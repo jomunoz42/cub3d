@@ -12,6 +12,11 @@
 #include <errno.h>
 #define prinf printf
 
+typedef struct s_parsing{
+    char **textures_info;
+}   t_parsing;
+
+t_parsing *parsing_init(void);
 int ft_strcmp(char *s1, char *s2);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strtrim(char const *s1, char const *set);

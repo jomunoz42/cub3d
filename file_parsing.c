@@ -27,8 +27,7 @@ char *validate_texture_path(char *file, char *one_direction)
 	return (NULL);
 }
 
-
-char **texture_info(char *file)
+void texture_info(char *file, t_parsing *parse)
 {
 	char *north_texture = validate_texture_path(file, "NO");
 	char *south_texture = validate_texture_path(file, "SO");
@@ -40,45 +39,43 @@ char **texture_info(char *file)
 		!east_texture || !floor_color || !ceiling_color)
 	{
 		printf("Error: missing texture or color\n");
-		return NULL;
+		return;
 	}
 
-	int size = ft_strlen(north_texture) + 
-				ft_strlen(south_texture) + ft_strlen(west_texture) + 
-				ft_strlen(east_texture) + ft_strlen(floor_color) + ft_strlen(ceiling_color);
+	parse->textures_info = malloc(sizeof(char *) * 7);
+	if (!parse->textures_info)
+		return ;
 
-	char **final_info = malloc(sizeof(char *) * 7);
-
-	if (!final_info)
-		return (NULL);
-
-	final_info[0] = malloc(ft_strlen(north_texture) + 1);
-	final_info[1] = malloc(ft_strlen(south_texture) + 1);
-	final_info[2] = malloc(ft_strlen(west_texture) + 1);
-	final_info[3] = malloc(ft_strlen(east_texture) + 1);
-	final_info[4] = malloc(ft_strlen(floor_color) + 1);
-	final_info[5] = malloc(ft_strlen(ceiling_color) + 1);
-	final_info[6] = NULL;
-	ft_strcpy(final_info[0], north_texture);
-	ft_strcpy(final_info[1], south_texture);
-	ft_strcpy(final_info[2], west_texture);
-	ft_strcpy(final_info[3], east_texture);
-	ft_strcpy(final_info[4], floor_color);
-	ft_strcpy(final_info[5], ceiling_color);
-
-	ft_print_matrix(final_info);
-	return (final_info);
-
-	
-
+	parse->textures_info[0] = malloc(ft_strlen(north_texture) + 1);
+	parse->textures_info[1] = malloc(ft_strlen(south_texture) + 1);
+	parse->textures_info[2] = malloc(ft_strlen(west_texture) + 1);
+	parse->textures_info[3] = malloc(ft_strlen(east_texture) + 1);
+	parse->textures_info[4] = malloc(ft_strlen(floor_color) + 1);
+	parse->textures_info[5] = malloc(ft_strlen(ceiling_color) + 1);
+	parse->textures_info[6] = NULL;
+	ft_strcpy(parse->textures_info[0], north_texture);
+	ft_strcpy(parse->textures_info[1], south_texture);
+	ft_strcpy(parse->textures_info[2], west_texture);
+	ft_strcpy(parse->textures_info[3], east_texture);
+	ft_strcpy(parse->textures_info[4], floor_color);
+	ft_strcpy(parse->textures_info[5], ceiling_color);
+	ft_print_matrix(parse->textures_info);
 }
 
 int main(int argc, char *argv[])
 {
+	t_parsing *parsing;
 	if (argc != 2)
 		return (printf("arguments\n"), 1);
-	texture_info(argv[1]);
+
+	parsing = parsing_init();
+	if (!parsing)
+		return (printf("parsing error\n"), 1);
+
+	texture_info(argv[1], parsing);
+	printf("\n\nJUST TESINT\n\n %s", parsing->textures_info[2]);
 	return (0);
+	
 }
 
 // NO

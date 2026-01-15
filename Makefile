@@ -6,7 +6,7 @@
 #    By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 10:25:55 by vivaz-ca          #+#    #+#              #
-#    Updated: 2026/01/15 22:29:57 by vvazzs           ###   ########.fr        #
+#    Updated: 2026/01/15 22:42:00 by vvazzs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ MAP_DIR = maps
 TEXTURE_DIR = ../textures
 
 SRC = \
-	$(SRCDIR)/gnl.c file_parsing.c vini_utils.c\
+	$(SRCDIR)/gnl.c file_parsing.c vini_utils.c struct_new.c\
 
 OBJS = $(SRC:../%.c=$(OBJDIR)/%.o)
 OBJS := $(OBJS:./%.c=$(OBJDIR)/%.o)
