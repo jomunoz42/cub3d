@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 10:29:38 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2026/01/15 10:36:26 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/01/15 12:37:26 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "cub3d.h"
 
-int main(void)
+int main(int argc, char **argv)
 {
-    printf("hello\n");
+    if (map_parser(argv[1]))
+        return (1);
     return (0);
 }
