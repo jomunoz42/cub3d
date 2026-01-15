@@ -27,6 +27,21 @@ char *validate_texture_path(char *file, char *one_direction)
 	return (NULL);
 }
 
+
+int validate_rgb_colors(char *str)
+{
+	char **all_colors = ft_split(str, ',');
+	int i = 0;
+	while (i < 3)
+	{
+		int rgb = ft_atoi(all_colors[i]);
+		if (rgb < 0 || rgb > 255)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 void texture_info(char *file, t_parsing *parse)
 {
 	char *north_texture = validate_texture_path(file, "NO");
@@ -42,6 +57,12 @@ void texture_info(char *file, t_parsing *parse)
 		return;
 	}
 
+	if (validate_rgb_colors(floor_color) == 0 || validate_rgb_colors(ceiling_color) == 0) // deixar isso mais explicito depois
+	{
+		printf("cor invalida\n");
+		return ;
+	}
+
 	parse->textures_info = malloc(sizeof(char *) * 7);
 	if (!parse->textures_info)
 		return ;
@@ -50,8 +71,10 @@ void texture_info(char *file, t_parsing *parse)
 	parse->textures_info[1] = malloc(ft_strlen(south_texture) + 1);
 	parse->textures_info[2] = malloc(ft_strlen(west_texture) + 1);
 	parse->textures_info[3] = malloc(ft_strlen(east_texture) + 1);
+
 	parse->textures_info[4] = malloc(ft_strlen(floor_color) + 1);
 	parse->textures_info[5] = malloc(ft_strlen(ceiling_color) + 1);
+
 	parse->textures_info[6] = NULL;
 	ft_strcpy(parse->textures_info[0], north_texture);
 	ft_strcpy(parse->textures_info[1], south_texture);
@@ -73,9 +96,7 @@ int main(int argc, char *argv[])
 		return (printf("parsing error\n"), 1);
 
 	texture_info(argv[1], parsing);
-	printf("\n\nJUST TESINT\n\n %s", parsing->textures_info[2]);
 	return (0);
-	
 }
 
 // NO

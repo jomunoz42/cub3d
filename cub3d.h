@@ -22,6 +22,8 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strtrim(char const *s1, char const *set);
 char    *ft_strcpy(char *s1, char *s2);
 void	ft_print_matrix(char **matrix);
+char	**ft_split(char const *s, char c);
+int	ft_atoi(const char *nptr);
 
 
 int     map_parser(char *argv);

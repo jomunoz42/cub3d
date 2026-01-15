@@ -106,3 +106,154 @@ void	ft_print_matrix(char **matrix)
 		write(2, "\n", 1);
 	}
 }
+
+void	ft_bzero(void *s, size_t n)
+{
+	size_t			i;
+	unsigned char	*str;
+
+	i = 0;
+	str = (unsigned char *)s;
+	while (i < n)
+	{
+		str[i] = '\0';
+		i++;
+	}
+}
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	void	*ptr;
+
+	if (size != 0 && nmemb > (size_t)-1 / size)
+		return (NULL);
+	ptr = malloc(nmemb * size);
+	if (ptr == NULL)
+		return (NULL);
+	ft_bzero(ptr, nmemb * size);
+	return (ptr);
+}
+
+
+
+int	ft_str_count(char *str, char c)
+{
+	int	ind;
+	int	count;
+
+	count = 0;
+	ind = 0;
+	while (str[ind])
+	{
+		if (str[ind] != c && (str[ind + 1] == '\0'
+				|| str[ind + 1] == c))
+			count++;
+		ind++;
+	}
+	return (count);
+}
+
+static char	*ft_split_strndup(const char *s, char c)
+{
+	char	*src;
+	char	*dest;
+	int		size;
+
+	size = 0;
+	while (s[size])
+	{
+		if (s[size] == c)
+			break ;
+		size++;
+	}
+	if (s == NULL)
+		return (NULL);
+	src = (char *)s;
+	dest = ft_calloc(size + 1, 1);
+	if (dest == NULL)
+		return (NULL);
+	ft_bzero(dest, size + 1);
+	dest = ft_memcpy(dest, src, size);
+	return (dest);
+}
+
+static void	*free_all(char **strs, int count)
+{
+	int	ind;
+
+	ind = -1;
+	while (++ind < count)
+		free (strs[ind]);
+	free (strs);
+	return (NULL);
+}
+
+static char	**alloc_mem(int str_count)
+{
+	char	**ret;
+
+	ret = malloc((str_count + 1) * sizeof(char *));
+	if (ret == NULL)
+		return (NULL);
+	ret[str_count] = NULL;
+	return (ret);
+}
+
+char	**ft_split(char const *s, char c)
+{
+	char	**ret;
+	char	*str;
+	int		str_count;
+	int		indv;
+
+	if (s == NULL)
+		return (NULL);
+	indv = 0;
+	str = (char *)s;
+	str_count = ft_str_count(str, c);
+	ret = alloc_mem(str_count);
+	if (ret == NULL)
+		return (NULL);
+	while (str_count-- > 0)
+	{
+		while (*str == c && *str)
+			str++;
+		ret[indv] = ft_split_strndup(str, c);
+		if (ret[indv] == NULL && indv != str_count)
+			return (free_all(ret, indv));
+		indv++;
+		while (*str != c && *str)
+			str++;
+	}
+	return (ret);
+}
+
+static int	is_space(char c)
+{
+	return ((c >= 9 && c <= 13) || c == ' ');
+}
+
+int	ft_atoi(const char *nptr)
+{
+	int	i;
+	int	result;
+	int	sign;
+
+	i = 0;
+	result = 0;
+	sign = 1;
+	while (nptr[i] && is_space(nptr[i]))
+		i++;
+	if (nptr[i] == '-' || nptr[i] == '+')
+	{
+		if (nptr[i] == '-')
+			sign = -sign;
+		i++;
+	}
+	while (nptr[i] >= '0' && nptr[i] <= '9')
+	{
+		result = result * 10 + (nptr[i] - '0');
+		i++;
+	}
+	return (result * sign);
+}
