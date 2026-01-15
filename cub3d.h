@@ -13,7 +13,10 @@
 #define prinf printf
 
 int ft_strcmp(char *s1, char *s2);
-
+int	ft_strncmp(const char *s1, const char *s2, size_t n);
+char	*ft_strtrim(char const *s1, char const *set);
+char    *ft_strcpy(char *s1, char *s2);
+void	ft_print_matrix(char **matrix);
 
 
 int     map_parser(char *argv);

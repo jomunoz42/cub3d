@@ -1,31 +1,83 @@
 #include "cub3d.h"
+#include <fcntl.h>
 
-int validate_textures(char *file, char *one_direction) //remember to check access depois
+char *validate_texture_path(char *file, char *one_direction)
 {
-	char *file_str, final_str;
-	int cube_file_fd = open(file, O_RDONLY);
-	if (cube_file_fd == -1)
-		return (printf("Read nao fucionou\n"), 0);
-	while (1)
+	int fd;
+	char *line;
+	char *path;
+	int len;
+
+	fd = open(file, O_RDONLY);
+	if (fd == -1)
+		return (printf("Error when opening the file\n"), NULL);
+	len = ft_strlen(one_direction);
+	while ((line = get_next_line(fd)))
 	{
-		read(cube_file_fd, file_str, 2);
-		if ( ft_strcmp(file_str, "NO") == 1 || ft_strcmp(file_str, "SO")  == 1|| ft_strcmp(file_str, "WE") == 1 || ft_strcmp(file_str, "EA") == 1) //maybe use strcmp?
+		if (ft_strncmp(line, one_direction, len) == 0 && line[len] == ' ')
 		{
-			printf("achou\n");
-			break ;
+			path = ft_strtrim(line + len + 1, "\n");
+			free(line);
+			close(fd);
+			return (path);
 		}
-		prinf("String = [%s]\n", file_str);
-		printf("ainda nao\n");
+		free(line);
 	}
-	return (1);
+	close(fd);
+	return (NULL);
+}
+
+
+char **texture_info(char *file)
+{
+	char *north_texture = validate_texture_path(file, "NO");
+	char *south_texture = validate_texture_path(file, "SO");
+	char *west_texture = validate_texture_path(file, "WE");
+	char *east_texture = validate_texture_path(file, "EA");
+	char *floor_color = validate_texture_path(file, "F");
+	char *ceiling_color = validate_texture_path(file, "C");
+	if (!north_texture || !south_texture || !west_texture ||
+		!east_texture || !floor_color || !ceiling_color)
+	{
+		printf("Error: missing texture or color\n");
+		return NULL;
+	}
+
+	int size = ft_strlen(north_texture) + 
+				ft_strlen(south_texture) + ft_strlen(west_texture) + 
+				ft_strlen(east_texture) + ft_strlen(floor_color) + ft_strlen(ceiling_color);
+
+	char **final_info = malloc(sizeof(char *) * 7);
+
+	if (!final_info)
+		return (NULL);
+
+	final_info[0] = malloc(ft_strlen(north_texture) + 1);
+	final_info[1] = malloc(ft_strlen(south_texture) + 1);
+	final_info[2] = malloc(ft_strlen(west_texture) + 1);
+	final_info[3] = malloc(ft_strlen(east_texture) + 1);
+	final_info[4] = malloc(ft_strlen(floor_color) + 1);
+	final_info[5] = malloc(ft_strlen(ceiling_color) + 1);
+	final_info[6] = NULL;
+	ft_strcpy(final_info[0], north_texture);
+	ft_strcpy(final_info[1], south_texture);
+	ft_strcpy(final_info[2], west_texture);
+	ft_strcpy(final_info[3], east_texture);
+	ft_strcpy(final_info[4], floor_color);
+	ft_strcpy(final_info[5], ceiling_color);
+
+	ft_print_matrix(final_info);
+	return (final_info);
+
+	
+
 }
 
 int main(int argc, char *argv[])
 {
 	if (argc != 2)
 		return (printf("arguments\n"), 1);
-	if (validate_textures(argv[1], "NO") == 0)
-		return (printf("Deu bo no validate texture\n"), 0);
+	texture_info(argv[1]);
 	return (0);
 }
 
