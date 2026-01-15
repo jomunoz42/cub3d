@@ -6,14 +6,14 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 10:29:38 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2026/01/15 10:36:26 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/01/15 12:51:43 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+// #include <stdio.h>
 
-int main(void)
-{
-    printf("hello\n");
-    return (0);
-}
+// int main(void)
+// {
+//     printf("hello\n");
+//     return (0);
+// }
