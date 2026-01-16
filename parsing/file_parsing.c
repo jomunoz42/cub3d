@@ -9,7 +9,7 @@ char	*find_texture_path(char *file, char *one_direction)
 
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		return (printf("Error: can't open file\n"), NULL);
+		return (close(fd), printf("Error: can't open file\n"), NULL);
 	len = ft_strlen(one_direction);
 	while ((line = get_next_line(fd)))
 	{
@@ -40,9 +40,10 @@ int	validate_rgb_colors(char *str)
 	{
 		rgb = ft_atoi(all_colors[i]);
 		if (rgb < 0 || rgb > 255)
-			return (0);
+			return (ft_free_matrix(all_colors), 0);
 		i++;
 	}
+	ft_free_matrix(all_colors);
 	return (1);
 }
 
@@ -84,6 +85,17 @@ char	**validate_textures(char *file, t_parsing *parse)
 	return (matrix);
 }
 
+void ft_free_matrix(char **matrix)
+{
+	int i = 0;
+	while (matrix[i])
+	{
+		free(matrix[i]);
+		i++;
+	}
+	free(matrix);
+}
+
 int	struct_sharingan(char *file, t_parsing *parse)
 {
 	char	**temp;
@@ -105,6 +117,7 @@ int	struct_sharingan(char *file, t_parsing *parse)
 		ft_strcpy(parse->textures_info[i], temp[i]);
 		i++;
 	}
+	ft_free_matrix(temp);
 	parse->textures_info[6] = NULL;
 	ft_print_matrix(parse->textures_info);
 	return (1);
@@ -120,8 +133,9 @@ int	validate_textures_path(char *argv, t_parsing *parse)
 	{
 		fd = open(parse->textures_info[i], O_RDONLY);
 		if (fd == -1)
-			return (printf("%s\n", parse->error_messages[i + 6]), 0);
+			return (close(fd), printf("%s\n", parse->error_messages[i + 6]), 0);
 		i++;
 	}
+	close(fd);
 	return (1);
 }

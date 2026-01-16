@@ -22,6 +22,18 @@ typedef struct s_parsing
 	const char	*error_messages[ERROR_COUNT];
 }				t_parsing;
 
+typedef struct s_mlx_data
+{
+	void *mlx_ptr;
+	void *win_ptr;
+}	t_mlx_data;
+
+typedef struct s_general
+{
+	t_parsing *parse;
+	t_mlx_data *mlx_data;
+}	t_gen;
+
 t_parsing		*parsing_init(void);
 int				ft_strcmp(char *s1, char *s2);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -35,6 +47,12 @@ int				initial_parsing(int argc, char *argv[]);
 int				ft_matrix_len(char **matrix);
 int				validate_textures_path(char *argv, t_parsing *parse);
 int start_window(void);
+int mlx_data_init(void);
+t_gen *gen_stuff();
+void ft_free_matrix(char **matrix);
+int super_duper_hiper_free(void);
+void file_closer(void);
+void free_parsing(t_parsing *parse);
 
 int				map_parser(char *argv);
 

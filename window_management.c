@@ -1,27 +1,56 @@
 #include "cub3d.h"
+#include "mlx.h"
+#include <stdio.h>
+
+t_gen *gen_stuff()
+{
+	static t_gen	general;
+
+	return (&general);
+}
+
+
+int super_duper_hiper_free(void)
+{
+    t_gen *gen = gen_stuff();
+
+    if (gen->mlx_data)
+    {
+        if (gen->mlx_data->win_ptr)
+            mlx_destroy_window(
+                gen->mlx_data->mlx_ptr,
+                gen->mlx_data->win_ptr
+            );
+        if (gen->mlx_data->mlx_ptr)
+            mlx_destroy_display(gen->mlx_data->mlx_ptr);
+		free(gen->mlx_data->mlx_ptr);
+        free(gen->mlx_data);
+        gen->mlx_data = NULL;
+    }
+    free_parsing(gen->parse);
+    gen->parse = NULL;
+    exit(0);
+}
 
 int handle_exit(int keysys)
 {
-	printf("handling\n");
 	if (keysys == XK_Escape)
-		exit(0) ;
+		return (super_duper_hiper_free(), 1);
 	return (0);
 }
 
 int start_window(void)
 {
-	void* mlx_ptr;
-	void *win_ptr;
+	t_gen *gen;
 
-	mlx_ptr = mlx_init();
-	if (!mlx_ptr)
+	gen = gen_stuff();
+	if (mlx_data_init())
 		return (1);
-	win_ptr = mlx_new_window(mlx_ptr, 1920, 1080, "salve");
-	if (!win_ptr)
-		return (printf("ANIMAL DO KRL\n"), 1);
-	printf("before\n");
-	mlx_loop_hook(mlx_ptr, handle_exit, NULL);
-	mlx_loop(mlx_ptr); //eventually create a loop function
-	mlx_destroy_window(mlx_ptr, win_ptr);
+	gen->mlx_data->win_ptr = mlx_new_window(gen->mlx_data->mlx_ptr, 1600, 1000, "salve");
+	if (!gen->mlx_data->win_ptr)
+		return (1);
+	mlx_key_hook(gen->mlx_data->win_ptr, handle_exit, NULL);
+	mlx_loop(gen->mlx_data->mlx_ptr);
+
 	return (0);
 }
