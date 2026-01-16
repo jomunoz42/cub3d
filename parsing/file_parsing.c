@@ -89,6 +89,9 @@ int	struct_sharingan(char *file, t_parsing *parse)
 	char	**temp;
 	int		i;
 
+	int len = ft_strlen(file);
+	if (len < 4 || ft_strncmp(file + (len - 4), ".cub", 4))
+		return (printf("Error: invalid map type\n"), 0);
 	temp = validate_textures(file, parse);
 	if (!temp)
 		return (0);
