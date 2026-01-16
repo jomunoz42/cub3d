@@ -1,30 +1,24 @@
 #include "cub3d.h"
 
-int super_duper_hiper_free(void)
+void	ft_free_matrix_partial(char **matrix, int max_index)
 {
-    t_gen *gen = gen_stuff();
+    int i;
 
-    if (gen->mlx_data)
+    if (!matrix)
+        return;
+    for (i = 0; i < max_index; i++)
     {
-        if (gen->mlx_data->win_ptr)
-            mlx_destroy_window(
-                gen->mlx_data->mlx_ptr,
-                gen->mlx_data->win_ptr
-            );
-        if (gen->mlx_data->mlx_ptr)
-            mlx_destroy_display(gen->mlx_data->mlx_ptr);
-		free(gen->mlx_data->mlx_ptr);
-        free(gen->mlx_data);
-        gen->mlx_data = NULL;
+        if (matrix && matrix[i])
+            free(matrix[i]);
     }
-    free_parsing(gen->parse);
-    gen->parse = NULL;
-    exit(0);
+    free(matrix);
 }
 
-void ft_free_matrix(char **matrix)
+void	ft_free_matrix(char **matrix)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (matrix[i])
 	{
 		free(matrix[i]);
@@ -33,18 +27,38 @@ void ft_free_matrix(char **matrix)
 	free(matrix);
 }
 
-int handle_exit(int keysys)
+int	handle_exit(int keysys)
 {
 	if (keysys == XK_Escape)
 		return (super_duper_hiper_free(), 1);
 	return (0);
 }
 
-void free_parsing(t_parsing *parse)
+void	free_parsing(t_parsing *parse)
 {
-    if (!parse)
-        return;
-    if (parse->textures_info)
+	if (!parse)
+		return ;
+	if (parse->textures_info)
 		ft_free_matrix(parse->textures_info);
-    free(parse);
+	free(parse);
+}
+
+int	super_duper_hiper_free(void)
+{
+	t_gen	*gen;
+
+	gen = gen_stuff();
+	if (gen->mlx_data)
+	{
+		if (gen->mlx_data->win_ptr)
+			mlx_destroy_window(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr);
+		if (gen->mlx_data->mlx_ptr)
+			mlx_destroy_display(gen->mlx_data->mlx_ptr);
+		free(gen->mlx_data->mlx_ptr);
+		free(gen->mlx_data);
+		gen->mlx_data = NULL;
+	}
+	free_parsing(gen->parse);
+	gen->parse = NULL;
+	exit(0);
 }

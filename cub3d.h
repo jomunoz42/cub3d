@@ -54,6 +54,8 @@ int super_duper_hiper_free(void);
 void file_closer(void);
 void free_parsing(t_parsing *parse);
 int handle_exit(int keysys);
+void	*ft_calloc(size_t nmemb, size_t size);
+void	ft_free_matrix_partial(char **matrix, int max_index);
 
 int				map_parser(char *argv);
 
