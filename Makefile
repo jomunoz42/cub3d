@@ -3,13 +3,12 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+         #
+#    By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 10:25:55 by vivaz-ca          #+#    #+#              #
-#    Updated: 2026/01/15 12:37:14 by jomunoz          ###   ########.fr        #
+#    Updated: 2026/01/16 14:33:37 by vvazzs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 
 NAME = cub3d
 SRCDIR = .
@@ -18,15 +17,22 @@ MLXDIR = ../.minilibx-linux
 GNL_DIR = ./gnl
 MAP_DIR = maps
 TEXTURE_DIR = ../textures
+PARSE = ./parsing
+UTILS = ./utils
 
 SRC = \
-	$(SRCDIR)/main.c gnl.c lib_utils1.c map_parser.c\
+	$(SRCDIR)/main.c struct_new.c \
+	$(PARSE)/file_parsing.c \
+	$(PARSE)/general_parsing.c \
+	$(UTILS)/gnl.c \
+	$(UTILS)/vini_utils.c
 
 OBJS = $(SRC:../%.c=$(OBJDIR)/%.o)
 OBJS := $(OBJS:./%.c=$(OBJDIR)/%.o)
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
+
 
 MLX_FLAGS = -L . -lmlx -lXext -lX11
 INCLUDES = -I$(MLXDIR) -I$(GNL_DIR) -I. -I$(MAP_DIR)
