@@ -2,16 +2,16 @@
 
 void	ft_free_matrix_partial(char **matrix, int max_index)
 {
-    int i;
+	int	i;
 
-    if (!matrix)
-        return;
-    for (i = 0; i < max_index; i++)
-    {
-        if (matrix && matrix[i])
-            free(matrix[i]);
-    }
-    free(matrix);
+	if (!matrix)
+		return ;
+	for (i = 0; i < max_index; i++)
+	{
+		if (matrix && matrix[i])
+			free(matrix[i]);
+	}
+	free(matrix);
 }
 
 void	ft_free_matrix(char **matrix)

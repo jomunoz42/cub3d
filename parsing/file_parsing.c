@@ -47,59 +47,57 @@ int	validate_rgb_colors(char *str)
 	return (1);
 }
 
-char **validate_textures(char *file, t_parsing *parse)
+char	**validate_textures(char *file, t_parsing *parse)
 {
-    char **matrix;
-    int i;
+	char	**matrix;
+	int		i;
 
-    matrix = ft_calloc(7, sizeof(char *));
-    if (!matrix)
-        return NULL;
-
-    matrix[0] = find_texture_path(file, "NO");
-    matrix[1] = find_texture_path(file, "SO");
-    matrix[2] = find_texture_path(file, "WE");
-    matrix[3] = find_texture_path(file, "EA");
-    matrix[4] = find_texture_path(file, "F");
-    matrix[5] = find_texture_path(file, "C");
-    i = 0;
-    while (i < 6)
-    {
-        if (!matrix[i])
-        {
+	matrix = ft_calloc(7, sizeof(char *));
+	if (!matrix)
+		return (NULL);
+	matrix[0] = find_texture_path(file, "NO");
+	matrix[1] = find_texture_path(file, "SO");
+	matrix[2] = find_texture_path(file, "WE");
+	matrix[3] = find_texture_path(file, "EA");
+	matrix[4] = find_texture_path(file, "F");
+	matrix[5] = find_texture_path(file, "C");
+	i = 0;
+	while (i < 6)
+	{
+		if (!matrix[i])
+		{
 			printf("%s\n", parse->error_messages[i]);
-			printf("im here\n");
-            ft_free_matrix_partial(matrix, 7);
-            return NULL;
-        }
-        i++;
-    }
-    i = 4;
-    while (i <= 5)
-    {
-        if (!validate_rgb_colors(matrix[i]))
-        {
-            printf("%s\n", parse->error_messages[i + 6]);
-            ft_free_matrix_partial(matrix, 7);
-            return NULL;
-        }
-        i++;
-    }
-    return matrix;
+			ft_free_matrix_partial(matrix, 7);
+			return (NULL);
+		}
+		i++;
+	}
+	i = 4;
+	while (i <= 5)
+	{
+		if (!validate_rgb_colors(matrix[i]))
+		{
+			printf("%s\n", parse->error_messages[i + 6]);
+			ft_free_matrix_partial(matrix, 7);
+			return (NULL);
+		}
+		i++;
+	}
+	return (matrix);
 }
-
 
 int	struct_sharingan(char *file, t_parsing *parse)
 {
 	char	**temp;
 	int		i;
+	int		len;
 
-	int len = ft_strlen(file);
+	len = ft_strlen(file);
 	if (len < 4 || ft_strncmp(file + (len - 4), ".cub", 4))
 		return (printf("Error: invalid map type\n"), 0);
 	temp = validate_textures(file, parse);
 	if (!temp)
-		return ( 0);
+		return (0);
 	parse->textures_info = malloc(sizeof(char *) * 7);
 	if (!parse->textures_info)
 		return (ft_free_matrix(temp), 0);
@@ -118,10 +116,12 @@ int	struct_sharingan(char *file, t_parsing *parse)
 
 int	validate_textures_path(char *argv, t_parsing *parse)
 {
+	int	i;
+	int	fd;
+
 	if (struct_sharingan(argv, parse) == 0)
 		return (0);
-	int i = 0;
-	int fd;
+	i = 0;
 	while (i <= 3)
 	{
 		fd = open(parse->textures_info[i], O_RDONLY);
