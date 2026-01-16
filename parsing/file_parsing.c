@@ -135,7 +135,7 @@ int	validate_textures_path(char *argv, t_parsing *parse)
 		if (fd == -1)
 			return (close(fd), printf("%s\n", parse->error_messages[i + 6]), 0);
 		i++;
+		close(fd);
 	}
-	close(fd);
 	return (1);
 }
