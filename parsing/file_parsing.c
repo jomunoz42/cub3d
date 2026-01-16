@@ -85,17 +85,6 @@ char	**validate_textures(char *file, t_parsing *parse)
 	return (matrix);
 }
 
-void ft_free_matrix(char **matrix)
-{
-	int i = 0;
-	while (matrix[i])
-	{
-		free(matrix[i]);
-		i++;
-	}
-	free(matrix);
-}
-
 int	struct_sharingan(char *file, t_parsing *parse)
 {
 	char	**temp;

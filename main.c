@@ -1,15 +1,6 @@
 #include "cub3d.h"
 #include <fcntl.h>
 
-void free_parsing(t_parsing *parse)
-{
-    if (!parse)
-        return;
-    if (parse->textures_info)
-		ft_free_matrix(parse->textures_info);
-    free(parse);
-}
-
 int main(int argc, char *argv[])
 {
     t_gen *gen;

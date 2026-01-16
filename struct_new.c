@@ -1,25 +1,6 @@
 #include "cub3d.h"
 #include "mlx.h"
 
-// t_parsing *parsing_init(void)
-// {
-//     t_parsing *new;
-
-//     new = malloc(sizeof(t_parsing));
-//     if (!new)
-//         return (NULL);
-//     new->textures_info = NULL;
-//     new->error_messages = {
-//         "Error: missing texture NO",
-// 		"Error: missing texture SO",
-// 		"Error: missing texture WE",
-// 		"Error: missing texture EA",
-// 		"Error: missing floor color",
-// 		"Error: missing ceiling color"
-// 	};
-//     return (new);
-// }
-
 t_parsing *parsing_init(void)
 {
     t_parsing *new;

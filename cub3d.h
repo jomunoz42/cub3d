@@ -53,6 +53,7 @@ void ft_free_matrix(char **matrix);
 int super_duper_hiper_free(void);
 void file_closer(void);
 void free_parsing(t_parsing *parse);
+int handle_exit(int keysys);
 
 int				map_parser(char *argv);
 
