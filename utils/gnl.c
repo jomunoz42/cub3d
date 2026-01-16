@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gnl.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 10:28:17 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2026/01/15 10:28:18 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/01/16 14:01:56 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 #include <string.h>
 #include <stdlib.h>
 #include <fcntl.h>
+#include "../cub3d.h"
 # define BUFFER_SIZE 2
 
-size_t ft_strlen(char *str)
+int ft_strlen(const char *str)
 {
     size_t i = 0;
     if (!str)

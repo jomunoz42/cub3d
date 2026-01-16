@@ -6,7 +6,7 @@
 #    By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 10:25:55 by vivaz-ca          #+#    #+#              #
-#    Updated: 2026/01/16 00:03:03 by vvazzs           ###   ########.fr        #
+#    Updated: 2026/01/16 14:00:12 by vvazzs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,11 +18,14 @@ GNL_DIR = ./gnl
 MAP_DIR = maps
 TEXTURE_DIR = ../textures
 PARSE = ./parsing
+UTILS = ./utils
 
 SRC = \
-	$(SRCDIR)/gnl.c main.c vini_utils.c struct_new.c \
+	$(SRCDIR)/main.c struct_new.c \
 	$(PARSE)/file_parsing.c \
-	$(PARSE)/general_parsing.c
+	$(PARSE)/general_parsing.c \
+	$(UTILS)/gnl.c \
+	$(UTILS)/vini_utils.c
 
 OBJS = $(SRC:../%.c=$(OBJDIR)/%.o)
 OBJS := $(OBJS:./%.c=$(OBJDIR)/%.o)

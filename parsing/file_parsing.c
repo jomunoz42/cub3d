@@ -1,6 +1,6 @@
 #include "../cub3d.h"
 
-char	*validate_texture_path(char *file, char *one_direction)
+char	*find_texture_path(char *file, char *one_direction)
 {
 	int		fd;
 	char	*line;
@@ -46,45 +46,55 @@ int	validate_rgb_colors(char *str)
 	return (1);
 }
 
-char	**validate_textures(char *file)
+char	**validate_textures(char *file, t_parsing *parse)
 {
-	char **matrix; // mudar nome quando tiver uma ideia mais legal
+	char	**matrix;
+	int		i;
+
 	matrix = malloc(sizeof(char *) * 7);
 	if (!matrix)
 		return (NULL);
-	matrix[0] = validate_texture_path(file, "NO");
-	matrix[1] = validate_texture_path(file, "SO");
-	matrix[2] = validate_texture_path(file, "WE");
-	matrix[3] = validate_texture_path(file, "EA");
-	matrix[4] = validate_texture_path(file, "F");
-	matrix[5] = validate_texture_path(file, "C");
+	matrix[0] = find_texture_path(file, "NO");
+	matrix[1] = find_texture_path(file, "SO");
+	matrix[2] = find_texture_path(file, "WE");
+	matrix[3] = find_texture_path(file, "EA");
+	matrix[4] = find_texture_path(file, "F");
+	matrix[5] = find_texture_path(file, "C");
 	matrix[6] = NULL;
-	if (!matrix[0] || !matrix[1] || !matrix[2] || !matrix[3] || !matrix[4]
-		|| !matrix[5])
+	i = 0;
+	while (i < 6)
 	{
-		printf("Error: missing texture or color\n");
-		return (NULL);
+		if (!matrix[i])
+		{
+			printf("%s\n", parse->error_messages[i]);
+			return (NULL);
+		}
+		i++;
 	}
-	if (validate_rgb_colors(matrix[4]) == 0
-		|| validate_rgb_colors(matrix[5]) == 0)
+	i = 4;
+	while (i <= 5)
 	{
-		printf("Error: cor invalida\n");
-		return (NULL);
+		if (validate_rgb_colors(matrix[i]) == 0)
+		{
+			printf("%s\n", parse->error_messages[i + 6]);
+			return (NULL);
+		}
+		i++;
 	}
 	return (matrix);
 }
 
-void	get_texture_info(char *file, t_parsing *parse)
+int	struct_sharingan(char *file, t_parsing *parse)
 {
 	char	**temp;
 	int		i;
 
-	temp = validate_textures(file);
+	temp = validate_textures(file, parse);
 	if (!temp)
-		return ;
+		return (0);
 	parse->textures_info = malloc(sizeof(char *) * 7);
 	if (!parse->textures_info)
-		return ;
+		return (0);
 	i = 0;
 	while (i < 6)
 	{
@@ -94,4 +104,24 @@ void	get_texture_info(char *file, t_parsing *parse)
 	}
 	parse->textures_info[6] = NULL;
 	ft_print_matrix(parse->textures_info);
+	return (1);
+}
+
+int	validate_textures_path(char *argv, t_parsing *parse)
+{
+	if (struct_sharingan(argv, parse) == 0)
+		return (0);
+	int i = 0;
+	int a = 6;
+	int fd;
+	while (i <= 3)
+	{
+		fd = open(parse->textures_info[i], O_RDONLY);
+		if (fd == -1)
+			return (printf("%s\n", parse->error_messages[a]), 0);
+				// COME HERE TO CHANGE STUFF
+		i++;
+		a++;
+	}
+	return (1);
 }

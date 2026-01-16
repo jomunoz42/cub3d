@@ -10,10 +10,12 @@
 #include <math.h>
 #include <sys/time.h>
 #include <errno.h>
+#define ERROR_COUNT 12
 #define prinf printf
 
 typedef struct s_parsing{
     char **textures_info;
+    const char *error_messages[ERROR_COUNT];
 }   t_parsing;
 
 t_parsing *parsing_init(void);
@@ -24,9 +26,10 @@ char    *ft_strcpy(char *s1, char *s2);
 void	ft_print_matrix(char **matrix);
 char	**ft_split(char const *s, char c);
 int	ft_atoi(const char *nptr);
-void get_texture_info(char *file, t_parsing *parse);
-int parse(int argc, char *argv[]);
+int struct_sharingan(char *file, t_parsing *parse);
+int initial_parsing(int argc, char *argv[]);
 int ft_matrix_len(char **matrix);
+int validate_textures_path(char *argv, t_parsing *parse);
 
 
 int     map_parser(char *argv);
