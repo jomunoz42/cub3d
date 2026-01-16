@@ -257,3 +257,11 @@ int	ft_atoi(const char *nptr)
 	}
 	return (result * sign);
 }
+
+int ft_matrix_len(char **matrix)
+{
+	int i = 0;
+	while (matrix[i] && matrix)
+		i++;
+	return (i);
+}

@@ -6,7 +6,7 @@
 #    By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 10:25:55 by vivaz-ca          #+#    #+#              #
-#    Updated: 2026/01/15 22:42:00 by vvazzs           ###   ########.fr        #
+#    Updated: 2026/01/15 23:53:12 by vvazzs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,12 @@ MLXDIR = ../.minilibx-linux
 GNL_DIR = ./gnl
 MAP_DIR = maps
 TEXTURE_DIR = ../textures
+PARSE = ./parsing
 
 SRC = \
-	$(SRCDIR)/gnl.c file_parsing.c vini_utils.c struct_new.c\
+	$(SRCDIR)/gnl.c main.c vini_utils.c struct_new.c \
+	$(PARSE)/file_parsing.c \
+	$(PARSE)/general_parsing.c
 
 OBJS = $(SRC:../%.c=$(OBJDIR)/%.o)
 OBJS := $(OBJS:./%.c=$(OBJDIR)/%.o)
