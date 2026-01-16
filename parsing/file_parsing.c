@@ -9,7 +9,7 @@ char	*find_texture_path(char *file, char *one_direction)
 
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		return (printf("Error when opening the file\n"), NULL);
+		return (printf("Error: can't open file\n"), NULL);
 	len = ft_strlen(one_direction);
 	while ((line = get_next_line(fd)))
 	{
@@ -115,16 +115,13 @@ int	validate_textures_path(char *argv, t_parsing *parse)
 	if (struct_sharingan(argv, parse) == 0)
 		return (0);
 	int i = 0;
-	int a = 6;
 	int fd;
 	while (i <= 3)
 	{
 		fd = open(parse->textures_info[i], O_RDONLY);
 		if (fd == -1)
-			return (printf("%s\n", parse->error_messages[a]), 0);
-				// COME HERE TO CHANGE STUFF
+			return (printf("%s\n", parse->error_messages[i + 6]), 0);
 		i++;
-		a++;
 	}
 	return (1);
 }

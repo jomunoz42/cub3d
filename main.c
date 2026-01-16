@@ -12,5 +12,6 @@ int main(int argc, char *argv[])
 	if (validate_textures_path(argv[1], parsing) == 0)
 		return (1);
 	printf("\n==All right from here==\n");
+	start_window();
 	return (0);
 }
