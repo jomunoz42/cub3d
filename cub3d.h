@@ -25,7 +25,7 @@ void	ft_print_matrix(char **matrix);
 char	**ft_split(char const *s, char c);
 int	ft_atoi(const char *nptr);
 void get_texture_info(char *file, t_parsing *parse);
-int parse(int argc, char *argv[], t_parsing *parsing);
+int parse(int argc, char *argv[]);
 int ft_matrix_len(char **matrix);
 
 

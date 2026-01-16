@@ -4,7 +4,7 @@
 int main(int argc, char *argv[])
 {
 	t_parsing *parsing;
-    if (parse(argc, argv, parsing) != 0)
+    if (parse(argc, argv) != 0)
 		return (1);
 	parsing = parsing_init();
 	if (!parsing)

@@ -1,6 +1,6 @@
 #include "../cub3d.h"
 
-int parse(int argc, char *argv[], t_parsing *parsing)
+int parse(int argc, char *argv[])
 {
 	if (argc != 2)
 		return (printf("Error: incorrect arguments\n"), 1);

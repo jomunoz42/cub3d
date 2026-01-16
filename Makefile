@@ -6,10 +6,9 @@
 #    By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 10:25:55 by vivaz-ca          #+#    #+#              #
-#    Updated: 2026/01/15 23:53:12 by vvazzs           ###   ########.fr        #
+#    Updated: 2026/01/16 00:03:03 by vvazzs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 
 NAME = cub3d
 SRCDIR = .
@@ -29,8 +28,7 @@ OBJS = $(SRC:../%.c=$(OBJDIR)/%.o)
 OBJS := $(OBJS:./%.c=$(OBJDIR)/%.o)
 
 CC = cc
-# CFLAGS = -Wall -Wextra -Werror -g
-CFLAGS = -g
+CFLAGS = -Wall -Wextra -Werror -g
 
 
 MLX_FLAGS = -L . -lmlx -lXext -lX11
