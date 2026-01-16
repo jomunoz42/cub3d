@@ -11,7 +11,17 @@
 #include <sys/time.h>
 #include <errno.h>
 
-int     map_parser(char *argv);
+typedef struct s_parsing
+{
+    char    *file_path;
+    char    **textures_info;
+    char    **map;
+    int     width;
+    int     height;
+}              t_parsing;
+
+int     ft_floodfill(char **map, int y, int x);
+int     map_parser(t_parsing *parser, char *argv);
 
 char    *get_next_line(int fd);
 
