@@ -37,5 +37,8 @@ int	mlx_data_init(void)
 	if (!gen->mlx_data->mlx_ptr)
 		return (1);
 	gen->mlx_data->win_ptr = NULL;
+	gen->arm = NULL;
+	gen->mlx_data->window_width = 1000;
+	gen->mlx_data->window_height = 1000;
 	return (0);
 }

@@ -15,6 +15,8 @@
 # include <unistd.h>
 # define ERROR_COUNT 12
 # define prinf printf
+# define ARM_HEIGHT 250
+# define ARM_WIDTH 262
 
 typedef struct s_parsing
 {
@@ -26,12 +28,15 @@ typedef struct s_mlx_data
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
+	int			window_width;
+	int			window_height;
 }				t_mlx_data;
 
 typedef struct s_general
 {
 	t_parsing	*parse;
 	t_mlx_data	*mlx_data;
+	void *arm;
 }				t_gen;
 
 t_parsing		*parsing_init(void);
