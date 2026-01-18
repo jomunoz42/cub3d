@@ -1,11 +1,25 @@
 #include "../headers/cub3d.h"
 
+char *space_skipper_shift(char *str)
+{
+	int i = 0;
+	int j = 0;
+
+	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
+		i++;
+
+	while (str[i])
+		str[j++] = str[i++];
+	str[j] = '\0';
+
+	return str;
+}
+
 char	*find_texture_path(char *file, char *one_direction)
 {
 	t_gen *gen;
 
 	gen = gen_stuff();
-	// int		fd;
 	char	*line;
 	char	*path;
 	int		len;
@@ -19,6 +33,7 @@ char	*find_texture_path(char *file, char *one_direction)
 		if (ft_strncmp(line, one_direction, len) == 0 && line[len] == ' ')
 		{
 			path = ft_strtrim(line + len + 1, "\n");
+			path = space_skipper_shift(path);
 			free(line);
 			close(gen->parse->fd);
 			return (path);
