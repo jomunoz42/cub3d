@@ -20,7 +20,8 @@ t_parsing	*parsing_init(void)
 							"Error: can't find west texture file",
 							"Error: can't find east texture file",
 							"Error: floor color invalid",
-							"Error: ceiling color invalid"}};
+							"Error: ceiling color invalid"},
+							.fd = 0};
 	return (new);
 }
 

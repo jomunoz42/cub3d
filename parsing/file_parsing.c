@@ -2,27 +2,30 @@
 
 char	*find_texture_path(char *file, char *one_direction)
 {
-	int		fd;
+	t_gen *gen;
+
+	gen = gen_stuff();
+	// int		fd;
 	char	*line;
 	char	*path;
 	int		len;
 
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-		return (close(fd), printf("Error: can't open file\n"), NULL);
+	gen->parse->fd = open(file, O_RDONLY);
+	if (gen->parse->fd == -1)
+		return (close(gen->parse->fd), printf("Error: can't open file\n"), NULL);
 	len = ft_strlen(one_direction);
-	while ((line = get_next_line(fd)))
+	while ((line = get_next_line(gen->parse->fd)))
 	{
 		if (ft_strncmp(line, one_direction, len) == 0 && line[len] == ' ')
 		{
 			path = ft_strtrim(line + len + 1, "\n");
 			free(line);
-			close(fd);
+			close(gen->parse->fd);
 			return (path);
 		}
 		free(line);
 	}
-	close(fd);
+	close(gen->parse->fd);
 	return (NULL);
 }
 

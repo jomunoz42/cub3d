@@ -4,6 +4,7 @@ typedef struct s_parsing
 {
 	char		**textures_info;
 	const char	*error_messages[ERROR_COUNT];
+	int 		fd;
 }				t_parsing;
 
 typedef struct s_mlx_data

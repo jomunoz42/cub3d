@@ -14,6 +14,7 @@ int	main(int argc, char *argv[])
 	if (!validate_textures_path(argv[1], gen->parse))
 		return (super_duper_hiper_free(), 1);
 	printf("\n==All right from here==\n");
+	printf("FILE DESCRIPTOR OF [%s] is: %d\n", argv[1], gen->parse->fd);
 	start_window();
 	return (0);
 }
