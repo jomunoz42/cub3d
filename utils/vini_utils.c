@@ -1,4 +1,4 @@
-#include "../cub3d.h"
+#include "../headers/cub3d.h"
 
 int ft_strcmp(char *s1, char *s2)
 {
@@ -264,4 +264,22 @@ int ft_matrix_len(char **matrix)
 	while (matrix[i] && matrix)
 		i++;
 	return (i);
+}
+
+int png_size_fd(const char *path, uint32_t *w, uint32_t *h) //study this later
+{
+    int fd = open(path, O_RDONLY);
+    if (fd < 0)
+        return 0;
+
+    unsigned char buf[24]; //why 24?
+    ssize_t n = read(fd, buf, sizeof(buf));
+    close(fd);
+    if (n != sizeof(buf))
+        return 0;
+    *w = (buf[16] << 24) | (buf[17] << 16) |
+         (buf[18] << 8)  |  buf[19];
+    *h = (buf[20] << 24) | (buf[21] << 16) |
+         (buf[22] << 8)  |  buf[23];
+    return 1;
 }

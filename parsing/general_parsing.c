@@ -1,4 +1,4 @@
-#include "../cub3d.h"
+#include "../headers/cub3d.h"
 
 int	initial_parsing(int argc, char *argv[])
 {

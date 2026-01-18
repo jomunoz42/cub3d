@@ -1,5 +1,5 @@
 
-#include "cub3d.h"
+#include "./headers/cub3d.h"
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {

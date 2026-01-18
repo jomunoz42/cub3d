@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <fcntl.h>
-#include "../cub3d.h"
+#include "../headers/cub3d.h"
 # define BUFFER_SIZE 2
 
 int ft_strlen(const char *str)

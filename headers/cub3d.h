@@ -3,27 +3,7 @@
 # define CUB3D_H
 
 # include "general.h"
-
-typedef struct s_parsing
-{
-	char		**textures_info;
-	const char	*error_messages[ERROR_COUNT];
-}				t_parsing;
-
-typedef struct s_mlx_data
-{
-	void		*mlx_ptr;
-	void		*win_ptr;
-	int			window_width;
-	int			window_height;
-}				t_mlx_data;
-
-typedef struct s_general
-{
-	t_parsing	*parse;
-	t_mlx_data	*mlx_data;
-	void *arm;
-}				t_gen;
+#include "typedef.h"
 
 t_parsing		*parsing_init(void);
 int				ft_strcmp(char *s1, char *s2);
@@ -47,6 +27,8 @@ void			free_parsing(t_parsing *parse);
 int				handle_exit(int keysys);
 void			*ft_calloc(size_t nmemb, size_t size);
 void			ft_free_matrix_partial(char **matrix, int max_index);
+int png_size_fd(const char *path, uint32_t *w, uint32_t *h);
+int png_size_fd(const char *path, uint32_t *w, uint32_t *h);
 
 int				map_parser(char *argv);
 

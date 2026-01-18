@@ -6,7 +6,7 @@
 #    By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 10:25:55 by vivaz-ca          #+#    #+#              #
-#    Updated: 2026/01/17 22:33:12 by vvazzs           ###   ########.fr        #
+#    Updated: 2026/01/18 00:05:46 by vvazzs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,7 @@ norm:
 	@echo "Amount of errors: " && norminette $(shell find . -type f \( -name "*.c" -o -name "*.h" \)) | grep "Error" | wc -l
 
 run: re
-	./$(NAME) testing.cub
+	@./$(NAME) testing.cub
 
 
 .PHONY: all clean fclean re

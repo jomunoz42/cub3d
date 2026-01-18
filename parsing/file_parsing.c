@@ -1,4 +1,4 @@
-#include "../cub3d.h"
+#include "../headers/cub3d.h"
 
 char	*find_texture_path(char *file, char *one_direction)
 {

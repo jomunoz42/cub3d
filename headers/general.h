@@ -11,13 +11,16 @@
 # include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <stdint.h>
+
 
 # define prinf printf
 # define ERROR_COUNT 12
-# define ARM_HEIGHT 250
-# define ARM_WIDTH 262
 # define WIN_WIDTH 1200
 # define WIN_HEIGHT 1000
-# define USER_HAND "./imgs/arm_placeholder.xpm"
+# define USER_HAND_XPM "./imgs/arm_placeholder.xpm"
+# define USER_HAND_PNG "./imgs/arm_placeholder.png"
+
+
 
 #endif
