@@ -290,6 +290,7 @@ int color_switch(char *str)
 	int red = ft_atoi(all_colors[0]);
 	int green = ft_atoi(all_colors[1]);
 	int blue = ft_atoi(all_colors[2]);
+	ft_free_matrix(all_colors);
 	int final = rgb_to_hex(red, green, blue);
 	return (final);
 }
