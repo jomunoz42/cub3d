@@ -1,17 +1,20 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   gnl.c                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/15 10:28:17 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2026/01/18 18:29:14 by jomunoz          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "cub3d.h"
+#include <unistd.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include "../headers/cub3d.h"
 # define BUFFER_SIZE 2
+
+int ft_strlen(const char *str)
+{
+    size_t i = 0;
+    if (!str)
+        return (0);
+    while (str[i])
+        i++;
+    return (i);
+}
 
 char *ft_strchr(char *str, int c)
 {

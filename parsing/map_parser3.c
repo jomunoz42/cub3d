@@ -1,5 +1,5 @@
 
-#include "cub3d.h"
+#include "../headers/cub3d.h"
 
 static int	only_spaces(char *line)
 {
@@ -64,36 +64,33 @@ int	not_last_element(t_parsing *data)
 			return (close(fd), free(line), 1);
 		}
 	}
-	close(fd);
-	return (0);
+	return (close(fd), 0);
 }
 
-int	construct_map(t_parsing *data) // check is file is already protected
+int	construct_map(t_parsing *data)
 {
 	char *line;
 	int length;
-	int fd;
 	int i;
 
 	i = -1;
-	fd = open(data->file_path, O_RDONLY);
 	data->map = malloc(sizeof(char *) * (data->height + 1));
 	if (!data->map)
-		(close(fd), write(2, "Error: Allocation failed\n", 25), exit(1));
+		(close(data->fd), write(2, "Error: Allocation failed\n", 25), exit(1));
 	while (++i < data->height)
 	{
-		line = get_next_line(fd);
-		line = skip_new_lines(line, fd);
+		line = get_next_line(data->fd);
+		line = skip_new_lines(line, data->fd);
 		length = ft_strlen(line);
 		if (data->width < length)
 			data->width = length;
 		data->map[i] = malloc(sizeof(char) * (length + 1));
 		if (!data->map[i])
-			(free(line), close(fd), write(2, "Error: Allocation failed\n", 25),
+			(free(line), close(data->fd), write(2, "Error: Allocation failed\n", 25),
 				exit(1));
 		(ft_memcpy(data->map[i], line, length), free(line));
 		data->map[i][length] = '\0';
 	}
 	data->map[i] = NULL;
-	return (close(fd), 0);
+	return (close(data->fd), 0);
 }

@@ -1,5 +1,5 @@
 
-#include "cub3d.h"
+#include "../headers/cub3d.h"
 
 int find_invalid_char(t_parsing *data)// I am accepting F and D
 {

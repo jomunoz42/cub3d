@@ -6,10 +6,9 @@
 #    By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 10:25:55 by vivaz-ca          #+#    #+#              #
-#    Updated: 2026/01/19 16:44:37 by jomunoz          ###   ########.fr        #
+#    Updated: 2026/01/19 18:30:42 by jomunoz          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 
 NAME = cub3d
 SRCDIR = .
@@ -18,15 +17,27 @@ MLXDIR = ../.minilibx-linux
 GNL_DIR = ./gnl
 MAP_DIR = maps
 TEXTURE_DIR = ../textures
+PARSE = ./parsing
+UTILS = ./utils
 
 SRC = \
-	$(SRCDIR)/main.c gnl.c utils1.c map_parser.c map_parser2.c map_parser3.c \
+	$(SRCDIR)/main.c struct_new.c window_management.c freedom.c \
+	$(PARSE)/file_parsing.c \
+	$(PARSE)/general_parsing.c \
+	$(PARSE)/map_parser.c \
+	$(PARSE)/map_parser2.c \
+	$(PARSE)/map_parser3.c \
+	$(UTILS)/gnl.c \
+	$(UTILS)/vini_utils.c \
+	$(UTILS)/utils1.c
+
 
 OBJS = $(SRC:../%.c=$(OBJDIR)/%.o)
 OBJS := $(OBJS:./%.c=$(OBJDIR)/%.o)
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g -Wno-incompatible-pointer-types #TIRAR ESSA ULTIMA FLAG DEPOIS ANIMAL CABACO DO KRL
+
 
 MLX_FLAGS = -L . -lmlx -lXext -lX11
 INCLUDES = -I$(MLXDIR) -I$(GNL_DIR) -I. -I$(MAP_DIR)
@@ -52,8 +63,8 @@ fclean: clean
 
 re: fclean all
 
-# val:
-# 	valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --track-origins=yes ./$(NAME) $(MAP_DIR)/subject_map.ber
+val: re
+	valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --track-origins=yes ./$(NAME) testing.cub
 	
 lib:
 	tar -xf minilibx-linux.tgz
@@ -66,6 +77,9 @@ norm:
 	@norminette $(shell find . -type f \( -name "*.c" -o -name "*.h" \)) \
 	| awk '/c: Error/ { c++; if (c % 2 == 1) printf "\033[1;35m%s\033[0m\n", $$0; else printf "\033[1;36m%s\033[0m\n", $$0 }'
 	@echo "Amount of errors: " && norminette $(shell find . -type f \( -name "*.c" -o -name "*.h" \)) | grep "Error" | wc -l
+
+run: re
+	@./$(NAME) testing.cub
 
 
 .PHONY: all clean fclean re
