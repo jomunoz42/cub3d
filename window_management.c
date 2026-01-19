@@ -2,58 +2,42 @@
 #include "headers/general.h"
 #include "headers/mlx.h"
 
-t_gen	*gen_stuff(void)
+int	draw_arm(void *param)
 {
-	static t_gen	general;
-
-	return (&general);
-}
-
-int draw_arm(void *param)
-{
-	t_gen *gen;
+	t_gen	*gen;
 
 	(void)param;
 	gen = gen_stuff();
 	if (!gen->arm)
 		return (0);
-	mlx_put_image_to_window( gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr, 
-				gen->arm, gen->mlx_data->window_width - gen->texture_data->arm_width, gen->mlx_data->window_height - gen->texture_data->arm_height);
+	mlx_put_image_to_window(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,
+		gen->arm, gen->mlx_data->window_width - gen->texture_data->arm_width,
+		gen->mlx_data->window_height - gen->texture_data->arm_height);
 	return (0);
 }
 
-void copied_mlx_pixel_put(t_img_data *img_data, int x, int y, int color)
+void	genesis(t_gen *gen)
 {
-	char *dest;
+	int	color;
 
-	dest = img_data->addr + (y * img_data->line_len + x * (img_data->bits_per_pixel / 8));
-	*(unsigned int *)dest = color;
-}
-
-void genesis(t_gen *gen)
-{
-    int x, y;
-    int color;
-
-    gen->img_data->img = mlx_new_image(gen->mlx_data->mlx_ptr,gen->mlx_data->window_width,gen->mlx_data->window_height);
-
-    gen->img_data->addr = mlx_get_data_addr( gen->img_data->img, &gen->img_data->bits_per_pixel, &gen->img_data->line_len, &gen->img_data->endian );
-
-    for (y = 0; y < gen->mlx_data->window_height; y++)
-    {
-        for (x = 0; x < gen->mlx_data->window_width; x++)
-        {
-            color = (y < gen->texture_data->horizon)
-                    ? gen->texture_data->clng_color
-                    : gen->texture_data->flr_color;
-
-            copied_mlx_pixel_put(gen->img_data, x, y, color);
-        }
-    }
-    mlx_put_image_to_window(gen->mlx_data->mlx_ptr,gen->mlx_data->win_ptr,gen->img_data->img,0, 0);
+	int x, y;
+	gen->img_data->img = mlx_new_image(gen->mlx_data->mlx_ptr,
+			gen->mlx_data->window_width, gen->mlx_data->window_height);
+	gen->img_data->addr = mlx_get_data_addr(gen->img_data->img,
+			&gen->img_data->bits_per_pixel, &gen->img_data->line_len,
+			&gen->img_data->endian);
+	for (y = 0; y < gen->mlx_data->window_height; y++)
+	{
+		for (x = 0; x < gen->mlx_data->window_width; x++)
+		{
+			color = (y < gen->texture_data->horizon) ? gen->texture_data->clng_color : gen->texture_data->flr_color;
+			copied_mlx_pixel_put(gen->img_data, x, y, color);
+		}
+	}
+	mlx_put_image_to_window(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,
+		gen->img_data->img, 0, 0);
 	mlx_destroy_image(gen->mlx_data->mlx_ptr, gen->img_data->img);
 }
-
 
 int	start_window(void)
 {
@@ -67,11 +51,11 @@ int	start_window(void)
 	if (mlx_data_init())
 		return (1);
 	gen->mlx_data->win_ptr = mlx_new_window(gen->mlx_data->mlx_ptr,
-			gen->mlx_data->window_width,gen->mlx_data->window_height,"salve");
+			gen->mlx_data->window_width, gen->mlx_data->window_height, "salve");
 	if (!gen->mlx_data->win_ptr)
 		return (1);
-	gen->arm = mlx_xpm_file_to_image(	gen->mlx_data->mlx_ptr,
-		USER_HAND_XPM, &w, &h);
+	gen->arm = mlx_xpm_file_to_image(gen->mlx_data->mlx_ptr, USER_HAND_XPM, &w,
+			&h);
 	if (!gen->arm)
 		return (printf("Error: failed to load arm image\n"), 1);
 	mlx_key_hook(gen->mlx_data->win_ptr, handle_exit, NULL);

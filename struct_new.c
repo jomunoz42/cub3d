@@ -21,11 +21,11 @@ t_parsing	*parsing_init(void)
 							"Error: can't find east texture file",
 							"Error: floor color invalid",
 							"Error: ceiling color invalid"},
-							.fd = 0};
+						.fd = 0};
 	return (new);
 }
 
-int avg_img_init(t_gen *gen)
+int	avg_img_init(t_gen *gen)
 {
 	gen->img_data = malloc(sizeof(t_img_data));
 	if (!gen->img_data)
@@ -38,7 +38,7 @@ int avg_img_init(t_gen *gen)
 	return (1);
 }
 
-int texture_data_init(t_gen *gen)
+int	texture_data_init(t_gen *gen)
 {
 	gen->texture_data = malloc(sizeof(t_texture_data));
 	if (!gen->texture_data)
@@ -48,9 +48,11 @@ int texture_data_init(t_gen *gen)
 	gen->texture_data->clng_color = color_switch(gen->parse->textures_info[4]);
 	gen->texture_data->flr_color = color_switch(gen->parse->textures_info[5]);
 	gen->texture_data->horizon = gen->mlx_data->window_height / 2;
-	if (!png_size_fd(USER_HAND_PNG, &gen->texture_data->arm_width, &gen->texture_data->arm_height))
+	if (!png_size_fd(USER_HAND_PNG, &gen->texture_data->arm_width,
+			&gen->texture_data->arm_height))
 		return (0);
-    printf("[arm image data] Width: %u, Height: %u\n", gen->texture_data->arm_width, gen->texture_data->arm_height);
+	printf("[arm image data] Width: %u, Height: %u\n",
+		gen->texture_data->arm_width, gen->texture_data->arm_height);
 	return (1);
 }
 
@@ -72,6 +74,5 @@ int	mlx_data_init(void)
 	texture_data_init(gen);
 	avg_img_init(gen);
 	printf("== horizontal line is on %d\n", gen->texture_data->horizon);
-
 	return (0);
 }

@@ -1,6 +1,13 @@
 #include "./headers/cub3d.h"
 #include <fcntl.h>
 
+t_gen	*gen_stuff(void)
+{
+	static t_gen	general;
+
+	return (&general);
+}
+
 int	main(int argc, char *argv[])
 {
 	t_gen	*gen;

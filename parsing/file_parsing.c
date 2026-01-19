@@ -1,20 +1,5 @@
 #include "../headers/cub3d.h"
 
-char *space_skipper_shift(char *str)
-{
-	int i = 0;
-	int j = 0;
-
-	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
-		i++;
-
-	while (str[i])
-		str[j++] = str[i++];
-	str[j] = '\0';
-
-	return str;
-}
-
 char	*find_texture_path(char *file, char *one_direction)
 {
 	t_gen *gen;

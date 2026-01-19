@@ -31,6 +31,8 @@ int png_size_fd(const char *path, uint32_t *w, uint32_t *h);
 int png_size_fd(const char *path, uint32_t *w, uint32_t *h);
 int rgb_to_hex(int r, int g, int b);
 int color_switch(char *str);
+char *space_skipper_shift(char *str);
+void copied_mlx_pixel_put(t_img_data *img_data, int x, int y, int color);
 
 int				map_parser(char *argv);
 
