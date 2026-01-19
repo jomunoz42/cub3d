@@ -24,6 +24,4 @@
 # define USER_HAND_XPM "./imgs/arm_placeholder.xpm"
 # define USER_HAND_PNG "./imgs/arm_placeholder.png"
 
-
-
 #endif
