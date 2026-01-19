@@ -1,5 +1,5 @@
 
-#include "./headers/cub3d.h"
+#include "../headers/cub3d.h"
 
 static char  *skip_new_lines(char *line, int fd)
 {

@@ -1,4 +1,6 @@
 #include "./headers/cub3d.h"
+#include "headers/general.h"
+#include "headers/mlx.h"
 
 t_gen	*gen_stuff(void)
 {
@@ -20,6 +22,39 @@ int draw_arm(void *param)
 	return (0);
 }
 
+void copied_mlx_pixel_put(t_img_data *img_data, int x, int y, int color)
+{
+	char *dest;
+
+	dest = img_data->addr + (y * img_data->line_len + x * (img_data->bits_per_pixel / 8));
+	*(unsigned int *)dest = color;
+}
+
+void genesis(t_gen *gen)
+{
+    int x, y;
+    int color;
+
+    gen->img_data->img = mlx_new_image(gen->mlx_data->mlx_ptr,gen->mlx_data->window_width,gen->mlx_data->window_height);
+
+    gen->img_data->addr = mlx_get_data_addr( gen->img_data->img, &gen->img_data->bits_per_pixel, &gen->img_data->line_len, &gen->img_data->endian );
+
+    for (y = 0; y < gen->mlx_data->window_height; y++)
+    {
+        for (x = 0; x < gen->mlx_data->window_width; x++)
+        {
+            color = (y < gen->texture_data->horizon)
+                    ? gen->texture_data->clng_color
+                    : gen->texture_data->flr_color;
+
+            copied_mlx_pixel_put(gen->img_data, x, y, color);
+        }
+    }
+    mlx_put_image_to_window(gen->mlx_data->mlx_ptr,gen->mlx_data->win_ptr,gen->img_data->img,0, 0);
+	mlx_destroy_image(gen->mlx_data->mlx_ptr, gen->img_data->img);
+}
+
+
 int	start_window(void)
 {
 	t_gen	*gen;
@@ -40,6 +75,7 @@ int	start_window(void)
 	if (!gen->arm)
 		return (printf("Error: failed to load arm image\n"), 1);
 	mlx_key_hook(gen->mlx_data->win_ptr, handle_exit, NULL);
+	genesis(gen);
 	mlx_loop_hook(gen->mlx_data->mlx_ptr, draw_arm, NULL);
 	mlx_loop(gen->mlx_data->mlx_ptr);
 	mlx_destroy_image(gen->mlx_data->mlx_ptr, gen->arm);

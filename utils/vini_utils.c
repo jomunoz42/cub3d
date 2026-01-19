@@ -283,3 +283,18 @@ int png_size_fd(const char *path, uint32_t *w, uint32_t *h) //study this later
          (buf[22] << 8)  |  buf[23];
     return 1;
 }
+
+int color_switch(char *str)
+{
+	char **all_colors = ft_split(str, ',');
+	int red = ft_atoi(all_colors[0]);
+	int green = ft_atoi(all_colors[1]);
+	int blue = ft_atoi(all_colors[2]);
+	int final = rgb_to_hex(red, green, blue);
+	return (final);
+}
+
+int rgb_to_hex(int r, int g, int b) //study this later
+{
+    return (r << 16) | (g << 8) | b;
+}

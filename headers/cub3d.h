@@ -29,6 +29,8 @@ void			*ft_calloc(size_t nmemb, size_t size);
 void			ft_free_matrix_partial(char **matrix, int max_index);
 int png_size_fd(const char *path, uint32_t *w, uint32_t *h);
 int png_size_fd(const char *path, uint32_t *w, uint32_t *h);
+int rgb_to_hex(int r, int g, int b);
+int color_switch(char *str);
 
 int				map_parser(char *argv);
 

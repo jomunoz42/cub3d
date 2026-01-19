@@ -62,6 +62,8 @@ int	super_duper_hiper_free(void)
 	}
 	if (gen->texture_data)
 		free(gen->texture_data);
+	if (gen->img_data)
+		free(gen->img_data);
 	free_parsing(gen->parse);
 	gen->parse = NULL;
 	exit(0);
