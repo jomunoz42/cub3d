@@ -4,18 +4,18 @@
 int find_invalid_char(t_parsing *data)// I am accepting F and D
 {
     int     len;
-    int     i;
-    int     j;
+    int     y;
+    int     x;
     char    c;
 
-    i = -1;
-    while(++i < data->height)
+    y = -1;
+    while(++y < data->height)
     {
-        j = 0;
-        len = ft_strlen(data->map[i]);
-        while(j < len)
+        x = 0;
+        len = ft_strlen(data->map[y]);
+        while(x < len)
         {
-            c = data->map[i][j];
+            c = data->map[y][x];
             if (c != '0' && c != '1' && c != 'N' && c != 'S' && c != 'E'
                     && c != 'W' &&  c != ' ' &&  c != 'D' && c != 'F' && c != '\n')
             {
@@ -23,7 +23,7 @@ int find_invalid_char(t_parsing *data)// I am accepting F and D
                 write (2, "Invalid char in map.\n", 22);
                 return (1);
             }
-            j++;
+            x++;
         }
     }
     return (0);
@@ -32,18 +32,18 @@ int find_invalid_char(t_parsing *data)// I am accepting F and D
 int	find_multiple_player(t_parsing *data)
 {
 	int	    player_found;
-	int	    i;
-	int	    j;
+	int	    y;
+	int	    x;
 
-	i = -1;
+	y = -1;
 	player_found = 0;
-	while (++i < data->height)
+	while (++y < data->height)
 	{
-		j = -1;
-		while (++j < (int)ft_strlen(data->map[i]))
+		x = -1;
+		while (++x < (int)ft_strlen(data->map[y]))
 		{
-			if (data->map[i][j] == 'N' || data->map[i][j] == 'S'
-				|| data->map[i][j] == 'E' || data->map[i][j] == 'W')
+			if (data->map[y][x] == 'N' || data->map[y][x] == 'S'
+				|| data->map[y][x] == 'E' || data->map[y][x] == 'W')
 			{
 				if (player_found == 1)
 				{
@@ -60,25 +60,24 @@ int	find_multiple_player(t_parsing *data)
 
 int	find_no_player(t_parsing *data)
 {
-	int	    player_found;
     int     len;
-	int	    i;
-	int	    j;
+	int	    y;
+	int	    x;
 
-	i = -1;
-	player_found = 0;
-	while (++i < data->height)
+	y = -1;
+	data->player = 'Q';
+	while (++y < data->height)
 	{
-		j = -1;
-        len = ft_strlen(data->map[i]);
-		while (++j < len)
+		x = -1;
+        len = ft_strlen(data->map[y]);
+		while (++x < len)
 		{
-			if (data->map[i][j] == 'N' || data->map[i][j] == 'S'
-				|| data->map[i][j] == 'E' || data->map[i][j] == 'W')
-				player_found = 1;
+			if (data->map[y][x] == 'N' || data->map[y][x] == 'S'
+				|| data->map[y][x] == 'E' || data->map[y][x] == 'W')
+				data->player = data->map[y][x];
 		}
 	}
-	if (player_found == 0)
+	if (data->player == 'Q')
 	{
 		write(2, "Error\n", 6);
 		write(2, "Invalid map, no player.\n", 25);

@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 10:28:17 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2026/01/15 14:02:26 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/01/18 18:29:14 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ char *ft_strchr(char *str, int c)
 
 char *ft_strjoin(char *s1, char *s2)
 {
-    char *joined = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+    char *const joined = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+
     if (!joined)
         return (NULL);
     int i = 0, j = 0;

@@ -16,14 +16,17 @@ typedef struct s_parsing
     char    *file_path;
     char    **textures_info;
     char    **map;
+    char    player;
     int     width;
     int     height;
+    int     fd;
 }              t_parsing;
 
 //===================== PARSING ========================
 
-int     ft_floodfill(char **map, int y, int x);
 int     map_parser(t_parsing *parser, char *argv);
+int	    construct_map(t_parsing *data);
+int	    not_last_element(t_parsing *data);
 int	    find_no_player(t_parsing *data);
 int	    find_multiple_player(t_parsing *data);
 int     find_invalid_char(t_parsing *data);
