@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+         #
+#    By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 10:25:55 by vivaz-ca          #+#    #+#              #
-#    Updated: 2026/01/18 00:05:46 by vvazzs           ###   ########.fr        #
+#    Updated: 2026/01/20 19:38:56 by vivaz-ca         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRC = \
 	$(SRCDIR)/main.c struct_new.c window_management.c freedom.c\
 	$(PARSE)/file_parsing.c \
 	$(PARSE)/general_parsing.c \
+	$(PARSE)/gods_thought.c \
 	$(UTILS)/gnl.c \
 	$(UTILS)/vini_utils.c
 

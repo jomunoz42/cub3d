@@ -322,3 +322,15 @@ void copied_mlx_pixel_put(t_img_data *img_data, int x, int y, int color)
 	dest = img_data->addr + (y * img_data->line_len + x * (img_data->bits_per_pixel / 8));
 	*(unsigned int *)dest = color;
 }
+
+int only_num(char *str)
+{
+	int i = 0;
+	while (str[i])
+	{
+		if (!(str[i] >= '0' && str[i] <= '9'))
+			return (0);
+		i++;
+	}
+	return (1);
+}
