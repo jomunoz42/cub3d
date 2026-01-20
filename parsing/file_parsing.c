@@ -27,12 +27,13 @@ int	validate_rgb_colors(char *str)
 char **refactored_shit(char *file)
 {
     int fd = open(file, O_RDONLY);
+	prinf("opening file 1\n");
     if (fd == -1)
         return (NULL);
 
     char **matrix = ft_calloc(7, sizeof(char *));
     if (!matrix)
-        return (close(fd), NULL);
+        return (printf("closing 0\n"), close(fd), NULL);
     char *elements[6] = {"NO", "SO", "EA", "WE", "C", "F"};
     char *line;
     while ((line = get_next_line(fd)))
@@ -51,6 +52,8 @@ char **refactored_shit(char *file)
         free(line);
     }
     close(fd);
+	printf("closing 1\n");
+
     return matrix;
 }
 
@@ -126,9 +129,11 @@ int	validate_textures_path(char *argv, t_parsing *parse)
 	while (i <= 3)
 	{
 		fd = open(parse->textures_info[i], O_RDONLY);
+		prinf("opening file 2\n");
 		if (fd == -1)
 			return (printf("%s\n", parse->error_messages[i + 6]), 0);
 		close(fd);
+		printf("closing 2\n");
 		i++;
 	}
 	return (1);
