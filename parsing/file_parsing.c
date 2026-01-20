@@ -30,8 +30,8 @@ char **refactored_shit(char *file)
     if (fd == -1)
         {return (NULL);}
 	
-	if (validate_file(fd) == 0)
-		{return (NULL);}
+	// if (validate_file(fd) == 0)
+	// 	{return (NULL);}
 	close(fd);
 	fd = open(file, O_RDONLY);
     char **matrix = ft_calloc(7, sizeof(char *));

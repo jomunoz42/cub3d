@@ -15,9 +15,11 @@ int	main(int argc, char *argv[])
 	gen = gen_stuff();
 	if (initial_parsing(argc, argv) != 0)
 		return (1);
-	gen->parse = parsing_init();
-	if (!gen->parse)
+    gen->parse = parsing_init();
+    if (!gen->parse)
 		return (printf("Error: error initializing parsing\n"), 1);
+    if (map_parser(gen->parse, argv[1]))
+            {return (1);}
 	if (!ultimate_file_validation(argv[1], gen->parse))
 		return (super_duper_hiper_free(), 1);
 	printf("\n==All right from here==\n");
