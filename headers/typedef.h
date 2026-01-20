@@ -10,6 +10,12 @@ typedef struct s_parsing
 	int				width;
 	int				height;
 	int				fd;
+	int  			seen_NO;
+	int  			seen_SO;
+	int  			seen_WE;
+	int  			seen_EA;
+	int  			seen_F;
+	int  			seen_C;
 }					t_parsing;
 
 typedef struct s_mlx_data

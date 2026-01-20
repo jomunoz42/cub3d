@@ -1,6 +1,24 @@
 
 #include "../headers/cub3d.h"
 
+static int	ft_floodfill(char **map, int y, int x)
+{
+	if (y < 0 || x < 0 || !map[y] || !map[y][x] || map[y][x] == ' ')
+		return (1);
+	if (map[y][x] == '1' || map[y][x] == 'Z')
+		return (0);
+	map[y][x] = 'Z';
+	if (ft_floodfill(map, y + 1, x))
+		return (1);
+	if (ft_floodfill(map, y - 1, x))
+		return (1);
+	if (ft_floodfill(map, y, x + 1))
+		return (1);
+	if (ft_floodfill(map, y, x - 1))
+		return (1);
+	return (0);
+}
+
 static char	**create_copy_map(t_parsing *data)
 {
 	char	**copy;
@@ -24,24 +42,6 @@ static char	**create_copy_map(t_parsing *data)
 	}
 	copy[i] = NULL;
 	return (copy);
-}
-
-static int	ft_floodfill(char **map, int y, int x)
-{
-	if (y < 0 || x < 0 || !map[y] || !map[y][x] || map[y][x] == ' ')
-		return (1);
-	if (map[y][x] == '1' || map[y][x] == 'Z')
-		return (0);
-	map[y][x] = 'Z';
-	if (ft_floodfill(map, y + 1, x))
-		return (1);
-	if (ft_floodfill(map, y - 1, x))
-		return (1);
-	if (ft_floodfill(map, y, x + 1))
-		return (1);
-	if (ft_floodfill(map, y, x - 1))
-		return (1);
-	return (0);
 }
 
 static int	is_map_valid(t_parsing *data)
@@ -73,21 +73,57 @@ static int	is_map_valid(t_parsing *data)
 
 int	map_parser(t_parsing *data, char *argv)
 {
-	if (data && data->file_path)
-		data->file_path = argv;
+	data->file_path = argv;
 	if (not_last_element(data) || construct_map(data) || find_invalid_char(data)
 		|| find_no_player(data) || find_multiple_player(data)
 		|| is_map_valid(data))
 		return (1);
+	int i = 0;
+	while(i < data->height)
+	{
+		printf("%s", data->map[i]);
+		i++;
+	}
 	// free_double(data->map);
 	return (0);
 }
 
 
+// 11111111 1111111 111111111111   1
 
+
+
+
+
+
+
+
+// 1
+
+// NOT COUNTING THAT AS MAP
+
+
+
+//int	is_header_line(char *line)  // it can have spaces before
+
+
+
+
+// is one of the six missing?
+
+
+//    ver se tem todos os elementos
+
+// 
 
 
 //   ERRORS:
+
+
+//   Double defenition of element
+
+//   Not all elements were defined
+
 
 //   No map found in file                     				DONE
 
