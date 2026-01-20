@@ -16,6 +16,12 @@ int	draw_arm(void *param)
 	return (0);
 }
 
+// void draw_minimap(char **matrix, t_gen *gen)
+// {
+// 	gen->minimap->img = mlx_new_image(gen->mlx_data->mlx_ptr, gen->mlx_data->window_width * 0.08, gen->mlx_data->window_height * 0.08);
+// 	gen->minimap->addr = mlx_get_data_addr(gen->minimap->img, &gen->minimap->bits_per_pixel, &gen->minimap->line_len, &gen->minimap->endian);
+// }
+
 void	genesis(t_gen *gen)
 {
 	int	color;
