@@ -41,7 +41,7 @@ void		copied_mlx_pixel_put(t_img_data *img_data, int x, int y, int color);
 int			map_parser(t_parsing *parser, char *argv);
 int			construct_map(t_parsing *data);
 int			not_last_element(t_parsing *data);
-int	        is_header_line(char *line);
+int	        is_header_line(t_parsing *data, char *line);
 int			find_no_player(t_parsing *data);
 int			find_multiple_player(t_parsing *data);
 int			find_invalid_char(t_parsing *data);

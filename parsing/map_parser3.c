@@ -15,55 +15,71 @@ static int	is_empty_line(char *line)
 	return (1);
 }
 
-int	is_header_line(char *line)
+int	is_header_line(t_parsing *data, char *line)  // it can have spaces before
 {
 	int  i;
 
 	i = 0;
 	if (!line)
 		return (0);
-	while(line[i] == ' ' || line[i] == '\t')
+	while(line[i] == ' ')
 		i++;
 	if (!ft_strncmp(&line[i], "NO ", 3))
+	{
+		data->seen_NO++;
 		return (1);
+	}
 	if (!ft_strncmp(&line[i], "SO ", 3))
-		return (2);
+	{
+		data->seen_SO++;
+		return (1);
+	}
 	if (!ft_strncmp(&line[i], "WE ", 3))
-		return (3);
+	{
+		data->seen_WE++;
+		return (1);
+	}
 	if (!ft_strncmp(&line[i], "EA ", 3))
-		return (4);
+	{
+		data->seen_EA++;
+		return (1);
+	}
 	if (!ft_strncmp(&line[i], "F ", 2))
-		return (5);
+	{
+		data->seen_F++;
+		return (1);
+	}
 	if (!ft_strncmp(&line[i], "C ", 2))
-		return (6);
+	{
+		data->seen_C++;
+		return (1);
+	}
 	return (0);
 }
 
-static int check_double_element(t_parsing *data, char *line) // Refatorar depois
+static int	check_element_number(t_parsing *data)
 {
-    int type;
-
-	type = is_header_line(line);
-    if (type == 1 && data->seen_NO++)
-        return (1);
-    if (type == 2 && data->seen_SO++)
-        return (1);
-    if (type == 3 && data->seen_WE++)
-        return (1);
-    if (type == 4 && data->seen_EA++)
-        return (1);
-    if (type == 5 && data->seen_F++)
-        return (1);
-    if (type == 6 && data->seen_C++)
-        return (1);
-    return (0);
+	if (data->seen_WE > 1 || data->seen_SO > 1 || data->seen_NO > 1
+	    || data->seen_EA > 1 || data->seen_F > 1 || data->seen_C > 1)
+	{
+		write(2, "Error\n", 6);
+		write(2, "Invalid map, double defenition of element\n", 43);
+		return (1);
+	}
+	if (data->seen_WE < 1 || data->seen_SO < 1 || data->seen_NO < 1
+	    || data->seen_EA < 1 || data->seen_F < 1 || data->seen_C < 1)
+	{
+		write(2, "Error\n", 6);
+		write(2, "Invalid map, not all elements were defined\n", 44);
+		return (1);
+	}
+	return (0);
 }
 
 static char	*skip_header_and_empty_lines(t_parsing *data, int fd)
 {
 	char	*line;
 
-	(void)data;
 	line = get_next_line(fd);
 	while (line)
 	{
@@ -73,20 +89,16 @@ static char	*skip_header_and_empty_lines(t_parsing *data, int fd)
 			line = get_next_line(fd);
 			continue ;
 		}
-		if (is_header_line(line))
+		if (is_header_line(data, line))
 		{
-			if (check_double_element(data, line))
-			{
-				write(2, "Error\nInvalid map, double definition of element\n", 49);
-				return (free(line), NULL);
-			}
 			free(line);
 			line = get_next_line(fd);
 			continue ;
 		}
 		return (line);
 	}
-	return (write(2, "Error\nInvalid map, map not found\n", 34), NULL);
+	write(2, "Error\nInvalid map, map not found\n", 34);
+	return (NULL);
 }
 
 int	not_last_element(t_parsing *data)
@@ -97,6 +109,8 @@ int	not_last_element(t_parsing *data)
 	line = skip_header_and_empty_lines(data, fd);
 	if (!line)
 		return (1);
+	if (check_element_number(data))
+			return (1);
 	while (line)
 	{
 		if (is_empty_line(line))
@@ -105,7 +119,7 @@ int	not_last_element(t_parsing *data)
             line = get_next_line(fd);
             continue;
         }
-        if (is_header_line(line))
+        if (is_header_line(data, line))
         {
             write(2, "Error\n", 6);
             write(2, "Invalid map, map is not the last element in file\n", 50);
@@ -127,8 +141,6 @@ int	construct_map(t_parsing *data)
 
 	i = -1;
 	line = skip_header_and_empty_lines(data, fd);
-	if (!line)
-		return (1);
 	data->map = malloc(sizeof(char *) * (data->height + 1));
 	if (!data->map)
 		(close(fd), write(2, "Error: Allocation failed\n", 25), exit(1));
