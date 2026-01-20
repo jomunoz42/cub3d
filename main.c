@@ -24,6 +24,8 @@ int	main(int argc, char *argv[])
 		return (super_duper_hiper_free(), 1);
 	printf("\n==All right from here==\n");
 	printf("FILE DESCRIPTOR OF [%s] is: %d\n", argv[1], gen->parse->fd);
+	for (int i = 0; gen->parse->map[i]; i++)
+		printf("map line[%d] = %s", i, gen->parse->map[i]);
 	start_window();
 	return (0);
 }
