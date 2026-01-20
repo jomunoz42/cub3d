@@ -27,13 +27,16 @@ int	validate_rgb_colors(char *str)
 char **refactored_shit(char *file)
 {
     int fd = open(file, O_RDONLY);
-	prinf("opening file 1\n");
     if (fd == -1)
-        return (NULL);
-
+        {return (NULL);}
+	
+	if (validate_file(fd) == 0)
+		{return (NULL);}
+	close(fd);
+	fd = open(file, O_RDONLY);
     char **matrix = ft_calloc(7, sizeof(char *));
     if (!matrix)
-        return (printf("closing 0\n"), close(fd), NULL);
+        return (close(fd), NULL);
     char *elements[6] = {"NO", "SO", "EA", "WE", "C", "F"};
     char *line;
     while ((line = get_next_line(fd)))
@@ -52,8 +55,6 @@ char **refactored_shit(char *file)
         free(line);
     }
     close(fd);
-	printf("closing 1\n");
-
     return matrix;
 }
 
@@ -64,7 +65,7 @@ char	**validate_textures(char *file, t_parsing *parse)
 
 	matrix = refactored_shit(file);
 	if (!matrix)
-		return (printf("dead ass bad matrix\n"), NULL);
+		return (NULL);
 	i = 0;
 	while (i < 6)
 	{
@@ -118,7 +119,7 @@ int	struct_sharingan(char *file, t_parsing *parse)
 	return (1);
 }
 
-int	validate_textures_path(char *argv, t_parsing *parse)
+int	ultimate_file_validation(char *argv, t_parsing *parse)
 {
 	int	i;
 	int	fd;
@@ -129,11 +130,9 @@ int	validate_textures_path(char *argv, t_parsing *parse)
 	while (i <= 3)
 	{
 		fd = open(parse->textures_info[i], O_RDONLY);
-		prinf("opening file 2\n");
 		if (fd == -1)
 			return (printf("%s\n", parse->error_messages[i + 6]), 0);
 		close(fd);
-		printf("closing 2\n");
 		i++;
 	}
 	return (1);

@@ -18,7 +18,7 @@ int	main(int argc, char *argv[])
 	gen->parse = parsing_init();
 	if (!gen->parse)
 		return (printf("Error: error initializing parsing\n"), 1);
-	if (!validate_textures_path(argv[1], gen->parse))
+	if (!ultimate_file_validation(argv[1], gen->parse))
 		return (super_duper_hiper_free(), 1);
 	printf("\n==All right from here==\n");
 	printf("FILE DESCRIPTOR OF [%s] is: %d\n", argv[1], gen->parse->fd);

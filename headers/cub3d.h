@@ -16,7 +16,7 @@ int				ft_atoi(const char *nptr);
 int				struct_sharingan(char *file, t_parsing *parse);
 int				initial_parsing(int argc, char *argv[]);
 int				ft_matrix_len(char **matrix);
-int				validate_textures_path(char *argv, t_parsing *parse);
+int				ultimate_file_validation(char *argv, t_parsing *parse);
 int				start_window(void);
 int				mlx_data_init(void);
 t_gen			*gen_stuff(void);
@@ -35,6 +35,7 @@ char *space_skipper_shift(char *str);
 void copied_mlx_pixel_put(t_img_data *img_data, int x, int y, int color);
 int enlightment(char *file);
 int only_num(char *str);
+int validate_file(int fd);
 
 int				map_parser(char *argv);
 

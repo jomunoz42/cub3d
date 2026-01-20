@@ -1,7 +1,7 @@
 NO ./imgs/north.png
-SO     ./imgs/south.png
+SO       ./imgs/south.png
 
-
+111111
 
 WE ./imgs/west.png
 EA ./imgs/east.png
