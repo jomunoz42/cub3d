@@ -1,9 +1,11 @@
 NO ./imgs/north.png
 SO ./imgs/south.png
+iuywieoryhwl
 WE ./imgs/west.png
 EA ./imgs/east.png
 
 F 0,100,0
+
 C 70,130,180
 
 1111111111111111111111111
