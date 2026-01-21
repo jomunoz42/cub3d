@@ -74,6 +74,7 @@ static int	is_map_valid(t_parsing *data)
 int	map_parser(t_parsing *data, char *argv)
 {
 	data->file_path = argv;
+	ft_bzero(data->elements, sizeof(int) * E_COUNT);
 	if (not_last_element(data) || construct_map(data) || find_invalid_char(data)
 		|| find_no_player(data) || find_multiple_player(data)
 		|| is_map_valid(data))

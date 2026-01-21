@@ -8,12 +8,6 @@ t_parsing	*parsing_init(void)
 	if (!new)
 		return (NULL);
 	*new = (t_parsing){// check and study this later
-						.seen_SO = 0,
-						.seen_EA = 0,
-						.seen_WE = 0,
-						.seen_F = 0,
-						.seen_C = 0,
-						.seen_NO = 0,
 						.textures_info = NULL,
 						.file_path = NULL,
 						.map = NULL,

@@ -1,100 +1,86 @@
 
 #include "../headers/cub3d.h"
 
-static int	is_empty_line(char *line)
+static int identify_header(char *line)
 {
-	int	i;
+    int i;
 
 	i = 0;
-	while (line[i])
-	{
-		if (line[i] != ' ' && line[i] != '\n')
-			return (0);
-		i++;
-	}
-	return (1);
+    while (line[i] == ' ')
+        i++;
+    if (!ft_strncmp(&line[i], "NO ", 3))
+        return (E_NO);
+    if (!ft_strncmp(&line[i], "SO ", 3))
+        return (E_SO);
+    if (!ft_strncmp(&line[i], "WE ", 3))
+        return (E_WE);
+    if (!ft_strncmp(&line[i], "EA ", 3))
+        return (E_EA);
+    if (!ft_strncmp(&line[i], "F ", 2))
+        return (E_F);
+    if (!ft_strncmp(&line[i], "C ", 2))
+        return (E_C);
+    return (-1);
 }
 
-int	is_header_line(t_parsing *data, char *line)  // it can have spaces before
+static int is_header_line(t_parsing *data, char *line)
 {
-	int  i;
+    int type;
 
-	i = 0;
-	if (!line)
-		return (0);
-	while(line[i] == ' ')
-		i++;
-	if (!ft_strncmp(&line[i], "NO ", 3))
-	{
-		data->seen_NO++;
-		return (1);
-	}
-	if (!ft_strncmp(&line[i], "SO ", 3))
-	{
-		data->seen_SO++;
-		return (1);
-	}
-	if (!ft_strncmp(&line[i], "WE ", 3))
-	{
-		data->seen_WE++;
-		return (1);
-	}
-	if (!ft_strncmp(&line[i], "EA ", 3))
-	{
-		data->seen_EA++;
-		return (1);
-	}
-	if (!ft_strncmp(&line[i], "F ", 2))
-	{
-		data->seen_F++;
-		return (1);
-	}
-	if (!ft_strncmp(&line[i], "C ", 2))
-	{
-		data->seen_C++;
-		return (1);
-	}
-	return (0);
+    type = identify_header(line);
+    if (type == -1)
+        return (0);
+    if (data->elements[type] == 1)
+    {
+        write(2, "Error\n", 6);
+        write(2, "Invalid map, double definition of element\n", 43);
+        return (-1);
+    }
+    data->elements[type] = 1;
+    return (1);
 }
 
-static int	check_element_number(t_parsing *data)
+static int check_all_elements(t_parsing *data)
 {
-	if (data->seen_WE > 1 || data->seen_SO > 1 || data->seen_NO > 1
-	    || data->seen_EA > 1 || data->seen_F > 1 || data->seen_C > 1)
-	{
-		write(2, "Error\n", 6);
-		write(2, "Invalid map, double defenition of element\n", 43);
-		return (1);
-	}
-	if (data->seen_WE < 1 || data->seen_SO < 1 || data->seen_NO < 1
-	    || data->seen_EA < 1 || data->seen_F < 1 || data->seen_C < 1)
-	{
-		write(2, "Error\n", 6);
-		write(2, "Invalid map, not all elements were defined\n", 44);
-		return (1);
-	}
-	return (0);
+    int i;
+
+    i = 0;
+    while (i < E_COUNT)
+    {
+        if (data->elements[i] == 0)
+        {
+            write(2, "Error\n", 6);
+            write(2, "Invalid map, not all elements were defined\n", 44);
+            return (1);
+        }
+        i++;
+    }
+    return (0);
 }
 
 static char	*skip_header_and_empty_lines(t_parsing *data, int fd)
 {
 	char	*line;
+	int		header;
 
 	line = get_next_line(fd);
 	while (line)
 	{
-		if (is_empty_line(line))
+		if (is_line_empty(line))
 		{
 			free(line);
 			line = get_next_line(fd);
 			continue ;
 		}
-		if (is_header_line(data, line))
+		header = is_header_line(data, line);
+		if (header == 1)
 		{
 			free(line);
 			line = get_next_line(fd);
 			continue ;
 		}
+		if (header == -1)
+			return (free(line), NULL);
 		return (line);
 	}
 	write(2, "Error\nInvalid map, map not found\n", 34);
@@ -107,13 +93,11 @@ int	not_last_element(t_parsing *data)
 	const int	fd = open(data->file_path, O_RDONLY);
 
 	line = skip_header_and_empty_lines(data, fd);
-	if (!line)
+	if (!line || check_all_elements(data))
 		return (1);
-	if (check_element_number(data))
-			return (1);
 	while (line)
 	{
-		if (is_empty_line(line))
+		if (is_line_empty(line))
         {
             free(line);
             line = get_next_line(fd);
@@ -140,6 +124,7 @@ int	construct_map(t_parsing *data)
 	const int	fd = open(data->file_path, O_RDONLY);
 
 	i = -1;
+	ft_bzero(data->elements, sizeof(int) * E_COUNT);
 	line = skip_header_and_empty_lines(data, fd);
 	data->map = malloc(sizeof(char *) * (data->height + 1));
 	if (!data->map)
