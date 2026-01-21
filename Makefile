@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+         #
+#    By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 10:25:55 by vivaz-ca          #+#    #+#              #
-#    Updated: 2026/01/20 23:25:26 by jomunoz          ###   ########.fr        #
+#    Updated: 2026/01/21 15:55:07 by vvazzs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ PARSE = ./parsing
 UTILS = ./utils
 
 SRC = \
-	$(SRCDIR)/main.c struct_new.c window_management.c freedom.c \
+	$(SRCDIR)/main.c struct_new.c window_management.c freedom.c megamente.c\
 	$(PARSE)/file_parsing.c \
 	$(PARSE)/general_parsing.c \
 	$(PARSE)/map_parser.c \
@@ -80,7 +80,7 @@ norm:
 	@echo "Amount of errors: " && norminette $(shell find . -type f \( -name "*.c" -o -name "*.h" \)) | grep "Error" | wc -l
 
 run: re
-	@./$(NAME) testing.cub
+	@./$(NAME) map.cub
 
 
 .PHONY: all clean fclean re

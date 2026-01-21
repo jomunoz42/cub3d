@@ -68,30 +68,33 @@ int	texture_data_init(t_gen *gen)
 	return (1);
 }
 
-// int minimap_init(t_gen *gen)
-// {
-// 	gen->minimap = malloc(sizeof(t_minimap));
-// 	if (!gen->minimap)
-// 		return (0);
-// 	gen->minimap->addr = NULL;
-// 	gen->minimap->bits_per_pixel = 0;
-// 	gen->minimap->endian = 0;
-// 	gen->minimap->img = NULL;
-// 	gen->minimap->line_len = 0;
-// 	gen->minimap->map = NULL;
-// 	return (1);
-// }
-int player_init(t_gen *gen)
+int minimap_init(t_gen *gen)
 {
-	gen->player->x = 1;
-	gen->player->y = 1;
+	gen->minimap = malloc(sizeof(t_minimap));
+	if (!gen->minimap)
+		return (0);
+	gen->minimap->map = NULL;
+	gen->minimap->width = gen->mlx_data->window_width * 0.20;
+	gen->minimap->height = gen->mlx_data->window_height * 0.20;
+	return (1);
 }
 
-int	mlx_data_init(void)
+int player_init(t_gen *gen)
 {
-	t_gen	*gen;
+	gen->player = malloc(sizeof(t_player));
+	if (!gen->player)
+		return (0);
+	gen->player->x = 1;
+	gen->player->y = 1;
+	gen->player->dir_x = 0;
+	gen->player->dir_y = 0;
+	gen->player->plane_x = 0;
+	gen->player->plane_y = 0;
+	return (1);
+}
 
-	gen = gen_stuff();
+int	mlx_data_init(t_gen *gen)
+{
 	gen->mlx_data = malloc(sizeof(t_mlx_data));
 	if (!gen->mlx_data)
 		return (1);
@@ -104,7 +107,8 @@ int	mlx_data_init(void)
 	gen->mlx_data->window_height = WIN_HEIGHT;
 	texture_data_init(gen);
 	avg_img_init(gen);
-	// minimap_init(gen);
+	player_init(gen);
+	minimap_init(gen);
 	printf("== horizontal line is on %d\n", gen->texture_data->horizon);
 	return (0);
 }

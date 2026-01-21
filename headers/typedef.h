@@ -35,20 +35,15 @@ typedef struct texture_data
 	int				clng_color;
 }					t_texture_data;
 
-// typedef struct s_minimap this wil draw the shit twice
-// {
-// 	char **map;
-// 	void *img;
-// 	char *addr;
-// 	int bits_per_pixel;
-// 	int line_len;
-// 	int endian;
-// }	t_minimap;
 
 typedef struct s_player
 {
-	int	x;
-	int y;
+	double	x;
+	double y;
+	double dir_x;
+	double dir_y;
+	double plane_x;
+	double plane_y;
 	
 }	t_player;
 
@@ -61,6 +56,14 @@ typedef struct s_images_data
 	int endian;
 }					t_img_data;
 
+typedef struct s_minimap
+{
+	t_img_data image;
+	char **map;
+	int width;
+	int height;
+}	t_minimap;
+
 typedef struct s_general
 {
 	t_texture_data *texture_data;
@@ -68,6 +71,6 @@ typedef struct s_general
 	t_mlx_data	*mlx_data;
 	t_img_data *img_data;
 	t_player 	*player;
-	// t_minimap *minimap;
+	t_minimap *minimap;
 	void *arm;
 }				t_gen;

@@ -17,8 +17,7 @@ int			struct_sharingan(char *file, t_parsing *parse);
 int			initial_parsing(int argc, char *argv[]);
 int			ft_matrix_len(char **matrix);
 int	ultimate_file_validation(char *argv, t_parsing *parse);
-int			start_window(void);
-int			mlx_data_init(void);
+int	mlx_data_init(t_gen *gen);
 t_gen		*gen_stuff(void);
 void		ft_free_matrix(char **matrix);
 int			super_duper_hiper_free(void);
@@ -32,11 +31,13 @@ int			png_size_fd(const char *path, uint32_t *w, uint32_t *h);
 int			rgb_to_hex(int r, int g, int b);
 int			color_switch(char *str);
 char		*space_skipper_shift(char *str);
-void		copied_mlx_pixel_put(t_img_data *img_data, int x, int y, int color);
+void copied_mlx_pixel_put(t_img_data *img_data, int x, int y, int color);
 int only_num(char *str);
 int validate_file(int fd);
 char **refactored_shit(char *file);
 int validate_file(int fd);
+int get_player_position(t_gen *gen);
+int	start_window(t_gen *gen);
 
 // JHONNY STUFF
 

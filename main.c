@@ -26,6 +26,9 @@ int	main(int argc, char *argv[])
 	printf("FILE DESCRIPTOR OF [%s] is: %d\n", argv[1], gen->parse->fd);
 	for (int i = 0; gen->parse->map[i]; i++)
 		printf("map line[%d] = %s", i, gen->parse->map[i]);
-	start_window();
+	if (mlx_data_init(gen))
+		return (1);
+	get_player_position(gen);
+	start_window(gen);
 	return (0);
 }
