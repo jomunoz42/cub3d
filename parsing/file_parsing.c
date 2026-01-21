@@ -1,33 +1,5 @@
 #include "../headers/cub3d.h"
 
-char	*find_texture_path(char *file, char *one_direction)
-{
-	t_gen *gen;
-
-	gen = gen_stuff();
-	char	*line;
-	char	*path;
-	int		len;
-
-	gen->parse->fd = open(file, O_RDONLY);
-	if (gen->parse->fd == -1)
-		return (close(gen->parse->fd), printf("Error: can't open file\n"), NULL);
-	len = ft_strlen(one_direction);
-	while ((line = get_next_line(gen->parse->fd)))
-	{
-		if (ft_strncmp(line, one_direction, len) == 0 && line[len] == ' ')
-		{
-			path = ft_strtrim(line + len + 1, "\n");
-			path = space_skipper_shift(path);
-			free(line);
-			close(gen->parse->fd);
-			return (path);
-		}
-		free(line);
-	}
-	close(gen->parse->fd);
-	return (NULL);
-}
 
 int	validate_rgb_colors(char *str)
 {
@@ -41,6 +13,8 @@ int	validate_rgb_colors(char *str)
 	i = 0;
 	while (i < 3)
 	{
+		if (only_num(all_colors[i]) == 0)
+			return (ft_free_matrix(all_colors), 0);
 		rgb = ft_atoi(all_colors[i]);
 		if (rgb < 0 || rgb > 255)
 			return (ft_free_matrix(all_colors), 0);
@@ -50,20 +24,48 @@ int	validate_rgb_colors(char *str)
 	return (1);
 }
 
+char **refactored_shit(char *file)
+{
+    int fd = open(file, O_RDONLY);
+    if (fd == -1)
+        {return (NULL);}
+	
+	// if (validate_file(fd) == 0)
+	// 	{return (NULL);}
+	close(fd);
+	fd = open(file, O_RDONLY);
+    char **matrix = ft_calloc(7, sizeof(char *));
+    if (!matrix)
+        return (close(fd), NULL);
+    char *elements[6] = {"NO", "SO", "EA", "WE", "C", "F"};
+    char *line;
+    while ((line = get_next_line(fd)))
+    {
+        for (int i = 0; i < 6; i++)
+        {
+			int len;
+			len = ft_strlen(elements[i]);
+			if (!matrix[i] && ft_strncmp(line, elements[i], len) == 0 && line[len] == ' ')
+			{
+				char *final = ft_strtrim(line + len + 1, "\n");
+				final = space_skipper_shift(final);
+				matrix[i] = final;
+			}
+        }
+        free(line);
+    }
+    close(fd);
+    return matrix;
+}
+
 char	**validate_textures(char *file, t_parsing *parse)
 {
 	char	**matrix;
 	int		i;
 
-	matrix = ft_calloc(7, sizeof(char *));
+	matrix = refactored_shit(file);
 	if (!matrix)
 		return (NULL);
-	matrix[0] = find_texture_path(file, "NO");
-	matrix[1] = find_texture_path(file, "SO");
-	matrix[2] = find_texture_path(file, "WE");
-	matrix[3] = find_texture_path(file, "EA");
-	matrix[4] = find_texture_path(file, "F");
-	matrix[5] = find_texture_path(file, "C");
 	i = 0;
 	while (i < 6)
 	{
@@ -117,7 +119,7 @@ int	struct_sharingan(char *file, t_parsing *parse)
 	return (1);
 }
 
-int	validate_textures_path(char *argv, t_parsing *parse)
+int	ultimate_file_validation(char *argv, t_parsing *parse)
 {
 	int	i;
 	int	fd;
@@ -130,8 +132,8 @@ int	validate_textures_path(char *argv, t_parsing *parse)
 		fd = open(parse->textures_info[i], O_RDONLY);
 		if (fd == -1)
 			return (printf("%s\n", parse->error_messages[i + 6]), 0);
-		i++;
 		close(fd);
+		i++;
 	}
 	return (1);
 }

@@ -8,7 +8,18 @@ t_parsing	*parsing_init(void)
 	if (!new)
 		return (NULL);
 	*new = (t_parsing){// check and study this later
+						.seen_SO = 0,
+						.seen_EA = 0,
+						.seen_WE = 0,
+						.seen_F = 0,
+						.seen_C = 0,
+						.seen_NO = 0,
 						.textures_info = NULL,
+						.file_path = NULL,
+						.map = NULL,
+						.player = '\0',
+						.width = 0,
+						.height = 0,
 						.error_messages = {"Error: missing north texture [NO]",
 							"Error: missing south texture [SO]",
 							"Error: missing west texture [WE]",
@@ -21,7 +32,8 @@ t_parsing	*parsing_init(void)
 							"Error: can't find east texture file",
 							"Error: floor color invalid",
 							"Error: ceiling color invalid"},
-						.fd = 0};
+						.fd = 0
+	};
 	return (new);
 }
 

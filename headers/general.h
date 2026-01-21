@@ -12,6 +12,7 @@
 # include <sys/time.h>
 # include <unistd.h>
 # include <stdint.h>
+# include <stdbool.h>
 
 
 # define prinf printf
@@ -23,7 +24,5 @@
 
 # define USER_HAND_XPM "./imgs/arm_placeholder.xpm"
 # define USER_HAND_PNG "./imgs/arm_placeholder.png"
-
-
 
 #endif
