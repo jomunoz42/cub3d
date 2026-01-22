@@ -38,6 +38,7 @@ char **refactored_shit(char *file);
 int validate_file(int fd);
 int get_player_position(t_gen *gen);
 int	start_window(t_gen *gen);
+void ciclope_dos_xman(t_gen *gen);
 
 // JHONNY STUFF
 
