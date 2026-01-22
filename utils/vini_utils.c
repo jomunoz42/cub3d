@@ -334,3 +334,4 @@ int only_num(char *str)
 	}
 	return (1);
 }
+

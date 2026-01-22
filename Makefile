@@ -6,7 +6,7 @@
 #    By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 10:25:55 by vivaz-ca          #+#    #+#              #
-#    Updated: 2026/01/21 15:55:07 by vvazzs           ###   ########.fr        #
+#    Updated: 2026/01/22 13:26:04 by vvazzs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ PARSE = ./parsing
 UTILS = ./utils
 
 SRC = \
-	$(SRCDIR)/main.c struct_new.c window_management.c freedom.c megamente.c\
+	$(SRCDIR)/main.c struct_new.c window_management.c freedom.c megamente.c player_movement.c\
 	$(PARSE)/file_parsing.c \
 	$(PARSE)/general_parsing.c \
 	$(PARSE)/map_parser.c \
