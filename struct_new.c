@@ -79,6 +79,18 @@ int minimap_init(t_gen *gen)
 	return (1);
 }
 
+int keyboard_init(t_gen *gen)
+{
+	gen->kboard = malloc(sizeof(t_keyboard));
+	if (!gen->kboard)
+		return (0);
+	gen->kboard->key_w = false;
+	gen->kboard->key_a = false;
+	gen->kboard->key_s = false;
+	gen->kboard->key_d = false;
+	return (1);
+}
+
 int player_init(t_gen *gen)
 {
 	gen->player = malloc(sizeof(t_player));
@@ -109,6 +121,7 @@ int	mlx_data_init(t_gen *gen)
 	avg_img_init(gen);
 	player_init(gen);
 	minimap_init(gen);
+	keyboard_init(gen);
 	printf("== horizontal line is on %d\n", gen->texture_data->horizon);
 	return (0);
 }

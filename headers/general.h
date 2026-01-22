@@ -21,7 +21,8 @@
 # define WIN_HEIGHT 1000
 # define FLOOR_COLOR "150,86,30"
 # define CEILING_COLOR "14,226,249"
-#define MINIMAP_SCALE 15
+# define MINIMAP_SCALE 15
+#define MOVE_SPEED 0.0005
 
 
 # define USER_HAND_XPM "./imgs/arm_placeholder.xpm"

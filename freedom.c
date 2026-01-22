@@ -68,6 +68,8 @@ int	super_duper_hiper_free(void)
 			ft_free_matrix(gen->minimap->map);
 		free(gen->minimap);
 	}
+	if (gen->kboard)
+		free(gen->kboard);
 	if (gen->texture_data)
 		free(gen->texture_data);
 	if (gen->img_data)

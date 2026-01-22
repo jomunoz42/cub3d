@@ -18,6 +18,14 @@ typedef struct s_parsing
 	int  			seen_C;
 }					t_parsing;
 
+typedef struct s_keyboard
+{
+	bool key_w;
+	bool key_a;
+	bool key_s;
+	bool key_d;
+}	t_keyboard;
+
 typedef struct s_mlx_data
 {
 	void			*mlx_ptr;
@@ -71,6 +79,7 @@ typedef struct s_general
 	t_mlx_data	*mlx_data;
 	t_img_data *img_data;
 	t_player 	*player;
+	t_keyboard *kboard;
 	t_minimap *minimap;
 	void *arm;
 }				t_gen;

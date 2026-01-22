@@ -119,7 +119,37 @@ int key_handler(int keysym, t_gen *gen)
           || keysym == XK_Up || keysym == XK_Down
           || keysym == XK_Left || keysym == XK_Right)
         move_player(keysym, gen);
+	
+	
+    return (0);
+}
 
+int game_loop(t_gen *gen)
+{
+	double nx = gen->player->x;
+	double ny = gen->player->y;
+	
+	int prev[2] = {(int)ny, (int)nx};
+
+
+    if (gen->kboard->key_w) 
+		ny -= MOVE_SPEED;
+    if (gen->kboard->key_s) 
+		ny += MOVE_SPEED;
+    if (gen->kboard->key_a) 
+		nx -= MOVE_SPEED;
+    if (gen->kboard->key_d) 
+		nx += MOVE_SPEED;
+
+    if (nx != prev[1] || ny != prev[0])
+    {
+        if (!collision(gen, ny, nx))
+        {
+            gen->player->x = nx;
+            gen->player->y = ny;
+            redraw_map_tiles(gen, ny, nx, prev);
+        }
+    }
     return (0);
 }
 
@@ -144,9 +174,12 @@ int	start_window(t_gen *gen)
 	gen->minimap->image.img = mlx_new_image(gen->mlx_data->mlx_ptr, gen->minimap->width, gen->minimap->height);
 	gen->minimap->image.addr = mlx_get_data_addr(gen->minimap->image.img , &gen->minimap->image.bits_per_pixel, &gen->minimap->image.line_len, &gen->minimap->image.endian);
 	draw_minimap(gen);
-	mlx_key_hook(gen->mlx_data->win_ptr, key_handler, gen);
+	// mlx_key_hook(gen->mlx_data->win_ptr, key_handler, gen);
 	// ciclope_dos_xman(gen);
 	// mlx_put_image_to_window(gen->mlx_data->mlx_ptr,gen->mlx_data->win_ptr,gen->minimap->image.img,0, 0);
+	mlx_hook(gen->mlx_data->win_ptr, 2, 1L << 0, key_press, gen);
+	mlx_hook(gen->mlx_data->win_ptr, 3, 1L << 1, key_release, gen);
+	mlx_loop_hook(gen->mlx_data->mlx_ptr, game_loop, gen);
 
 	mlx_loop(gen->mlx_data->mlx_ptr);
 	mlx_destroy_image(gen->mlx_data->mlx_ptr, gen->arm);

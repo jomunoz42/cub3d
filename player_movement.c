@@ -75,5 +75,37 @@ int move_player(int keysym, t_gen *gen)
     return (0);
 }
 
+int key_press(int key, t_gen *gen)
+{
+    if (key == XK_Escape)
+        handle_exit(key);
+
+    if (key == XK_w || key == XK_Up)
+        gen->kboard->key_w = true;
+    if (key == XK_s || key == XK_Down)
+        gen->kboard->key_s = true;
+    if (key == XK_a || key == XK_Left)
+        gen->kboard->key_a = true;
+    if (key == XK_d || key == XK_Right)
+        gen->kboard->key_d = true;
+
+    return (0);
+}
+
+
+int key_release(int key, t_gen *gen)
+{
+    if (key == XK_w || key == XK_Up)
+        gen->kboard->key_w = false;
+    if (key == XK_s || key == XK_Down)
+        gen->kboard->key_s = false;
+    if (key == XK_a || key == XK_Left)
+        gen->kboard->key_a = false;
+    if (key == XK_d || key == XK_Right)
+        gen->kboard->key_d = false;
+
+    return (0);
+}
+
 
 
