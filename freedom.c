@@ -60,6 +60,14 @@ int	super_duper_hiper_free(void)
 		free(gen->mlx_data);
 		gen->mlx_data = NULL;
 	}
+	if (gen->player)
+		free(gen->player);
+	if (gen->minimap)
+	{
+		if (gen->minimap->map)
+			ft_free_matrix(gen->minimap->map);
+		free(gen->minimap);
+	}
 	if (gen->texture_data)
 		free(gen->texture_data);
 	if (gen->img_data)

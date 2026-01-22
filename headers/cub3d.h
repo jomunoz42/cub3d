@@ -42,6 +42,7 @@ void ciclope_dos_xman(t_gen *gen);
 void draw_minimap(t_gen *gen);
 int move_player(int keysym, t_gen *gen);
 void	ft_bzero(void *s, size_t n);
+void draw_minimap_tile(t_gen *gen, int row, int col, int color);
 
 // JHONNY STUFF
 

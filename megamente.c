@@ -3,26 +3,29 @@
 //colocar aqui as cenas de calculo
 void search_in_matrix(t_gen *gen, int character)
 {
-    int x = 0;
-    while (gen->parse->map[x])
+    int row = 0;
+    while (gen->parse->map[row])
     {
-        int y = 0;
-        while (gen->parse->map[x][y])
+        int col = 0;
+        while (gen->parse->map[row][col])
         {
-            if (gen->parse->map[x][y] == character)
+            if (gen->parse->map[row][col] == character)
             {
-                gen->player->x = x + 0.5;
-                gen->player->y = y + 0.5;
+                gen->player->x = col + 0.5;
+                gen->player->y = row + 0.5;
+
                 gen->player->dir_x = 0;
-	            gen->player->dir_y = -1;
-	            gen->player->plane_x = 0.66;
-	            gen->player->plane_y = 0;
+                gen->player->dir_y = -1;
+                gen->player->plane_x = 0.66;
+                gen->player->plane_y = 0;
+                return;
             }
-            y++;
+            col++;
         }
-        x++;
+        row++;
     }
 }
+
 
 int get_player_position(t_gen *gen)
 {

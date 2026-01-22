@@ -22,50 +22,68 @@ int draw_arm(void *param)
 	return (0);
 }
 
-
-
 void draw_minimap(t_gen *gen)
 {
-	if (!gen || !gen->parse || !gen->parse->map)
-		return;
+    int row;
+    int col;
+    int dx;
+    int dy;
+    int color;
 
-	for (int row = 0; gen->parse->map[row]; row++)
-	{
-		for (int col = 0; gen->parse->map[row][col]; col++)
-		{
-			int color;
+    if (!gen || !gen->parse || !gen->parse->map)
+        return;
 
-			if (gen->parse->map[row][col] == '1')
-				color = 0xFFFFFF;
-			else if (gen->parse->map[row][col] == '0')
-				color = 0x161616;
-			else if (gen->parse->map[row][col] == 'N')
-				color = 0xFFA500;
-			else
-				continue;
+    row = 0;
+    while (gen->parse->map[row])
+    {
+        col = 0;
+        while (gen->parse->map[row][col])
+        {
+            if (gen->parse->map[row][col] == '1')
+                color = 0xFFFFFF;
+            else if (gen->parse->map[row][col] == '0')
+                color = 0x161616;
+            else
+            {
+                col++;
+                continue;
+            }
 
-			for (int dy = 0; dy < MINIMAP_SCALE; dy++)
-			{
-				for (int dx = 0; dx < MINIMAP_SCALE; dx++)
-				{
-					copied_mlx_pixel_put(
-						&gen->minimap->image,
-						col * MINIMAP_SCALE + dx,
-						row * MINIMAP_SCALE + dy,
-						color
-					);
-				}
-			}
-		}
-	}
-
-	mlx_put_image_to_window(
-		gen->mlx_data->mlx_ptr,
-		gen->mlx_data->win_ptr,
-		gen->minimap->image.img,
-		0, 0
-	);
+            dy = 0;
+            while (dy < MINIMAP_SCALE)
+            {
+                dx = 0;
+                while (dx < MINIMAP_SCALE)
+                {
+                    copied_mlx_pixel_put(
+                        &gen->minimap->image,
+                        col * MINIMAP_SCALE + dx,
+                        row * MINIMAP_SCALE + dy,
+                        color
+                    );
+                    dx++;
+                }
+                dy++;
+            }
+            col++;
+        }
+        row++;
+    }
+    draw_minimap_tile(
+        gen,
+        (int)gen->player->y,
+        (int)gen->player->x,
+        0xFFA500
+    );
+    mlx_put_image_to_window(
+        gen->mlx_data->mlx_ptr,
+        gen->mlx_data->win_ptr,
+        gen->minimap->image.img,
+        0,
+        0
+    );
 }
+
 
 
 void	genesis(t_gen *gen)
@@ -91,6 +109,21 @@ void	genesis(t_gen *gen)
 	mlx_destroy_image(gen->mlx_data->mlx_ptr, gen->img_data->img);
 }
 
+int key_handler(int keysym, t_gen *gen)
+{
+    if (keysym == XK_Escape)
+        handle_exit(keysym);
+
+    else if (keysym == XK_w || keysym == XK_a
+          || keysym == XK_s || keysym == XK_d
+          || keysym == XK_Up || keysym == XK_Down
+          || keysym == XK_Left || keysym == XK_Right)
+        move_player(keysym, gen);
+
+    return (0);
+}
+
+
 int	start_window(t_gen *gen)
 {
 	int		w;
@@ -106,17 +139,17 @@ int	start_window(t_gen *gen)
 			&h);
 	if (!gen->arm)
 		return (printf("Error: failed to load arm image\n"), 1);
-	mlx_key_hook(gen->mlx_data->win_ptr, handle_exit, NULL);
 	genesis(gen);
 	mlx_loop_hook(gen->mlx_data->mlx_ptr, draw_arm, gen);
 	gen->minimap->image.img = mlx_new_image(gen->mlx_data->mlx_ptr, gen->minimap->width, gen->minimap->height);
 	gen->minimap->image.addr = mlx_get_data_addr(gen->minimap->image.img , &gen->minimap->image.bits_per_pixel, &gen->minimap->image.line_len, &gen->minimap->image.endian);
 	draw_minimap(gen);
-	mlx_key_hook(gen->mlx_data->mlx_ptr, move_player, gen);
+	mlx_key_hook(gen->mlx_data->win_ptr, key_handler, gen);
 	// ciclope_dos_xman(gen);
 	// mlx_put_image_to_window(gen->mlx_data->mlx_ptr,gen->mlx_data->win_ptr,gen->minimap->image.img,0, 0);
 
 	mlx_loop(gen->mlx_data->mlx_ptr);
 	mlx_destroy_image(gen->mlx_data->mlx_ptr, gen->arm);
+	mlx_destroy_image(gen->mlx_data->mlx_ptr, gen->minimap->image.img);
 	return (0);
 }

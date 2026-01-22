@@ -6,7 +6,7 @@
 #    By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 10:25:55 by vivaz-ca          #+#    #+#              #
-#    Updated: 2026/01/22 13:26:04 by vvazzs           ###   ########.fr        #
+#    Updated: 2026/01/22 17:42:15 by vvazzs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,7 @@ fclean: clean
 re: fclean all
 
 val: re
-	valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --track-origins=yes ./$(NAME) testing.cub
+	valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --track-origins=yes ./$(NAME) map.cub
 	
 lib:
 	tar -xf minilibx-linux.tgz
