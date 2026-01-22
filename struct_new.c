@@ -26,7 +26,8 @@ t_parsing	*parsing_init(void)
 							"Error: can't find east texture file",
 							"Error: floor color invalid",
 							"Error: ceiling color invalid"},
-						.fd = 0
+						.fd = 0,
+						.elements = {0, 0, 0, 0, 0, 0}
 	};
 	return (new);
 }

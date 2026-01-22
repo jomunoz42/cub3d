@@ -8,7 +8,6 @@
 t_parsing	*parsing_init(void);
 void		ft_print_matrix(char **matrix);
 int			struct_sharingan(char *file, t_parsing *parse);
-int			initial_parsing(int argc, char *argv[]);
 int			ft_matrix_len(char **matrix);
 int			ultimate_file_validation(char *argv, t_parsing *parse);
 int			start_window(void);
@@ -35,9 +34,9 @@ int			validate_file(int fd);
 
 //===================== PARSING ========================
 
-int			map_parser(t_parsing *parser, char *argv);
+int	        parser(t_gen *gen, int argc, char **argv);
+int         initial_parsing(int argc, char *file_path);
 int			construct_map(t_parsing *data);
-int			not_last_element(t_parsing *data);
 int			find_no_player(t_parsing *data);
 int			find_multiple_player(t_parsing *data);
 int			find_invalid_char(t_parsing *data);
@@ -47,7 +46,6 @@ int			is_line_empty(char *line);
 
 char		*get_next_line(int fd);
 
-int			is_line_empty(char *line);
 void		free_double(char **arg);
 
 //====================== LIBFT =========================

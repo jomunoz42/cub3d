@@ -29,6 +29,13 @@ char	*find_texture_path(char *file, char *one_direction)
 	return (NULL);
 }
 
+// Opens the file 6 times
+
+//  Uses gen_stuff() inside parsing (bad design)
+//  No control over header order
+//  Ignores empty lines logic
+//  Doesn’t cooperate with map parsing
+
 int	validate_rgb_colors(char *str)
 {
 	char	**all_colors;
@@ -48,7 +55,7 @@ int	validate_rgb_colors(char *str)
 	}
 	ft_free_matrix(all_colors);
 	return (1);
-}
+}                     // Does not detect trailing garbage ("220,10,5abc" would pass)
 
 char	**validate_textures(char *file, t_parsing *parse)
 {

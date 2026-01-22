@@ -87,7 +87,41 @@ static char	*skip_header_and_empty_lines(t_parsing *data, int fd)
 	return (NULL);
 }
 
-int	not_last_element(t_parsing *data)
+char	**get_map_with_style(int fd, int count)
+{
+	char	*const line = get_next_line(fd);
+	char	**map;
+
+	map = NULL;
+	if (line != NULL)
+		map = get_map_with_style(fd, count + 1);
+	else if (count)
+	{
+		map = malloc(sizeof(char *) * (count + 1));
+		if (!map)
+		{
+			write (2, "Error\nAllocation failed\n", 25);
+			return (close(fd), NULL);                   // free line???
+		}
+	}
+	if (map)
+		map[count] = line;
+	return (map);
+}
+
+void 	get_height_and_max_width(t_parsing *data)
+{
+	int			length;
+
+	while(data->map[data->height])
+	{
+		length = ft_strlen(data->map[data->height]);
+		data->width = (int[]){data->width, length}[data->width < length];
+		data->height++;
+	}
+}
+
+int	construct_map(t_parsing *data)
 {
 	char		*line;
 	const int	fd = open(data->file_path, O_RDONLY);
@@ -95,54 +129,10 @@ int	not_last_element(t_parsing *data)
 	line = skip_header_and_empty_lines(data, fd);
 	if (!line || check_all_elements(data))
 		return (1);
-	while (line)
-	{
-		if (is_line_empty(line))
-        {
-            free(line);
-            line = get_next_line(fd);
-            continue;
-        }
-        if (is_header_line(data, line))
-        {
-            write(2, "Error\n", 6);
-            write(2, "Invalid map, map is not the last element in file\n", 50);
-            return (free(line), close(fd), 1);
-        }
-		data->height++;
-		free(line);
-		line = get_next_line(fd);
-	}
-	return (close(fd), 0);
-}
-
-int	construct_map(t_parsing *data)
-{
-	char		*line;
-	int			length;
-	int			i;
-	const int	fd = open(data->file_path, O_RDONLY);
-
-	i = -1;
-	ft_bzero(data->elements, sizeof(int) * E_COUNT);
-	line = skip_header_and_empty_lines(data, fd);
-	data->map = malloc(sizeof(char *) * (data->height + 1));
+	data->map = get_map_with_style(fd, 1);
 	if (!data->map)
-		(close(fd), write(2, "Error: Allocation failed\n", 25), exit(1));
-	while (++i < data->height)
-	{
-		if (i > 0)
-			line = get_next_line(fd);
-		length = ft_strlen(line);
-		if (data->width < length)
-			data->width = length;
-		data->map[i] = malloc(sizeof(char) * (length + 1));
-		if (!data->map[i])
-			(free(line), close(fd), write(2, "Error: Allocation failed\n",
-					25), exit(1));
-		(ft_memcpy(data->map[i], line, length), free(line));
-		data->map[i][length] = '\0';
-	}
-	data->map[i] = NULL;
+		return (1);
+	data->map[0] = line;
+	get_height_and_max_width(data);
 	return (close(fd), 0);
 }

@@ -1,7 +1,7 @@
 
 #include "../headers/cub3d.h"
 
-int	initial_parsing(int argc, char *argv[])
+int	initial_parsing(int argc, char *file_path)
 {
 	int	fd;
 
@@ -11,11 +11,11 @@ int	initial_parsing(int argc, char *argv[])
 		write(2, "Incorrect number of arguments\n", 31);
 		return (1);
 	}
-	fd = open(argv[1], O_RDONLY);
-	if (fd == -1)
+	fd = open(file_path, O_RDONLY);
+	if (fd < 0)
 	{
 		write(2, "Error\n", 6);
-		write(2, argv[1], ft_strlen(argv[1]));
+		write(2, file_path, ft_strlen(file_path));
 		if (errno == ENOENT)
 			return (write(2, " does not exist\n", 17), 1);
 		else if (errno == EACCES)

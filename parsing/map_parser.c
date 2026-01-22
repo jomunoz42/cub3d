@@ -71,60 +71,40 @@ static int	is_map_valid(t_parsing *data)
 	return (free_double(copy), 0);
 }
 
-int	map_parser(t_parsing *data, char *argv)
+int	parser(t_gen *gen, int argc, char **argv)
 {
-	data->file_path = argv;
-	ft_bzero(data->elements, sizeof(int) * E_COUNT);
-	if (not_last_element(data) || construct_map(data) || find_invalid_char(data)
-		|| find_no_player(data) || find_multiple_player(data)
-		|| is_map_valid(data))
+	if (initial_parsing(argc, argv[1]) != 0)
 		return (1);
-	int i = 0;
-	while(i < data->height)
-	{
-		printf("%s", data->map[i]);
-		i++;
-	}
-	// free_double(data->map);
+    gen->parse = parsing_init();
+    if (!gen->parse)
+		return (write (2, "Error\nAllocation failed\n", 25), 1);
+	gen->parse->file_path = argv[1];
+	if (construct_map(gen->parse) 
+		|| find_invalid_char(gen->parse)
+		|| find_no_player(gen->parse) 
+		|| find_multiple_player(gen->parse)
+		|| is_map_valid(gen->parse))
+		return (1);
+	
+	int	i = -1;
+	while(++i < gen->parse->height)
+		printf("%s", gen->parse->map[i]);
+	// free_double(gen->parse->map);
 	return (0);
 }
-
-
-// 11111111 1111111 111111111111   1
-
-
-
-
-
-
-
-
-// 1
-
-// NOT COUNTING THAT AS MAP
-
-
-
-//int	is_header_line(char *line)  // it can have spaces before
-
-
-
-
-// is one of the six missing?
-
-
-//    ver se tem todos os elementos
-
-// 
 
 
 //   ERRORS:
 
 
-//   Double defenition of element
+//   TEXTURES
 
-//   Not all elements were defined
+//   Double defenition of element                         	DONE
 
+//   Not all elements were defined                       	DONE
+
+
+//   MAP
 
 //   No map found in file                     				DONE
 
