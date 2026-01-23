@@ -84,5 +84,6 @@ void redraw_map_tiles(t_gen *gen, int y, int x, int prev[2])
 {
     draw_minimap_tile(gen,prev[0],prev[1],0x161616);
     draw_minimap_tile( gen, y, x, 0xFFA500);
+    ciclope_dos_xman(gen);
     mlx_put_image_to_window(gen->mlx_data->mlx_ptr,gen->mlx_data->win_ptr,gen->minimap->image.img,0,0);
 }

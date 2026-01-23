@@ -31,42 +31,45 @@ int get_player_position(t_gen *gen)
     return (0);
 }
 
-void ciclope_dos_xman(t_gen *gen)
+void	ciclope_dos_xman(t_gen *gen)
 {
-	double	x;
-	double	y;
-	int		i;
+	double	ray_x;
+	double	ray_y;
+	double	step;
+	int		map_x;
+	int		map_y;
+	int		px;
+	int		py;
 
-	if (!gen || !gen->player)
+	if (!gen || !gen->player || !gen->parse || !gen->parse->map)
 		return;
 
-	x = gen->player->x;
-	y = gen->player->y;
+	ray_x = gen->player->x;
+	ray_y = gen->player->y;
+	step = 0.05;
 
-	i = 0;
-	while (i < 10)
+	while (1)
 	{
-		int px = (int)(x * MINIMAP_SCALE);
-		int py = (int)(y * MINIMAP_SCALE);
+		map_x = (int)ray_x;
+		map_y = (int)ray_y;
 
-		px += MINIMAP_SCALE / 2;
-		py += MINIMAP_SCALE / 2;
+		if (map_y < 0 || map_x < 0
+			|| !gen->parse->map[map_y]
+			|| !gen->parse->map[map_y][map_x])
+			break;
+		if (gen->parse->map[map_y][map_x] == '1')
+			break;
+		px = (int)(ray_x * MINIMAP_SCALE);
+		py = (int)(ray_y * MINIMAP_SCALE);
 
-		if (px >= 0 && px < gen->minimap->width &&
-			py >= 0 && py < gen->minimap->height)
-		{
-			copied_mlx_pixel_put(
-				&gen->minimap->image,
-				px,
-				py,
-				0xFF0000
-			);
-		}
+		if (px >= 0 && px < gen->minimap->width
+			&& py >= 0 && py < gen->minimap->height)
+			copied_mlx_pixel_put(&gen->minimap->image, px, py, 0xFF0000);
 
-		x += gen->player->dir_x * 0.1;
-		y += gen->player->dir_y * 0.1;
-		i++;
+		ray_x += gen->player->dir_x * step;
+		ray_y += gen->player->dir_y * step;
 	}
 }
+
 
 

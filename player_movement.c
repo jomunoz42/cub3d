@@ -7,13 +7,13 @@ int move_player(int keysym, t_gen *gen)
     int next_x = prev[1];
     int next_y = prev[0];
 
-    if (keysym == XK_w || keysym == XK_Up)
+    if (keysym == XK_w)
         next_y--;
-    else if (keysym == XK_s || keysym == XK_Down)
+    else if (keysym == XK_s)
         next_y++;
-    else if (keysym == XK_a || keysym == XK_Left)
+    else if (keysym == XK_a)
         next_x--;
-    else if (keysym == XK_d || keysym == XK_Right)
+    else if (keysym == XK_d)
         next_x++;
 
     if (!collision(gen, next_y, next_x))
@@ -32,9 +32,7 @@ int key_handler(int keysym, t_gen *gen)
         handle_exit(keysym);
 
     else if (keysym == XK_w || keysym == XK_a
-          || keysym == XK_s || keysym == XK_d
-          || keysym == XK_Up || keysym == XK_Down
-          || keysym == XK_Left || keysym == XK_Right)
+          || keysym == XK_s || keysym == XK_d)
         move_player(keysym, gen);
     return (0);
 }

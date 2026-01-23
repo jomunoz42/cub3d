@@ -76,7 +76,6 @@ int	start_window(t_gen *gen)
 	gen->minimap->image.img = mlx_new_image(gen->mlx_data->mlx_ptr, gen->minimap->width, gen->minimap->height);
 	gen->minimap->image.addr = mlx_get_data_addr(gen->minimap->image.img , &gen->minimap->image.bits_pixel, &gen->minimap->image.line_len, &gen->minimap->image.endian);
 	draw_minimap(gen);
-	ciclope_dos_xman(gen);
 	mlx_put_image_to_window(gen->mlx_data->mlx_ptr,gen->mlx_data->win_ptr,gen->minimap->image.img,0, 0);
 	mlx_hook(gen->mlx_data->win_ptr, 2, 1L << 0, key_press, gen);
 	mlx_hook(gen->mlx_data->win_ptr, 3, 1L << 1, key_release, gen);
