@@ -56,6 +56,7 @@ int			key_release(int key, t_gen *gen);
 t_gen		*gen_stuff(void);
 t_parsing	*parsing_init(void);
 int         main_init(t_gen *gen, char *argv);
+void draw_minimap_fov(t_gen *gen);
 
 // JHONNY STUFF
 
