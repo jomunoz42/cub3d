@@ -46,7 +46,7 @@ void	ciclope_dos_xman(t_gen *gen)
 
 	ray_x = gen->player->x;
 	ray_y = gen->player->y;
-	step = 0.05;
+	step = 0.08;
 
 	while (1)
 	{
@@ -61,15 +61,11 @@ void	ciclope_dos_xman(t_gen *gen)
 			break;
 		px = (int)(ray_x * MINIMAP_SCALE);
 		py = (int)(ray_y * MINIMAP_SCALE);
-
 		if (px >= 0 && px < gen->minimap->width
 			&& py >= 0 && py < gen->minimap->height)
 			copied_mlx_pixel_put(&gen->minimap->image, px, py, 0xFF0000);
-
 		ray_x += gen->player->dir_x * step;
 		ray_y += gen->player->dir_y * step;
 	}
 }
-
-
 
