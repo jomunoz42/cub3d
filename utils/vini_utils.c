@@ -319,7 +319,7 @@ void copied_mlx_pixel_put(t_img_data *img_data, int x, int y, int color)
 {
 	char *dest;
 
-	dest = img_data->addr + (y * img_data->line_len + x * (img_data->bits_per_pixel / 8));
+	dest = img_data->addr + (y * img_data->line_len + x * (img_data->bits_pixel / 8));
 	*(unsigned int *)dest = color;
 }
 

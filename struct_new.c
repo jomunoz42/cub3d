@@ -37,6 +37,20 @@ t_parsing	*parsing_init(void)
 	return (new);
 }
 
+int main_init(t_gen *gen, char *argv)
+{
+	gen->parse = parsing_init();
+    if (!gen->parse)
+		return (printf("Error: error initializing parsing\n"), 0);
+	if (map_parser(gen->parse, argv))
+		return (0);
+	if (!ultimate_file_validation(argv, gen->parse))
+		return (super_duper_hiper_free(), 0);
+	if (mlx_data_init(gen))
+		return (0);
+	return (1);
+}
+
 int	avg_img_init(t_gen *gen)
 {
 	gen->img_data = malloc(sizeof(t_img_data));
@@ -46,7 +60,7 @@ int	avg_img_init(t_gen *gen)
 	gen->img_data->img = NULL;
 	gen->img_data->endian = 0;
 	gen->img_data->line_len = 0;
-	gen->img_data->bits_per_pixel = 0;
+	gen->img_data->bits_pixel = 0;
 	return (1);
 }
 
@@ -59,7 +73,7 @@ int	texture_data_init(t_gen *gen)
 	gen->texture_data->arm_height = 0;
 	gen->texture_data->clng_color = color_switch(gen->parse->textures_info[4]);
 	gen->texture_data->flr_color = color_switch(gen->parse->textures_info[5]);
-	gen->texture_data->horizon = gen->mlx_data->window_height / 2;
+	gen->texture_data->horizon = gen->mlx_data->win_height / 2;
 	if (!png_size_fd(USER_HAND_PNG, &gen->texture_data->arm_width,
 			&gen->texture_data->arm_height))
 		return (0);
@@ -74,8 +88,8 @@ int minimap_init(t_gen *gen)
 	if (!gen->minimap)
 		return (0);
 	gen->minimap->map = NULL;
-	gen->minimap->width = gen->mlx_data->window_width * 0.20;
-	gen->minimap->height = gen->mlx_data->window_height * 0.20;
+	gen->minimap->width = gen->mlx_data->win_width * 0.20;
+	gen->minimap->height = gen->mlx_data->win_height * 0.20;
 	return (1);
 }
 
@@ -115,8 +129,8 @@ int	mlx_data_init(t_gen *gen)
 		return (1);
 	gen->mlx_data->win_ptr = NULL;
 	gen->arm = NULL;
-	gen->mlx_data->window_width = WIN_WIDTH;
-	gen->mlx_data->window_height = WIN_HEIGHT;
+	gen->mlx_data->win_width = WIN_WIDTH;
+	gen->mlx_data->win_height = WIN_HEIGHT;
 	texture_data_init(gen);
 	avg_img_init(gen);
 	player_init(gen);

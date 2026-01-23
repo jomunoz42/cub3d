@@ -6,14 +6,13 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <math.h>
+# include <stdbool.h>
+# include <stdint.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
-# include <stdint.h>
-# include <stdbool.h>
-
 
 # define prinf printf
 # define ERROR_COUNT 12
@@ -22,8 +21,7 @@
 # define FLOOR_COLOR "150,86,30"
 # define CEILING_COLOR "14,226,249"
 # define MINIMAP_SCALE 15
-#define MOVE_SPEED 0.00025
-
+# define MOVE_SPEED 0.0004
 
 # define USER_HAND_XPM "./imgs/arm_placeholder.xpm"
 # define USER_HAND_PNG "./imgs/arm_placeholder.png"

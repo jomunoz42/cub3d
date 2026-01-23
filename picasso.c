@@ -11,7 +11,7 @@ int draw_arm(void *param)
 		return (0);
 
 	mlx_put_image_to_window(gen->mlx_data->mlx_ptr,gen->mlx_data->win_ptr,gen->arm,
-        gen->mlx_data->window_width - gen->texture_data->arm_width,gen->mlx_data->window_height - gen->texture_data->arm_height);
+        gen->mlx_data->win_width - gen->texture_data->arm_width,gen->mlx_data->win_height - gen->texture_data->arm_height);
 	return (0);
 }
 
