@@ -1,6 +1,5 @@
 #include "./headers/cub3d.h"
 
-//colocar aqui as cenas de calculo
 void search_in_matrix(t_gen *gen, int character)
 {
     int row = 0;
@@ -26,11 +25,9 @@ void search_in_matrix(t_gen *gen, int character)
     }
 }
 
-
 int get_player_position(t_gen *gen)
 {
     search_in_matrix(gen, 'N');
-
     return (0);
 }
 

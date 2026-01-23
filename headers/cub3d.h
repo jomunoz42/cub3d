@@ -47,6 +47,17 @@ int key_press(int key, t_gen *gen);
 int key_release(int key, t_gen *gen);
 bool collision(t_gen *gen, int next_y, int next_x);
 void redraw_map_tiles(t_gen *gen, int y, int x, int prev[2]);
+bool collision(t_gen *gen, int next_y, int next_x);
+int draw_arm(void *param);
+void draw_minimap(t_gen *gen);
+int key_handler(int keysym, t_gen *gen);
+void draw_minimap_tile(t_gen *gen, int row, int col, int color);
+void redraw_map_tiles(t_gen *gen, int y, int x, int prev[2]);
+int key_press(int key, t_gen *gen);
+int key_release(int key, t_gen *gen);
+
+
+
 
 // JHONNY STUFF
 

@@ -2,90 +2,6 @@
 #include "headers/general.h"
 #include "headers/mlx.h"
 
-int draw_arm(void *param)
-{
-	t_gen *gen;
-
-	if (!param)
-		return (0);
-	gen = (t_gen *)param;
-	if (!gen->arm)
-		return (0);
-
-	mlx_put_image_to_window(
-		gen->mlx_data->mlx_ptr,
-		gen->mlx_data->win_ptr,
-		gen->arm,
-		gen->mlx_data->window_width - gen->texture_data->arm_width,
-		gen->mlx_data->window_height - gen->texture_data->arm_height
-	);
-	return (0);
-}
-
-void draw_minimap(t_gen *gen)
-{
-    int row;
-    int col;
-    int dx;
-    int dy;
-    int color;
-
-    if (!gen || !gen->parse || !gen->parse->map)
-        return;
-
-    row = 0;
-    while (gen->parse->map[row])
-    {
-        col = 0;
-        while (gen->parse->map[row][col])
-        {
-            if (gen->parse->map[row][col] == '1')
-                color = 0xFFFFFF;
-            else if (gen->parse->map[row][col] == '0')
-                color = 0x161616;
-            else
-            {
-                col++;
-                continue;
-            }
-
-            dy = 0;
-            while (dy < MINIMAP_SCALE)
-            {
-                dx = 0;
-                while (dx < MINIMAP_SCALE)
-                {
-                    copied_mlx_pixel_put(
-                        &gen->minimap->image,
-                        col * MINIMAP_SCALE + dx,
-                        row * MINIMAP_SCALE + dy,
-                        color
-                    );
-                    dx++;
-                }
-                dy++;
-            }
-            col++;
-        }
-        row++;
-    }
-    draw_minimap_tile(
-        gen,
-        (int)gen->player->y,
-        (int)gen->player->x,
-        0xFFA500
-    );
-    mlx_put_image_to_window(
-        gen->mlx_data->mlx_ptr,
-        gen->mlx_data->win_ptr,
-        gen->minimap->image.img,
-        0,
-        0
-    );
-}
-
-
-
 void	genesis(t_gen *gen)
 {
 	int	color;
@@ -109,28 +25,11 @@ void	genesis(t_gen *gen)
 	mlx_destroy_image(gen->mlx_data->mlx_ptr, gen->img_data->img);
 }
 
-int key_handler(int keysym, t_gen *gen)
-{
-    if (keysym == XK_Escape)
-        handle_exit(keysym);
-
-    else if (keysym == XK_w || keysym == XK_a
-          || keysym == XK_s || keysym == XK_d
-          || keysym == XK_Up || keysym == XK_Down
-          || keysym == XK_Left || keysym == XK_Right)
-        move_player(keysym, gen);
-	
-	
-    return (0);
-}
-
 int game_loop(t_gen *gen)
 {
 	double nx = gen->player->x;
 	double ny = gen->player->y;
-	
 	int prev[2] = {(int)ny, (int)nx};
-
 
     if (gen->kboard->key_w) 
 		ny -= MOVE_SPEED;
@@ -140,7 +39,6 @@ int game_loop(t_gen *gen)
 		nx -= MOVE_SPEED;
     if (gen->kboard->key_d) 
 		nx += MOVE_SPEED;
-
     if (nx != prev[1] || ny != prev[0])
     {
         if (!collision(gen, ny, nx))
@@ -152,7 +50,6 @@ int game_loop(t_gen *gen)
     }
     return (0);
 }
-
 
 int	start_window(t_gen *gen)
 {
@@ -174,7 +71,6 @@ int	start_window(t_gen *gen)
 	gen->minimap->image.img = mlx_new_image(gen->mlx_data->mlx_ptr, gen->minimap->width, gen->minimap->height);
 	gen->minimap->image.addr = mlx_get_data_addr(gen->minimap->image.img , &gen->minimap->image.bits_per_pixel, &gen->minimap->image.line_len, &gen->minimap->image.endian);
 	draw_minimap(gen);
-	// mlx_key_hook(gen->mlx_data->win_ptr, key_handler, gen);
 	// ciclope_dos_xman(gen);
 	// mlx_put_image_to_window(gen->mlx_data->mlx_ptr,gen->mlx_data->win_ptr,gen->minimap->image.img,0, 0);
 	mlx_hook(gen->mlx_data->win_ptr, 2, 1L << 0, key_press, gen);

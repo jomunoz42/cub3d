@@ -335,3 +335,39 @@ int only_num(char *str)
 	return (1);
 }
 
+bool collision(t_gen *gen, int next_y, int next_x)
+{
+    return (gen->parse->map[next_y][next_x] == '1');
+}
+
+int key_press(int key, t_gen *gen)
+{
+    if (key == XK_Escape)
+        handle_exit(key);
+
+    if (key == XK_w || key == XK_Up)
+        gen->kboard->key_w = true;
+    if (key == XK_s || key == XK_Down)
+        gen->kboard->key_s = true;
+    if (key == XK_a || key == XK_Left)
+        gen->kboard->key_a = true;
+    if (key == XK_d || key == XK_Right)
+        gen->kboard->key_d = true;
+
+    return (0);
+}
+
+
+int key_release(int key, t_gen *gen)
+{
+    if (key == XK_w || key == XK_Up)
+        gen->kboard->key_w = false;
+    if (key == XK_s || key == XK_Down)
+        gen->kboard->key_s = false;
+    if (key == XK_a || key == XK_Left)
+        gen->kboard->key_a = false;
+    if (key == XK_d || key == XK_Right)
+        gen->kboard->key_d = false;
+
+    return (0);
+}
