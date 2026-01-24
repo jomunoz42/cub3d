@@ -28,28 +28,28 @@ void		copied_mlx_pixel_put(t_img_data *img_data, int x, int y, int color);
 int			only_num(char *str);
 int			validate_file(int fd);
 char		**refactored_shit(char *file);
-int			validate_file(int fd);
 
 // JHONNY STUFF
 
 //===================== PARSING ========================
 
 int	        parser(t_gen *gen, int argc, char **argv);
-int         initial_parsing(int argc, char *file_path);
 int			construct_map(t_parsing *data);
-int			find_no_player(t_parsing *data);
-int			find_multiple_player(t_parsing *data);
-int			find_invalid_char(t_parsing *data);
-int			is_line_empty(char *line);
+int         is_map_valid(t_parsing *data);
+int         is_header_line_with_validation(t_parsing *data, char *line);
+int         check_all_elements(t_parsing *data);
+int     	is_rgb_colours_invalid(char *line, char c);
 
 //====================== UTILS =========================
 
 char		*get_next_line(int fd);
-
+int			is_line_empty(char *line);
 void		free_double(char **arg);
 
 //====================== LIBFT =========================
 
+int     	ft_isdigit(int c);
+char	    *ft_strrchr(const char *s, int c);
 void		ft_bzero(void *s, size_t n);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 void		*ft_memcpy(void *dest, const void *src, size_t n);

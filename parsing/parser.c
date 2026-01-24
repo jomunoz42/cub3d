@@ -1,7 +1,7 @@
 
 #include "../headers/cub3d.h"
 
-int find_invalid_char(t_parsing *data)// I am accepting F and D
+static int find_invalid_char(t_parsing *data)// I am accepting F and D
 {
     int     len;
     int     y;
@@ -29,7 +29,7 @@ int find_invalid_char(t_parsing *data)// I am accepting F and D
     return (0);
 }
 
-int	find_multiple_player(t_parsing *data)
+static int	find_multiple_player(t_parsing *data)
 {
 	int	    player_found;
 	int	    y;
@@ -58,7 +58,7 @@ int	find_multiple_player(t_parsing *data)
 	return (0);
 }
 
-int	find_no_player(t_parsing *data)
+static int	find_no_player(t_parsing *data)
 {
     int     len;
 	int	    y;
@@ -85,3 +85,57 @@ int	find_no_player(t_parsing *data)
 	}
 	return (0);
 }
+
+static int	file_parsing(int argc, char *file_path)
+{
+	int	fd;
+
+	if (argc != 2)
+	{
+		write(2, "Error\n", 6);
+		write(2, "Incorrect number of arguments\n", 31);
+		return (1);
+	}
+	fd = open(file_path, O_RDONLY);
+	if (fd < 0)
+	{
+		write(2, "Error\n", 6);
+		write(2, file_path, ft_strlen(file_path));
+		if (errno == ENOENT)
+			return (write(2, " does not exist\n", 17), 1);
+		else if (errno == EACCES)
+			return (write(2, " has no reading permissions\n", 29), 1);
+	}
+	return (close(fd), 0);
+}
+
+int	parser(t_gen *gen, int argc, char **argv)
+{
+	if (file_parsing(argc, argv[1]) != 0)
+		return (1);
+    gen->parse = parsing_init();
+    if (!gen->parse)
+		return (write (2, "Error\nAllocation failed\n", 25), 1);
+	gen->parse->file_path = argv[1];
+	if (construct_map(gen->parse) 
+		|| find_invalid_char(gen->parse)
+		|| find_no_player(gen->parse) 
+		|| find_multiple_player(gen->parse)
+		|| is_map_valid(gen->parse))
+		return (1);
+	
+	int	i = -1;
+	while(++i < gen->parse->height)
+		printf("%s", gen->parse->map[i]);
+	// free_double(gen->parse->map);
+	return (0);
+}
+ 
+
+
+
+//      png not valid???????????????????????
+
+//      I AM ACCEPTING TABS
+
+//      REVIEW AND FFEDBACK

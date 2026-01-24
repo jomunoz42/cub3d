@@ -13,7 +13,7 @@ int	main(int argc, char *argv[])
 
 	gen = gen_stuff();
     if (parser(gen, argc, argv))
-        return (1);
+       {return (1);}
 	// if (!validate_textures_path(argv[1], gen->parse))
 	// 	return (super_duper_hiper_free(), 1);
 	// printf("\n==All right from here==\n");

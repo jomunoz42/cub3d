@@ -6,7 +6,7 @@
 #    By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 10:25:55 by vivaz-ca          #+#    #+#              #
-#    Updated: 2026/01/19 18:30:42 by jomunoz          ###   ########.fr        #
+#    Updated: 2026/01/24 19:51:03 by jomunoz          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,11 +22,11 @@ UTILS = ./utils
 
 SRC = \
 	$(SRCDIR)/main.c struct_new.c window_management.c freedom.c \
-	$(PARSE)/file_parsing.c \
-	$(PARSE)/general_parsing.c \
-	$(PARSE)/map_parser.c \
-	$(PARSE)/map_parser2.c \
-	$(PARSE)/map_parser3.c \
+	$(PARSE)/parser.c \
+	$(PARSE)/header_validation.c \
+	$(PARSE)/construct_map.c \
+	$(PARSE)/map_validation.c \
+	$(PARSE)/rgb_validation.c \
 	$(UTILS)/gnl.c \
 	$(UTILS)/vini_utils.c \
 	$(UTILS)/utils1.c

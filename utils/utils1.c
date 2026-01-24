@@ -47,3 +47,29 @@ char	*ft_strdup(const char *s)
 	str[a] = '\0';
 	return (str);
 }
+
+char	*ft_strrchr(const char *s, int c)
+{
+	int		length;
+
+	length = 0;
+	while (s[length] != '\0')
+		length++;
+	while (length >= 0)
+	{
+		if (s[length] == (char)c)
+			return ((char *)&s[length]);
+		length--;
+	}
+	return (NULL);
+}
+
+int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+	{
+		return (1);
+	}
+	else
+		return (0);
+}

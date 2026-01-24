@@ -21,11 +21,10 @@ static int	ft_floodfill(char **map, int y, int x)
 
 static char	**create_copy_map(t_parsing *data)
 {
-	char	**copy;
+	char	**const copy = malloc(sizeof(char *) * (data->height + 1));
 	int		i;
 	int		j;
 
-	copy = malloc(sizeof(char *) * (data->height + 1));
 	if (!copy)
 		(write(2, "Error: Allocation failed\n", 25), exit(1));
 	i = -1;
@@ -44,13 +43,12 @@ static char	**create_copy_map(t_parsing *data)
 	return (copy);
 }
 
-static int	is_map_valid(t_parsing *data)
+int	is_map_valid(t_parsing *data)
 {
-	char	**copy;
+	char	**const copy = create_copy_map(data);
 	int		y;
 	int		x;
 
-	copy = create_copy_map(data);
 	y = -1;
 	while (++y < data->height)
 	{
@@ -70,53 +68,3 @@ static int	is_map_valid(t_parsing *data)
 	}
 	return (free_double(copy), 0);
 }
-
-int	parser(t_gen *gen, int argc, char **argv)
-{
-	if (initial_parsing(argc, argv[1]) != 0)
-		return (1);
-    gen->parse = parsing_init();
-    if (!gen->parse)
-		return (write (2, "Error\nAllocation failed\n", 25), 1);
-	gen->parse->file_path = argv[1];
-	if (construct_map(gen->parse) 
-		|| find_invalid_char(gen->parse)
-		|| find_no_player(gen->parse) 
-		|| find_multiple_player(gen->parse)
-		|| is_map_valid(gen->parse))
-		return (1);
-	
-	int	i = -1;
-	while(++i < gen->parse->height)
-		printf("%s", gen->parse->map[i]);
-	// free_double(gen->parse->map);
-	return (0);
-}
-
-
-//   ERRORS:
-
-
-//   TEXTURES
-
-//   Double defenition of element                         	DONE
-
-//   Not all elements were defined                       	DONE
-
-
-//   MAP
-
-//   No map found in file                     				DONE
-
-//   Map only has spaces (no map)               			DONE
-
-//   Map is not the last element in the file    			DONE
-
-//   The map has 6 possible characters: 0,1,N,S,E,W,' '     DONE
-
-//   More than one player position found       				DONE
-
-//   No player position found              					DONE
-
-//   Map is not surrounded by walls                         DONE
- 
