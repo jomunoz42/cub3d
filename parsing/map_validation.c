@@ -21,18 +21,19 @@ static int	ft_floodfill(char **map, int y, int x)
 
 static char	**create_copy_map(t_parsing *data)
 {
-	char	**const copy = malloc(sizeof(char *) * (data->height + 1));
+	char	**copy;
 	int		i;
 	int		j;
 
+	copy = malloc(sizeof(char *) * (data->height + 1));
 	if (!copy)
-		(write(2, "Error: Allocation failed\n", 25), exit(1));
+		(write(2, "Error: Allocation failed\n", 26), free(data), exit(1));
 	i = -1;
 	while (++i < data->height)
 	{
 		copy[i] = malloc(sizeof(char) * (data->width + 1));
 		if (!copy[i])
-			(write(2, "Error: Allocation failed\n", 25), exit(1));
+			(write(2, "Error: Allocation failed\n", 26), free(data), exit(1));//free here
 		j = 0;
 		while (j < data->width)
 			copy[i][j++] = ' ';
@@ -60,8 +61,8 @@ int	is_map_valid(t_parsing *data)
 				if (ft_floodfill(copy, y, x))
 				{
 					write(2, "Error\n", 6);
-					return (write(2, "Invalid map, not surrounded by walls.\n",
-							39), 1);
+					write(2, "Invalid map, not surrounded by walls.\n", 39);
+					return (free_double(copy), 1);
 				}
 			}
 		}

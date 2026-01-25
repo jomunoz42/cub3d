@@ -16,22 +16,6 @@ int ft_strlen(const char *str)
     return (i);
 }
 
-char *ft_strchr(char *str, int c)
-{
-    int i = 0;
-    if (!str)
-        return (NULL);
-    if (c == '\0')
-        return ((char *)str + ft_strlen(str));
-    while (str[i])
-    {
-        if (str[i] == c)
-            return ((char *)str + i);
-        i++;
-    }
-    return (NULL);
-}
-
 char *ft_strjoin(char *s1, char *s2)
 {
     char *const joined = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);

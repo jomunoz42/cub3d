@@ -6,7 +6,7 @@ static int	is_there_garbage(char *line)
 	char	*tmp;
 	int		i;
 
-	tmp = ft_strtrim(line, "\n");
+	tmp = ft_strtrim(line, " \n");
 	i = 0;
 	while (tmp[i])
 	{

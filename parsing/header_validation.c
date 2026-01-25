@@ -26,7 +26,7 @@ static int identify_header(char *line)
 static int	    is_texture_path_invalid(char *line)
 {
 	char	*path;
-	char	fd;
+	int	    fd;
     int     i;
 
     i = 0;
@@ -39,18 +39,19 @@ static int	    is_texture_path_invalid(char *line)
 	{
 		write(2, "Error\nInvalid texture: ", 24);
 		write(2, path, ft_strlen(path));
+        free(path);
 		if (errno == ENOENT)
 			return (write(2, " does not exist\n", 17), 1);
 		else if (errno == EACCES)
 			return (write(2, " has no reading permissions\n", 29), 1);
 	}
-	return (close(fd), 0);
+	return (free(path), close(fd), 0);
 }
 
 int is_header_line_with_validation(t_parsing *data, char *line)
 {
     int type;
-
+    
     type = identify_header(line);
 	if ((type == E_NO || type == E_SO || type == E_WE || type == E_EA) 
         && is_texture_path_invalid(line))

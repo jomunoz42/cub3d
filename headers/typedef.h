@@ -13,9 +13,6 @@ typedef enum e_element
 
 typedef struct s_parsing
 {
-	char			**textures_info;
-	const char		*error_messages[ERROR_COUNT];
-	char			*file_path;
 	char			**map;
 	char			player;
 	int				width;

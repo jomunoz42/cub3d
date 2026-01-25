@@ -5,9 +5,7 @@
 # include "general.h"
 # include "typedef.h"
 
-t_parsing	*parsing_init(void);
 void		ft_print_matrix(char **matrix);
-int			struct_sharingan(char *file, t_parsing *parse);
 int			ft_matrix_len(char **matrix);
 int			ultimate_file_validation(char *argv, t_parsing *parse);
 int			start_window(void);
@@ -26,7 +24,6 @@ int			color_switch(char *str);
 char		*space_skipper_shift(char *str);
 void		copied_mlx_pixel_put(t_img_data *img_data, int x, int y, int color);
 int			only_num(char *str);
-int			validate_file(int fd);
 char		**refactored_shit(char *file);
 
 // JHONNY STUFF
@@ -39,15 +36,18 @@ int         is_map_valid(t_parsing *data);
 int         is_header_line_with_validation(t_parsing *data, char *line);
 int         check_all_elements(t_parsing *data);
 int     	is_rgb_colours_invalid(char *line, char c);
+t_parsing	*parsing_init(void);
 
 //====================== UTILS =========================
 
 char		*get_next_line(int fd);
+int         contains_tab(char *s);
 int			is_line_empty(char *line);
 void		free_double(char **arg);
 
 //====================== LIBFT =========================
 
+char	    *ft_strchr(const char *s, int c);
 int     	ft_isdigit(int c);
 char	    *ft_strrchr(const char *s, int c);
 void		ft_bzero(void *s, size_t n);

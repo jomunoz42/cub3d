@@ -1,25 +1,25 @@
 
 #include "../headers/cub3d.h"
 
-static char	*skip_header_and_empty_lines(t_parsing *data, int fd)
+static char	*skip_header_and_empty_lines(t_parsing *data)
 {
 	char	*line;
 	int		header;
 
-	line = get_next_line(fd);
+	line = get_next_line(data->fd);
 	while (line)
 	{
 		if (is_line_empty(line))
 		{
 			free(line);
-			line = get_next_line(fd);
+			line = get_next_line(data->fd);
 			continue ;
 		}
 		header = is_header_line_with_validation(data, line);
 		if (header == 1)
 		{
 			free(line);
-			line = get_next_line(fd);
+			line = get_next_line(data->fd);
 			continue ;
 		}
 		if (header == -1)
@@ -30,21 +30,21 @@ static char	*skip_header_and_empty_lines(t_parsing *data, int fd)
 	return (NULL);
 }
 
-static char	**get_map_with_style(int fd, int count)
+static char	**get_map_with_style(t_parsing *data, int count)
 {
+	char 	*const line = get_next_line(data->fd);
 	char	**map;
 
-	char *const line = get_next_line(fd);
 	map = NULL;
 	if (line != NULL)
-		map = get_map_with_style(fd, count + 1);
+		map = get_map_with_style(data, count + 1);
 	else if (count)
 	{
 		map = malloc(sizeof(char *) * (count + 1));
 		if (!map)
 		{
 			write(2, "Error\nAllocation failed\n", 25);
-			return (close(fd), NULL); // free line???
+			return (close(data->fd), NULL); // free line???
 		}
 	}
 	if (map)
@@ -67,15 +67,14 @@ static void	get_height_and_max_width(t_parsing *data)
 int	construct_map(t_parsing *data)
 {
 	char		*line;
-	const int	fd = open(data->file_path, O_RDONLY);
 
-	line = skip_header_and_empty_lines(data, fd);
+	line = skip_header_and_empty_lines(data);
 	if (!line || check_all_elements(data))
-		return (1);
-	data->map = get_map_with_style(fd, 1);
+		return (close(data->fd), 1);
+	data->map = get_map_with_style(data, 1);
 	if (!data->map)
-		return (1);
+		return (close(data->fd), 1);
 	data->map[0] = line;
 	get_height_and_max_width(data);
-	return (close(fd), 0);
+	return (close(data->fd), 0);
 }

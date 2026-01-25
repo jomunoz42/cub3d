@@ -8,24 +8,10 @@ t_parsing	*parsing_init(void)
 	if (!new)
 		return (NULL);
 	*new = (t_parsing){// check and study this later
-						.textures_info = NULL,
-						.file_path = NULL,
 						.map = NULL,
 						.player = '\0',
 						.width = 0,
 						.height = 0,
-						.error_messages = {"Error: missing north texture [NO]",
-							"Error: missing south texture [SO]",
-							"Error: missing west texture [WE]",
-							"Error: missing east texture [EA]",
-							"Error: missing floor color [F]",
-							"Error: missing ceiling color [C]",
-							"Error: can't find north texture file",
-							"Error: can't find south texture file",
-							"Error: can't find west texture file",
-							"Error: can't find east texture file",
-							"Error: floor color invalid",
-							"Error: ceiling color invalid"},
 						.fd = 0,
 						.elements = {0, 0, 0, 0, 0, 0}
 	};
@@ -52,8 +38,8 @@ int	texture_data_init(t_gen *gen)
 		return (0);
 	gen->texture_data->arm_width = 0;
 	gen->texture_data->arm_height = 0;
-	gen->texture_data->clng_color = color_switch(gen->parse->textures_info[4]);
-	gen->texture_data->flr_color = color_switch(gen->parse->textures_info[5]);
+	// gen->texture_data->clng_color = color_switch(gen->parse->textures_info[4]);
+	// gen->texture_data->flr_color = color_switch(gen->parse->textures_info[5]);
 	gen->texture_data->horizon = gen->mlx_data->window_height / 2;
 	if (!png_size_fd(USER_HAND_PNG, &gen->texture_data->arm_width,
 			&gen->texture_data->arm_height))
