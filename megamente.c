@@ -3,6 +3,11 @@
 void search_in_matrix(t_gen *gen, int character)
 {
     int row = 0;
+    if (!gen || !gen->parse || !gen->parse->map || !gen->parse->map[0][0])
+    {
+        printf("nigger\n");
+        return ;
+    }
     while (gen->parse->map[row])
     {
         int col = 0;

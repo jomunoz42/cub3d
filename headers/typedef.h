@@ -13,6 +13,7 @@ typedef enum e_element
 
 typedef struct s_parsing
 {
+	char 			**textures_info;
 	char			**map;
 	char			player;
 	int				width;

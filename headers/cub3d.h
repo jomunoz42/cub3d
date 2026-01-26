@@ -63,7 +63,7 @@ int			not_last_element(t_parsing *data);
 int			is_header_line(t_parsing *data, char *line);
 int	        is_rgb_colours_invalid(char *line, char c);
 int         check_all_elements(t_parsing *data);
-int is_header_line_with_validation(t_parsing *data, char *line);
+int         is_header_line_with_validation(t_parsing *data, char *line);
 
 //====================== UTILS =========================
 

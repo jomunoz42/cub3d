@@ -130,17 +130,10 @@ int	parser(t_gen *gen, int argc, char **argv)
 	int	i = -1;
 	while (++i < gen->parse->height)
 		printf("%s", gen->parse->map[i]);
-	free_double(gen->parse->map);
-	free(gen->parse);
+	// free_double(gen->parse->map);
+	// free(gen->parse);
 
 	return (0);
 }
-
-// Files das texturas em xpm
-// int len = ft_strlen(path);
-// if (len < 4 || ft_strncmp(path + len - 4, ".xpm", 4) != 0)
-//     return (error _message());
-
-//      I AM ACCEPTING TABS   (invalid)
 
 // TRATAR LEAKS
