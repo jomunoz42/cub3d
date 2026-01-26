@@ -127,11 +127,9 @@ int	parser(t_gen *gen, int argc, char **argv)
 		|| find_multiple_player(gen->parse) || is_map_valid(gen->parse))
 		return (free_double(gen->parse->map), free(gen->parse), 1);
 
-	int	i = -1;
-	while (++i < gen->parse->height)
-		printf("%s", gen->parse->map[i]);
-	// free_double(gen->parse->map);
-	// free(gen->parse);
+	// int	i = -1;
+	// while (++i < gen->parse->height)
+	// 	printf("%s", gen->parse->map[i]);
 
 	return (0);
 }

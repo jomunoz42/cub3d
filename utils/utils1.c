@@ -1,5 +1,5 @@
 
-#include "./headers/cub3d.h"
+#include "../headers/cub3d.h"
 
 void	free_double(char **arg)
 {
@@ -30,22 +30,25 @@ int	is_line_empty(char *line)
 
 char	*ft_strdup(const char *s)
 {
-	char	*str;
-	int		a;
-	int		size;
+	char	*dest;
+	int		i;
 
-	size = ft_strlen(s);
-	str = malloc(sizeof(char) * (size + 1));
-	if (str == NULL)
+	i = 0;
+	if (!s)
 		return (NULL);
-	a = 0;
-	while (a < size)
+	while (s[i])
+		i++;
+	dest = (char *)malloc(i + 1);
+	if (!dest)
+		return (NULL);
+	i = 0;
+	while (s[i] != '\0')
 	{
-		str[a] = s[a];
-		a++;
+		dest[i] = s[i];
+		i++;
 	}
-	str[a] = '\0';
-	return (str);
+	dest[i] = '\0';
+	return (dest);
 }
 
 char	*ft_strrchr(const char *s, int c)

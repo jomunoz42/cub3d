@@ -68,9 +68,18 @@ int	construct_map(t_parsing *data)
 {
 	char		*line;
 
+	data->textures_info = malloc(sizeof(char *) * 7);
+	if (!data->textures_info)
+		return (ft_free_matrix(data->textures_info), 0);
+	data->textures_info[6] = NULL;
+
 	line = skip_header_and_empty_lines(data);
 	if (!line || check_all_elements(data))
 		return (close(data->fd), 1);
+
+	// for (int i = 0; i < 6; i++)
+	// 	printf("VALID? right after parser: texture_info[%d]: %s\n", i, data->textures_info[i]);
+
 	data->map = get_map_with_style(data, 1);
 	if (!data->map)
 		return (close(data->fd), 1);

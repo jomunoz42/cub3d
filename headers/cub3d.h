@@ -52,6 +52,7 @@ int main_init(t_gen *gen, char *argv);
 int	start_window(t_gen *gen, char *argv);
 void draw_minimap_fov(t_gen *gen);
 
+
 // JHONNY STUFF
 
 //===================== PARSING ========================
@@ -61,8 +62,8 @@ int	        is_map_valid(t_parsing *data);
 int			construct_map(t_parsing *data);
 int			not_last_element(t_parsing *data);
 int			is_header_line(t_parsing *data, char *line);
-int	        is_rgb_colours_invalid(char *line, char c);
 int         check_all_elements(t_parsing *data);
+int	        is_rgb_colours_invalid(t_parsing *data, char *line, char c, int type);
 int         is_header_line_with_validation(t_parsing *data, char *line);
 
 //====================== UTILS =========================
@@ -76,6 +77,7 @@ void		free_double(char **arg);
 
 char	    *ft_strchr(const char *s, int c);
 int     	ft_isdigit(int c);
+char	*ft_strdup(const char *s);
 char	    *ft_strrchr(const char *s, int c);
 void		ft_bzero(void *s, size_t n);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
