@@ -1,47 +1,6 @@
 
 #include "./headers/cub3d.h"
 
-// int	ft_strncmp(const char *s1, const char *s2, size_t n)
-// {
-// 	size_t	a;
-
-// 	a = 0;
-// 	if (!s1 || !s2)
-// 		return (1);
-// 	while ((s1[a] != '\0' || s2[a] != '\0') && a < n)
-// 	{
-// 		if ((unsigned char)s1[a] != (unsigned char)s2[a])
-// 		{
-// 			return ((unsigned char)s1[a] - (unsigned char)s2[a]);
-// 		}
-// 		a++;
-// 	}
-// 	return (0);
-// }
-
-// size_t ft_strlen(char *str)
-// {
-//     size_t i = 0;
-//     if (!str)
-//         return (0);
-//     while (str[i])
-//         i++;
-//     return (i);
-// }
-
-// void	*ft_memcpy(void *dest, const void *src, size_t n)
-// {
-// 	size_t	i;
-
-// 	i = 0;
-// 	while (i < n)
-// 	{
-// 		((unsigned char *)dest)[i] = ((unsigned char *)src)[i];
-// 		i++;
-// 	}
-// 	return (dest);
-// }
-
 void	free_double(char **arg)
 {
 	int	i;
@@ -53,4 +12,96 @@ void	free_double(char **arg)
 		free(arg[i++]);
 	free(arg);
 	return ;
+}
+
+int	is_line_empty(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] != ' ' && line[i] != '\n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+char	*ft_strdup(const char *s)
+{
+	char	*str;
+	int		a;
+	int		size;
+
+	size = ft_strlen(s);
+	str = malloc(sizeof(char) * (size + 1));
+	if (str == NULL)
+		return (NULL);
+	a = 0;
+	while (a < size)
+	{
+		str[a] = s[a];
+		a++;
+	}
+	str[a] = '\0';
+	return (str);
+}
+
+char	*ft_strrchr(const char *s, int c)
+{
+	int		length;
+
+	length = 0;
+	while (s[length] != '\0')
+		length++;
+	while (length >= 0)
+	{
+		if (s[length] == (char)c)
+			return ((char *)&s[length]);
+		length--;
+	}
+	return (NULL);
+}
+
+int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+	{
+		return (1);
+	}
+	else
+		return (0);
+}
+
+int contains_tab(char *line)
+{
+    int i;
+
+	i = 0;
+    while (line[i])
+    {
+        if (line[i] == '\t')
+            return (1);
+        i++;
+    }
+    return (0);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	unsigned char	unc;
+	size_t			a;
+
+	unc = (unsigned char)c;
+	a = 0;
+	while (s[a] != '\0')
+	{
+		if ((unsigned char)s[a] == unc)
+			return ((char *)&s[a]);
+		a++;
+	}
+	if (unc == '\0')
+		return ((char *)&s[a]);
+	return (NULL);
 }

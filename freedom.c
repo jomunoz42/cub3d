@@ -38,8 +38,6 @@ void	free_parsing(t_parsing *parse)
 {
 	if (!parse)
 		return ;
-	if (parse->textures_info)
-		ft_free_matrix(parse->textures_info);
 	free(parse);
 }
 
