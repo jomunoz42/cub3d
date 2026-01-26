@@ -5,12 +5,14 @@
 # include "general.h"
 # include "typedef.h"
 
+int			ft_strcmp(char *s1, char *s2);
+int			ft_strncmp(const char *s1, const char *s2, size_t n);
+char		*ft_strtrim(char const *s1, char const *set);
+char		*ft_strcpy(char *s1, char *s2);
 void		ft_print_matrix(char **matrix);
 int			ft_matrix_len(char **matrix);
 int			ultimate_file_validation(char *argv, t_parsing *parse);
-int			start_window(void);
-int			mlx_data_init(void);
-t_gen		*gen_stuff(void);
+int			mlx_data_init(t_gen *gen);
 void		ft_free_matrix(char **matrix);
 int			super_duper_hiper_free(void);
 void		file_closer(void);
@@ -24,19 +26,44 @@ int			color_switch(char *str);
 char		*space_skipper_shift(char *str);
 void		copied_mlx_pixel_put(t_img_data *img_data, int x, int y, int color);
 int			only_num(char *str);
+int			validate_file(int fd);
 char		**refactored_shit(char *file);
+int			validate_file(int fd);
+int			get_player_position(t_gen *gen);
+void		draw_minimap(t_gen *gen);
+int			move_player(int keysym, t_gen *gen);
+void		ft_bzero(void *s, size_t n);
+void		draw_minimap_tile(t_gen *gen, int row, int col, int color);
+int			key_press(int key, t_gen *gen);
+int			key_release(int key, t_gen *gen);
+bool		collision(t_gen *gen, int next_y, int next_x);
+void		redraw_map_tiles(t_gen *gen, int y, int x, int prev[2]);
+bool		collision(t_gen *gen, int next_y, int next_x);
+int			draw_arm(void *param);
+void		draw_minimap(t_gen *gen);
+int			key_handler(int keysym, t_gen *gen);
+void		draw_minimap_tile(t_gen *gen, int row, int col, int color);
+void		redraw_map_tiles(t_gen *gen, int y, int x, int prev[2]);
+int			key_press(int key, t_gen *gen);
+int			key_release(int key, t_gen *gen);
+t_gen		*gen_stuff(void);
+t_parsing	*parsing_init(void);
+int main_init(t_gen *gen, char *argv);
+int	start_window(t_gen *gen, char *argv);
+void draw_minimap_fov(t_gen *gen);
 
 // JHONNY STUFF
 
 //===================== PARSING ========================
 
 int	        parser(t_gen *gen, int argc, char **argv);
+int	        is_map_valid(t_parsing *data);
 int			construct_map(t_parsing *data);
-int         is_map_valid(t_parsing *data);
-int         is_header_line_with_validation(t_parsing *data, char *line);
+int			not_last_element(t_parsing *data);
+int			is_header_line(t_parsing *data, char *line);
+int	        is_rgb_colours_invalid(char *line, char c);
 int         check_all_elements(t_parsing *data);
-int     	is_rgb_colours_invalid(char *line, char c);
-t_parsing	*parsing_init(void);
+int is_header_line_with_validation(t_parsing *data, char *line);
 
 //====================== UTILS =========================
 

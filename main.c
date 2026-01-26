@@ -18,6 +18,6 @@ int	main(int argc, char *argv[])
 	// 	return (super_duper_hiper_free(), 1);
 	// printf("\n==All right from here==\n");
 	// printf("FILE DESCRIPTOR OF [%s] is: %d\n", argv[1], gen->parse->fd);
-	start_window();
+	start_window(gen, argv[1]);
 	return (0);
 }

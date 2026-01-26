@@ -10,7 +10,7 @@ PARSE = ./parsing
 UTILS = ./utils
 
 SRC = \
-	$(SRCDIR)/main.c struct_new.c window_management.c freedom.c \
+	$(SRCDIR)/main.c struct_new.c window_management.c freedom.c megamente.c player_movement.c picasso.c davinci.c\
 	$(PARSE)/parser.c \
 	$(PARSE)/header_validation.c \
 	$(PARSE)/construct_map.c \
@@ -18,7 +18,8 @@ SRC = \
 	$(PARSE)/rgb_validation.c \
 	$(UTILS)/gnl.c \
 	$(UTILS)/vini_utils.c \
-	$(UTILS)/utils1.c
+	$(UTILS)/utils1.c \
+	$(PARSE)/villan_arc.c \
 
 
 OBJS = $(SRC:../%.c=$(OBJDIR)/%.o)
@@ -53,7 +54,7 @@ fclean: clean
 re: fclean all
 
 val: re
-	valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --track-origins=yes ./$(NAME) testing.cub
+	valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --track-origins=yes ./$(NAME) map.cub
 	
 lib:
 	tar -xf minilibx-linux.tgz
@@ -68,7 +69,7 @@ norm:
 	@echo "Amount of errors: " && norminette $(shell find . -type f \( -name "*.c" -o -name "*.h" \)) | grep "Error" | wc -l
 
 run: re
-	@./$(NAME) testing.cub
+	@./$(NAME) map.cub
 
 
 .PHONY: all clean fclean re

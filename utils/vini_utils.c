@@ -319,7 +319,7 @@ void copied_mlx_pixel_put(t_img_data *img_data, int x, int y, int color)
 {
 	char *dest;
 
-	dest = img_data->addr + (y * img_data->line_len + x * (img_data->bits_per_pixel / 8));
+	dest = img_data->addr + (y * img_data->line_len + x * (img_data->bits_pixel / 8));
 	*(unsigned int *)dest = color;
 }
 
@@ -333,4 +333,41 @@ int only_num(char *str)
 		i++;
 	}
 	return (1);
+}
+
+bool collision(t_gen *gen, int next_y, int next_x)
+{
+    return (gen->parse->map[next_y][next_x] == '1');
+}
+
+int key_press(int key, t_gen *gen)
+{
+    if (key == XK_Escape)
+        handle_exit(key);
+
+    if (key == XK_w)
+        gen->kboard->key_w = true;
+    if (key == XK_s)
+        gen->kboard->key_s = true;
+    if (key == XK_a)
+        gen->kboard->key_a = true;
+    if (key == XK_d)
+        gen->kboard->key_d = true;
+
+    return (0);
+}
+
+
+int key_release(int key, t_gen *gen)
+{
+    if (key == XK_w)
+        gen->kboard->key_w = false;
+    if (key == XK_s)
+        gen->kboard->key_s = false;
+    if (key == XK_a)
+        gen->kboard->key_a = false;
+    if (key == XK_d)
+        gen->kboard->key_d = false;
+
+    return (0);
 }
