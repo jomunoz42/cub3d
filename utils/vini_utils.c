@@ -345,13 +345,13 @@ int key_press(int key, t_gen *gen)
     if (key == XK_Escape)
         handle_exit(key);
 
-    if (key == XK_w || key == XK_Up)
+    if (key == XK_w)
         gen->kboard->key_w = true;
-    if (key == XK_s || key == XK_Down)
+    if (key == XK_s)
         gen->kboard->key_s = true;
-    if (key == XK_a || key == XK_Left)
+    if (key == XK_a)
         gen->kboard->key_a = true;
-    if (key == XK_d || key == XK_Right)
+    if (key == XK_d)
         gen->kboard->key_d = true;
 
     return (0);
@@ -360,13 +360,13 @@ int key_press(int key, t_gen *gen)
 
 int key_release(int key, t_gen *gen)
 {
-    if (key == XK_w || key == XK_Up)
+    if (key == XK_w)
         gen->kboard->key_w = false;
-    if (key == XK_s || key == XK_Down)
+    if (key == XK_s)
         gen->kboard->key_s = false;
-    if (key == XK_a || key == XK_Left)
+    if (key == XK_a)
         gen->kboard->key_a = false;
-    if (key == XK_d || key == XK_Right)
+    if (key == XK_d)
         gen->kboard->key_d = false;
 
     return (0);

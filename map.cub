@@ -1,5 +1,5 @@
 NO ./imgs/north.png
-SO       ./imgs/south.png
+SO  ./imgs/south.png
 WE ./imgs/west.png
 EA ./imgs/east.png
 
