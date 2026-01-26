@@ -54,9 +54,7 @@ int	is_rgb_colours_invalid(t_parsing *data, char *line, char c, int type)
 	while (line[i] == ' ' || line[i] == c)
 		i++;
 
-	// printf("%s\n", &line[i]);
 	data->textures_info[type] = ft_strdup(line + i);
-	// ft_strcpy(data->textures_info[type], line + i);
 
 	if (!ft_strrchr(&line[i], ','))
 		return (rgb_error_message(), 1);
@@ -73,9 +71,5 @@ int	is_rgb_colours_invalid(t_parsing *data, char *line, char c, int type)
 			return (free_double(all_colors), rgb_error_message(), 1);
 		i++;
 	}
-
-
-	for (int i = 0; i < 6; i++)
-		printf("VALID? right after parser: texture_info[%d]: %s\n", i, data->textures_info[i]);
 	return (0);
 }

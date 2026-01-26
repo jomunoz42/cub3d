@@ -47,8 +47,6 @@ int	texture_data_init(t_gen *gen)
 		return (0);
 	gen->texture_data->arm_width = 0;
 	gen->texture_data->arm_height = 0;
-	printf("\nOLHA SO 1: %s\n", gen->parse->textures_info[4]);
-	printf("daltonismo = %s\n", gen->parse->textures_info[4]);
 	gen->texture_data->clng_color = color_switch(gen->parse->textures_info[5]);
 	gen->texture_data->flr_color = color_switch(gen->parse->textures_info[4]);
 	gen->texture_data->horizon = gen->mlx_data->win_height / 2;

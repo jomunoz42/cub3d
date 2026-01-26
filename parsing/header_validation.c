@@ -57,17 +57,10 @@ int is_header_line_with_validation(t_parsing *data, char *line)
 	if ((type == E_NO || type == E_SO || type == E_WE || type == E_EA) 
         && is_texture_path_invalid(data, line, type))
 		return (-1);
-
-
 	if (type == E_F && is_rgb_colours_invalid(data, line, 'F', type))
 		return (-1);
 	if (type == E_C && is_rgb_colours_invalid(data, line, 'C', type))
 		return (-1);
-
-
-        
-	// for (int i = 0; i < 6; i++)
-	// 	printf("VALID? right after parser: texture_info[%d]: %s\n", i, data->textures_info[i]);
     if (type == -1)
         return (0);
     if (data->elements[type] == 1)
