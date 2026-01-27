@@ -60,8 +60,8 @@ void direction_hits_wall(t_gen *gen, double rayDirX, double rayDirY)
 	double	sideDistY;
 	double	deltaDistX;
 	double	deltaDistY;
-	int		mapX;
-	int		mapY;
+	int		mapX; //atual_tile_x
+	int		mapY; // atual_tile_y
 	int		stepX;
 	int		stepY;
 	int		hit;
@@ -69,17 +69,22 @@ void direction_hits_wall(t_gen *gen, double rayDirX, double rayDirY)
 	mapX = (int)gen->player->x;
 	mapY = (int)gen->player->y;
 
-	deltaDistX = fabs(1 / rayDirX);
-	deltaDistY = fabs(1 / rayDirY);
+	deltaDistX = fabs(5 / rayDirX); //basicamente a distancia entre linhas vertis
+	deltaDistY = fabs(5 / rayDirY);	//basicamente a distancia entre linhas horizontais
 
+// ########
+// 	|   |   |   |
+//  |   | P |   | cruzar um linha vertical muda x, uma horizontal muda y
+//  |   |   |   |
+// ########
 	if (rayDirX < 0)
 	{
-		stepX = -1;
+		stepX = -1; //raio pra esquerda
 		sideDistX = (gen->player->x - mapX) * deltaDistX;
 	}
 	else
 	{
-		stepX = 1;
+		stepX = 1; //raio pra direita
 		sideDistX = (mapX + 1.0 - gen->player->x) * deltaDistX;
 	}
 
@@ -95,7 +100,7 @@ void direction_hits_wall(t_gen *gen, double rayDirX, double rayDirY)
 	}
 
 	hit = 0;
-	while (!hit)
+	while (!hit) //base da 
 	{
 		if (sideDistX < sideDistY)
 		{
@@ -143,4 +148,20 @@ void draw_minimap_fov(t_gen *gen)
 		direction_hits_wall(gen, rayDirX, rayDirY);
 		i++;
 	}
+}
+
+void rotate_player(t_gen *gen, double angle)
+{
+	double oldDirX = gen->player->dir_x;
+	double oldPlaneX = gen->player->plane_x;
+
+	gen->player->dir_x = gen->player->dir_x * cos(angle)
+		- gen->player->dir_y * sin(angle);
+	gen->player->dir_y = oldDirX * sin(angle)
+		+ gen->player->dir_y * cos(angle);
+
+	gen->player->plane_x = gen->player->plane_x * cos(angle)
+		- gen->player->plane_y * sin(angle);
+	gen->player->plane_y = oldPlaneX * sin(angle)
+		+ gen->player->plane_y * cos(angle);
 }

@@ -343,16 +343,14 @@ bool collision(t_gen *gen, int next_y, int next_x)
 int key_press(int key, t_gen *gen)
 {
     if (key == XK_Escape)
-        handle_exit(key);
+        {handle_exit(key);}
 
-    if (key == XK_w)
-        gen->kboard->key_w = true;
-    if (key == XK_s)
-        gen->kboard->key_s = true;
-    if (key == XK_a)
-        gen->kboard->key_a = true;
-    if (key == XK_d)
-        gen->kboard->key_d = true;
+	if (key == XK_w) {gen->kboard->key_w = true;}
+	if (key == XK_s) {gen->kboard->key_s = true;}
+	if (key == XK_a) {gen->kboard->key_a = true;}
+	if (key == XK_d) {gen->kboard->key_d = true;}
+	if (key == XK_Left) {gen->kboard->key_left = true;}
+	if (key == XK_Right) {gen->kboard->key_right = true;}
 
     return (0);
 }
@@ -361,13 +359,17 @@ int key_press(int key, t_gen *gen)
 int key_release(int key, t_gen *gen)
 {
     if (key == XK_w)
-        gen->kboard->key_w = false;
+        {gen->kboard->key_w = false;}
     if (key == XK_s)
-        gen->kboard->key_s = false;
+        {gen->kboard->key_s = false;}
     if (key == XK_a)
-        gen->kboard->key_a = false;
+        {gen->kboard->key_a = false;}
     if (key == XK_d)
-        gen->kboard->key_d = false;
+        {gen->kboard->key_d = false;}
+	if (key == XK_Left)
+		{gen->kboard->key_left = false;}
+	if (key == XK_Right)
+		{gen->kboard->key_right = false;}
 
     return (0);
 }

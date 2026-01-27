@@ -1,41 +1,34 @@
 #include "./headers/cub3d.h"
 #include "headers/general.h"
 
-int move_player(int keysym, t_gen *gen)
+int game_loop(t_gen *gen)
 {
-    int prev[2] = {(int)gen->player->y, (int)gen->player->x};
-    int next_x = prev[1];
-    int next_y = prev[0];
+	double nx = gen->player->x;
+	double ny = gen->player->y;
+	int prev[2] = {(int)ny, (int)nx};
 
-    if (keysym == XK_w)
-        next_y--;
-    else if (keysym == XK_s)
-        next_y++;
-    else if (keysym == XK_a)
-        next_x--;
-    else if (keysym == XK_d)
-        next_x++;
-
-    if (!collision(gen, next_y, next_x))
-    {
-        gen->player->x = next_x;
-        gen->player->y = next_y;
-        redraw_map_tiles(gen, next_y, next_x, prev);
+    if (gen->kboard->key_w) 
+		ny -= MOVE_SPEED;
+    if (gen->kboard->key_s) 
+		ny += MOVE_SPEED;
+    if (gen->kboard->key_a) 
+		nx -= MOVE_SPEED;
+    if (gen->kboard->key_d) 
+		nx += MOVE_SPEED;
+	if (gen->kboard->key_right)
+	{
+        rotate_player(gen, ROTATION_SPEED);
     }
-
+	if (gen->kboard->key_left)
+		rotate_player(gen, -ROTATION_SPEED);
+    if (nx != prev[1] || ny != prev[0])
+    {
+        if (!collision(gen, ny, nx))
+        {
+            gen->player->x = nx;
+            gen->player->y = ny;
+            redraw_map_tiles(gen, ny, nx, prev);
+        }
+    }
     return (0);
 }
-
-int key_handler(int keysym, t_gen *gen)
-{
-    if (keysym == XK_Escape)
-        handle_exit(keysym);
-
-    else if (keysym == XK_w || keysym == XK_a
-          || keysym == XK_s || keysym == XK_d)
-        move_player(keysym, gen);
-    return (0);
-}
-
-
-

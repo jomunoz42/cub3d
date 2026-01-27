@@ -28,6 +28,9 @@ typedef struct s_keyboard
 	bool			key_a;
 	bool			key_s;
 	bool			key_d;
+	bool			key_right;
+	bool			key_left;
+
 }					t_keyboard;
 
 typedef struct s_mlx_data

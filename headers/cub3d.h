@@ -24,6 +24,7 @@ int			png_size_fd(const char *path, uint32_t *w, uint32_t *h);
 int			rgb_to_hex(int r, int g, int b);
 int			color_switch(char *str);
 char		*space_skipper_shift(char *str);
+int game_loop(t_gen *gen);
 void		copied_mlx_pixel_put(t_img_data *img_data, int x, int y, int color);
 int			only_num(char *str);
 int			validate_file(int fd);
@@ -51,6 +52,8 @@ t_parsing	*parsing_init(void);
 int main_init(t_gen *gen, char *argv);
 int	start_window(t_gen *gen, char *argv);
 void draw_minimap_fov(t_gen *gen);
+void ciclope_dos_xman(t_img_data *img,int x0, int y0, int x1, int y1, int color);
+void rotate_player(t_gen *gen, double angle);
 
 
 // JHONNY STUFF

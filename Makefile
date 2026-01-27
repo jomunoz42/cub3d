@@ -26,7 +26,7 @@ OBJS = $(SRC:../%.c=$(OBJDIR)/%.o)
 OBJS := $(OBJS:./%.c=$(OBJDIR)/%.o)
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -Wno-incompatible-pointer-types #TIRAR ESSA ULTIMA FLAG DEPOIS ANIMAL CABACO DO KRL
+CFLAGS = -Wall -Wextra -Werror -g -lm -Wno-incompatible-pointer-types #TIRAR ESSA ULTIMA FLAG DEPOIS ANIMAL CABACO DO KRL
 
 
 MLX_FLAGS = -L . -lmlx -lXext -lX11
