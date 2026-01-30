@@ -78,6 +78,15 @@ typedef struct s_minimap
 	int				height;
 }					t_minimap;
 
+typedef struct s_rayhit
+{
+    int     mapX;
+    int     mapY;
+    int     side;      // 0 = parede vertical (X), 1 = horizontal (Y)
+    double  dist;
+}   t_rayhit;
+
+
 typedef struct s_general
 {
 	t_texture_data	*texture_data;
@@ -87,5 +96,6 @@ typedef struct s_general
 	t_player		*player;
 	t_keyboard		*kboard;
 	t_minimap		*minimap;
+	t_rayhit		*rayhit;
 	void			*arm;
 }					t_gen;

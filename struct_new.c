@@ -83,6 +83,18 @@ int keyboard_init(t_gen *gen)
 	return (1);
 }
 
+int rayhit_init(t_gen *gen)
+{
+	gen->rayhit = malloc(sizeof(t_rayhit));
+	if (!gen->rayhit)
+		return (0);
+	gen->rayhit->dist = 0;
+	gen->rayhit->mapX = 0;
+	gen->rayhit->mapY = 0;
+	gen->rayhit->side = -1;
+	return (1);
+}
+
 int player_init(t_gen *gen)
 {
 	gen->player = malloc(sizeof(t_player));
@@ -114,6 +126,7 @@ int	mlx_data_init(t_gen *gen)
 	player_init(gen);
 	minimap_init(gen);
 	keyboard_init(gen);
+	rayhit_init(gen);
 	printf("== horizontal line is on %d\n", gen->texture_data->horizon);
 	return (0);
 }

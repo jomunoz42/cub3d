@@ -51,6 +51,7 @@ t_gen		*gen_stuff(void);
 t_parsing	*parsing_init(void);
 int main_init(t_gen *gen, char *argv);
 int	start_window(t_gen *gen, char *argv);
+void render_scene(t_gen *gen);
 void draw_minimap_fov(t_gen *gen);
 void ciclope_dos_xman(t_img_data *img,int x0, int y0, int x1, int y1, int color);
 void rotate_player(t_gen *gen, double angle);

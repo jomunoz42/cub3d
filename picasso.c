@@ -1,17 +1,5 @@
 #include "./headers/cub3d.h"
 
-void draw_player_direction(t_gen *gen)
-{
-    int px = gen->player->x * MINIMAP_SCALE + (MINIMAP_SCALE / 2);
-    int py = gen->player->y * MINIMAP_SCALE + (MINIMAP_SCALE / 2);
-
-    int dx = px + gen->player->dir_x * MINIMAP_SCALE * 1.5;
-    int dy = py + gen->player->dir_y * MINIMAP_SCALE * 1.5;
-
-    ciclope_dos_xman(&gen->minimap->image, px, py, dx, dy, 0xFF0000);
-}
-
-
 int draw_arm(void *param)
 {
 	t_gen *gen;
@@ -71,7 +59,6 @@ void draw_minimap(t_gen *gen)
     }
     draw_minimap_tile(gen,(int)gen->player->y,(int)gen->player->x,0xFFA500);
     draw_minimap_fov(gen);
-    // draw_player_direction(gen);
     mlx_put_image_to_window(gen->mlx_data->mlx_ptr,gen->mlx_data->win_ptr,
         gen->minimap->image.img,0,0);
 }

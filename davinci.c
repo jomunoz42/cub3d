@@ -125,7 +125,7 @@ void direction_hits_wall(t_gen *gen, double rayDirX, double rayDirY)
 }
 
 
-void draw_minimap_fov(t_gen *gen)
+void draw_minimap_fov(t_gen *gen) 
 {
 	int		i;
 	int		num_rays;
