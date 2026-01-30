@@ -19,6 +19,7 @@ void rotate_player(t_gen *gen, double angle)
 
 int game_loop(t_gen *gen)
 {
+
 	double nx = gen->player->x;
 	double ny = gen->player->y;
 
@@ -52,6 +53,8 @@ int game_loop(t_gen *gen)
 		gen->player->x = nx;
 		gen->player->y = ny;
 	}
+  genesis(gen);
+  draw_arm(gen);
 	draw_minimap(gen);   // limpa minimapa
 	render_scene(gen);  // raycast + raios + paredes
 

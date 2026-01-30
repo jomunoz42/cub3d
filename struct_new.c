@@ -22,7 +22,7 @@ t_parsing	*parsing_init(void)
 int main_init(t_gen *gen, char *argv)
 {
 	(void)argv;
-	if (mlx_data_init(gen))
+	if (init_all(gen))
 		return (0);
 	return (1);
 }
@@ -109,24 +109,30 @@ int player_init(t_gen *gen)
 	return (1);
 }
 
-int	mlx_data_init(t_gen *gen)
+int basic_mlx_init(t_gen *gen)
 {
-	gen->mlx_data = malloc(sizeof(t_mlx_data));
-	if (!gen->mlx_data)
-		return (1);
 	gen->mlx_data->mlx_ptr = mlx_init();
 	if (!gen->mlx_data->mlx_ptr)
-		return (1);
+		return (0);
 	gen->mlx_data->win_ptr = NULL;
 	gen->arm = NULL;
 	gen->mlx_data->win_width = WIN_WIDTH;
 	gen->mlx_data->win_height = WIN_HEIGHT;
+	return (1);
+}
+
+int	init_all(t_gen *gen)
+{
+	gen->mlx_data = malloc(sizeof(t_mlx_data));
+	if (!gen->mlx_data)
+		return (1);
+	basic_mlx_init(gen);
 	texture_data_init(gen);
 	avg_img_init(gen);
 	player_init(gen);
 	minimap_init(gen);
 	keyboard_init(gen);
 	rayhit_init(gen);
-	printf("== horizontal line is on %d\n", gen->texture_data->horizon);
+	// printf("== horizontal line is on %d\n", gen->texture_data->horizon);
 	return (0);
 }
