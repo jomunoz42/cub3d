@@ -57,6 +57,9 @@ fclean: clean
 
 re: fclean all
 
+deb:
+	lldb ./$(NAME) map.cub
+
 val: re
 	valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --track-origins=yes ./$(NAME) map.cub
 	

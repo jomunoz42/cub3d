@@ -97,5 +97,5 @@ typedef struct s_general
 	t_keyboard		*kboard;
 	t_minimap		*minimap;
 	t_rayhit		*rayhit;
-	void			*arm;
+	t_img_data			*arm;
 }					t_gen;

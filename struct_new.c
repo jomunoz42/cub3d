@@ -109,6 +109,32 @@ int player_init(t_gen *gen)
 	return (1);
 }
 
+int arm_init(t_gen *gen)
+{
+	gen->arm = malloc(sizeof(t_img_data));
+	if (!gen->arm)
+		return (0);
+	int img_width = (int)gen->texture_data->arm_width;
+	int img_height = (int)gen->texture_data->arm_height;
+	gen->arm->bits_pixel = 0;
+	gen->arm->line_len = 0;
+	gen->arm->endian = 0;
+	gen->arm->img = mlx_xpm_file_to_image(
+    gen->mlx_data->mlx_ptr,
+    USER_HAND_XPM,
+    &img_width,
+    &img_height
+	);
+	gen->arm->addr = mlx_get_data_addr(
+		gen->arm->img,
+		&gen->arm->bits_pixel,
+		&gen->arm->line_len,
+		&gen->arm->endian
+	);
+	return (1);
+
+}
+
 int basic_mlx_init(t_gen *gen)
 {
 	gen->mlx_data->mlx_ptr = mlx_init();
@@ -132,7 +158,9 @@ int	init_all(t_gen *gen)
 	player_init(gen);
 	minimap_init(gen);
 	keyboard_init(gen);
+	
 	rayhit_init(gen);
+	arm_init(gen);
 	// printf("== horizontal line is on %d\n", gen->texture_data->horizon);
 	return (0);
 }
