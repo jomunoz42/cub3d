@@ -8,9 +8,10 @@ MAP_DIR = maps
 TEXTURE_DIR = ../textures
 PARSE = ./parsing
 UTILS = ./utils
+MINIMAP = ./minimap
 
 SRC = \
-	$(SRCDIR)/main.c struct_new.c window_management.c freedom.c megamente.c player_movement.c picasso.c davinci.c\
+	$(SRCDIR)/main.c struct_new.c window_management.c freedom.c  player_movement.c picasso.c \
 	$(PARSE)/parser.c \
 	$(PARSE)/header_validation.c \
 	$(PARSE)/construct_map.c \
@@ -20,6 +21,7 @@ SRC = \
 	$(UTILS)/vini_utils.c \
 	$(UTILS)/utils1.c \
 	$(PARSE)/villan_arc.c \
+	$(MINIMAP)/minimap.c
 
 
 OBJS = $(SRC:../%.c=$(OBJDIR)/%.o)

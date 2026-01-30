@@ -1,25 +1,5 @@
-#include "./headers/cub3d.h"
+#include "../headers/cub3d.h"
 
-//manda uma linha vermelha
-//inicio em (0:0)
-//final em (6, 3)
-// y
-// 3 |            *
-// 2 |        *
-// 1 |    *
-// 0 |*
-//   +---------------- x
-//     0 1 2 3 4 5 6
-// distance_x_total = |6 - 0| = 6   // anda 6 pixels no eixo X
-// distance_y_total = |3 - 0| = 3   // anda 3 pixels no eixo Y
-
-// direction_of_x = +1   // anda para a direita
-// direction_of_y = +1   // anda para cima
-
-// err = distance_x_total - distance_y_total ==> 6 - 3 ==> 3
-
-// y = m*x
-//m = dy/dy
 void ciclope_dos_xman(t_img_data *img,int x0, int y0, int x1, int y1, int color)
 {
 	int distance_x_total;
@@ -52,6 +32,52 @@ void ciclope_dos_xman(t_img_data *img,int x0, int y0, int x1, int y1, int color)
 		}
 	}
 }
+
+void draw_minimap_fov(t_gen *gen) 
+{
+	int		i;
+	int		num_rays;
+	double	cameraX;
+	double	rayDirX;
+	double	rayDirY;
+
+	num_rays = 20; // quantos raios no cone
+
+	i = 0;
+	while (i < num_rays)
+	{
+		cameraX = 2.0 * i / (num_rays - 1) - 1.0;
+
+		rayDirX = gen->player->dir_x
+			+ gen->player->plane_x * cameraX;
+		rayDirY = gen->player->dir_y
+			+ gen->player->plane_y * cameraX;
+
+		direction_hits_wall(gen, rayDirX, rayDirY);
+		i++;
+	}
+}
+
+//manda uma linha vermelha
+//inicio em (0:0)
+//final em (6, 3)
+// y
+// 3 |            *
+// 2 |        *
+// 1 |    *
+// 0 |*
+//   +---------------- x
+//     0 1 2 3 4 5 6
+// distance_x_total = |6 - 0| = 6   // anda 6 pixels no eixo X
+// distance_y_total = |3 - 0| = 3   // anda 3 pixels no eixo Y
+
+// direction_of_x = +1   // anda para a direita
+// direction_of_y = +1   // anda para cima
+
+// err = distance_x_total - distance_y_total ==> 6 - 3 ==> 3
+
+// y = m*x
+//m = dy/dy
 
 //ve se a direcao que tamo olhando bateu numa parece
 void direction_hits_wall(t_gen *gen, double rayDirX, double rayDirY)
@@ -122,46 +148,4 @@ void direction_hits_wall(t_gen *gen, double rayDirX, double rayDirY)
 	int py1 = (mapY + 0.5) * MINIMAP_SCALE;
 
 	ciclope_dos_xman(&gen->minimap->image, px0, py0, px1, py1, 0xFF0000);
-}
-
-
-void draw_minimap_fov(t_gen *gen) 
-{
-	int		i;
-	int		num_rays;
-	double	cameraX;
-	double	rayDirX;
-	double	rayDirY;
-
-	num_rays = 20; // quantos raios no cone
-
-	i = 0;
-	while (i < num_rays)
-	{
-		cameraX = 2.0 * i / (num_rays - 1) - 1.0;
-
-		rayDirX = gen->player->dir_x
-			+ gen->player->plane_x * cameraX;
-		rayDirY = gen->player->dir_y
-			+ gen->player->plane_y * cameraX;
-
-		direction_hits_wall(gen, rayDirX, rayDirY);
-		i++;
-	}
-}
-
-void rotate_player(t_gen *gen, double angle)
-{
-	double oldDirX = gen->player->dir_x;
-	double oldPlaneX = gen->player->plane_x;
-
-	gen->player->dir_x = gen->player->dir_x * cos(angle)
-		- gen->player->dir_y * sin(angle);
-	gen->player->dir_y = oldDirX * sin(angle)
-		+ gen->player->dir_y * cos(angle);
-
-	gen->player->plane_x = gen->player->plane_x * cos(angle)
-		- gen->player->plane_y * sin(angle);
-	gen->player->plane_y = oldPlaneX * sin(angle)
-		+ gen->player->plane_y * cos(angle);
 }
