@@ -19,44 +19,18 @@ int start_window(t_gen *gen, char *argv)
 {
     (void)argv;
 
-    // Inicializa janela
     if (window_init(gen, 0, 0) == 1)
         return (printf("inutil animal\n"), 1);
-
     get_player_position(gen);
+    gen->img_data->img = mlx_new_image(gen->mlx_data->mlx_ptr,gen->mlx_data->win_width,gen->mlx_data->win_height);
+    gen->img_data->addr = mlx_get_data_addr(gen->img_data->img,&gen->img_data->bits_pixel,&gen->img_data->line_len,&gen->img_data->endian);
 
-    // Cria a imagem principal para render
-    gen->img_data->img = mlx_new_image(
-        gen->mlx_data->mlx_ptr,
-        gen->mlx_data->win_width,
-        gen->mlx_data->win_height
-    );
-    gen->img_data->addr = mlx_get_data_addr(
-        gen->img_data->img,
-        &gen->img_data->bits_pixel,
-        &gen->img_data->line_len,
-        &gen->img_data->endian
-    );
-	printf("IMAGE ADDRESS = %p\n", (void *)gen->img_data->addr);
+    gen->minimap->image.img = mlx_new_image(gen->mlx_data->mlx_ptr,gen->minimap->width,gen->minimap->height);
+    gen->minimap->image.addr = mlx_get_data_addr(gen->minimap->image.img,&gen->minimap->image.bits_pixel,&gen->minimap->image.line_len,&gen->minimap->image.endian);
 
-    // Cria imagem fixa para minimapa
-    gen->minimap->image.img = mlx_new_image(
-        gen->mlx_data->mlx_ptr,
-        gen->minimap->width,
-        gen->minimap->height
-    );
-    gen->minimap->image.addr = mlx_get_data_addr(
-        gen->minimap->image.img,
-        &gen->minimap->image.bits_pixel,
-        &gen->minimap->image.line_len,
-        &gen->minimap->image.endian
-    );
-
-    // Hooks do teclado
     mlx_hook(gen->mlx_data->win_ptr, 2, 1L << 0, key_press, gen);
     mlx_hook(gen->mlx_data->win_ptr, 3, 1L << 1, key_release, gen);
 
-    // Loop principal
     mlx_loop_hook(gen->mlx_data->mlx_ptr, game_loop, gen);
     mlx_loop(gen->mlx_data->mlx_ptr);
 

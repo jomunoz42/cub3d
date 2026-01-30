@@ -33,29 +33,59 @@ void ciclope_dos_xman(t_img_data *img,int x0, int y0, int x1, int y1, int color)
 	}
 }
 
-void draw_minimap_fov(t_gen *gen) 
+void direction_hits_wall(t_gen *gen, double rayDirX, double rayDirY)
 {
-	int		i;
-	int		num_rays;
-	double	cameraX;
-	double	rayDirX;
-	double	rayDirY;
+    int mapX = (int)gen->player->x;
+    int mapY = (int)gen->player->y;
+    int stepX, stepY, hit = 0;
+    double sideDistX, sideDistY, deltaDistX, deltaDistY;
 
-	num_rays = 20; // quantos raios no cone
+    deltaDistX = fabs(5 / rayDirX);
+    deltaDistY = fabs(5 / rayDirY);
 
-	i = 0;
-	while (i < num_rays)
-	{
-		cameraX = 2.0 * i / (num_rays - 1) - 1.0;
+    stepX = (rayDirX < 0) ? -1 : 1;
+    sideDistX = (rayDirX < 0) ? (gen->player->x - mapX) * deltaDistX : (mapX + 1.0 - gen->player->x) * deltaDistX;
 
-		rayDirX = gen->player->dir_x
-			+ gen->player->plane_x * cameraX;
-		rayDirY = gen->player->dir_y
-			+ gen->player->plane_y * cameraX;
+    stepY = (rayDirY < 0) ? -1 : 1;
+    sideDistY = (rayDirY < 0) ? (gen->player->y - mapY) * deltaDistY : (mapY + 1.0 - gen->player->y) * deltaDistY;
 
-		direction_hits_wall(gen, rayDirX, rayDirY);
-		i++;
-	}
+    while (!hit)
+    {
+        if (sideDistX < sideDistY)
+        {
+            sideDistX += deltaDistX;
+            mapX += stepX;
+        }
+        else
+        {
+            sideDistY += deltaDistY;
+            mapY += stepY;
+        }
+        if (gen->parse->map[mapY][mapX] == '1')
+            hit = 1;
+    }
+
+    int px0 = gen->player->x * MINIMAP_SCALE;
+    int py0 = gen->player->y * MINIMAP_SCALE;
+    int px1 = (mapX + 0.5) * MINIMAP_SCALE;
+    int py1 = (mapY + 0.5) * MINIMAP_SCALE;
+
+    ciclope_dos_xman(gen->img_data, px0, py0, px1, py1, 0xFF0000);
+}
+
+void draw_minimap_fov(t_gen *gen)
+{
+    int i, num_rays = 20;
+    double cameraX, rayDirX, rayDirY;
+
+    for (i = 0; i < num_rays; i++)
+    {
+        cameraX = 2.0 * i / (num_rays - 1) - 1.0;
+        rayDirX = gen->player->dir_x + gen->player->plane_x * cameraX;
+        rayDirY = gen->player->dir_y + gen->player->plane_y * cameraX;
+
+        direction_hits_wall(gen, rayDirX, rayDirY);
+    }
 }
 
 //manda uma linha vermelha
@@ -80,72 +110,72 @@ void draw_minimap_fov(t_gen *gen)
 //m = dy/dy
 
 //ve se a direcao que tamo olhando bateu numa parece
-void direction_hits_wall(t_gen *gen, double rayDirX, double rayDirY)
-{
-	double	sideDistX;
-	double	sideDistY;
-	double	deltaDistX;
-	double	deltaDistY;
-	int		mapX; //atual_tile_x
-	int		mapY; // atual_tile_y
-	int		stepX;
-	int		stepY;
-	int		hit;
+// void direction_hits_wall(t_gen *gen, double rayDirX, double rayDirY)
+// {
+// 	double	sideDistX;
+// 	double	sideDistY;
+// 	double	deltaDistX;
+// 	double	deltaDistY;
+// 	int		mapX; //atual_tile_x
+// 	int		mapY; // atual_tile_y
+// 	int		stepX;
+// 	int		stepY;
+// 	int		hit;
 
-	mapX = (int)gen->player->x;
-	mapY = (int)gen->player->y;
+// 	mapX = (int)gen->player->x;
+// 	mapY = (int)gen->player->y;
 
-	deltaDistX = fabs(5 / rayDirX); //basicamente a distancia entre linhas vertis
-	deltaDistY = fabs(5 / rayDirY);	//basicamente a distancia entre linhas horizontais
+// 	deltaDistX = fabs(5 / rayDirX); //basicamente a distancia entre linhas vertis
+// 	deltaDistY = fabs(5 / rayDirY);	//basicamente a distancia entre linhas horizontais
 
-// ########
-// 	|   |   |   |
-//  |   | P |   | cruzar um linha vertical muda x, uma horizontal muda y
-//  |   |   |   |
-// ########
-	if (rayDirX < 0)
-	{
-		stepX = -1; //raio pra esquerda
-		sideDistX = (gen->player->x - mapX) * deltaDistX;
-	}
-	else
-	{
-		stepX = 1; //raio pra direita
-		sideDistX = (mapX + 1.0 - gen->player->x) * deltaDistX;
-	}
+// // ########
+// // 	|   |   |   |
+// //  |   | P |   | cruzar um linha vertical muda x, uma horizontal muda y
+// //  |   |   |   |
+// // ########
+// 	if (rayDirX < 0)
+// 	{
+// 		stepX = -1; //raio pra esquerda
+// 		sideDistX = (gen->player->x - mapX) * deltaDistX;
+// 	}
+// 	else
+// 	{
+// 		stepX = 1; //raio pra direita
+// 		sideDistX = (mapX + 1.0 - gen->player->x) * deltaDistX;
+// 	}
 
-	if (rayDirY < 0)
-	{
-		stepY = -1;
-		sideDistY = (gen->player->y - mapY) * deltaDistY;
-	}
-	else
-	{
-		stepY = 1;
-		sideDistY = (mapY + 1.0 - gen->player->y) * deltaDistY;
-	}
+// 	if (rayDirY < 0)
+// 	{
+// 		stepY = -1;
+// 		sideDistY = (gen->player->y - mapY) * deltaDistY;
+// 	}
+// 	else
+// 	{
+// 		stepY = 1;
+// 		sideDistY = (mapY + 1.0 - gen->player->y) * deltaDistY;
+// 	}
 
-	hit = 0;
-	while (!hit) //base da 
-	{
-		if (sideDistX < sideDistY)
-		{
-			sideDistX += deltaDistX;
-			mapX += stepX;
-		}
-		else
-		{
-			sideDistY += deltaDistY;
-			mapY += stepY;
-		}
-		if (gen->parse->map[mapY][mapX] == '1')
-			hit = 1;
-	}
+// 	hit = 0;
+// 	while (!hit) //base da 
+// 	{
+// 		if (sideDistX < sideDistY)
+// 		{
+// 			sideDistX += deltaDistX;
+// 			mapX += stepX;
+// 		}
+// 		else
+// 		{
+// 			sideDistY += deltaDistY;
+// 			mapY += stepY;
+// 		}
+// 		if (gen->parse->map[mapY][mapX] == '1')
+// 			hit = 1;
+// 	}
 
-	int px0 = gen->player->x * MINIMAP_SCALE;
-	int py0 = gen->player->y * MINIMAP_SCALE;
-	int px1 = (mapX + 0.5) * MINIMAP_SCALE;
-	int py1 = (mapY + 0.5) * MINIMAP_SCALE;
+// 	int px0 = gen->player->x * MINIMAP_SCALE;
+// 	int py0 = gen->player->y * MINIMAP_SCALE;
+// 	int px1 = (mapX + 0.5) * MINIMAP_SCALE;
+// 	int py1 = (mapY + 0.5) * MINIMAP_SCALE;
 
-	ciclope_dos_xman(&gen->minimap->image, px0, py0, px1, py1, 0xFF0000);
-}
+// 	ciclope_dos_xman(&gen->minimap->image, px0, py0, px1, py1, 0xFF0000);
+// }

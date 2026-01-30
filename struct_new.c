@@ -60,14 +60,30 @@ int	texture_data_init(t_gen *gen)
 
 int minimap_init(t_gen *gen)
 {
-	gen->minimap = malloc(sizeof(t_minimap));
-	if (!gen->minimap)
-		return (0);
-	gen->minimap->map = NULL;
-	gen->minimap->width = gen->mlx_data->win_width * 0.20;
-	gen->minimap->height = gen->mlx_data->win_height * 0.20;
-	return (1);
+    gen->minimap = malloc(sizeof(t_minimap));
+    if (!gen->minimap)
+        return 0;
+
+    gen->minimap->map = NULL;
+    gen->minimap->width  = gen->mlx_data->win_width * 0.20;
+    gen->minimap->height = gen->mlx_data->win_height * 0.20;
+
+    // Create the MLX image for the minimap
+    gen->minimap->image.img = mlx_new_image(
+        gen->mlx_data->mlx_ptr,
+        gen->minimap->width,
+        gen->minimap->height
+    );
+    gen->minimap->image.addr = mlx_get_data_addr(
+        gen->minimap->image.img,
+        &gen->minimap->image.bits_pixel,
+        &gen->minimap->image.line_len,
+        &gen->minimap->image.endian
+    );
+
+    return 1;
 }
+
 
 int keyboard_init(t_gen *gen)
 {

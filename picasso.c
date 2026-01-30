@@ -30,6 +30,17 @@ int get_pixel_color(t_gen *gen, int x, int y)
     return color;
 }
 
+int get_pixel_color_img(t_img_data *img, int x, int y)
+{
+    if (!img || !img->addr)
+        return 0;
+    if (x < 0 || x >= img->line_len / (img->bits_pixel / 8) || y < 0)
+        return 0;
+
+    char *pixel = img->addr + y * img->line_len + x * (img->bits_pixel / 8);
+    return *(int *)pixel;
+}
+
 
 void draw_arm(t_gen *gen)
 {
