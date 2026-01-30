@@ -48,8 +48,12 @@ int	super_duper_hiper_free(void)
 	gen = gen_stuff();
 	if (gen->mlx_data)
 	{
-		if (gen->arm)
-			mlx_destroy_image(gen->mlx_data->mlx_ptr, gen->arm);
+		if (gen->img_data->img)
+			mlx_destroy_image(gen->mlx_data->mlx_ptr, gen->img_data->img);
+
+		if (gen->minimap->image.img)
+			mlx_destroy_image(gen->mlx_data->mlx_ptr, gen->minimap->image.img);
+
 		if (gen->mlx_data->win_ptr)
 			mlx_destroy_window(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr);
 		if (gen->mlx_data->mlx_ptr)
@@ -66,6 +70,10 @@ int	super_duper_hiper_free(void)
 			ft_free_matrix(gen->minimap->map);
 		free(gen->minimap);
 	}
+	if (gen->minimap)
+		free(gen->minimap);
+	if (gen->arm)
+		/* free(gen->arm->img),  */free(gen->arm);
 	if (gen->kboard)
 		free(gen->kboard);
 	if (gen->texture_data)
