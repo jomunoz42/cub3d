@@ -68,7 +68,6 @@ int minimap_init(t_gen *gen)
     gen->minimap->width  = gen->mlx_data->win_width * 0.20;
     gen->minimap->height = gen->mlx_data->win_height * 0.20;
 
-    // Create the MLX image for the minimap
     gen->minimap->image.img = mlx_new_image(
         gen->mlx_data->mlx_ptr,
         gen->minimap->width,
@@ -173,6 +172,7 @@ int	init_all(t_gen *gen)
 	avg_img_init(gen);
 	player_init(gen);
 	minimap_init(gen);
+	draw_static_minimap(gen);
 	keyboard_init(gen);
 	
 	rayhit_init(gen);
