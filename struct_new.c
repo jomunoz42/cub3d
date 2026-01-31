@@ -172,7 +172,7 @@ int	init_all(t_gen *gen)
 	avg_img_init(gen);
 	player_init(gen);
 	minimap_init(gen);
-	draw_static_minimap(gen);
+	// draw_static_minimap(gen);
 	keyboard_init(gen);
 	
 	rayhit_init(gen);

@@ -67,11 +67,11 @@ void update_player(t_gen *gen)
 
 int game_loop(t_gen *gen)
 {
-    update_player(gen);               // Movimento e rotação
+    update_player(gen);              
     clear_image(gen->img_data, 0x000000); // Limpa a tela
-    render_scene(gen);                // Raycasting e paredes
-    draw_minimap(gen);                // Minimapa
-    draw_arm(gen);                     // HUD da arma
+    render_scene(gen);                
+    draw_minimap(gen);                
+    draw_arm(gen);                     
     mlx_put_image_to_window(
         gen->mlx_data->mlx_ptr,
         gen->mlx_data->win_ptr,

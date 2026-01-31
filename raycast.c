@@ -68,15 +68,6 @@ t_rayhit cast_ray(t_gen *gen, double rayDirX, double rayDirY)
     return (hit);
 }
 
-void draw_ray_debug(t_gen *gen, t_rayhit hit)
-{
-    int px0 = gen->player->x * MINIMAP_SCALE;
-    int py0 = gen->player->y * MINIMAP_SCALE;
-    int px1 = (hit.mapX + 0.5) * MINIMAP_SCALE;
-    int py1 = (hit.mapY + 0.5) * MINIMAP_SCALE;
-
-    ciclope_dos_xman(&gen->minimap->image, px0, py0, px1, py1, 0xFF0000);
-}
 void render_scene(t_gen *gen)
 {
     for (int x = 0; x < WIN_WIDTH; x++)
