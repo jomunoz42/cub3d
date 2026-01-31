@@ -31,6 +31,21 @@ void draw_player_dot(t_gen *gen, int center_x, int center_y)
     }
 }
 
+void draw_player_square(t_gen *gen)
+{
+    int cx = MINIMAP_OFFSET_X + MINIMAP_RADIUS * MINIMAP_SCALE;
+    int cy = MINIMAP_OFFSET_Y + MINIMAP_RADIUS * MINIMAP_SCALE;
+
+    int size = MINIMAP_SCALE;
+    for (int y = 0; y < size; y++)
+        for (int x = 0; x < size; x++)
+            copied_mlx_pixel_put(
+                gen->img_data,
+                cx + x,
+                cy + y,
+                0x0000FF
+            );
+}
 
 // Called each frame
 void draw_minimap(t_gen *gen)
@@ -38,51 +53,53 @@ void draw_minimap(t_gen *gen)
     int player_x = (int)gen->player->x;
     int player_y = (int)gen->player->y;
 
-    for (int dy = -MINIMAP_RADIUS; dy <= MINIMAP_RADIUS; dy++)
+    int start_x = player_x - MINIMAP_RADIUS;
+    int start_y = player_y - MINIMAP_RADIUS;
+
+    // Clamp to map bounds
+    if (start_x < 0) start_x = 0;
+    if (start_y < 0) start_y = 0;
+    if (start_x + MINIMAP_TILES > gen->parse->width)
+        start_x = gen->parse->width - MINIMAP_TILES;
+    if (start_y + MINIMAP_TILES > gen->parse->height)
+        start_y = gen->parse->height - MINIMAP_TILES;
+
+    for (int y = 0; y < MINIMAP_TILES; y++)
     {
-        for (int dx = -MINIMAP_RADIUS; dx <= MINIMAP_RADIUS; dx++)
+        for (int x = 0; x < MINIMAP_TILES; x++)
         {
-            int map_x = player_x + dx;
-            int map_y = player_y + dy;
+            int map_x = start_x + x;
+            int map_y = start_y + y;
 
-            int screen_x = (dx + MINIMAP_RADIUS) * MINIMAP_SCALE;
-            int screen_y = (dy + MINIMAP_RADIUS) * MINIMAP_SCALE;
+            if (map_x < 0 || map_y < 0 || map_y >= gen->parse->height)
+                continue;
 
-    if (map_y < 0 || map_y >= gen->parse->height)
-        continue;
-
-    if (map_x < 0)
-        continue;
-
-    if (!gen->parse->map[map_y])
-        continue;
-
-    int row_len = ft_strlen(gen->parse->map[map_y]);
-    if (map_x >= row_len)
-        continue;
-
-
+            int row_len = ft_strlen(gen->parse->map[map_y]);
+            if (map_x >= row_len)
+                continue;
 
             int color;
-            if (gen->parse->map[map_y][map_x] == '1')
+            char tile = gen->parse->map[map_y][map_x];
+            if (tile == '1')
                 color = 0xFFFFFF;
-            else if (gen->parse->map[map_y][map_x] == '0')
+            else if (tile == '0')
                 color = 0x161616;
             else
                 continue;
 
             draw_minimap_tile_pixel(
                 gen,
-                screen_x,
-                screen_y,
+                MINIMAP_OFFSET_X + x * MINIMAP_SCALE,
+                MINIMAP_OFFSET_Y + y * MINIMAP_SCALE,
                 color
             );
         }
     }
-    int center = MINIMAP_RADIUS * MINIMAP_SCALE;
-    draw_player_dot(gen, center, center);
+
+    draw_player_square(gen);
     draw_minimap_fov(gen);
 }
+
 
 
 void draw_minimap_tile(t_gen *gen, int row, int col, int color)
