@@ -23,9 +23,8 @@
 # define MINIMAP_SCALE 15
 # define MOVE_SPEED 0.09
 # define ROTATION_SPEED 0.09
-# define TRANSPARENT_COLOR 0X00000000
-// # define MOVE_SPEED 0.009
-// # define ROTATION_SPEED 0.009
+# define TRANSPARENT_COLOR 0X000000
+# define WALL_MARGIN 0.2
 
 
 # define USER_HAND_XPM "./imgs/arm_placeholder.xpm"

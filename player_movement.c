@@ -57,11 +57,11 @@ void update_player(t_gen *gen)
     if (gen->kboard->key_left)
         rotate_player(gen, -ROTATION_SPEED);
 
-    if (!collision(gen, ny, nx))
-    {
+
+    if (!collision(gen, gen->player->y, nx + gen->player->dir_x * WALL_MARGIN))
         gen->player->x = nx;
+    if (!collision(gen, ny + gen->player->dir_y * WALL_MARGIN, gen->player->x))
         gen->player->y = ny;
-    }
 }
 
 
