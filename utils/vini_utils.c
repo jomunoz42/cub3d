@@ -317,11 +317,16 @@ char *space_skipper_shift(char *str)
 
 void copied_mlx_pixel_put(t_img_data *img_data, int x, int y, int color)
 {
-	char *dest;
+    // First, check bounds
+    if (x < 0 || x >= img_data->width || y < 0 || y >= img_data->height)
+        return; // outside image, do nothing
 
-	dest = img_data->addr + (y * img_data->line_len + x * (img_data->bits_pixel / 8));
-	*(unsigned int *)dest = color;
+    char *dest;
+
+    dest = img_data->addr + (y * img_data->line_len + x * (img_data->bits_pixel / 8));
+    *(unsigned int *)dest = color;
 }
+
 
 int only_num(char *str)
 {
@@ -405,4 +410,11 @@ int get_player_position(t_gen *gen)
 {
     search_in_matrix(gen, 'N');
     return (0);
+}
+
+int	ft_abs(int n)
+{
+	if (n < 0)
+		return (-n);
+	return (n);
 }

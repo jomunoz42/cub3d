@@ -24,7 +24,8 @@ int start_window(t_gen *gen, char *argv)
     get_player_position(gen);
     gen->img_data->img = mlx_new_image(gen->mlx_data->mlx_ptr,gen->mlx_data->win_width,gen->mlx_data->win_height);
     gen->img_data->addr = mlx_get_data_addr(gen->img_data->img,&gen->img_data->bits_pixel,&gen->img_data->line_len,&gen->img_data->endian);
-
+	gen->img_data->height = gen->mlx_data->win_height;
+	gen->img_data->width = gen->mlx_data->win_width;
     mlx_hook(gen->mlx_data->win_ptr, 2, 1L << 0, key_press, gen);
     mlx_hook(gen->mlx_data->win_ptr, 3, 1L << 1, key_release, gen);
 

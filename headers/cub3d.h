@@ -47,6 +47,7 @@ bool		collision(t_gen *gen, int next_y, int next_x);
 void		draw_minimap(t_gen *gen);
 int			key_handler(int keysym, t_gen *gen);
 void		draw_minimap_tile(t_gen *gen, int row, int col, int color);
+int	ft_abs(int n);
 int main_loop(t_gen *gen);
 int			key_press(int key, t_gen *gen);
 int			key_release(int key, t_gen *gen);

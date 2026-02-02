@@ -63,12 +63,15 @@ typedef struct s_player
 
 typedef struct s_images_data
 {
-	void			*img;
-	char			*addr;
-	int				bits_pixel;
-	int				line_len;
-	int				endian;
-}					t_img_data;
+    void *img;
+    char *addr;
+    int bits_pixel;
+    int line_len;
+    int endian;
+    int width;
+    int height;
+} t_img_data;
+
 
 typedef struct s_minimap
 {

@@ -79,6 +79,8 @@ int minimap_init(t_gen *gen)
         &gen->minimap->image.line_len,
         &gen->minimap->image.endian
     );
+	gen->minimap->image.height = gen->mlx_data->win_height;
+	gen->minimap->image.width = gen->mlx_data->win_width;
 
     return 1;
 }
@@ -134,6 +136,8 @@ int arm_init(t_gen *gen)
 	gen->arm->bits_pixel = 0;
 	gen->arm->line_len = 0;
 	gen->arm->endian = 0;
+	gen->arm->width = 0;
+	gen->arm->height = 0;
 	gen->arm->img = mlx_xpm_file_to_image(
     gen->mlx_data->mlx_ptr,
     USER_HAND_XPM,

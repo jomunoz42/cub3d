@@ -9,8 +9,8 @@ void ciclope_dos_xman(t_img_data *img,int x0, int y0, int x1, int y1, int color)
 	int err;
 	int err_times_2;
 
-	distance_x_total = abs(x1 - x0); //quantos puxels andar no x
-	distance_y_total = abs(y1 - y0); // quantos pixel andar no y
+	distance_x_total = ft_abs(x1 - x0); //quantos puxels andar no x
+	distance_y_total = ft_abs(y1 - y0); // quantos pixel andar no y
 	direction_of_x = (x0 < x1) ? 1 : -1;
 	direction_of_y = (y0 < y1) ? 1 : -1;
 	err = distance_x_total - distance_y_total;
