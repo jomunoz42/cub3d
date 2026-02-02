@@ -35,6 +35,9 @@ void ciclope_dos_xman(t_img_data *img,int x0, int y0, int x1, int y1, int color)
 
 void direction_hits_wall(t_gen *gen, double rayDirX, double rayDirY)
 {
+    int start_x = (int)gen->player->x - ZOOM_LEVEL / 2;
+    int start_y = (int)gen->player->y - ZOOM_LEVEL / 2;
+
     int mapX = (int)gen->player->x;
     int mapY = (int)gen->player->y;
     int stepX, stepY, hit = 0;
@@ -65,10 +68,10 @@ void direction_hits_wall(t_gen *gen, double rayDirX, double rayDirY)
             hit = 1;
     }
 
-    int px0 = gen->player->x * MINIMAP_SCALE;
-    int py0 = gen->player->y * MINIMAP_SCALE;
-    int px1 = (mapX + 0.5) * MINIMAP_SCALE;
-    int py1 = (mapY + 0.5) * MINIMAP_SCALE;
+    int px0 = MINIMAP_PIXELS / 2;
+    int py0 = MINIMAP_PIXELS / 2;
+    int px1 = (mapX - start_x + 0.5) * MINIMAP_TILE_PIXELS;
+    int py1 = (mapY - start_y + 0.5) * MINIMAP_TILE_PIXELS;
 
     ciclope_dos_xman(gen->img_data, px0, py0, px1, py1, 0xFF0000);
 }

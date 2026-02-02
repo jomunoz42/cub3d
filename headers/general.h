@@ -30,4 +30,10 @@
 # define USER_HAND_XPM "./imgs/arm_placeholder.xpm"
 # define USER_HAND_PNG "./imgs/arm_placeholder.png"
 
+
+#define MINIMAP_PIXELS 200
+#define ZOOM_LEVEL 15   
+#define MINIMAP_TILE_PIXELS (MINIMAP_PIXELS / ZOOM_LEVEL)
+
+
 #endif
