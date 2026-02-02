@@ -1,6 +1,21 @@
 
 #include "../headers/cub3d.h"
 
+static void	free_partial_copy(char **copy, int last)
+{
+	int	i;
+
+	if (!copy)
+		return ;
+	i = 0;
+	while (i < last)
+	{
+		free(copy[i]);
+		i++;
+	}
+	free(copy);
+}
+
 static int	ft_floodfill(char **map, int y, int x)
 {
 	if (y < 0 || x < 0 || !map[y] || !map[y][x] || map[y][x] == ' ')
@@ -27,13 +42,13 @@ static char	**create_copy_map(t_parsing *data)
 
 	copy = malloc(sizeof(char *) * (data->height + 1));
 	if (!copy)
-		(write(2, "Error: Allocation failed\n", 26), free(data), exit(1));
+		return (write(2, "Error: Allocation failed\n", 26), NULL);
 	i = -1;
 	while (++i < data->height)
 	{
 		copy[i] = malloc(sizeof(char) * (data->width + 1));
 		if (!copy[i])
-			(write(2, "Error: Allocation failed\n", 26), free(data), exit(1));//free here
+			return (write(2, "Error: Allocation failed\n", 26), free_partial_copy(copy, i), NULL);
 		j = 0;
 		while (j < data->width)
 			copy[i][j++] = ' ';
@@ -46,10 +61,13 @@ static char	**create_copy_map(t_parsing *data)
 
 int	is_map_valid(t_parsing *data)
 {
-	char	**const copy = create_copy_map(data);
+	char	**copy;
 	int		y;
 	int		x;
 
+	copy = create_copy_map(data);
+	if (!copy)
+		return (1);
 	y = -1;
 	while (++y < data->height)
 	{

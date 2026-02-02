@@ -45,6 +45,8 @@ static int	    is_texture_path_invalid(t_parsing *data, char *line, int type)
 		else if (errno == EACCES)
 			return (write(2, " has no reading permissions\n", 29), 1);
 	}
+    if (data->textures_info[type])
+		free(data->textures_info[type]);
     data->textures_info[type] = path;
 	return (close(fd), 0);
 }
@@ -69,7 +71,7 @@ int is_header_line_with_validation(t_parsing *data, char *line)
     return (1);
 }
 
-int check_all_elements(t_parsing *data)
+int check_all_elements(t_parsing *data, char *line)
 {
     int i;
 
@@ -80,6 +82,7 @@ int check_all_elements(t_parsing *data)
         {
             write(2, "Error\n", 6);
             write(2, "Invalid map, not all elements were defined\n", 44);
+            free(line);
             return (1);
         }
         i++;

@@ -1,6 +1,17 @@
 
 #include "../headers/cub3d.h"
 
+static int allocate_textures(t_parsing *data)
+{
+	data->textures_info = ft_calloc(E_COUNT + 1, sizeof(char *));
+	if (!data->textures_info)
+	{
+		write(2, "Error\nAllocation failed\n", 25);
+		return (1);
+	}
+	return (0);
+}
+
 static char	*skip_header_and_empty_lines(t_parsing *data)
 {
 	char	*line;
@@ -44,7 +55,7 @@ static char	**get_map_with_style(t_parsing *data, int count)
 		if (!map)
 		{
 			write(2, "Error\nAllocation failed\n", 25);
-			return (close(data->fd), NULL); // free line???
+			return (free(line), NULL);
 		}
 	}
 	if (map)
@@ -64,20 +75,18 @@ static void	get_height_and_max_width(t_parsing *data)
 	}
 }
 
-int	construct_map(t_parsing *data)
+int	construct_map_and_textures(t_parsing *data)
 {
 	char		*line;
 
-	data->textures_info = malloc(sizeof(char *) * 7);
-	if (!data->textures_info)
-		return (ft_free_matrix(data->textures_info), 0);
-	data->textures_info[6] = NULL;
+	if (allocate_textures(data))
+		return (1);
 	line = skip_header_and_empty_lines(data);
-	if (!line || check_all_elements(data))
-		return (close(data->fd), 1);
+	if (!line || check_all_elements(data, line))
+		return (1);
 	data->map = get_map_with_style(data, 1);
 	if (!data->map)
-		return (close(data->fd), 1);
+		return (free(line), 1);
 	data->map[0] = line;
 	get_height_and_max_width(data);
 	return (close(data->fd), 0);

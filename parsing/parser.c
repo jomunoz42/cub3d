@@ -94,7 +94,7 @@ static int	file_parsing(t_parsing *data, int argc, char *file_path)
 	{
 		write(2, "Error\n", 6);
 		write(2, "Incorrect number of arguments\n", 30);
-		return (free(data), 1);
+		return (1);
 	}
 	data->fd = open(file_path, O_RDONLY);
 	if (data->fd < 0)
@@ -102,14 +102,14 @@ static int	file_parsing(t_parsing *data, int argc, char *file_path)
 		write(2, "Error\n", 6);
 		write(2, file_path, ft_strlen(file_path));
 		if (errno == ENOENT)
-			return (write(2, " does not exist\n", 17), free(data), 1);
+			return (write(2, " does not exist\n", 17), 1);
 		else if (errno == EACCES)
-			return (write(2, ": permission denied\n", 21), free(data), 1);
+			return (write(2, ": permission denied\n", 21), 1);
 	}
 	if (len < 4 || ft_strncmp(&file_path[len - 4], ".cub\0", 5))
 	{
 		write(2, "Error\nFile doesn't have the right extension\n", 45);
-		return (close(data->fd), free(data), 1);
+		return (1);
 	}
 	return (0);
 }
@@ -120,13 +120,12 @@ int	parser(t_gen *gen, int argc, char **argv)
 	if (!gen->parse)
 		return (write(2, "Error\nAllocation failed\n", 25), 1);
 	if (file_parsing(gen->parse, argc, argv[1]) != 0)
-		return (1);
-	if (construct_map(gen->parse))
-		return (free(gen->parse), 1);
+		return (free_parsing(gen->parse), 1);
+	if (construct_map_and_textures(gen->parse))
+		return (free_parsing(gen->parse), 1);
 	if (find_invalid_char(gen->parse) || find_no_player(gen->parse)
 		|| find_multiple_player(gen->parse) || is_map_valid(gen->parse))
-		return (free_double(gen->parse->map), free(gen->parse), 1);
+		return (free_parsing(gen->parse), 1);
 	return (0);
 }
 
-// TRATAR LEAKS

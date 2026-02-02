@@ -20,7 +20,6 @@ SRC = \
 	$(UTILS)/gnl.c \
 	$(UTILS)/vini_utils.c \
 	$(UTILS)/utils1.c \
-	$(PARSE)/villan_arc.c \
 	$(MINIMAP)/minimap.c \
 	$(MINIMAP)/minimap_utils.c
 
@@ -30,7 +29,7 @@ OBJS = $(SRC:../%.c=$(OBJDIR)/%.o)
 OBJS := $(OBJS:./%.c=$(OBJDIR)/%.o)
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -lm -Wno-incompatible-pointer-types #TIRAR ESSA ULTIMA FLAG DEPOIS ANIMAL CABACO DO KRL
+CFLAGS = -Wall -Wextra -Werror -g -Wno-incompatible-pointer-types #TIRAR ESSA ULTIMA FLAG DEPOIS ANIMAL CABACO DO KRL
 
 
 MLX_FLAGS = -L . -lmlx -lXext -lX11
@@ -39,7 +38,7 @@ INCLUDES = -I$(MLXDIR) -I$(GNL_DIR) -I. -I$(MAP_DIR)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) $(MLX_FLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(MLX_FLAGS) -o $(NAME) -lm
 
 $(OBJDIR)/%.o: ../%.c
 	@mkdir -p $(dir $@)
