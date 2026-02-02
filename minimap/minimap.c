@@ -1,33 +1,5 @@
 #include "../headers/cub3d.h"
 
-// Called once at initialization
-void draw_static_minimap(t_gen *gen)
-{
-    for (int row = 0; gen->parse->map[row]; row++)
-    {
-        for (int col = 0; gen->parse->map[row][col]; col++)
-        {
-            int color;
-            if (gen->parse->map[row][col] == '1')
-                color = 0xFFFFFF;
-            else if (gen->parse->map[row][col] == '0')
-                color = 0x161616;
-            else
-                continue;
-
-            for (int dy = 0; dy < MINIMAP_SCALE; dy++)
-                for (int dx = 0; dx < MINIMAP_SCALE; dx++)
-                    copied_mlx_pixel_put(
-                        &gen->minimap->image,
-                        col * MINIMAP_SCALE + dx,
-                        row * MINIMAP_SCALE + dy,
-                        color
-                    );
-        }
-    }
-
-}
-
 void draw_minimap_player(t_gen *gen)
 {
     int center_tile = ZOOM_LEVEL / 2;
@@ -49,7 +21,20 @@ void draw_minimap_player(t_gen *gen)
     }
 }
 
+void draw_minimap_fov(t_gen *gen)
+{
+    int i, num_rays = 20;
+    double cameraX, rayDirX, rayDirY;
 
+    for (i = 0; i < num_rays; i++)
+    {
+        cameraX = 2.0 * i / (num_rays - 1) - 1.0;
+        rayDirX = gen->player->dir_x + gen->player->plane_x * cameraX;
+        rayDirY = gen->player->dir_y + gen->player->plane_y * cameraX;
+
+        direction_hits_wall(gen, rayDirX, rayDirY);
+    }
+}
 
 void draw_minimap(t_gen *gen)
 {
@@ -88,17 +73,4 @@ void draw_minimap(t_gen *gen)
     }
     draw_minimap_player(gen);
     draw_minimap_fov(gen);
-}
-
-
-void draw_minimap_tile(t_gen *gen, int row, int col, int color)
-{
-    for (int dy = 0; dy < MINIMAP_SCALE; dy++)
-        for (int dx = 0; dx < MINIMAP_SCALE; dx++)
-            copied_mlx_pixel_put(
-                gen->img_data,
-                col * MINIMAP_SCALE + dx,
-                row * MINIMAP_SCALE + dy,
-                color
-            );
 }

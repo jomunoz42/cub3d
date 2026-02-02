@@ -75,18 +75,3 @@ void direction_hits_wall(t_gen *gen, double rayDirX, double rayDirY)
 
     ciclope_dos_xman(gen->img_data, px0, py0, px1, py1, 0xFF0000);
 }
-
-void draw_minimap_fov(t_gen *gen)
-{
-    int i, num_rays = 20;
-    double cameraX, rayDirX, rayDirY;
-
-    for (i = 0; i < num_rays; i++)
-    {
-        cameraX = 2.0 * i / (num_rays - 1) - 1.0;
-        rayDirX = gen->player->dir_x + gen->player->plane_x * cameraX;
-        rayDirY = gen->player->dir_y + gen->player->plane_y * cameraX;
-
-        direction_hits_wall(gen, rayDirX, rayDirY);
-    }
-}
