@@ -70,10 +70,10 @@ void rotate_player(t_gen *gen, double angle);
 
 int	        parser(t_gen *gen, int argc, char **argv);
 int	        is_map_valid(t_parsing *data);
-int			construct_map(t_parsing *data);
+int	        construct_map_and_textures(t_parsing *data);
 int			not_last_element(t_parsing *data);
 int			is_header_line(t_parsing *data, char *line);
-int         check_all_elements(t_parsing *data);
+int         check_all_elements(t_parsing *data, char *line);
 int	        is_rgb_colours_invalid(t_parsing *data, char *line, char c, int type);
 int         is_header_line_with_validation(t_parsing *data, char *line);
 

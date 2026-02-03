@@ -36,9 +36,29 @@ int	handle_exit(int keysys)
 
 void	free_parsing(t_parsing *parse)
 {
-	if (!parse)
-		return ;
-	free(parse);
+	int i;
+
+	i = 0;
+	if (parse->fd > 2)
+	{
+		close(parse->fd);
+		parse->fd = -1;
+	}
+	if (parse->textures_info)	
+	{
+		while (i < E_COUNT)
+		{
+			free(parse->textures_info[i]);
+			parse->textures_info[i] = NULL;
+			i++;
+		}
+		free(parse->textures_info);
+		parse->textures_info = NULL;
+	}
+	if (parse->map)
+		free_double(parse->map);
+	if (parse)
+		free(parse);
 }
 
 int	super_duper_hiper_free(void)

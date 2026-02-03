@@ -49,27 +49,28 @@ int	is_rgb_colours_invalid(t_parsing *data, char *line, char c, int type)
 	char	**all_colors;
 	int		rgb;
 	int		i;
+	int		j;
 
 	i = 0;
 	while (line[i] == ' ' || line[i] == c)
 		i++;
-
-	data->textures_info[type] = ft_strdup(line + i);
-
 	if (!ft_strrchr(&line[i], ','))
 		return (rgb_error_message(), 1);
 	all_colors = ft_split(&line[i], ',');
 	if (ft_matrix_len(all_colors) != 3)
 		return (free_double(all_colors), rgb_error_message(), 1);
-	i = 0;
-	while (i < 3)
+	j = i;
+	i = -1;
+	while (++i < 3)
 	{
 		if (is_there_garbage(all_colors[i]) || not_one_number(all_colors[i]))
 			return (free_double(all_colors), rgb_error_message(), 1);
 		rgb = ft_atoi(all_colors[i]);
 		if (rgb < 0 || rgb > 255)
 			return (free_double(all_colors), rgb_error_message(), 1);
-		i++;
 	}
-	return (0);
+	if (data->textures_info[type])
+		free(data->textures_info[type]);
+	data->textures_info[type] = ft_strdup(line + j);
+	return (free_double(all_colors), 0);
 }

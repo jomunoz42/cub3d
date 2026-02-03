@@ -2,5 +2,6 @@
 *.o
 .a
 .o
+cub3d
 cub3d_parsing.txt
 Intra Projects cub3d Edit.pdf
