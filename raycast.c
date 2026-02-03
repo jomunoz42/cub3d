@@ -1,6 +1,6 @@
 #include "./headers/cub3d.h"
 
-t_rayhit cast_ray(t_gen *gen, double rayDirX, double rayDirY)
+t_rayhit castrate(t_gen *gen, double rayDirX, double rayDirY)
 {
     if (!gen || !gen->parse || !gen->parse->map)
     {
@@ -99,7 +99,7 @@ void render_scene(t_gen *gen)
         double rayDirX = gen->player->dir_x + gen->player->plane_x * cameraX;
         double rayDirY = gen->player->dir_y + gen->player->plane_y * cameraX;
 
-        t_rayhit hit = cast_ray(gen, rayDirX, rayDirY);
+        t_rayhit hit = castrate(gen, rayDirX, rayDirY);
 
         int lineHeight = (int)(WIN_HEIGHT / hit.dist);
         int drawStart = -lineHeight / 2 + WIN_HEIGHT / 2;
