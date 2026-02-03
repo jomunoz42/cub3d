@@ -55,41 +55,15 @@ int general_texture_init(t_gen *gen)
     return 1;
 }
 
-int png_name_to_xpm(t_gen *gen, char *xpm_files[4])
-{
-    for (int i = 0; i < 4; i++)
-    {
-        char *name = gen->parse->textures_info[i]; // e.g. "north.png"
-        if (!name)
-            return 0;
-
-        // Find last dot
-        char *dot = strrchr(name, '.');
-        int len = dot ? (size_t)(dot - name) : strlen(name);
-
-        // Allocate new string for XPM filename
-        xpm_files[i] = malloc(len + 5); // len + strlen(".xpm") + 1
-        if (!xpm_files[i])
-            return 0;
-
-        strncpy(xpm_files[i], name, len);
-        xpm_files[i][len] = '\0';        // terminate
-        strcat(xpm_files[i], ".xpm");    // add .xpm
-    }
-    return 1;
-}
-
 void wall_textures_init(t_gen *gen)
 {
     int bpp, sl, endian;
     char *xpm_files[4];
-
     if (!png_name_to_xpm(gen, xpm_files))
     {
         fprintf(stderr, "Failed to convert PNG names to XPM\n");
         exit(1);
     }
-
     for (int i = 0; i < 4; i++)
     {
         gen->texture[i]->img = mlx_xpm_file_to_image(

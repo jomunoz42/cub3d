@@ -421,3 +421,53 @@ int	ft_abs(int n)
 		return (-n);
 	return (n);
 }
+
+char *ft_strncpy(char *dst, char *srce, int n)
+{
+	unsigned char *dest = (unsigned char *)dst;
+	unsigned char *src = (unsigned char *)srce;
+	int i = 0;
+	while (i < n)
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return ((char *)dest);
+}
+
+char *ft_strcat(char *dst, char *srce)
+{
+	unsigned char *dest = (unsigned char *)dst;
+	unsigned char *src = (unsigned char *)srce;
+	int i = ft_strlen(dst);
+	int j = 0;
+	while (src[j])
+	{
+		dest[i + j] = src[j];
+		j++;
+	}
+	dest[i + j] = '\0';
+	return ((char *)dest);
+	
+}
+
+
+int png_name_to_xpm(t_gen *gen, char *xpm_files[4])
+{
+    for (int i = 0; i < 4; i++)
+    {
+        char *name = gen->parse->textures_info[i];
+        if (!name)
+            return 0;
+        char *dot = strrchr(name, '.');
+        int len = dot ? (size_t)(dot - name) : strlen(name);
+        xpm_files[i] = malloc(len + ft_strlen(".xpm") + 1);
+        if (!xpm_files[i])
+            return 0;
+        ft_strncpy(xpm_files[i], name, len);
+        xpm_files[i][len] = '\0';
+        ft_strcat(xpm_files[i], ".xpm");
+    }
+    return 1;
+}
