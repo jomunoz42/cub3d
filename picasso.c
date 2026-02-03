@@ -1,20 +1,5 @@
 #include "./headers/cub3d.h"
 
-// int draw_arm(void *param)
-// {
-// 	t_gen *gen;
-
-// 	if (!param)
-// 		return (0);
-// 	gen = (t_gen *)param;
-// 	if (!gen->arm)
-// 		return (0);
-
-// 	mlx_put_image_to_window(gen->mlx_data->mlx_ptr,gen->mlx_data->win_ptr,gen->arm,
-//         gen->mlx_data->win_width - gen->texture_data->arm_width,gen->mlx_data->win_height - gen->texture_data->arm_height);
-// 	return (0);
-// }
-
 int get_pixel_color(t_gen *gen, int x, int y)
 {
     char *pixel;

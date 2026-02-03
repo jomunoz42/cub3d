@@ -50,6 +50,14 @@ typedef struct texture_data
 	int				clng_color;
 }					t_texture_data;
 
+typedef struct s_texture
+{
+	void *img;
+	int *data;
+	int width;
+	int height;
+}	t_texture;
+
 typedef struct s_player
 {
 	double			x;
@@ -81,12 +89,20 @@ typedef struct s_minimap
 	int				height;
 }					t_minimap;
 
+typedef enum e_wall_face {
+    NORTH,
+    SOUTH,
+    EAST,
+    WEST
+} t_wall_face;
+
 typedef struct s_rayhit
 {
     int     mapX;
     int     mapY;
     int     side;      // 0 = parede vertical (X), 1 = horizontal (Y)
     double  dist;
+	t_wall_face face;
 }   t_rayhit;
 
 
@@ -101,4 +117,5 @@ typedef struct s_general
 	t_minimap		*minimap;
 	t_rayhit		*rayhit;
 	t_img_data			*arm;
+	t_texture		*texture[4];
 }					t_gen;

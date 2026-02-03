@@ -66,9 +66,22 @@ t_rayhit cast_ray(t_gen *gen, double rayDirX, double rayDirY)
             wall_hit = 1;
     }
     if (side == 0)
+    {
         hit.dist = (start_x - gen->player->x + (1 - stepX) / 2.0) / rayDirX;
+        if (rayDirX > 0)
+            hit.face = WEST;
+        else
+            hit.face = EAST;
+    }
     else
+    {
         hit.dist = (start_y - gen->player->y + (1 - stepY) / 2.0) / rayDirY;
+        if (rayDirY > 0)
+            hit.face = NORTH;
+        else
+            hit.face = SOUTH;
+    }
+
 
     hit.mapX = start_x;
     hit.mapY = start_y;
@@ -95,10 +108,25 @@ void render_scene(t_gen *gen)
         if (drawStart < 0) drawStart = 0;
         if (drawEnd >= WIN_HEIGHT) drawEnd = WIN_HEIGHT - 1;
 
-        int color = (hit.side == 0) ? 0xAAAAAA : 0x777777;
+        double wallX;
+        if (hit.side == 0)
+            wallX = gen->player->y + hit.dist * rayDirY;
+        else               
+            wallX = gen->player->x + hit.dist * rayDirX;
+        wallX -= floor(wallX);
+        t_texture *tex = gen->texture[hit.face];
+        int texX = (int)(wallX * (double)tex->width);
+        if ((hit.side == 0 && rayDirX < 0) || (hit.side == 1 && rayDirY > 0))
+            texX = tex->width - texX - 1;
+
 
         for (int y = drawStart; y < drawEnd; y++)
+        {
+            int d = y * 256 - WIN_HEIGHT * 128 + lineHeight * 128; // current position on wall
+            int texY = ((d * tex->height) / lineHeight) / 256;
+            int color = tex->data[texY * tex->width + texX];
             copied_mlx_pixel_put(gen->img_data, x, y, color);
+        }
 
         for (int y = 0; y < drawStart; y++)
             copied_mlx_pixel_put(gen->img_data, x, y, gen->texture_data->clng_color);
@@ -106,3 +134,4 @@ void render_scene(t_gen *gen)
             copied_mlx_pixel_put(gen->img_data, x, y, gen->texture_data->flr_color);
     }
 }
+

@@ -23,14 +23,12 @@
 # define MINIMAP_SCALE 15
 # define MOVE_SPEED 0.05
 # define ROTATION_SPEED 0.03
-# define TRANSPARENT_COLOR 0X000000
+# define TRANSPARENT_COLOR 0Xb3ff00
 # define WALL_MARGIN 0.5
-
-
-# define USER_HAND_XPM "./imgs/arm_placeholder.xpm"
-# define USER_HAND_PNG "./imgs/arm_placeholder.png"
-
-
+# define USER_HAND_XPM "./imgs/pixil-frame-0.xpm"
+# define USER_HAND_PNG "./imgs/pixil-frame-0.png"
+// # define USER_HAND_XPM "./imgs/arm_placeholder.xpm"
+// # define USER_HAND_PNG "./imgs/arm_placeholder.png"
 #define MINIMAP_PIXELS 200
 #define ZOOM_LEVEL 15   
 #define MINIMAP_TILE_PIXELS (MINIMAP_PIXELS / ZOOM_LEVEL)
