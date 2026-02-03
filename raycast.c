@@ -90,7 +90,6 @@ t_rayhit castrate(t_gen *gen, double rayDirX, double rayDirY)
     return hit;
 }
 
-
 void render_scene(t_gen *gen)
 {
     for (int x = 0; x < WIN_WIDTH; x++)
