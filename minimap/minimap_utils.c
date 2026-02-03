@@ -64,7 +64,7 @@ void direction_hits_wall(t_gen *gen, double rayDirX, double rayDirY)
             sideDistY += deltaDistY;
             mapY += stepY;
         }
-        if (gen->parse->map[mapY][mapX] == '1')
+        if (is_wall(gen, mapX, mapY))
             hit = 1;
     }
 

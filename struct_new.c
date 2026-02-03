@@ -9,8 +9,8 @@ t_parsing	*parsing_init(void)
 		return (NULL);
 	*new = (t_parsing){// check and study this later
 						.textures_info = NULL,
-						.map = NULL,
 						.player = '\0',
+						.map = NULL,
 						.width = 0,
 						.height = 0,
 						.fd = 0,

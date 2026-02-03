@@ -36,6 +36,19 @@ void draw_minimap_fov(t_gen *gen)
     }
 }
 
+int is_wall(t_gen *gen, int map_x, int map_y)
+{
+    if (map_y < 0 || map_y >= gen->parse->height)
+        return (1);
+
+    int row_len = ft_strlen(gen->parse->map[map_y]);
+    if (map_x < 0 || map_x >= row_len)
+        return (1);
+
+    return (gen->parse->map[map_y][map_x] == '1');
+}
+
+
 void draw_minimap(t_gen *gen)
 {
     int start_x = (int)gen->player->x - ZOOM_LEVEL / 2;

@@ -2,71 +2,81 @@
 
 t_rayhit cast_ray(t_gen *gen, double rayDirX, double rayDirY)
 {
+    if (!gen || !gen->parse || !gen->parse->map)
+    {
+        fprintf(stderr, "ERROR: gen->parse is NULL\n");
+        exit(1);
+    }
+
     t_rayhit hit;
 
-    int mapX = (int)gen->player->x;
-    int mapY = (int)gen->player->y;
+    int start_x = (int)gen->player->x;
+    int start_y = (int)gen->player->y;
+
+    double deltaDistX = fabs(1.0 / rayDirX);
+    double deltaDistY = fabs(1.0 / rayDirY);
 
     double sideDistX;
     double sideDistY;
-    double deltaDistX = fabs(1 / rayDirX);
-    double deltaDistY = fabs(1 / rayDirY);
 
     int stepX;
     int stepY;
-    int side;
-
+    int side = 0;
+    int wall_hit = 0;
     if (rayDirX < 0)
     {
         stepX = -1;
-        sideDistX = (gen->player->x - mapX) * deltaDistX;
+        sideDistX = (gen->player->x - start_x) * deltaDistX;
     }
     else
     {
         stepX = 1;
-        sideDistX = (mapX + 1.0 - gen->player->x) * deltaDistX;
+        sideDistX = (start_x + 1.0 - gen->player->x) * deltaDistX;
     }
 
     if (rayDirY < 0)
     {
         stepY = -1;
-        sideDistY = (gen->player->y - mapY) * deltaDistY;
+        sideDistY = (gen->player->y - start_y) * deltaDistY;
     }
     else
     {
         stepY = 1;
-        sideDistY = (mapY + 1.0 - gen->player->y) * deltaDistY;
+        sideDistY = (start_y + 1.0 - gen->player->y) * deltaDistY;
     }
-
-    int wall_hit = 0;
     while (!wall_hit)
     {
         if (sideDistX < sideDistY)
         {
             sideDistX += deltaDistX;
-            mapX += stepX;
+            start_x += stepX;
             side = 0;
         }
         else
         {
             sideDistY += deltaDistY;
-            mapY += stepY;
+            start_y += stepY;
             side = 1;
         }
-        if (gen->parse->map[mapY][mapX] == '1')
+        if (start_y < 0 || start_y >= gen->parse->height)
+            break;
+        if (start_x < 0 || start_x >= (int)ft_strlen(gen->parse->map[start_y]))
+            break;
+        if (gen->parse->map[start_y][start_x] == '1')
             wall_hit = 1;
     }
-
     if (side == 0)
-        hit.dist = (mapX - gen->player->x + (1 - stepX) / 2) / rayDirX;
+        hit.dist = (start_x - gen->player->x + (1 - stepX) / 2.0) / rayDirX;
     else
-        hit.dist = (mapY - gen->player->y + (1 - stepY) / 2) / rayDirY;
+        hit.dist = (start_y - gen->player->y + (1 - stepY) / 2.0) / rayDirY;
 
-    hit.mapX = mapX;
-    hit.mapY = mapY;
+    hit.mapX = start_x;
+    hit.mapY = start_y;
     hit.side = side;
-    return (hit);
+
+    return hit;
 }
+
 
 void render_scene(t_gen *gen)
 {
@@ -90,7 +100,6 @@ void render_scene(t_gen *gen)
         for (int y = drawStart; y < drawEnd; y++)
             copied_mlx_pixel_put(gen->img_data, x, y, color);
 
-        // Fundo e teto
         for (int y = 0; y < drawStart; y++)
             copied_mlx_pixel_put(gen->img_data, x, y, gen->texture_data->clng_color);
         for (int y = drawEnd; y < WIN_HEIGHT; y++)

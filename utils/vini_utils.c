@@ -340,9 +340,12 @@ int only_num(char *str)
 	return (1);
 }
 
-bool collision(t_gen *gen, int next_y, int next_x)
+bool collision(t_gen *gen, double next_y, double next_x) //collision is fucking up everything
 {
-    return (gen->parse->map[next_y][next_x] == '1');
+    int map_x = (int)next_x;
+    int map_y = (int)next_y;
+
+    return (gen->parse->map[map_y][map_x] == '1');
 }
 
 int key_press(int key, t_gen *gen)
