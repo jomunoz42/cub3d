@@ -361,6 +361,7 @@ int key_press(int key, t_gen *gen)
 	if (key == XK_Control_L)
 	{
 		gen->kboard->control_left = true;
+		gen->player->fov += 0.07;
 		gen->player->move_speed = 0.15;
 		gen->player->rotate_speed = 0.060;
 	}
@@ -404,6 +405,7 @@ int key_release(int key, t_gen *gen)
 	{
 		gen->player->move_speed = 0.05;
 		gen->player->rotate_speed = 0.045;
+		gen->player->fov -= 0.07;
 		gen->kboard->control_left = false;
 	}
 		if (key == XK_Shift_L)
