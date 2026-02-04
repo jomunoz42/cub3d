@@ -75,5 +75,5 @@ void direction_hits_wall(t_gen *gen, double ray_direction_x, double ray_directio
     px1 = ft_clamp(px1, 0, MINIMAP_PIXELS - 1);
     py1 = ft_clamp(py1, 0, MINIMAP_PIXELS - 1);
 
-    ciclope_dos_xman(gen->img_data, px0, py0, px1, py1, 0xFF0000);
+    ciclope_dos_xman(gen->img_data, px0, py0, px1, py1, RED_CLR);
 }

@@ -107,34 +107,33 @@ void print_info(t_gen *gen)
     char *mouse_x = print_helper("Mouse x: ", (double)gen->mouse->x);
     char *mouse_y = print_helper("Mouse y: ", (double)gen->mouse->y);
 
-
     mlx_string_put(
         gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 230,
-            0xFFFFFF, dir_x);
+            INFO_TEXT_COLOR, dir_x);
         mlx_string_put(
         gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 240,
-            0xFFFFFF, dir_y);
+            INFO_TEXT_COLOR, dir_y);
         mlx_string_put(
         gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 250,
-            0xFFFFFF, plane_x);
+            INFO_TEXT_COLOR, plane_x);
         mlx_string_put(
         gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 260,
-            0xFFFFFF, plane_y);
+            INFO_TEXT_COLOR, plane_y);
         mlx_string_put(
         gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 270,
-            0xFFFFFF, x);
+            INFO_TEXT_COLOR, x);
         mlx_string_put(
         gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 280,
-            0xFFFFFF, y);
+            INFO_TEXT_COLOR, y);
         mlx_string_put(
         gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 290,
-            0xFFFFFF, fov);
+            INFO_TEXT_COLOR, fov);
         mlx_string_put(
         gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 300,
-            0xFFFFFF, mouse_x);
+            INFO_TEXT_COLOR, mouse_x);
         mlx_string_put(
         gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 310,
-            0xFFFFFF, mouse_y);
+            INFO_TEXT_COLOR, mouse_y);
     free(dir_x);
     free(dir_y);
     free(plane_x);
@@ -150,7 +149,7 @@ void print_info(t_gen *gen)
 int game_loop(t_gen *gen)
 {
     update_player(gen);              
-    clear_image(gen->img_data, 0x000000); // Limpa a tela
+    clear_image(gen->img_data, 0x000000);
     render_scene(gen);              
     mouse_looking(gen);  
     draw_minimap(gen);                

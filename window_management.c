@@ -5,7 +5,7 @@
 int window_init(t_gen *gen, int w, int h)
 {
 	gen->mlx_data->win_ptr = mlx_new_window(gen->mlx_data->mlx_ptr,
-			gen->mlx_data->win_width, gen->mlx_data->win_height, "cub3d");
+			gen->mlx_data->win_width, gen->mlx_data->win_height, WINDOW_NAME);
 	if (!gen->mlx_data->win_ptr)
 		return (1);
 	gen->arm->img = mlx_xpm_file_to_image(gen->mlx_data->mlx_ptr, USER_HAND_XPM, &w,

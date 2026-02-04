@@ -1,4 +1,5 @@
 #include "./headers/cub3d.h"
+#include "headers/general.h"
 
 t_parsing	*parsing_init(void)
 {
@@ -35,7 +36,7 @@ int mouse_init(t_gen *gen)
 	gen->mouse->x = 0;
 	gen->mouse->y = 0;
 	gen->mouse->previous_x = 0;
-	gen->mouse->sens = 0.0047;
+	gen->mouse->sens = MOUSE_SENS;
 	return (1);
 }
 
@@ -180,9 +181,9 @@ int player_init(t_gen *gen)
 	gen->player->dir_y = 0;
 	gen->player->plane_x = 0;
 	gen->player->plane_y = 0;
-	gen->player->move_speed = 0.05;
-	gen->player->rotate_speed = 0.045;
-	gen->player->fov = 2.0;
+	gen->player->move_speed = DEFAULT_PLAYER_MOVE_SPEED;
+	gen->player->rotate_speed = DEFAULT_PLAYER_ROTATE_SPEED;
+	gen->player->fov = DEFAULT_PLAYER_FOV;
 	return (1);
 }
 
@@ -198,7 +199,7 @@ int arm_init(t_gen *gen)
 	gen->arm->endian = 0;
 	gen->arm->width = 0;
 	gen->arm->height = 0;
-	gen->arm->img = mlx_xpm_file_to_image( //<--- line 189
+	gen->arm->img = mlx_xpm_file_to_image(
     gen->mlx_data->mlx_ptr,
     USER_HAND_XPM,
     &img_width,

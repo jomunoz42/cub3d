@@ -15,7 +15,7 @@ void draw_minimap_player(t_gen *gen)
                 gen->img_data,
                 px + x,
                 py + y,
-                0xFFA500
+                MINIMAP_PLAYER_CLR
             );
         }
     }
@@ -48,7 +48,6 @@ int is_wall(t_gen *gen, int map_x, int map_y)
     return (gen->parse->map[map_y][map_x] == '1');
 }
 
-
 void draw_minimap(t_gen *gen)
 {
     int start_x = (int)gen->player->x - ZOOM_LEVEL / 2;
@@ -70,9 +69,9 @@ void draw_minimap(t_gen *gen)
             
             int color;
             if (gen->parse->map[map_y][map_x] == '1')
-                color = 0xFFFFFF;
+                color = MINIMAP_WALL_CLR;
             else
-                color = 0x161616;
+                color = MINIMAP_GROUND_CLR;
 
             for (int py = 0; py < MINIMAP_TILE_PIXELS; py++)
                 for (int px = 0; px < MINIMAP_TILE_PIXELS; px++)
