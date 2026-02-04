@@ -26,7 +26,6 @@ int get_pixel_color_img(t_img_data *img, int x, int y)
     return *(int *)pixel;
 }
 
-
 void draw_arm(t_gen *gen)
 {
     if (!gen || !gen->arm)

@@ -1,5 +1,6 @@
 #include "./headers/cub3d.h"
 #include "headers/general.h"
+#include "headers/mlx.h"
 
 void rotate_player(t_gen *gen, double angle)
 {
@@ -64,6 +65,71 @@ void update_player(t_gen *gen)
         gen->player->y = ny;
 }
 
+char *ft_dtoa_fixed(double v)
+{
+    char *a;
+    char *b;
+    char *tmp;
+    int iv = (int)v;
+    int frac = (int)((v - iv) * 1000);
+
+    a = ft_itoa(iv);
+    b = ft_itoa(frac < 0 ? -frac : frac);
+    tmp = ft_strjoin(a, ".");
+    free(a);
+    a = ft_strjoin(tmp, b);
+    free(tmp);
+    free(b);
+    return a;
+}
+
+char * print_helper(char *which_info, double what_to_convert)
+{
+    char *num = ft_dtoa_fixed(what_to_convert);
+    if (!num)
+        return NULL;
+    char *text = ft_strjoin(which_info, num);
+    if (!text)
+    {
+        free(num);
+        return NULL;
+    }
+    return (text);
+}
+void print_info(t_gen *gen)
+{
+    char *dir_x = print_helper("Direction x: ", gen->player->dir_x);
+    char *dir_y = print_helper("Direction y: ", gen->player->dir_y);
+    char *plane_x = print_helper("Plane x: ", gen->player->plane_x);
+    char *plane_y = print_helper("Plane y: ", gen->player->plane_y);
+    char *x = print_helper("X: ", gen->player->x);
+    char *y = print_helper("Y: ", gen->player->y);
+
+
+
+
+
+    mlx_string_put(
+        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 230,
+            0xFFFFFF, dir_x);
+        mlx_string_put(
+        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 240,
+            0xFFFFFF, dir_y);
+        mlx_string_put(
+        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 250,
+            0xFFFFFF, plane_x);
+        mlx_string_put(
+        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 260,
+            0xFFFFFF, plane_y);
+        mlx_string_put(
+        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 270,
+            0xFFFFFF, x);
+        mlx_string_put(
+        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 280,
+            0xFFFFFF, y);
+
+}
+
 
 int game_loop(t_gen *gen)
 {
@@ -71,13 +137,14 @@ int game_loop(t_gen *gen)
     clear_image(gen->img_data, 0x000000); // Limpa a tela
     render_scene(gen);                
     draw_minimap(gen);                
-    draw_arm(gen);                     
+    draw_arm(gen);      
     mlx_put_image_to_window(
         gen->mlx_data->mlx_ptr,
         gen->mlx_data->win_ptr,
         gen->img_data->img,
         0, 0
     );
+    print_info(gen);
     return 0;
 }
 

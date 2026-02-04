@@ -16,7 +16,7 @@ int ft_strlen(const char *str)
     return (i);
 }
 
-char *ft_strjoin(char *s1, char *s2)
+char *ft_strjoin_gnl(char *s1, char *s2)
 {
     char *const joined = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 
@@ -61,7 +61,7 @@ char *full_line(char *full_line, char *file_str)
     while (file_str[i] != '\0')
         file_str[j++] = file_str[i++];
     file_str[j] = '\0';
-    full_line = ft_strjoin(full_line, temp);
+    full_line = ft_strjoin_gnl(full_line, temp);
     free(temp);
     return (full_line);
 }
@@ -85,7 +85,7 @@ char *get_next_line(int fd)
         }
         if (ft_strchr(file_str, '\n'))
             return (full_line(print, file_str));
-        print = ft_strjoin(print, file_str);
+        print = ft_strjoin_gnl(print, file_str);
         file_str[0] = '\0';
     }
     if (count < 0)

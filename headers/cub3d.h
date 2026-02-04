@@ -59,6 +59,7 @@ void render_scene(t_gen *gen);
 void draw_minimap_fov(t_gen *gen);
 int get_pixel_color(t_gen *gen, int x, int y);
 int get_pixel_color_img(t_img_data *img, int x, int y);
+
 void ciclope_dos_xman(t_img_data *img,int x0, int y0, int x1, int y1, int color);
 int png_name_to_xpm(t_gen *gen, char *xpm_files[4]);
 void rotate_player(t_gen *gen, double angle);
@@ -103,4 +104,7 @@ char		**ft_split(char const *s, char c);
 int			ft_atoi(const char *nptr);
 char *ft_strncpy(char *dst, char *srce, int n);
 char *ft_strcat(char *dst, char *srce);
+char	*ft_itoa(int n);
+char	*ft_strjoin(char *s1, char *s2);
+
 #endif

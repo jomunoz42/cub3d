@@ -69,9 +69,9 @@ t_rayhit castrate(t_gen *gen, double rayDirX, double rayDirY)
     {
         hit.dist = (start_x - gen->player->x + (1 - stepX) / 2.0) / rayDirX;
         if (rayDirX > 0)
-            hit.face = WEST;
-        else
             hit.face = EAST;
+        else
+            hit.face = WEST;
     }
     else
     {
@@ -121,7 +121,7 @@ void render_scene(t_gen *gen)
 
         for (int y = drawStart; y < drawEnd; y++)
         {
-            int d = y * 256 - WIN_HEIGHT * 128 + lineHeight * 128; // current position on wall
+            int d = y * 256 - WIN_HEIGHT * 128 + lineHeight * 128;
             int texY = ((d * tex->height) / lineHeight) / 256;
             int color = tex->data[texY * tex->width + texX];
             copied_mlx_pixel_put(gen->img_data, x, y, color);

@@ -382,25 +382,53 @@ int key_release(int key, t_gen *gen)
     return (0);
 }
 
-void search_in_matrix(t_gen *gen, int character)
+static void set_player_dir(t_player *p, char c)
+{
+    if (c == 'N')
+    {
+        p->dir_x = 0;
+        p->dir_y = -1;
+        p->plane_x = 0.66;
+        p->plane_y = 0;
+    }
+    else if (c == 'S')
+    {
+        p->dir_x = 0;
+        p->dir_y = 1;
+        p->plane_x = -0.66;
+        p->plane_y = 0;
+    }
+    else if (c == 'E')
+    {
+        p->dir_x = 1;
+        p->dir_y = 0;
+        p->plane_x = 0;
+        p->plane_y = 0.66;
+    }
+    else if (c == 'W')
+    {
+        p->dir_x = -1;
+        p->dir_y = 0;
+        p->plane_x = 0;
+        p->plane_y = -0.66;
+    }
+}
+
+
+void search_in_matrix(t_gen *gen, char c)
 {
     int row = 0;
-    if (!gen || !gen->parse || !gen->parse->map || !gen->parse->map[0][0])
-        return ;
+
     while (gen->parse->map[row])
     {
         int col = 0;
         while (gen->parse->map[row][col])
         {
-            if (gen->parse->map[row][col] == character)
+            if (gen->parse->map[row][col] == c)
             {
                 gen->player->x = col + 0.5;
                 gen->player->y = row + 0.5;
-
-                gen->player->dir_x = 0;
-                gen->player->dir_y = -1;
-                gen->player->plane_x = 0.66;
-                gen->player->plane_y = 0;
+                set_player_dir(gen->player, c);
                 return;
             }
             col++;
@@ -409,10 +437,14 @@ void search_in_matrix(t_gen *gen, int character)
     }
 }
 
+
 int get_player_position(t_gen *gen)
 {
     search_in_matrix(gen, 'N');
-    return (0);
+    search_in_matrix(gen, 'S');
+    search_in_matrix(gen, 'E');
+    search_in_matrix(gen, 'W');
+	return (0);
 }
 
 int	ft_abs(int n)
@@ -470,4 +502,71 @@ int png_name_to_xpm(t_gen *gen, char *xpm_files[4])
         ft_strcat(xpm_files[i], ".xpm");
     }
     return 1;
+}
+
+static size_t	ft_putnbr_fake(int n)
+{
+	size_t	count;
+
+	count = 0;
+	if (n == 0)
+		return (1);
+	if (n < 0)
+		count++;
+	while (n != 0)
+	{
+		count++;
+		n /= 10;
+	}
+	return (count);
+}
+
+char	*ft_itoa(int n)
+{
+	size_t	digits;
+	size_t	i;
+	char	*str;
+	long	num;
+
+	num = n;
+	digits = ft_putnbr_fake(n);
+	str = (char *)malloc(digits + 1);
+	if (!str)
+		return (NULL);
+	str[digits] = '\0';
+	if (num < 0)
+	{
+		str[0] = '-';
+		num = -num;
+	}
+	i = digits - 1;
+	if (num == 0)
+		str[0] = '0';
+	while (num > 0)
+	{
+		str[i--] = (num % 10) + '0';
+		num /= 10;
+	}
+	return (str);
+}
+
+char	*ft_strjoin(char *s1, char *s2)
+{
+	size_t	i;
+	size_t	j;
+	char	*str;
+
+	if (!s1)
+		s1 = "";
+	if (!s2)
+		s2 = "";
+	i = ft_strlen(s1);
+	j = ft_strlen(s2);
+	str = (char *)malloc(i + j + 1);
+	if (!str)
+		return (NULL);
+	ft_memcpy(str, s1, i);
+	ft_memcpy(str + i, s2, j);
+	str[i + j] = '\0';
+	return (str);
 }

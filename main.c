@@ -15,6 +15,8 @@ int	main(int argc, char *argv[])
     if (parser(gen, argc, argv))
        {return (1);}
 	printf("\n==All right from here==\n");
+	// for(int i = 0; i < 4; i++)
+	// 	printf("texture_info[%d]: %s\n", i, gen->parse->textures_info[i]);
 	main_init(gen, argv[1]);
 	start_window(gen, argv[1]);
 	return (0);

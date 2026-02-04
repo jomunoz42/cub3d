@@ -66,6 +66,7 @@ void wall_textures_init(t_gen *gen)
     }
     for (int i = 0; i < 4; i++)
     {
+		// printf("XPM[%d]: %s\n", i, xpm_files[i]);
         gen->texture[i]->img = mlx_xpm_file_to_image(
             gen->mlx_data->mlx_ptr,
             xpm_files[i],
@@ -86,10 +87,6 @@ void wall_textures_init(t_gen *gen)
 }
 
 
-
-
-
-
 int	texture_data_init(t_gen *gen)
 {
 	gen->texture_data = malloc(sizeof(t_texture_data));
@@ -103,8 +100,8 @@ int	texture_data_init(t_gen *gen)
 	if (!png_size_fd(USER_HAND_PNG, &gen->texture_data->arm_width,
 			&gen->texture_data->arm_height))
 		return (0);
-	printf("[arm image data] Width: %u, Height: %u\n",
-		gen->texture_data->arm_width, gen->texture_data->arm_height);
+	// printf("[arm image data] Width: %u, Height: %u\n",
+	// 	gen->texture_data->arm_width, gen->texture_data->arm_height);
 	return (1);
 }
 
