@@ -94,7 +94,7 @@ void render_scene(t_gen *gen)
 {
     for (int x = 0; x < WIN_WIDTH; x++)
     {
-        double cameraX = 2.0 * x / (double)WIN_WIDTH - 1.0;
+        double cameraX = gen->player->fov * x / (double)WIN_WIDTH - 1.0;
         double rayDirX = gen->player->dir_x + gen->player->plane_x * cameraX;
         double rayDirY = gen->player->dir_y + gen->player->plane_y * cameraX;
 

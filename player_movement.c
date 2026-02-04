@@ -104,10 +104,7 @@ void print_info(t_gen *gen)
     char *plane_y = print_helper("Plane y: ", gen->player->plane_y);
     char *x = print_helper("X: ", gen->player->x);
     char *y = print_helper("Y: ", gen->player->y);
-
-
-
-
+    char *fov = print_helper("FOV: ", gen->player->fov);
 
     mlx_string_put(
         gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 230,
@@ -127,6 +124,9 @@ void print_info(t_gen *gen)
         mlx_string_put(
         gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 280,
             0xFFFFFF, y);
+        mlx_string_put(
+        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 290,
+            0xFFFFFF, fov);
 
 }
 

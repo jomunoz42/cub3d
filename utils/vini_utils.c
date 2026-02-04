@@ -371,6 +371,16 @@ int key_press(int key, t_gen *gen)
 		gen->player->move_speed = 0.01;
 		gen->player->rotate_speed = 0.030;
 	}
+	if (key == XK_f)
+	{
+		gen->kboard->key_f = true;
+		gen->player->fov -= 0.1;
+	}
+	if (key == XK_l)
+	{
+		gen->kboard->key_l = true;
+		gen->player->fov += 0.1;
+	}
     return (0);
 }
 
@@ -401,6 +411,10 @@ int key_release(int key, t_gen *gen)
 		gen->player->rotate_speed = 0.045;
 		gen->kboard->shift_left = false;
 	}
+	if (key == XK_f)
+		gen->kboard->key_f = false;
+	if (key == XK_l)
+		gen->kboard->key_l = false;
     return (0);
 }
 

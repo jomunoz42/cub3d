@@ -37,6 +37,8 @@
 #define MINIMAP_PIXELS 200
 #define ZOOM_LEVEL 15   
 #define MINIMAP_TILE_PIXELS (MINIMAP_PIXELS / ZOOM_LEVEL)
+#define FOV_DEG 2.0
+
 
 
 #endif
