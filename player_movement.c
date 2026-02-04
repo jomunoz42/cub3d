@@ -4,25 +4,23 @@
 
 void rotate_player(t_gen *gen, double angle)
 {
-	double oldDirX = gen->player->dir_x;
-	double oldPlaneX = gen->player->plane_x;
+	double first_direction_x = gen->player->dir_x;
+	double first_plane_x = gen->player->plane_x;
 
 	gen->player->dir_x = gen->player->dir_x * cos(angle)
 		- gen->player->dir_y * sin(angle);
-	gen->player->dir_y = oldDirX * sin(angle)
+	gen->player->dir_y = first_direction_x * sin(angle)
 		+ gen->player->dir_y * cos(angle);
 
 	gen->player->plane_x = gen->player->plane_x * cos(angle)
 		- gen->player->plane_y * sin(angle);
-	gen->player->plane_y = oldPlaneX * sin(angle)
+	gen->player->plane_y = first_plane_x * sin(angle)
 		+ gen->player->plane_y * cos(angle);
 }
 
 void clear_image(t_img_data *img, int color)
 {
     int x, y;
-
-
     for (y = 0; y < WIN_HEIGHT; y++)
         for (x = 0; x < WIN_WIDTH; x++)
             copied_mlx_pixel_put(img, x, y, color);

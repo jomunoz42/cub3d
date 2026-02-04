@@ -61,12 +61,11 @@ void wall_textures_init(t_gen *gen)
     char *xpm_files[4];
     if (!png_name_to_xpm(gen, xpm_files))
     {
-        fprintf(stderr, "Failed to convert PNG names to XPM\n");
+		ft_putstr_fd("Failed to convert PNG names to XPM\n", 2);
         exit(1);
     }
     for (int i = 0; i < 4; i++)
     {
-		// printf("XPM[%d]: %s\n", i, xpm_files[i]);
         gen->texture[i]->img = mlx_xpm_file_to_image(
             gen->mlx_data->mlx_ptr,
             xpm_files[i],
@@ -75,7 +74,7 @@ void wall_textures_init(t_gen *gen)
         );
         if (!gen->texture[i]->img)
         {
-            fprintf(stderr, "Failed to load texture %d: %s\n", i, xpm_files[i]);
+            printf("Failed to load texture %d: %s\n", i, xpm_files[i]);
             exit(1);
         }
         gen->texture[i]->data = (int *)mlx_get_data_addr(
@@ -100,8 +99,6 @@ int	texture_data_init(t_gen *gen)
 	if (!png_size_fd(USER_HAND_PNG, &gen->texture_data->arm_width,
 			&gen->texture_data->arm_height))
 		return (0);
-	// printf("[arm image data] Width: %u, Height: %u\n",
-	// 	gen->texture_data->arm_width, gen->texture_data->arm_height);
 	return (1);
 }
 
@@ -110,11 +107,9 @@ int minimap_init(t_gen *gen)
     gen->minimap = malloc(sizeof(t_minimap));
     if (!gen->minimap)
         return 0;
-
     gen->minimap->map = NULL;
     gen->minimap->width  = gen->mlx_data->win_width * 0.20;
     gen->minimap->height = gen->mlx_data->win_height * 0.20;
-
     gen->minimap->image.img = mlx_new_image(
         gen->mlx_data->mlx_ptr,
         gen->minimap->width,
@@ -128,7 +123,6 @@ int minimap_init(t_gen *gen)
     );
 	gen->minimap->image.height = gen->mlx_data->win_height;
 	gen->minimap->image.width = gen->mlx_data->win_width;
-
     return 1;
 }
 
@@ -157,8 +151,8 @@ int rayhit_init(t_gen *gen)
 	if (!gen->rayhit)
 		return (0);
 	gen->rayhit->dist = 0;
-	gen->rayhit->mapX = 0;
-	gen->rayhit->mapY = 0;
+	gen->rayhit->map_x = 0;
+	gen->rayhit->map_y = 0;
 	gen->rayhit->side = -1;
 	return (1);
 }
@@ -235,6 +229,5 @@ int	init_all(t_gen *gen)
 	arm_init(gen);
 	general_texture_init(gen);
 	wall_textures_init(gen);
-	// printf("== horizontal line is on %d\n", gen->texture_data->horizon);
 	return (0);
 }

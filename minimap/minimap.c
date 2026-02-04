@@ -24,15 +24,15 @@ void draw_minimap_player(t_gen *gen)
 void draw_minimap_fov(t_gen *gen)
 {
     int i, num_rays = 20;
-    double cameraX, rayDirX, rayDirY;
+    double camera_x, ray_direction_x, ray_direction_y;
 
     for (i = 0; i < num_rays; i++)
     {
-        cameraX = 2.0 * i / (num_rays - 1) - 1.0;
-        rayDirX = gen->player->dir_x + gen->player->plane_x * cameraX;
-        rayDirY = gen->player->dir_y + gen->player->plane_y * cameraX;
+        camera_x = 2.0 * i / (num_rays - 1) - 1.0;
+        ray_direction_x = gen->player->dir_x + gen->player->plane_x * camera_x;
+        ray_direction_y = gen->player->dir_y + gen->player->plane_y * camera_x;
 
-        direction_hits_wall(gen, rayDirX, rayDirY);
+        direction_hits_wall(gen, ray_direction_x, ray_direction_y);
     }
 }
 

@@ -34,8 +34,6 @@ typedef struct s_keyboard
 	bool			shift_left;
 	bool			key_f;
 	bool			key_l;
-
-
 }					t_keyboard;
 
 typedef struct s_mlx_data
@@ -105,9 +103,9 @@ typedef enum e_wall_face {
 
 typedef struct s_rayhit
 {
-    int     mapX;
-    int     mapY;
-    int     side;      // 0 = parede vertical (X), 1 = horizontal (Y)
+    int     map_x;
+    int     map_y;
+    int     side;
     double  dist;
 	t_wall_face face;
 }   t_rayhit;

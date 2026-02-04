@@ -33,47 +33,47 @@ void ciclope_dos_xman(t_img_data *img,int x0, int y0, int x1, int y1, int color)
 	}
 }
 
-void direction_hits_wall(t_gen *gen, double rayDirX, double rayDirY)
+void direction_hits_wall(t_gen *gen, double ray_direction_x, double ray_direction_y)
 {
     int start_x = (int)gen->player->x - ZOOM_LEVEL / 2;
     int start_y = (int)gen->player->y - ZOOM_LEVEL / 2;
 
-    int mapX = (int)gen->player->x;
-    int mapY = (int)gen->player->y;
-    int stepX, stepY, hit = 0;
-    double sideDistX, sideDistY, deltaDistX, deltaDistY;
+    int map_x = (int)gen->player->x;
+    int map_y = (int)gen->player->y;
+    int step_x, step_y, hit = 0;
+    double side_dist_x, side_dist_y, delta_dist_x, delta_dist_y;
 
-    deltaDistX = fabs(5 / rayDirX);
-    deltaDistY = fabs(5 / rayDirY);
+    delta_dist_x = fabs(5 / ray_direction_x);
+    delta_dist_y = fabs(5 / ray_direction_y);
 
-    stepX = (rayDirX < 0) ? -1 : 1;
-    sideDistX = (rayDirX < 0) ? (gen->player->x - mapX) * deltaDistX : (mapX + 1.0 - gen->player->x) * deltaDistX;
+    step_x = (ray_direction_x < 0) ? -1 : 1;
+    side_dist_x = (ray_direction_x < 0) ? (gen->player->x - map_x) * delta_dist_x : (map_x + 1.0 - gen->player->x) * delta_dist_x;
 
-    stepY = (rayDirY < 0) ? -1 : 1;
-    sideDistY = (rayDirY < 0) ? (gen->player->y - mapY) * deltaDistY : (mapY + 1.0 - gen->player->y) * deltaDistY;
+    step_y = (ray_direction_y < 0) ? -1 : 1;
+    side_dist_y = (ray_direction_y < 0) ? (gen->player->y - map_y) * delta_dist_y : (map_y + 1.0 - gen->player->y) * delta_dist_y;
 
     while (!hit)
     {
-        if (sideDistX < sideDistY)
+        if (side_dist_x < side_dist_y)
         {
-            sideDistX += deltaDistX;
-            mapX += stepX;
+            side_dist_x += delta_dist_x;
+            map_x += step_x;
         }
         else
         {
-            sideDistY += deltaDistY;
-            mapY += stepY;
+            side_dist_y += delta_dist_y;
+            map_y += step_y;
         }
-        if (is_wall(gen, mapX, mapY))
+        if (is_wall(gen, map_x, map_y))
             hit = 1;
     }
 
     int px0 = MINIMAP_PIXELS / 2;
     int py0 = MINIMAP_PIXELS / 2;
-    int px1 = (mapX - start_x + 0.5) * MINIMAP_TILE_PIXELS;
-    int py1 = (mapY - start_y + 0.5) * MINIMAP_TILE_PIXELS;
-    px1 = clamp(px1, 0, MINIMAP_PIXELS - 1);
-    py1 = clamp(py1, 0, MINIMAP_PIXELS - 1);
+    int px1 = (map_x - start_x + 0.5) * MINIMAP_TILE_PIXELS;
+    int py1 = (map_y - start_y + 0.5) * MINIMAP_TILE_PIXELS;
+    px1 = ft_clamp(px1, 0, MINIMAP_PIXELS - 1);
+    py1 = ft_clamp(py1, 0, MINIMAP_PIXELS - 1);
 
     ciclope_dos_xman(gen->img_data, px0, py0, px1, py1, 0xFF0000);
 }

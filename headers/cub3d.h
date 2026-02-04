@@ -33,7 +33,7 @@ int			validate_file(int fd);
 void draw_static_minimap(t_gen *gen);
 int is_wall(t_gen *gen, int map_x, int map_y);
 int			get_player_position(t_gen *gen);
-void direction_hits_wall(t_gen *gen, double rayDirX, double rayDirY);
+void direction_hits_wall(t_gen *gen, double ray_direction_x, double ray_direction_y);
 void		draw_minimap(t_gen *gen);
 int			move_player(int keysym, t_gen *gen);
 void		ft_bzero(void *s, size_t n);
@@ -84,7 +84,7 @@ char		*get_next_line(int fd);
 int         contains_tab(char *s);
 int			is_line_empty(char *line);
 void		free_double(char **arg);
-int clamp(int value, int min, int max);
+int ft_clamp(int value, int min, int max);
 
 //====================== LIBFT =========================
 
@@ -107,5 +107,6 @@ char *ft_strncpy(char *dst, char *srce, int n);
 char *ft_strcat(char *dst, char *srce);
 char	*ft_itoa(int n);
 char	*ft_strjoin(char *s1, char *s2);
+void	ft_putstr_fd(char *s, int fd);
 
 #endif

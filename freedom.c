@@ -78,7 +78,6 @@ int	super_duper_hiper_free(void)
 			mlx_destroy_window(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr);
 		if (gen->mlx_data->mlx_ptr)
 			mlx_destroy_display(gen->mlx_data->mlx_ptr);
-		// free(gen->mlx_data->win_ptr);
 		free(gen->mlx_data->mlx_ptr);
 		free(gen->mlx_data);
 		gen->mlx_data = NULL;

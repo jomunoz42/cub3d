@@ -374,13 +374,15 @@ int key_press(int key, t_gen *gen)
 	if (key == XK_f)
 	{
 		gen->kboard->key_f = true;
-		gen->player->fov -= 0.1;
+		gen->player->fov -= 0.01;
 	}
 	if (key == XK_l)
 	{
 		gen->kboard->key_l = true;
-		gen->player->fov += 0.1;
+		gen->player->fov += 0.01;
 	}
+	if (key == XK_r)
+		gen->player->fov = 2.0;
     return (0);
 }
 
@@ -607,9 +609,23 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (str);
 }
 
-int clamp(int value, int min, int max)
+int ft_clamp(int value, int min, int max)
 {
     if (value < min) return min;
     if (value > max) return max;
     return value;
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	int	i;
+
+	i = 0;
+	if (!s)
+		return ;
+	while (s[i])
+	{
+		write(fd, &s[i], 1);
+		i++;
+	}
 }
