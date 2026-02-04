@@ -570,3 +570,10 @@ char	*ft_strjoin(char *s1, char *s2)
 	str[i + j] = '\0';
 	return (str);
 }
+
+int clamp(int value, int min, int max)
+{
+    if (value < min) return min;
+    if (value > max) return max;
+    return value;
+}

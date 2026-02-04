@@ -72,6 +72,8 @@ void direction_hits_wall(t_gen *gen, double rayDirX, double rayDirY)
     int py0 = MINIMAP_PIXELS / 2;
     int px1 = (mapX - start_x + 0.5) * MINIMAP_TILE_PIXELS;
     int py1 = (mapY - start_y + 0.5) * MINIMAP_TILE_PIXELS;
+    px1 = clamp(px1, 0, MINIMAP_PIXELS - 1);
+    py1 = clamp(py1, 0, MINIMAP_PIXELS - 1);
 
     ciclope_dos_xman(gen->img_data, px0, py0, px1, py1, 0xFF0000);
 }

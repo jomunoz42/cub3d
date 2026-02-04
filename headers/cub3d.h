@@ -84,6 +84,7 @@ char		*get_next_line(int fd);
 int         contains_tab(char *s);
 int			is_line_empty(char *line);
 void		free_double(char **arg);
+int clamp(int value, int min, int max);
 
 //====================== LIBFT =========================
 
