@@ -149,6 +149,7 @@ int keyboard_init(t_gen *gen)
 	gen->kboard->key_a = false;
 	gen->kboard->key_s = false;
 	gen->kboard->key_d = false;
+	gen->kboard->key_e = false;
 	gen->kboard->key_right = false;
 	gen->kboard->key_left = false;
 	gen->kboard->control_left = false;

@@ -1,6 +1,25 @@
 #include "./headers/cub3d.h"
 
-t_rayhit castrate(t_gen *gen, double ray_direction_x, double ray_direction_y)
+//
+static t_texture *create_solid_texture(int color)
+{
+    t_texture *tex = malloc(sizeof(t_texture));
+    if (!tex)
+        return NULL;
+
+    tex->width = 1;
+    tex->height = 1;
+    tex->img = NULL;
+    tex->data = malloc(sizeof(int));
+    if (!tex->data)
+        return (free(tex), NULL);
+
+    tex->data[0] = color;
+    return tex;
+}
+//
+
+t_rayhit castrate(t_gen *gen, double ray_direction_x, double ray_direction_y, bool interact)
 {
     if (!gen || !gen->parse || !gen->parse->map)
     {
@@ -57,8 +76,31 @@ t_rayhit castrate(t_gen *gen, double ray_direction_x, double ray_direction_y)
             break;
         if (start_x < 0 || start_x >= (int)ft_strlen(gen->parse->map[start_y]))
             break;
-        if (gen->parse->map[start_y][start_x] == '1')
+        // if (gen->parse->map[start_y][start_x] == '1')
+        //     wall_hit = 1;
+        //
+        char cell = gen->parse->map[start_y][start_x];
+        if (cell == '1')
+        {
             wall_hit = 1;
+            hit.type = HIT_WALL;
+        }
+        else if (cell == 'D')
+        {
+            wall_hit = 1;
+            hit.type = HIT_DOOR;
+        }
+        else if (cell == 'd')
+        {
+            if (interact)
+            {
+                hit.type = HIT_DOOR;
+                break;
+            }
+            else
+                continue;
+        }
+        //
     }
     if (side == 0)
     {
@@ -87,13 +129,15 @@ t_rayhit castrate(t_gen *gen, double ray_direction_x, double ray_direction_y)
 
 void render_scene(t_gen *gen)
 {
+    gen->door_texture = create_solid_texture(0x00FF00);
+
     for (int x = 0; x < WIN_WIDTH; x++)
     {
         double camera_x = gen->player->fov * x / (double)WIN_WIDTH - 1.0;
         double ray_direction_x = gen->player->dir_x + gen->player->plane_x * camera_x;
         double ray_direction_y = gen->player->dir_y + gen->player->plane_y * camera_x;
 
-        t_rayhit hit = castrate(gen, ray_direction_x, ray_direction_y);
+        t_rayhit hit = castrate(gen, ray_direction_x, ray_direction_y, 0);
 
         int line_height = (int)(WIN_HEIGHT / hit.dist);
         int draw_start = -line_height / 2 + WIN_HEIGHT / 2;
@@ -108,7 +152,14 @@ void render_scene(t_gen *gen)
         else               
             wall_x = gen->player->x + hit.dist * ray_direction_x;
         wall_x -= floor(wall_x);
-        t_texture *tex = gen->texture[hit.face];
+        // t_texture *tex = gen->texture[hit.face];
+        t_texture *tex;
+
+        if (hit.type == HIT_WALL)
+            tex = gen->texture[hit.face];
+        else if (hit.type == HIT_DOOR)
+            tex = gen->door_texture;
+        //
         int texture_x = (int)(wall_x * (double)tex->width);
         if ((hit.side == 0 && ray_direction_x < 0) || (hit.side == 1 && ray_direction_y > 0))
             texture_x = tex->width - texture_x - 1;

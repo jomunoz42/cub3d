@@ -356,6 +356,7 @@ int key_press(int key, t_gen *gen)
 	if (key == XK_s) {gen->kboard->key_s = true;}
 	if (key == XK_a) {gen->kboard->key_a = true;}
 	if (key == XK_d) {gen->kboard->key_d = true;}
+	if (key == XK_e) {gen->kboard->key_e = true;}
 	if (key == XK_Left) {gen->kboard->key_left = true;}
 	if (key == XK_Right) {gen->kboard->key_right = true;}
 	if (key == XK_Control_L)
@@ -397,6 +398,8 @@ int key_release(int key, t_gen *gen)
         {gen->kboard->key_a = false;}
     if (key == XK_d)
         {gen->kboard->key_d = false;}
+	if (key == XK_e)
+        {gen->kboard->key_e = false;}
 	if (key == XK_Left)
 		{gen->kboard->key_left = false;}
 	if (key == XK_Right)

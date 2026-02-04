@@ -26,6 +26,25 @@ void clear_image(t_img_data *img, int color)
             copied_mlx_pixel_put(img, x, y, color);
 }
 
+static void open_close_door(t_gen *gen)
+{
+    double ray_x = gen->player->dir_x;
+    double ray_y = gen->player->dir_y;
+
+    t_rayhit hit = castrate(gen, ray_x, ray_y, 1);
+
+    if (hit.type != HIT_DOOR)
+        return;
+    if (hit.dist > 1.5)
+        return;
+    char *cell = &gen->parse->map[hit.map_y][hit.map_x];
+
+    if (*cell == 'D')
+        *cell = 'd';
+    else if (*cell == 'd')
+        *cell = 'D';
+}
+
 void update_player(t_gen *gen)
 {
     double nx = gen->player->x;
@@ -50,6 +69,11 @@ void update_player(t_gen *gen)
     {
         nx += gen->player->plane_x * gen->player->move_speed;
         ny += gen->player->plane_y * gen->player->move_speed;
+    }
+    if (gen->kboard->key_e)
+    {
+        open_close_door(gen);
+        gen->kboard->key_e = false;
     }
     if (gen->kboard->key_right)
         rotate_player(gen, gen->player->rotate_speed);

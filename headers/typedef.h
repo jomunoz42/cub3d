@@ -36,6 +36,7 @@ typedef struct s_keyboard
 	bool			key_a;
 	bool			key_s;
 	bool			key_d;
+	bool			key_e;
 	bool			key_right;
 	bool			key_left;
 	bool			control_left;
@@ -109,6 +110,12 @@ typedef enum e_wall_face {
     WEST
 } t_wall_face;
 
+typedef enum e_hit_type 
+{
+    HIT_WALL,
+    HIT_DOOR
+} t_hit_type;
+
 typedef struct s_rayhit
 {
     int     map_x;
@@ -116,6 +123,7 @@ typedef struct s_rayhit
     int     side;
     double  dist;
 	t_wall_face face;
+	t_hit_type  type;
 }   t_rayhit;
 
 
@@ -131,5 +139,8 @@ typedef struct s_general
 	t_rayhit		*rayhit;
 	t_img_data			*arm;
 	t_texture		*texture[4];
+
+	t_texture		*door_texture;
+
 	t_mouse			*mouse;
 }					t_gen;
