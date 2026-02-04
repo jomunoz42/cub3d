@@ -144,6 +144,8 @@ int keyboard_init(t_gen *gen)
 	gen->kboard->key_d = false;
 	gen->kboard->key_right = false;
 	gen->kboard->key_left = false;
+	gen->kboard->control_left = false;
+	gen->kboard->shift_left = false;
 	return (1);
 }
 
@@ -170,6 +172,8 @@ int player_init(t_gen *gen)
 	gen->player->dir_y = 0;
 	gen->player->plane_x = 0;
 	gen->player->plane_y = 0;
+	gen->player->move_speed = 0.05;
+	gen->player->rotate_speed = 0.045;
 	return (1);
 }
 

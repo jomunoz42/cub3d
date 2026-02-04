@@ -30,6 +30,8 @@ typedef struct s_keyboard
 	bool			key_d;
 	bool			key_right;
 	bool			key_left;
+	bool			control_left;
+	bool			shift_left;
 
 }					t_keyboard;
 
@@ -66,7 +68,8 @@ typedef struct s_player
 	double			dir_y;
 	double			plane_x;
 	double			plane_y;
-
+	double			move_speed;
+	double			rotate_speed;
 }					t_player;
 
 typedef struct s_images_data

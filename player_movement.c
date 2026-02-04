@@ -35,28 +35,28 @@ void update_player(t_gen *gen)
 
     if (gen->kboard->key_w)
     {
-        nx += gen->player->dir_x * MOVE_SPEED;
-        ny += gen->player->dir_y * MOVE_SPEED;
+        nx += gen->player->dir_x * gen->player->move_speed;
+        ny += gen->player->dir_y * gen->player->move_speed;
     }
     if (gen->kboard->key_s)
     {
-        nx -= gen->player->dir_x * MOVE_SPEED;
-        ny -= gen->player->dir_y * MOVE_SPEED;
+        nx -= gen->player->dir_x * gen->player->move_speed;
+        ny -= gen->player->dir_y * gen->player->move_speed;
     }
     if (gen->kboard->key_a)
     {
-        nx -= gen->player->plane_x * MOVE_SPEED;
-        ny -= gen->player->plane_y * MOVE_SPEED;
+        nx -= gen->player->plane_x * gen->player->move_speed;
+        ny -= gen->player->plane_y * gen->player->move_speed;
     }
     if (gen->kboard->key_d)
     {
-        nx += gen->player->plane_x * MOVE_SPEED;
-        ny += gen->player->plane_y * MOVE_SPEED;
+        nx += gen->player->plane_x * gen->player->move_speed;
+        ny += gen->player->plane_y * gen->player->move_speed;
     }
     if (gen->kboard->key_right)
-        rotate_player(gen, ROTATION_SPEED);
+        rotate_player(gen, gen->player->rotate_speed);
     if (gen->kboard->key_left)
-        rotate_player(gen, -ROTATION_SPEED);
+        rotate_player(gen, -gen->player->rotate_speed);
 
 
     if (!collision(gen, gen->player->y, nx + gen->player->dir_x * WALL_MARGIN))

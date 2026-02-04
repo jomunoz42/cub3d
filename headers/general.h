@@ -28,8 +28,8 @@
 #define MINIMAP_OFFSET_X 20
 #define MINIMAP_OFFSET_Y 20
 
-# define MOVE_SPEED 0.05
-# define ROTATION_SPEED 0.045
+// # define MOVE_SPEED 0.05
+// # define ROTATION_SPEED 0.045
 # define TRANSPARENT_COLOR 0Xb3ff00
 # define WALL_MARGIN 0.5
 # define USER_HAND_XPM "./imgs/pixil-frame-0.xpm"

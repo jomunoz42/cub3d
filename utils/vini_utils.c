@@ -359,7 +359,18 @@ int key_press(int key, t_gen *gen)
 	if (key == XK_d) {gen->kboard->key_d = true;}
 	if (key == XK_Left) {gen->kboard->key_left = true;}
 	if (key == XK_Right) {gen->kboard->key_right = true;}
-
+	if (key == XK_Control_L)
+	{
+		gen->kboard->control_left = true;
+		gen->player->move_speed = 0.15;
+		gen->player->rotate_speed = 0.060;
+	}
+	if (key == XK_Shift_L)
+	{
+		gen->kboard->shift_left = true;
+		gen->player->move_speed = 0.01;
+		gen->player->rotate_speed = 0.030;
+	}
     return (0);
 }
 
@@ -378,7 +389,18 @@ int key_release(int key, t_gen *gen)
 		{gen->kboard->key_left = false;}
 	if (key == XK_Right)
 		{gen->kboard->key_right = false;}
-
+	if (key == XK_Control_L)
+	{
+		gen->player->move_speed = 0.05;
+		gen->player->rotate_speed = 0.045;
+		gen->kboard->control_left = false;
+	}
+		if (key == XK_Shift_L)
+	{
+		gen->player->move_speed = 0.05;
+		gen->player->rotate_speed = 0.045;
+		gen->kboard->shift_left = false;
+	}
     return (0);
 }
 
