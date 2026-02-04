@@ -11,6 +11,14 @@ typedef enum e_element
     E_COUNT
 } t_element;
 
+typedef struct s_mouse
+{
+	int	previous_x;
+	int	x;
+	int y;
+	double	sens;
+}	t_mouse;
+
 typedef struct s_parsing
 {
 	char 			**textures_info;
@@ -123,4 +131,5 @@ typedef struct s_general
 	t_rayhit		*rayhit;
 	t_img_data			*arm;
 	t_texture		*texture[4];
+	t_mouse			*mouse;
 }					t_gen;

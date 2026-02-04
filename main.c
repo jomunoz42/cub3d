@@ -19,8 +19,3 @@ int	main(int argc, char *argv[])
 	start_window(gen, argv[1]);
 	return (0);
 }
-
-// 88 in 1
-// 136 in 1
-// 0 in 0
-// 0 in 0

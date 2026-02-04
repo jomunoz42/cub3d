@@ -104,6 +104,9 @@ void print_info(t_gen *gen)
     char *x = print_helper("X: ", gen->player->x);
     char *y = print_helper("Y: ", gen->player->y);
     char *fov = print_helper("FOV: ", gen->player->fov);
+    char *mouse_x = print_helper("Mouse x: ", (double)gen->mouse->x);
+    char *mouse_y = print_helper("Mouse y: ", (double)gen->mouse->y);
+
 
     mlx_string_put(
         gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 230,
@@ -126,6 +129,12 @@ void print_info(t_gen *gen)
         mlx_string_put(
         gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 290,
             0xFFFFFF, fov);
+        mlx_string_put(
+        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 300,
+            0xFFFFFF, mouse_x);
+        mlx_string_put(
+        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 310,
+            0xFFFFFF, mouse_y);
     free(dir_x);
     free(dir_y);
     free(plane_x);
@@ -133,6 +142,8 @@ void print_info(t_gen *gen)
     free(x);
     free(y);
     free(fov);
+    free(mouse_x);
+    free (mouse_y);
 }
 
 
@@ -140,7 +151,8 @@ int game_loop(t_gen *gen)
 {
     update_player(gen);              
     clear_image(gen->img_data, 0x000000); // Limpa a tela
-    render_scene(gen);                
+    render_scene(gen);              
+    mouse_looking(gen);  
     draw_minimap(gen);                
     draw_arm(gen);      
     mlx_put_image_to_window(

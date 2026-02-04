@@ -92,6 +92,8 @@ int	super_duper_hiper_free(void)
 		free(gen->mlx_data);
 		gen->mlx_data = NULL;
 	}
+	if (gen->mouse)
+		free(gen->mouse);
 	if (gen->rayhit)
 		free(gen->rayhit);
 	if (gen->player)

@@ -27,6 +27,18 @@ int main_init(t_gen *gen, char *argv)
 	return (1);
 }
 
+int mouse_init(t_gen *gen)
+{
+	gen->mouse = malloc(sizeof(t_mouse));
+	if (!gen->mouse)
+		return (0);
+	gen->mouse->x = 0;
+	gen->mouse->y = 0;
+	gen->mouse->previous_x = 0;
+	gen->mouse->sens = 0.0047;
+	return (1);
+}
+
 int	avg_img_init(t_gen *gen)
 {
 	gen->img_data = malloc(sizeof(t_img_data));
@@ -229,5 +241,6 @@ int	init_all(t_gen *gen)
 	arm_init(gen);
 	general_texture_init(gen);
 	wall_textures_init(gen);
+	mouse_init(gen);
 	return (0);
 }
