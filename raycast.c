@@ -4,7 +4,7 @@ t_rayhit castrate(t_gen *gen, double ray_direction_x, double ray_direction_y)
 {
     if (!gen || !gen->parse || !gen->parse->map)
     {
-        ft_putstr_fd( "ERROR: gen->parse is NULL\n", stderr);
+        ft_putstr_fd( "ERROR: gen->parse is NULL\n", 2);
         exit(1);
     }
     t_rayhit hit;

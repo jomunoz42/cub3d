@@ -92,6 +92,7 @@ char * print_helper(char *which_info, double what_to_convert)
         free(num);
         return NULL;
     }
+    free(num);
     return (text);
 }
 void print_info(t_gen *gen)
@@ -125,7 +126,13 @@ void print_info(t_gen *gen)
         mlx_string_put(
         gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 290,
             0xFFFFFF, fov);
-
+    free(dir_x);
+    free(dir_y);
+    free(plane_x);
+    free(plane_y);
+    free(x);
+    free(y);
+    free(fov);
 }
 
 
@@ -145,4 +152,3 @@ int game_loop(t_gen *gen)
     print_info(gen);
     return 0;
 }
-

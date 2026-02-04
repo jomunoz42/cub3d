@@ -186,7 +186,7 @@ int arm_init(t_gen *gen)
 	gen->arm->endian = 0;
 	gen->arm->width = 0;
 	gen->arm->height = 0;
-	gen->arm->img = mlx_xpm_file_to_image(
+	gen->arm->img = mlx_xpm_file_to_image( //<--- line 189
     gen->mlx_data->mlx_ptr,
     USER_HAND_XPM,
     &img_width,

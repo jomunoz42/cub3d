@@ -317,9 +317,8 @@ char *space_skipper_shift(char *str)
 
 void copied_mlx_pixel_put(t_img_data *img_data, int x, int y, int color)
 {
-    // First, check bounds
     if (x < 0 || x >= img_data->width || y < 0 || y >= img_data->height)
-        return; // outside image, do nothing
+        return;
 
     char *dest;
 
