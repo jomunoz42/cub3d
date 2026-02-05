@@ -60,7 +60,10 @@ void update_player(t_gen *gen)
     if (!collision(gen, ny + gen->player->dir_y * WALL_MARGIN, gen->player->x))
         gen->player->y = ny;
     if (!gen->flags->terror_mode && gen->kboard->control_left == false)
-        gen->player->move_speed = 0.05;
+    {
+        if (gen->kboard->shift_left == false)
+            gen->player->move_speed = 0.05;
+    }
 }
 
 char *ft_dtoa_fixed(double v)
@@ -108,6 +111,7 @@ void print_info(t_gen *gen)
     char *mouse_y = print_helper("Mouse y: ", (double)gen->mouse->y);
     char *zoom_lvl = print_helper("Minimap zoom level: ", gen->minimap->zoom_level);
     char *player_speed = print_helper("Player speed: ", gen->player->move_speed);
+    char *rot_speed = print_helper("Player speed: ", gen->player->rotate_speed);
 
     int i;
     const double spacing = 11;
@@ -148,6 +152,9 @@ void print_info(t_gen *gen)
         mlx_string_put(
         gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, i += spacing,
             INFO_TEXT_COLOR, player_speed);
+        mlx_string_put(
+        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, i += spacing,
+            INFO_TEXT_COLOR, rot_speed);
     free(dir_x);
     free(dir_y);
     free(plane_x);
@@ -159,6 +166,7 @@ void print_info(t_gen *gen)
     free (mouse_y);
     free(zoom_lvl);
     free(player_speed);
+    free(rot_speed);
 }
 
 void apply_vignette_to_image(t_gen *gen, t_img_data *img)
