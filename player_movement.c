@@ -145,6 +145,24 @@ void print_info(t_gen *gen)
     free (mouse_y);
 }
 
+void apply_vignette_to_image(t_img_data *img)
+{
+    for (int y = 0; y < img->height; y++)
+    {
+        for (int x = 0; x < img->width; x++)
+        {
+            int color = get_pixel_color_img(img, x, y);
+            float f = img->vignette[y * img->width + x];
+
+            int r = ((color >> 16) & 0xFF) * f;
+            int g = ((color >> 8) & 0xFF) * f;
+            int b = (color & 0xFF) * f;
+
+            copied_mlx_pixel_put(img, x, y, (r << 16) | (g << 8) | b);
+        }
+    }
+}
+
 
 int game_loop(t_gen *gen)
 {
@@ -153,7 +171,8 @@ int game_loop(t_gen *gen)
     render_scene(gen);              
     mouse_looking(gen);  
     draw_minimap(gen);                
-    draw_arm(gen);      
+    draw_arm(gen);     
+    apply_vignette_to_image(gen->img_data);
     mlx_put_image_to_window(
         gen->mlx_data->mlx_ptr,
         gen->mlx_data->win_ptr,

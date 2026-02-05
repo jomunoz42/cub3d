@@ -50,8 +50,53 @@ int	avg_img_init(t_gen *gen)
 	gen->img_data->endian = 0;
 	gen->img_data->line_len = 0;
 	gen->img_data->bits_pixel = 0;
+	gen->img_data->vignette = 0;
 	return (1);
 }
+
+void init_vignette(t_img_data *img)
+{
+    double cx = img->width / 2.0;
+    double cy = img->height / 2.0;
+    double max_dist = sqrt(cx * cx + cy * cy);
+
+    double inner_radius = 0.35;   // 👈 tweak this (0.25–0.45)
+    double max_light = 0.6;       // 👈 how dark the center is
+
+    img->vignette = malloc(sizeof(float) * img->width * img->height);
+    if (!img->vignette)
+        return;
+
+    for (int y = 0; y < img->height; y++)
+    {
+        for (int x = 0; x < img->width; x++)
+        {
+            double dx = x - cx;
+            double dy = y - cy;
+            double dist = sqrt(dx * dx + dy * dy);
+            double t = dist / max_dist;
+
+            double factor;
+
+            if (t < inner_radius)
+                factor = 1.0;
+            else
+            {
+                factor = 1.0 - (t - inner_radius) / (1.0 - inner_radius);
+                factor = pow(factor, 2.0);   // darkness curve
+            }
+
+            factor *= max_light;   // overall darkness
+
+            if (factor < 0.0)
+                factor = 0.0;
+
+            img->vignette[y * img->width + x] = factor;
+        }
+    }
+}
+
+
 
 int general_texture_init(t_gen *gen)
 {

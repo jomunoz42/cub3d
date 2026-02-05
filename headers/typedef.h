@@ -91,6 +91,7 @@ typedef struct s_images_data
     int endian;
     int width;
     int height;
+	float	*vignette;
 } t_img_data;
 
 

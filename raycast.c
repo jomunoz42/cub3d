@@ -85,6 +85,20 @@ t_rayhit castrate(t_gen *gen, double ray_direction_x, double ray_direction_y)
     return hit;
 }
 
+int apply_fog(int color, double dist)
+{
+    if (dist <= FOG_START)
+        return color;
+    if (dist >= FOG_END)
+        return 0x000000;
+    double factor = 1.0 - (dist - FOG_START) / (FOG_END - FOG_START);
+    int r = ((color >> 16) & 0xFF) * factor;
+    int g = ((color >> 8) & 0xFF) * factor;
+    int b = (color & 0xFF) * factor;
+    return (r << 16) | (g << 8) | b;
+}
+
+
 void render_scene(t_gen *gen)
 {
     for (int x = 0; x < WIN_WIDTH; x++)
@@ -118,6 +132,7 @@ void render_scene(t_gen *gen)
             int d = y * 256 - WIN_HEIGHT * 128 + line_height * 128;
             int texY = ((d * tex->height) / line_height) / 256;
             int color = tex->data[texY * tex->width + texture_x];
+            color = apply_fog(color, hit.dist);
             copied_mlx_pixel_put(gen->img_data, x, y, color);
         }
 

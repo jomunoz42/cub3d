@@ -63,5 +63,8 @@
 #define USER_HAND_XPM "./imgs/pixil-frame-0.xpm"
 #define USER_HAND_PNG "./imgs/pixil-frame-0.png"
 
+// ######SHADOW######
+#define FOG_START 0.3
+#define FOG_END 5.5
 
 #endif
