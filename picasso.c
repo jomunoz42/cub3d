@@ -1,4 +1,5 @@
 #include "./headers/cub3d.h"
+#include "headers/general.h"
 
 int get_pixel_color(t_gen *gen, int x, int y)
 {
@@ -40,6 +41,25 @@ void draw_arm(t_gen *gen)
         {
             int color = get_pixel_color(gen, x, y);
             if (color != TRANSPARENT_COLOR)
+                copied_mlx_pixel_put(gen->img_data, start_x + x, start_y + y, color);
+        }
+    }
+}
+
+void draw_terror_arm(t_gen *gen)
+{
+    if (!gen || !gen->arm)
+        return;
+
+    int start_x = gen->mlx_data->win_width -  gen->texture_data->terror_arm_width;
+    int start_y = gen->mlx_data->win_height - gen->texture_data->terror_arm_height;
+
+    for (int y = 0; y < (int)gen->texture_data->terror_arm_height; y++)
+    {
+        for (int x = 0; x < (int)gen->texture_data->terror_arm_width; x++)
+        {
+            int color = get_pixel_color_img(gen->terror_arm, x, y);
+            if (color != TERROR_ARM_TRANSPARENT)
                 copied_mlx_pixel_put(gen->img_data, start_x + x, start_y + y, color);
         }
     }

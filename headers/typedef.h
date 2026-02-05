@@ -62,6 +62,8 @@ typedef struct texture_data
 {
 	uint32_t		arm_width;
 	uint32_t		arm_height;
+	uint32_t		terror_arm_width;
+	uint32_t		terror_arm_height;
 	int				horizon;
 	int				flr_color;
 	int				clng_color;
@@ -157,6 +159,7 @@ typedef struct s_general
 	t_minimap		*minimap;
 	t_rayhit		*rayhit;
 	t_img_data			*arm;
+	t_img_data			*terror_arm;
 	t_texture		*texture[4];
 	t_mouse			*mouse;
 	t_def_values	*def_values;

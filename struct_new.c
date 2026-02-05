@@ -151,11 +151,16 @@ int	texture_data_init(t_gen *gen)
 		return (0);
 	gen->texture_data->arm_width = 0;
 	gen->texture_data->arm_height = 0;
+	gen->texture_data->terror_arm_width = 0;
+	gen->texture_data->terror_arm_height = 0;
 	gen->texture_data->clng_color = color_switch(gen->parse->textures_info[5]);
 	gen->texture_data->flr_color = color_switch(gen->parse->textures_info[4]);
 	gen->texture_data->horizon = gen->mlx_data->win_height / 2;
 	if (!png_size_fd(USER_HAND_PNG, &gen->texture_data->arm_width,
 			&gen->texture_data->arm_height))
+		return (0);
+	if (!png_size_fd(USER_TERROR_HAND_PNG, &gen->texture_data->terror_arm_width,
+			&gen->texture_data->terror_arm_height))
 		return (0);
 	return (1);
 }
@@ -264,7 +269,33 @@ int arm_init(t_gen *gen)
 		&gen->arm->endian
 	);
 	return (1);
+}
 
+int terror_arm_init(t_gen *gen)
+{
+	gen->terror_arm = malloc(sizeof(t_img_data));
+	if (!gen->terror_arm)
+		return (0);
+	int img_width = (int)gen->texture_data->terror_arm_width;
+	int img_height = (int)gen->texture_data->terror_arm_height;
+	gen->terror_arm->bits_pixel = 0;
+	gen->terror_arm->line_len = 0;
+	gen->terror_arm->endian = 0;
+	gen->terror_arm->width = 0;
+	gen->terror_arm->height = 0;
+	gen->terror_arm->img = mlx_xpm_file_to_image(
+    gen->mlx_data->mlx_ptr,
+    USER_TERROR_HAND_XPM,
+    &img_width,
+    &img_height
+	);
+	gen->terror_arm->addr = mlx_get_data_addr(
+		gen->terror_arm->img,
+		&gen->terror_arm->bits_pixel,
+		&gen->terror_arm->line_len,
+		&gen->terror_arm->endian
+	);
+	return (1);
 }
 
 int basic_mlx_init(t_gen *gen)
@@ -319,6 +350,7 @@ int	init_all(t_gen *gen)
 	keyboard_init(gen);
 	rayhit_init(gen);
 	arm_init(gen);
+	terror_arm_init(gen);
 	general_texture_init(gen);
 	wall_textures_init(gen);
 	mouse_init(gen);
