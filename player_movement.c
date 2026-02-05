@@ -171,8 +171,9 @@ int game_loop(t_gen *gen)
     render_scene(gen);              
     mouse_looking(gen);  
     draw_minimap(gen);                
-    draw_arm(gen);     
-    apply_vignette_to_image(gen->img_data);
+    draw_arm(gen);   
+    if (gen->terror_mode)  
+        apply_vignette_to_image(gen->img_data);
     mlx_put_image_to_window(
         gen->mlx_data->mlx_ptr,
         gen->mlx_data->win_ptr,

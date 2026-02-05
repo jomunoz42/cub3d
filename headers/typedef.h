@@ -42,6 +42,7 @@ typedef struct s_keyboard
 	bool			shift_left;
 	bool			key_f;
 	bool			key_l;
+	bool			key_t;
 }					t_keyboard;
 
 typedef struct s_mlx_data
@@ -122,6 +123,7 @@ typedef struct s_rayhit
 
 typedef struct s_general
 {
+	bool			terror_mode;
 	t_texture_data	*texture_data;
 	t_parsing		*parse;
 	t_mlx_data		*mlx_data;

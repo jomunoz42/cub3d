@@ -383,6 +383,11 @@ int key_press(int key, t_gen *gen)
 	}
 	if (key == XK_r)
 		gen->player->fov = 2.0;
+	if (key == XK_t && !gen->kboard->key_t)
+	{
+		gen->terror_mode = !gen->terror_mode;
+		gen->kboard->key_t = true;
+	}
     return (0);
 }
 
@@ -418,6 +423,8 @@ int key_release(int key, t_gen *gen)
 		gen->kboard->key_f = false;
 	if (key == XK_l)
 		gen->kboard->key_l = false;
+	if (key == XK_t)
+		gen->kboard->key_t = false;
     return (0);
 }
 

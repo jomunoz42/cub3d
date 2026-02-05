@@ -200,6 +200,7 @@ int keyboard_init(t_gen *gen)
 	gen->kboard->shift_left = false;
 	gen->kboard->key_f = false;
 	gen->kboard->key_l = false;
+	gen->kboard->key_t = false;
 	return (1);
 }
 
@@ -277,6 +278,7 @@ int	init_all(t_gen *gen)
 	gen->mlx_data = malloc(sizeof(t_mlx_data));
 	if (!gen->mlx_data)
 		return (1);
+	gen->terror_mode = false;
 	basic_mlx_init(gen);
 	texture_data_init(gen);
 	avg_img_init(gen);
