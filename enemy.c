@@ -76,11 +76,42 @@ void draw_enemy_minimap(t_gen *gen)
 }
 
 
+#define FOV_DEG 66.0
+#define FOV_RAD (FOV_DEG * M_PI / 180.0)
 
 void draw_enemy(t_gen *gen)
 {
+    double dx;
+    double dy;
+    double dist;
+    double enemy_dir_x;
+    double enemy_dir_y;
+    double dot;
+    double fov_limit;
+    int screen_x;
+    int screen_y;
     int x;
     int y;
+
+    dx = gen->enemy->x - gen->player->x;
+    dy = gen->enemy->y - gen->player->y;
+
+    dist = sqrt(dx * dx + dy * dy);
+    if (dist <= 0.01)
+        return;
+
+    enemy_dir_x = dx / dist;
+    enemy_dir_y = dy / dist;
+
+    dot = enemy_dir_x * gen->player->dir_x
+        + enemy_dir_y * gen->player->dir_y;
+
+    fov_limit = cos((66.0 * M_PI / 180.0) / 2.0);
+    if (dot < fov_limit)
+        return; // ❌ outside FOV
+
+    screen_x = gen->mlx_data->win_width / 2 + (int)(dx * 50);
+    screen_y = gen->mlx_data->win_height / 2 + (int)(dy * 50);
 
     y = 0;
     while (y < gen->enemy->size)
@@ -90,8 +121,8 @@ void draw_enemy(t_gen *gen)
         {
             copied_mlx_pixel_put(
                 gen->img_data,
-                (int)gen->enemy->x + x,
-                (int)gen->enemy->y + y,
+                screen_x + x,
+                screen_y + y,
                 0xdb27c9
             );
             x++;
@@ -99,3 +130,6 @@ void draw_enemy(t_gen *gen)
         y++;
     }
 }
+
+
+
