@@ -20,15 +20,11 @@ int mouse_looking(t_gen *gen)
                 rotate_player(gen, direction_x * gen->mouse->sens);
         }
         else
-        {
             first_frame = 0; // skip rotation this frame
-        }
-
         mlx_mouse_move(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr, cursor_x, cursor_y);
     }
     else
         mlx_mouse_show(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr);
-
     return 1;
 }
 
