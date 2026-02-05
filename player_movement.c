@@ -106,6 +106,7 @@ void print_info(t_gen *gen)
     char *fov = print_helper("FOV: ", gen->player->fov);
     char *mouse_x = print_helper("Mouse x: ", (double)gen->mouse->x);
     char *mouse_y = print_helper("Mouse y: ", (double)gen->mouse->y);
+    char *zoom_lvl = print_helper("Minimap zoom level: ", gen->minimap->zoom_level);
 
     mlx_string_put(
         gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 230,
@@ -134,6 +135,9 @@ void print_info(t_gen *gen)
         mlx_string_put(
         gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 310,
             INFO_TEXT_COLOR, mouse_y);
+        mlx_string_put(
+        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 320,
+            INFO_TEXT_COLOR, zoom_lvl);
     free(dir_x);
     free(dir_y);
     free(plane_x);
@@ -143,6 +147,7 @@ void print_info(t_gen *gen)
     free(fov);
     free(mouse_x);
     free (mouse_y);
+    free(zoom_lvl);
 }
 
 void apply_vignette_to_image(t_img_data *img)
@@ -169,10 +174,11 @@ int game_loop(t_gen *gen)
     update_player(gen);              
     clear_image(gen->img_data, 0x000000);
     render_scene(gen);              
-    mouse_looking(gen);  
-    draw_minimap(gen);                
+    mouse_looking(gen);
+    if (!gen->flags->terror_mode && gen->flags->minimap)
+        draw_minimap(gen);                
     draw_arm(gen);   
-    if (gen->terror_mode)  
+    if (gen->flags->terror_mode)  
         apply_vignette_to_image(gen->img_data);
     mlx_put_image_to_window(
         gen->mlx_data->mlx_ptr,
@@ -180,6 +186,7 @@ int game_loop(t_gen *gen)
         gen->img_data->img,
         0, 0
     );
-    print_info(gen);
+    if (gen->flags->info && !gen->flags->terror_mode)
+        print_info(gen);
     return 0;
 }

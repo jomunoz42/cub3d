@@ -181,6 +181,7 @@ int minimap_init(t_gen *gen)
     );
 	gen->minimap->image.height = gen->mlx_data->win_height;
 	gen->minimap->image.width = gen->mlx_data->win_width;
+	gen->minimap->zoom_level = 15.0;
     return 1;
 }
 
@@ -201,6 +202,10 @@ int keyboard_init(t_gen *gen)
 	gen->kboard->key_f = false;
 	gen->kboard->key_l = false;
 	gen->kboard->key_t = false;
+	gen->kboard->key_i = false;
+	gen->kboard->key_z = false;
+	gen->kboard->key_x = false;
+	gen->kboard->key_m = false;
 	return (1);
 }
 
@@ -273,12 +278,22 @@ int basic_mlx_init(t_gen *gen)
 	return (1);
 }
 
+int init_flags(t_gen *gen)
+{
+	gen->flags = malloc(sizeof(t_flags));
+	if (!gen->flags)
+		return (0);
+	gen->flags->info = true;
+	gen->flags->terror_mode = false;
+	gen->flags->minimap = true;
+	return (1);
+}
+
 int	init_all(t_gen *gen)
 {
 	gen->mlx_data = malloc(sizeof(t_mlx_data));
 	if (!gen->mlx_data)
 		return (1);
-	gen->terror_mode = false;
 	basic_mlx_init(gen);
 	texture_data_init(gen);
 	avg_img_init(gen);
@@ -290,5 +305,6 @@ int	init_all(t_gen *gen)
 	general_texture_init(gen);
 	wall_textures_init(gen);
 	mouse_init(gen);
+	init_flags(gen);
 	return (0);
 }

@@ -133,12 +133,12 @@ void render_scene(t_gen *gen)
             int d = y * 256 - WIN_HEIGHT * 128 + line_height * 128;
             int texY = ((d * tex->height) / line_height) / 256;
             int color = tex->data[texY * tex->width + texture_x];
-            if (gen->terror_mode)
+            if (gen->flags->terror_mode)
                 color = apply_fog(color, hit.dist);
             copied_mlx_pixel_put(gen->img_data, x, y, color);
         }
 
-        if (!gen->terror_mode)
+        if (!gen->flags->terror_mode)
         {
             for (int y = 0; y < draw_start; y++)
                 copied_mlx_pixel_put(gen->img_data, x, y, gen->texture_data->clng_color);

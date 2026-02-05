@@ -46,7 +46,7 @@
 #define ZOOM_LEVEL            15
 #define MINIMAP_TILES     (MINIMAP_RADIUS * 2 + 1)
 #define MINIMAP_SIZE      (MINIMAP_TILES * MINIMAP_SCALE)
-#define MINIMAP_TILE_PIXELS   (MINIMAP_PIXELS / ZOOM_LEVEL)
+#define MINIMAP_TILE_PIXELS   (MINIMAP_PIXELS / gen->minimap->zoom_level)
 
 
 // ###### COLORS ######

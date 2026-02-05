@@ -381,12 +381,35 @@ int key_press(int key, t_gen *gen)
 		gen->kboard->key_l = true;
 		gen->player->fov += 0.01;
 	}
+	if (key == XK_z)
+	{
+		gen->kboard->key_z = true;
+		gen->minimap->zoom_level -= 0.5;
+	}
+	if (key == XK_x)
+	{
+		gen->kboard->key_x = true;
+		gen->minimap->zoom_level += 0.5;
+	}
 	if (key == XK_r)
+	{
 		gen->player->fov = 2.0;
+		gen->minimap->zoom_level = 15;
+	}
 	if (key == XK_t && !gen->kboard->key_t)
 	{
-		gen->terror_mode = !gen->terror_mode;
 		gen->kboard->key_t = true;
+		gen->flags->terror_mode = !gen->flags->terror_mode;
+	}
+	if (key == XK_i && !gen->kboard->key_i)
+	{
+		gen->kboard->key_i = true;
+		gen->flags->info = !gen->flags->info;
+	}
+	if (key == XK_m && !gen->kboard->key_m)
+	{
+		gen->kboard->key_m = true;
+		gen->flags->minimap = !gen->flags->minimap;
 	}
     return (0);
 }
@@ -419,12 +442,20 @@ int key_release(int key, t_gen *gen)
 		gen->player->rotate_speed = 0.045;
 		gen->kboard->shift_left = false;
 	}
+	if (key == XK_m)
+		gen->kboard->key_m = false;
+	if (key == XK_x)
+		gen->kboard->key_x = false;
+	if (key == XK_z)
+		gen->kboard->key_z = false;
 	if (key == XK_f)
 		gen->kboard->key_f = false;
 	if (key == XK_l)
 		gen->kboard->key_l = false;
 	if (key == XK_t)
 		gen->kboard->key_t = false;
+	if (key == XK_i)
+		gen->kboard->key_i = false;
     return (0);
 }
 

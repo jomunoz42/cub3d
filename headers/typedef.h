@@ -43,6 +43,10 @@ typedef struct s_keyboard
 	bool			key_f;
 	bool			key_l;
 	bool			key_t;
+	bool			key_i;
+	bool			key_z;
+	bool			key_x;
+	bool			key_m;
 }					t_keyboard;
 
 typedef struct s_mlx_data
@@ -102,6 +106,7 @@ typedef struct s_minimap
 	char			**map;
 	int				width;
 	int				height;
+	double				zoom_level;
 }					t_minimap;
 
 typedef enum e_wall_face {
@@ -120,10 +125,16 @@ typedef struct s_rayhit
 	t_wall_face face;
 }   t_rayhit;
 
+typedef struct s_flags
+{
+	bool terror_mode;
+	bool info;
+	bool minimap;
+}	t_flags;
 
 typedef struct s_general
 {
-	bool			terror_mode;
+	t_flags			*flags;
 	t_texture_data	*texture_data;
 	t_parsing		*parse;
 	t_mlx_data		*mlx_data;
