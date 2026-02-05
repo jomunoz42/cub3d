@@ -337,6 +337,20 @@ int def_values_init(t_gen *gen)
 	return (1);
 }
 
+int enemy_init(t_gen *gen)
+{
+	gen->enemy = malloc(sizeof(t_enemy));
+	if (!gen->enemy)
+		return (0);
+	gen->enemy->move_speed = gen->def_values->player_move_speed + 0.01;
+	gen->enemy->size = 20;
+	gen->enemy->x = 0;
+	gen->enemy->y = 0;
+	find_enemy_position(gen, 'X');
+	printf("Enemy position is x[%d][%d]\n", (int)gen->enemy->x, (int)gen->enemy->y);
+	return (1);
+}
+
 int	init_all(t_gen *gen)
 {
 	gen->mlx_data = malloc(sizeof(t_mlx_data));
@@ -356,5 +370,6 @@ int	init_all(t_gen *gen)
 	mouse_init(gen);
 	init_flags(gen);
 	def_values_init(gen);
+	enemy_init(gen);
 	return (0);
 }

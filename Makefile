@@ -11,7 +11,7 @@ UTILS = ./utils
 MINIMAP = ./minimap
 
 SRC = \
-	$(SRCDIR)/main.c struct_new.c window_management.c freedom.c  player_movement.c picasso.c raycast.c mouse_movement.c\
+	$(SRCDIR)/main.c struct_new.c window_management.c freedom.c  player_movement.c picasso.c raycast.c mouse_movement.c enemy.c\
 	$(PARSE)/parser.c \
 	$(PARSE)/header_validation.c \
 	$(PARSE)/construct_map.c \

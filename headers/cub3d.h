@@ -65,6 +65,10 @@ int png_name_to_xpm(t_gen *gen, char *xpm_files[4]);
 void rotate_player(t_gen *gen, double angle);
 int mouse_looking(t_gen *gen);
 void draw_terror_arm(t_gen *gen);
+void find_enemy_position(t_gen *gen, char c);
+void update_enemy(t_gen *gen);
+void draw_enemy(t_gen *gen);
+void draw_enemy_minimap(t_gen *gen);
 
 
 // JHONNY STUFF

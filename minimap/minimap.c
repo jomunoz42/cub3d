@@ -83,6 +83,7 @@ void draw_minimap(t_gen *gen)
                     );
         }
     }
+    draw_enemy_minimap(gen);
     draw_minimap_player(gen);
     draw_minimap_fov(gen);
 }

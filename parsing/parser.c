@@ -17,7 +17,7 @@ static int	find_invalid_char(t_parsing *data) // I am accepting F and D
 		{
 			c = data->map[y][x];
 			if (c != '0' && c != '1' && c != 'N' && c != 'S' && c != 'E'
-				&& c != 'W' && c != ' ' && c != 'D' && c != 'F' && c != '\n')
+				&& c != 'W' && c != ' ' && c != 'D' && c != 'F' && c != '\n' && c != 'X')
 			{
 				write(2, "Error\n", 6);
 				write(2, "Invalid char in map.\n", 22);

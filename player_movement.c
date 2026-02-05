@@ -193,9 +193,11 @@ void apply_vignette_to_image(t_gen *gen, t_img_data *img)
 
 int game_loop(t_gen *gen)
 {
-    update_player(gen);              
+    update_player(gen);
+    update_enemy(gen);            
     clear_image(gen->img_data, 0x000000);
     render_scene(gen);
+    draw_enemy(gen);
     mouse_looking(gen);
     if (!gen->flags->terror_mode && gen->flags->minimap)
         draw_minimap(gen);  

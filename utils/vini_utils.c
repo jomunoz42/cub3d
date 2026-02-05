@@ -538,6 +538,7 @@ int get_player_position(t_gen *gen)
 	return (0);
 }
 
+
 int	ft_abs(int n)
 {
 	if (n < 0)

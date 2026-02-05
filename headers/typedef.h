@@ -147,6 +147,14 @@ typedef struct s_default_values
 	double terror_player_move_speed;
 }	t_def_values;
 
+typedef struct s_enemy
+{
+	double x;
+	double y;
+	double move_speed;
+	int size;
+}	t_enemy;
+
 typedef struct s_general
 {
 	t_flags			*flags;
@@ -163,4 +171,5 @@ typedef struct s_general
 	t_texture		*texture[4];
 	t_mouse			*mouse;
 	t_def_values	*def_values;
+	t_enemy			*enemy;
 }					t_gen;
