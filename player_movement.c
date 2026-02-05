@@ -55,12 +55,12 @@ void update_player(t_gen *gen)
         rotate_player(gen, gen->player->rotate_speed);
     if (gen->kboard->key_left)
         rotate_player(gen, -gen->player->rotate_speed);
-
-
     if (!collision(gen, gen->player->y, nx + gen->player->dir_x * WALL_MARGIN))
         gen->player->x = nx;
     if (!collision(gen, ny + gen->player->dir_y * WALL_MARGIN, gen->player->x))
         gen->player->y = ny;
+    if (!gen->flags->terror_mode && gen->kboard->control_left == false)
+        gen->player->move_speed = 0.05;
 }
 
 char *ft_dtoa_fixed(double v)
@@ -107,37 +107,47 @@ void print_info(t_gen *gen)
     char *mouse_x = print_helper("Mouse x: ", (double)gen->mouse->x);
     char *mouse_y = print_helper("Mouse y: ", (double)gen->mouse->y);
     char *zoom_lvl = print_helper("Minimap zoom level: ", gen->minimap->zoom_level);
+    char *player_speed = print_helper("Player speed: ", gen->player->move_speed);
 
+    int i;
+    const double spacing = 11;
+    if (gen->flags->minimap)
+        i = 220;
+    else
+        i = 10;
     mlx_string_put(
-        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 230,
+        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, i += spacing,
             INFO_TEXT_COLOR, dir_x);
         mlx_string_put(
-        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 240,
+        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, i += spacing,
             INFO_TEXT_COLOR, dir_y);
         mlx_string_put(
-        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 250,
+        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, i += spacing,
             INFO_TEXT_COLOR, plane_x);
         mlx_string_put(
-        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 260,
+        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, i += spacing,
             INFO_TEXT_COLOR, plane_y);
         mlx_string_put(
-        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 270,
+        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, i += spacing,
             INFO_TEXT_COLOR, x);
         mlx_string_put(
-        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 280,
+        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, i += spacing,
             INFO_TEXT_COLOR, y);
         mlx_string_put(
-        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 290,
+        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, i += spacing,
             INFO_TEXT_COLOR, fov);
         mlx_string_put(
-        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 300,
+        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, i += spacing,
             INFO_TEXT_COLOR, mouse_x);
         mlx_string_put(
-        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 310,
+        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, i += spacing,
             INFO_TEXT_COLOR, mouse_y);
         mlx_string_put(
-        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, 320,
+        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, i += spacing,
             INFO_TEXT_COLOR, zoom_lvl);
+        mlx_string_put(
+        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, i += spacing,
+            INFO_TEXT_COLOR, player_speed);
     free(dir_x);
     free(dir_y);
     free(plane_x);
@@ -148,6 +158,7 @@ void print_info(t_gen *gen)
     free(mouse_x);
     free (mouse_y);
     free(zoom_lvl);
+    free(player_speed);
 }
 
 void apply_vignette_to_image(t_img_data *img)
@@ -186,7 +197,7 @@ int game_loop(t_gen *gen)
         gen->img_data->img,
         0, 0
     );
-    if (gen->flags->info && !gen->flags->terror_mode)
+    // if (gen->flags->info && !gen->flags->terror_mode)
         print_info(gen);
     return 0;
 }

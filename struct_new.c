@@ -232,7 +232,7 @@ int player_init(t_gen *gen)
 	gen->player->dir_y = 0;
 	gen->player->plane_x = 0;
 	gen->player->plane_y = 0;
-	gen->player->move_speed = DEFAULT_PLAYER_MOVE_SPEED;
+	gen->player->move_speed = 0.05;
 	gen->player->rotate_speed = DEFAULT_PLAYER_ROTATE_SPEED;
 	gen->player->fov = DEFAULT_PLAYER_FOV;
 	return (1);

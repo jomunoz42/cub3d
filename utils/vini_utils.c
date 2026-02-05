@@ -362,7 +362,10 @@ int key_press(int key, t_gen *gen)
 	{
 		gen->kboard->control_left = true;
 		gen->player->fov += 0.07;
-		gen->player->move_speed = 0.15;
+		if (gen->flags->terror_mode)
+			gen->player->move_speed = 0.13;
+		else
+			gen->player->move_speed = 0.15;
 		gen->player->rotate_speed = 0.060;
 	}
 	if (key == XK_Shift_L)
@@ -399,6 +402,7 @@ int key_press(int key, t_gen *gen)
 	if (key == XK_t && !gen->kboard->key_t)
 	{
 		gen->kboard->key_t = true;
+		gen->player->move_speed = 0.1;
 		gen->flags->terror_mode = !gen->flags->terror_mode;
 	}
 	if (key == XK_i && !gen->kboard->key_i)
@@ -453,7 +457,9 @@ int key_release(int key, t_gen *gen)
 	if (key == XK_l)
 		gen->kboard->key_l = false;
 	if (key == XK_t)
+	{
 		gen->kboard->key_t = false;
+	}
 	if (key == XK_i)
 		gen->kboard->key_i = false;
     return (0);
