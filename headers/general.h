@@ -43,7 +43,6 @@
 #define MINIMAP_OFFSET_X  20
 #define MINIMAP_OFFSET_Y  20
 #define MINIMAP_PIXELS        200
-#define ZOOM_LEVEL            15
 #define MINIMAP_TILES     (MINIMAP_RADIUS * 2 + 1)
 #define MINIMAP_SIZE      (MINIMAP_TILES * MINIMAP_SCALE)
 #define MINIMAP_TILE_PIXELS   (MINIMAP_PIXELS / gen->minimap->zoom_level)

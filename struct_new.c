@@ -181,7 +181,7 @@ int minimap_init(t_gen *gen)
     );
 	gen->minimap->image.height = gen->mlx_data->win_height;
 	gen->minimap->image.width = gen->mlx_data->win_width;
-	gen->minimap->zoom_level = 15.0;
+	gen->minimap->zoom_level = 14.0;
     return 1;
 }
 
@@ -206,6 +206,7 @@ int keyboard_init(t_gen *gen)
 	gen->kboard->key_z = false;
 	gen->kboard->key_x = false;
 	gen->kboard->key_m = false;
+	gen->kboard->key_caps_lock = false;
 	return (1);
 }
 
@@ -286,6 +287,22 @@ int init_flags(t_gen *gen)
 	gen->flags->info = true;
 	gen->flags->terror_mode = false;
 	gen->flags->minimap = true;
+	gen->flags->mouse_on = true;
+	return (1);
+}
+
+int def_values_init(t_gen *gen)
+{
+	gen->def_values = malloc(sizeof(t_def_values));
+	if (!gen->def_values)
+		return (0);
+	gen->def_values->fov = gen->player->fov;
+	gen->def_values->player_rotation_speed = gen->player->rotate_speed;
+	gen->def_values->player_move_speed = gen->player->move_speed;
+	gen->def_values->player_x = gen->player->x;
+	gen->def_values->player_y = gen->player->y;
+	gen->def_values->minimap_zoom_level = gen->minimap->zoom_level;
+	gen->def_values->terror_player_move_speed = gen->def_values->player_move_speed + 0.05;
 	return (1);
 }
 
@@ -306,5 +323,6 @@ int	init_all(t_gen *gen)
 	wall_textures_init(gen);
 	mouse_init(gen);
 	init_flags(gen);
+	def_values_init(gen);
 	return (0);
 }

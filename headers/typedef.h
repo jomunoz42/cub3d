@@ -47,6 +47,7 @@ typedef struct s_keyboard
 	bool			key_z;
 	bool			key_x;
 	bool			key_m;
+	bool			key_caps_lock;
 }					t_keyboard;
 
 typedef struct s_mlx_data
@@ -130,7 +131,19 @@ typedef struct s_flags
 	bool terror_mode;
 	bool info;
 	bool minimap;
+	bool mouse_on;
 }	t_flags;
+
+typedef struct s_default_values
+{
+	double player_x;
+	double player_y;
+	double player_move_speed;
+	double player_rotation_speed;
+	double minimap_zoom_level;
+	double fov;
+	double terror_player_move_speed;
+}	t_def_values;
 
 typedef struct s_general
 {
@@ -146,4 +159,5 @@ typedef struct s_general
 	t_img_data			*arm;
 	t_texture		*texture[4];
 	t_mouse			*mouse;
+	t_def_values	*def_values;
 }					t_gen;

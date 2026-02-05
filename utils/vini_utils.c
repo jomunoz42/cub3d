@@ -363,9 +363,9 @@ int key_press(int key, t_gen *gen)
 		gen->kboard->control_left = true;
 		gen->player->fov += 0.07;
 		if (gen->flags->terror_mode)
-			gen->player->move_speed = 0.13;
+			gen->player->move_speed = gen->def_values->terror_player_move_speed + 0.03;
 		else
-			gen->player->move_speed = 0.15;
+			gen->player->move_speed = gen->def_values->player_move_speed + 0.06 ;
 		gen->player->rotate_speed = 0.060;
 	}
 	if (key == XK_Shift_L)
@@ -396,14 +396,19 @@ int key_press(int key, t_gen *gen)
 	}
 	if (key == XK_r)
 	{
-		gen->player->fov = 2.0;
-		gen->minimap->zoom_level = 15;
+		gen->player->fov = gen->def_values->fov;
+		gen->minimap->zoom_level = gen->def_values->minimap_zoom_level;
 	}
 	if (key == XK_t && !gen->kboard->key_t)
 	{
 		gen->kboard->key_t = true;
 		gen->player->move_speed = 0.1;
 		gen->flags->terror_mode = !gen->flags->terror_mode;
+	}
+	if (key == XK_Caps_Lock && !gen->kboard->key_caps_lock)
+	{
+		gen->kboard->key_caps_lock = true;
+		gen->flags->mouse_on = !gen->flags->mouse_on;
 	}
 	if (key == XK_i && !gen->kboard->key_i)
 	{
@@ -435,7 +440,10 @@ int key_release(int key, t_gen *gen)
 		{gen->kboard->key_right = false;}
 	if (key == XK_Control_L)
 	{
-		gen->player->move_speed = 0.05;
+		if (gen->flags->terror_mode)
+			gen->player->move_speed = gen->def_values->terror_player_move_speed;
+		else
+			gen->player->move_speed = 0.05;
 		gen->player->rotate_speed = 0.045;
 		gen->player->fov -= 0.07;
 		gen->kboard->control_left = false;
@@ -457,9 +465,9 @@ int key_release(int key, t_gen *gen)
 	if (key == XK_l)
 		gen->kboard->key_l = false;
 	if (key == XK_t)
-	{
 		gen->kboard->key_t = false;
-	}
+	if (key == XK_Caps_Lock)
+		gen->kboard->key_caps_lock = false;
 	if (key == XK_i)
 		gen->kboard->key_i = false;
     return (0);

@@ -161,20 +161,23 @@ void print_info(t_gen *gen)
     free(player_speed);
 }
 
-void apply_vignette_to_image(t_img_data *img)
+void apply_vignette_to_image(t_gen *gen, t_img_data *img)
 {
-    for (int y = 0; y < img->height; y++)
+    if (gen->flags->terror_mode) 
     {
-        for (int x = 0; x < img->width; x++)
+        for (int y = 0; y < img->height; y++)
         {
-            int color = get_pixel_color_img(img, x, y);
-            float f = img->vignette[y * img->width + x];
+            for (int x = 0; x < img->width; x++)
+            {
+                int color = get_pixel_color_img(img, x, y);
+                float f = img->vignette[y * img->width + x];
 
-            int r = ((color >> 16) & 0xFF) * f;
-            int g = ((color >> 8) & 0xFF) * f;
-            int b = (color & 0xFF) * f;
+                int r = ((color >> 16) & 0xFF) * f;
+                int g = ((color >> 8) & 0xFF) * f;
+                int b = (color & 0xFF) * f;
 
-            copied_mlx_pixel_put(img, x, y, (r << 16) | (g << 8) | b);
+                copied_mlx_pixel_put(img, x, y, (r << 16) | (g << 8) | b);
+            }
         }
     }
 }
@@ -184,20 +187,19 @@ int game_loop(t_gen *gen)
 {
     update_player(gen);              
     clear_image(gen->img_data, 0x000000);
-    render_scene(gen);              
+    render_scene(gen);
     mouse_looking(gen);
     if (!gen->flags->terror_mode && gen->flags->minimap)
         draw_minimap(gen);                
     draw_arm(gen);   
-    if (gen->flags->terror_mode)  
-        apply_vignette_to_image(gen->img_data);
+    apply_vignette_to_image(gen, gen->img_data);
     mlx_put_image_to_window(
         gen->mlx_data->mlx_ptr,
         gen->mlx_data->win_ptr,
         gen->img_data->img,
         0, 0
     );
-    // if (gen->flags->info && !gen->flags->terror_mode)
+    if (gen->flags->info && !gen->flags->terror_mode)
         print_info(gen);
     return 0;
 }
