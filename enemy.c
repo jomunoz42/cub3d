@@ -23,19 +23,42 @@ void find_enemy_position(t_gen *gen, char c)
 
 void update_enemy(t_gen *gen)
 {
-    double direction_x;
-    double direction_y;
+    double dx;
+    double dy;
     double dist;
-    direction_x = gen->player->x - gen->enemy->x;
-    direction_y = gen->player->y - gen->enemy->y;
-    dist = sqrt(direction_x * direction_x + direction_y * direction_y);
-    if (dist < 1.0)
+    double next_x;
+    double next_y;
+
+    dx = gen->player->x - gen->enemy->x;
+    dy = gen->player->y - gen->enemy->y;
+
+    dist = sqrt(dx * dx + dy * dy);
+    if (dist < 0.5)
         return;
-    direction_x /= dist;
-    direction_y /= dist;
-    gen->enemy->x += direction_x * gen->enemy->move_speed;
-    gen->enemy->y += direction_y * gen->enemy->move_speed;
+
+    dx /= dist;
+    dy /= dist;
+
+    next_x = gen->enemy->x + dx * gen->enemy->move_speed;
+    next_y = gen->enemy->y + dy * gen->enemy->move_speed;
+
+    /* try full movement */
+    if (!collision(gen, next_y, next_x))
+    {
+        gen->enemy->x = next_x;
+        gen->enemy->y = next_y;
+        return;
+    }
+
+    /* try sliding on X */
+    if (!collision(gen, gen->enemy->y, next_x))
+        gen->enemy->x = next_x;
+
+    /* try sliding on Y */
+    else if (!collision(gen, next_y, gen->enemy->x))
+        gen->enemy->y = next_y;
 }
+
 
 void draw_enemy_minimap(t_gen *gen)
 {

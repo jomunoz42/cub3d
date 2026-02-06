@@ -13,6 +13,7 @@
 # include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
+#include <X11/extensions/Xfixes.h>
 
 // ###### WINDOW | MLX ######
 
