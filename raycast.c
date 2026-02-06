@@ -123,7 +123,12 @@ void render_scene(t_gen *gen)
         else               
             wall_x = gen->player->x + hit.dist * ray_direction_x;
         wall_x -= floor(wall_x);
-        t_texture *tex = gen->texture[hit.face];
+        t_texture *tex;
+
+        if (gen->flags->terror_mode)
+            tex = gen->terror_texture[hit.face];
+        else
+            tex = gen->texture[hit.face];
         int texture_x = (int)(wall_x * (double)tex->width);
         if ((hit.side == 0 && ray_direction_x < 0) || (hit.side == 1 && ray_direction_y > 0))
             texture_x = tex->width - texture_x - 1;

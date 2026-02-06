@@ -110,38 +110,76 @@ int general_texture_init(t_gen *gen)
         gen->texture[i]->width = 0;
         gen->texture[i]->img = NULL;
     }
+    for (int i = 0; i < 4; i++)
+    {
+        gen->terror_texture[i] = malloc(sizeof(t_texture));
+        if (!gen->terror_texture[i])
+            return 0;
+        gen->terror_texture[i]->data = NULL;
+        gen->terror_texture[i]->height = 0;
+        gen->terror_texture[i]->width = 0;
+        gen->terror_texture[i]->img = NULL;
+    }
     return 1;
 }
 
-void wall_textures_init(t_gen *gen)
+
+static void load_wall_textures(
+    t_gen *gen,
+    t_texture **dst,
+    char **xpm_files
+)
 {
     int bpp, sl, endian;
-    char *xpm_files[4];
-    if (!png_name_to_xpm(gen, xpm_files))
-    {
-		ft_putstr_fd("Failed to convert PNG names to XPM\n", 2);
-        exit(1);
-    }
+
     for (int i = 0; i < 4; i++)
     {
-        gen->texture[i]->img = mlx_xpm_file_to_image(
+        dst[i]->img = mlx_xpm_file_to_image(
             gen->mlx_data->mlx_ptr,
             xpm_files[i],
-            &gen->texture[i]->width,
-            &gen->texture[i]->height
+            &dst[i]->width,
+            &dst[i]->height
         );
-        if (!gen->texture[i]->img)
+        if (!dst[i]->img)
         {
             printf("Failed to load texture %d: %s\n", i, xpm_files[i]);
             exit(1);
         }
-        gen->texture[i]->data = (int *)mlx_get_data_addr(
-            gen->texture[i]->img, &bpp, &sl, &endian
+
+        dst[i]->data = (int *)mlx_get_data_addr(
+            dst[i]->img, &bpp, &sl, &endian
         );
     }
-    for (int i = 0; i < 4; i++)
-        free(xpm_files[i]);
 }
+
+void wall_textures_init(t_gen *gen)
+{
+    char *normal_xpm[4];
+    char *terror_xpm[4];
+
+    if (!png_name_to_xpm(gen, normal_xpm))
+    {
+        ft_putstr_fd("Failed to convert normal PNG names\n", 2);
+        exit(1);
+    }
+
+    terror_xpm[0] = ft_strdup("imgs/scary4.xpm");
+    terror_xpm[1] = ft_strdup("imgs/scary1.xpm");
+    terror_xpm[2] = ft_strdup("imgs/scary2.xpm");
+    terror_xpm[3] = ft_strdup("imgs/scary3.xpm");
+
+	
+
+    load_wall_textures(gen, gen->texture, normal_xpm);
+    load_wall_textures(gen, gen->terror_texture, terror_xpm);
+
+    for (int i = 0; i < 4; i++)
+    {
+        free(normal_xpm[i]);
+        free(terror_xpm[i]);
+    }
+}
+
 
 
 int	texture_data_init(t_gen *gen)
