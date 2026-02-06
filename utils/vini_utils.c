@@ -451,6 +451,11 @@ int key_press(int key, t_gen *gen)
 		gen->kboard->key_m = true;
 		gen->flags->minimap = !gen->flags->minimap;
 	}
+	if (key == XK_e && !gen->kboard->key_m)
+	{
+		gen->kboard->key_e = true;
+		gen->flags->enemy_mini = !gen->flags->enemy_mini;
+	}
     return (0);
 }
 
@@ -502,6 +507,8 @@ int key_release(int key, t_gen *gen)
 		gen->kboard->key_caps_lock = false;
 	if (key == XK_i)
 		gen->kboard->key_i = false;
+	if (key == XK_e)
+		gen->kboard->key_e = false;
     return (0);
 }
 

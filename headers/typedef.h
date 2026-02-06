@@ -48,6 +48,7 @@ typedef struct s_keyboard
 	bool			key_x;
 	bool			key_m;
 	bool			key_caps_lock;
+	bool			key_e;
 }					t_keyboard;
 
 typedef struct s_mlx_data
@@ -133,6 +134,7 @@ typedef struct s_flags
 	bool terror_mode;
 	bool info;
 	bool minimap;
+	bool enemy_mini;
 	bool mouse_on;
 }	t_flags;
 

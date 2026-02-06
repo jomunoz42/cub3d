@@ -211,6 +211,7 @@ int keyboard_init(t_gen *gen)
 	gen->kboard->key_z = false;
 	gen->kboard->key_x = false;
 	gen->kboard->key_m = false;
+	gen->kboard->key_e = false;
 	gen->kboard->key_caps_lock = false;
 	return (1);
 }
@@ -319,6 +320,7 @@ int init_flags(t_gen *gen)
 	gen->flags->terror_mode = false;
 	gen->flags->minimap = true;
 	gen->flags->mouse_on = true;
+	gen->flags->enemy_mini = true;
 	return (1);
 }
 
