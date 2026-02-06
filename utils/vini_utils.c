@@ -513,7 +513,8 @@ int key_release(int key, t_gen *gen)
 		gen->kboard->key_l = false;
 	if (key == XK_t)
 	{
-		stop_all_sounds(gen);
+		if (!gen->flags->terror_mode) // If we just toggled it off
+			stop_all_sounds(gen);
 		gen->kboard->key_t = false;
 	}
 	if (key == XK_Caps_Lock)
