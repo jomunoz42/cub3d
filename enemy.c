@@ -96,20 +96,31 @@ void update_enemy(t_gen *gen)
     source.nodeNeighbors = nodeNeighbors;
     source.pathCostHeuristic = pathCostHeuristic;
     source.nodeComparator = nodeComparator;
-    source.earlyExit = NULL; // optional
+    source.earlyExit = NULL;
 
     ASPath path = ASPathCreate(&source, gen, &start, &goal);
 
-    if (path && ASPathGetCount(path) > 1)
+    if (path && ASPathGetCount(path) > 0)
     {
-        t_node *nextStep = ASPathGetNode(path, 1); // next node in path
+        t_node *nextStep;
+
+        double dx = gen->player->x - gen->enemy->x;
+        double dy = gen->player->y - gen->enemy->y;
+        double distance = sqrt(dx*dx + dy*dy);
+        if (distance > 0.5 && ASPathGetCount(path) > 1)
+            nextStep = ASPathGetNode(path, 1);
+        else
+        {
+            t_node direct = { (int)gen->player->x, (int)gen->player->y };
+            nextStep = &direct;
+        }
         gen->enemy->x += (nextStep->x + 0.5 - gen->enemy->x) * gen->enemy->move_speed;
         gen->enemy->y += (nextStep->y + 0.5 - gen->enemy->y) * gen->enemy->move_speed;
     }
-
     if (path)
         ASPathDestroy(path);
 }
+
 bool enemy_visible(t_gen *gen, double *distance_out)
 {
     double dx = gen->enemy->x - gen->player->x;
