@@ -391,13 +391,17 @@ int key_press(int key, t_gen *gen)
 	if (key == XK_Control_L)
 	{
 		gen->kboard->control_left = true;
-		gen->player->fov += 0.07;
 		if (gen->flags->terror_mode)
-			gen->player->move_speed = gen->def_values->terror_player_move_speed + 0.03;
+		{
+			gen->player->move_speed = gen->def_values->terror_player_move_speed /* + 0.03 */;
+			gen->enemy->move_speed = gen->player->move_speed - 0.01;
+		}
 		else
+		{
 			gen->player->move_speed = gen->def_values->player_move_speed + 0.06 ;
-		gen->player->rotate_speed = 0.060;
-		gen->enemy->move_speed = gen->player->move_speed - 0.001;
+			gen->player->rotate_speed = 0.060;
+			gen->player->fov += 0.07;
+		}
 	}
 	if (key == XK_Shift_L)
 	{
@@ -434,6 +438,7 @@ int key_press(int key, t_gen *gen)
 	{
 		gen->kboard->key_t = true;
 		gen->player->move_speed = 0.1;
+		gen->enemy->move_speed = gen->player->move_speed ;
 		gen->flags->terror_mode = !gen->flags->terror_mode;
 	}
 	if (key == XK_Caps_Lock && !gen->kboard->key_caps_lock)
@@ -477,13 +482,17 @@ int key_release(int key, t_gen *gen)
 	if (key == XK_Control_L)
 	{
 		if (gen->flags->terror_mode)
+		{
 			gen->player->move_speed = gen->def_values->terror_player_move_speed;
+			gen->enemy->move_speed = gen->player->move_speed - 0.001;
+		}
 		else
+		{
 			gen->player->move_speed = 0.05;
-		gen->player->rotate_speed = 0.045;
-		gen->player->fov -= 0.07;
-		gen->enemy->move_speed = gen->player->move_speed - 0.001;
-		gen->kboard->control_left = false;
+			gen->player->rotate_speed = 0.045;
+			gen->player->fov -= 0.07;
+			gen->kboard->control_left = false;
+		}
 	}
 		if (key == XK_Shift_L)
 	{

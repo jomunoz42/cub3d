@@ -232,7 +232,7 @@ int game_loop(t_gen *gen)
         gen->img_data->img,
         0, 0
     );
-    if (gen->flags->info && !gen->flags->terror_mode)
+    // if (gen->flags->info && !gen->flags->terror_mode)
         print_info(gen);
     double dx = gen->enemy->x - gen->player->x;
     double dy = gen->enemy->y - gen->player->y;
