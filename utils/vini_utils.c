@@ -683,3 +683,20 @@ void	ft_putstr_fd(char *s, int fd)
 		i++;
 	}
 }
+
+t_texture *load_xpm_texture(void *mlx_ptr, char *file)
+{
+    t_texture *tex = malloc(sizeof(t_texture));
+    if (!tex)
+        return NULL;
+
+    tex->img = mlx_xpm_file_to_image(mlx_ptr, file, &tex->width, &tex->height);
+    if (!tex->img)
+    {
+        free(tex);
+        return NULL;
+    }
+
+    tex->data = (int *)mlx_get_data_addr(tex->img, &(int){0}, &(int){0}, &(int){0});
+    return tex;
+}

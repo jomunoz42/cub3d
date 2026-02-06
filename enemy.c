@@ -113,3 +113,52 @@ void update_enemy(t_gen *gen)
     if (path)
         ASPathDestroy(path);
 }
+
+
+void draw_enemy(t_gen *gen)
+{
+    if (!gen->enemy || !gen->enemy_tex)
+        return;
+
+    t_enemy *enemy = gen->enemy;
+    t_texture *tex = gen->enemy_tex;
+
+    double sprite_x = enemy->x - gen->player->x;
+    double sprite_y = enemy->y - gen->player->y;
+
+    double inv_det = 1.0 / (gen->player->plane_x * gen->player->dir_y - gen->player->dir_x * gen->player->plane_y);
+    double transform_x = inv_det * (gen->player->dir_y * sprite_x - gen->player->dir_x * sprite_y);
+    double transform_y = inv_det * (-gen->player->plane_y * sprite_x + gen->player->plane_x * sprite_y);
+
+    if (transform_y <= 0)
+        return; // Behind camera
+
+    int sprite_screen_x = (int)((WIN_WIDTH / 2) * (1 + transform_x / transform_y));
+
+    int sprite_height = abs((int)(WIN_HEIGHT / transform_y));
+    int draw_start_y = -sprite_height / 2 + WIN_HEIGHT / 2;
+    int draw_end_y = sprite_height / 2 + WIN_HEIGHT / 2;
+    if (draw_start_y < 0) draw_start_y = 0;
+    if (draw_end_y >= WIN_HEIGHT) draw_end_y = WIN_HEIGHT - 1;
+
+    int sprite_width = abs((int)(WIN_HEIGHT / transform_y));
+    int draw_start_x = -sprite_width / 2 + sprite_screen_x;
+    int draw_end_x = sprite_width / 2 + sprite_screen_x;
+    if (draw_start_x < 0) draw_start_x = 0;
+    if (draw_end_x >= WIN_WIDTH) draw_end_x = WIN_WIDTH - 1;
+
+    for (int stripe = draw_start_x; stripe < draw_end_x; stripe++)
+    {
+        int tex_x = (int)((stripe - draw_start_x) * tex->width / (draw_end_x - draw_start_x));
+
+        for (int y = draw_start_y; y < draw_end_y; y++)
+        {
+            int d = y * 256 - WIN_HEIGHT * 128 + sprite_height * 128;
+            int tex_y = ((d * tex->height) / sprite_height) / 256;
+            int color = tex->data[tex_y * tex->width + tex_x];
+
+            if ((color & 0x00FFFFFF) != 0)
+                copied_mlx_pixel_put(gen->img_data, stripe, y, color);
+        }
+    }
+}

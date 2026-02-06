@@ -68,6 +68,9 @@
 #define USER_HAND_PNG "./imgs/pixil-frame-0.png"
 #define USER_TERROR_HAND_PNG "./imgs/terror_arm.png"
 #define USER_TERROR_HAND_XPM "./imgs/terror_arm.xpm"
+#define ENEMY_SPRITE_PNG "./imgs/enemy.png"
+#define ENEMY_SPRITE_XPM "./imgs/enemy.xpm"
+
 
 // ######SHADOW######
 #define FOG_START 0.3

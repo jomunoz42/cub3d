@@ -137,7 +137,6 @@ void render_scene(t_gen *gen)
                 color = apply_fog(color, hit.dist);
             copied_mlx_pixel_put(gen->img_data, x, y, color);
         }
-
         if (!gen->flags->terror_mode)
         {
             for (int y = 0; y < draw_start; y++)
@@ -152,7 +151,6 @@ void render_scene(t_gen *gen)
             for (int y = draw_end; y < WIN_HEIGHT; y++)
                 copied_mlx_pixel_put(gen->img_data, x, y, BLACK_CLR);
         }
-
     }
 }
 

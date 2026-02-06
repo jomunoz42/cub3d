@@ -169,6 +169,7 @@ typedef struct s_general
 	t_img_data			*arm;
 	t_img_data			*terror_arm;
 	t_texture		*texture[4];
+	t_texture		*enemy_tex;
 	t_mouse			*mouse;
 	t_def_values	*def_values;
 	t_enemy			*enemy;
