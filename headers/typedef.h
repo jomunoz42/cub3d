@@ -138,6 +138,14 @@ typedef struct s_flags
 	bool mouse_on;
 }	t_flags;
 
+typedef struct s_sound
+{
+    pid_t *pids;
+    int count;
+    int capacity;
+	pid_t terror_music_pid;
+} t_sound;
+
 typedef struct s_default_values
 {
 	double player_x;
@@ -147,6 +155,8 @@ typedef struct s_default_values
 	double minimap_zoom_level;
 	double fov;
 	double terror_player_move_speed;
+	char **env;
+	t_sound sounds;
 }	t_def_values;
 
 typedef struct s_enemy

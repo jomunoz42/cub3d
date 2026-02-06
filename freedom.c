@@ -67,6 +67,7 @@ int	super_duper_hiper_free(void)
 	t_gen	*gen;
 
 	gen = gen_stuff();
+	stop_all_sounds(gen);
 	if (gen->img_data->vignette)
 		free (gen->img_data->vignette);
 	if (gen->flags)

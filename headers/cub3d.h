@@ -53,7 +53,7 @@ int			key_press(int key, t_gen *gen);
 int			key_release(int key, t_gen *gen);
 t_gen		*gen_stuff(void);
 t_parsing	*parsing_init(void);
-int main_init(t_gen *gen, char *argv);
+int main_init(t_gen *gen, char *argv, char **environ);
 int	start_window(t_gen *gen, char *argv);
 void render_scene(t_gen *gen);
 void draw_minimap_fov(t_gen *gen);
@@ -72,6 +72,11 @@ void draw_enemy_minimap(t_gen *gen);
 t_texture *load_xpm_texture(void *mlx_ptr, char *file);
 void draw_enemy(t_gen *gen);
 int apply_fog(int color, double dist);
+void play_music(t_gen *gen);
+void start_terror_music(t_gen *gen);
+void stop_all_sounds(t_gen *gen);
+
+
 
 // JHONNY STUFF
 

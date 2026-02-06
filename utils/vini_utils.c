@@ -440,6 +440,7 @@ int key_press(int key, t_gen *gen)
 		gen->player->move_speed = 0.1;
 		gen->enemy->move_speed = gen->player->move_speed ;
 		gen->flags->terror_mode = !gen->flags->terror_mode;
+		start_terror_music(gen);
 	}
 	if (key == XK_Caps_Lock && !gen->kboard->key_caps_lock)
 	{
@@ -511,7 +512,10 @@ int key_release(int key, t_gen *gen)
 	if (key == XK_l)
 		gen->kboard->key_l = false;
 	if (key == XK_t)
+	{
+		stop_all_sounds(gen);
 		gen->kboard->key_t = false;
+	}
 	if (key == XK_Caps_Lock)
 		gen->kboard->key_caps_lock = false;
 	if (key == XK_i)

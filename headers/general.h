@@ -15,7 +15,8 @@
 # include <unistd.h>
 # include <X11/extensions/Xfixes.h>
 # include "../extra/AStar/AStar.h"
-
+# include <sys/wait.h>
+#include <time.h>
 
 // ###### WINDOW | MLX ######
 

@@ -220,7 +220,7 @@ int game_loop(t_gen *gen)
         draw_enemy(gen);
     mouse_looking(gen);
     if (!gen->flags->terror_mode && gen->flags->minimap)
-        draw_minimap(gen);  
+        draw_minimap(gen);
     if (!gen->flags->terror_mode)              
         draw_arm(gen);
     else

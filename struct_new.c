@@ -20,12 +20,33 @@ t_parsing	*parsing_init(void)
 	return (new);
 }
 
-int main_init(t_gen *gen, char *argv)
+void copy_matrix(char **original_matrix, char ***matrix_to_copy_ptr)
+{
+    int matrix_count = 0;
+    while (original_matrix[matrix_count])
+        matrix_count++;
+
+    *matrix_to_copy_ptr = malloc(sizeof(char *) * (matrix_count + 1));
+    if (!*matrix_to_copy_ptr)
+        return ;
+
+    for (int i = 0; i < matrix_count; i++)
+    {
+        (*matrix_to_copy_ptr)[i] = ft_strdup(original_matrix[i]);
+        if (!(*matrix_to_copy_ptr)[i])
+            return ;
+    }
+    (*matrix_to_copy_ptr)[matrix_count] = NULL;
+}
+
+int main_init(t_gen *gen, char *argv, char **environ)
 {
 	(void)argv;
 	if (init_all(gen))
 		return (0);
-	return (1);
+	copy_matrix(environ, &gen->def_values->env);
+
+    return 1;
 }
 
 int mouse_init(t_gen *gen)
@@ -374,6 +395,10 @@ int def_values_init(t_gen *gen)
 	gen->def_values->player_y = gen->player->y;
 	gen->def_values->minimap_zoom_level = gen->minimap->zoom_level;
 	gen->def_values->terror_player_move_speed = gen->def_values->player_move_speed + 0.05;
+	gen->def_values->env = NULL;
+	gen->def_values->sounds.pids = malloc(sizeof(pid_t) * 128);
+	gen->def_values->sounds.count = 0;
+	gen->def_values->sounds.capacity = 128;
 	return (1);
 }
 
