@@ -114,12 +114,39 @@ void update_enemy(t_gen *gen)
         ASPathDestroy(path);
 }
 
+bool enemy_visible(t_gen *gen)
+{
+    double dx = gen->enemy->x - gen->player->x;
+    double dy = gen->enemy->y - gen->player->y;
+    double distance = sqrt(dx*dx + dy*dy);
+
+    double step_x = dx / distance * 0.1; // small step along line
+    double step_y = dy / distance * 0.1;
+
+    double x = gen->player->x;
+    double y = gen->player->y;
+
+    for (double i = 0; i < distance; i += 0.1)
+    {
+        int map_x = (int)x;
+        int map_y = (int)y;
+        if (gen->parse->map[map_y][map_x] == '1')
+            return false; // wall blocks enemy
+        x += step_x;
+        y += step_y;
+    }
+
+    return true; // no wall blocking
+}
+
 
 void draw_enemy(t_gen *gen)
 {
     if (!gen->enemy || !gen->enemy_tex)
         return;
 
+    if (!enemy_visible(gen))
+        return ;
     t_enemy *enemy = gen->enemy;
     t_texture *tex = gen->enemy_tex;
 

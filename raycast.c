@@ -153,4 +153,3 @@ void render_scene(t_gen *gen)
         }
     }
 }
-
