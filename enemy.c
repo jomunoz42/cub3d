@@ -1,9 +1,15 @@
 #include "./headers/cub3d.h"
 
+typedef struct s_node
+{
+    int x;
+    int y;
+} t_node;
+
+/* === Find Enemy Initial Position === */
 void find_enemy_position(t_gen *gen, char c)
 {
     int row = 0;
-
     while (gen->parse->map[row])
     {
         int col = 0;
@@ -21,138 +27,89 @@ void find_enemy_position(t_gen *gen, char c)
     }
 }
 
-void update_enemy(t_gen *gen)
-{
-    double dx;
-    double dy;
-    double dist;
-    double next_x;
-    double next_y;
-
-    dx = gen->player->x - gen->enemy->x;
-    dy = gen->player->y - gen->enemy->y;
-
-    dist = sqrt(dx * dx + dy * dy);
-    if (dist < 0.5)
-        return;
-
-    dx /= dist;
-    dy /= dist;
-
-    next_x = gen->enemy->x + dx * gen->enemy->move_speed;
-    next_y = gen->enemy->y + dy * gen->enemy->move_speed;
-
-    /* try full movement */
-    if (!collision(gen, next_y, next_x))
-    {
-        gen->enemy->x = next_x;
-        gen->enemy->y = next_y;
-        return;
-    }
-
-    /* try sliding on X */
-    if (!collision(gen, gen->enemy->y, next_x))
-        gen->enemy->x = next_x;
-
-    /* try sliding on Y */
-    else if (!collision(gen, next_y, gen->enemy->x))
-        gen->enemy->y = next_y;
-}
-
-
+/* === Draw Enemy on Minimap === */
 void draw_enemy_minimap(t_gen *gen)
 {
-    int start_x;
-    int start_y;
-    int px;
-    int py;
-    int x;
-    int y;
+    int start_x = (int)gen->player->x - gen->minimap->zoom_level / 2;
+    int start_y = (int)gen->player->y - gen->minimap->zoom_level / 2;
 
-    start_x = (int)gen->player->x - gen->minimap->zoom_level / 2;
-    start_y = (int)gen->player->y - gen->minimap->zoom_level / 2;
+    int px = (gen->enemy->x - start_x) * MINIMAP_TILE_PIXELS;
+    int py = (gen->enemy->y - start_y) * MINIMAP_TILE_PIXELS;
 
-    px = (gen->enemy->x - start_x) * MINIMAP_TILE_PIXELS;
-    py = (gen->enemy->y - start_y) * MINIMAP_TILE_PIXELS;
-
-    if (px < 0 || py < 0
-        || px >= MINIMAP_PIXELS
-        || py >= MINIMAP_PIXELS)
+    if (px < 0 || py < 0 || px >= MINIMAP_PIXELS || py >= MINIMAP_PIXELS)
         return;
 
-    y = -3;
-    while (y <= 3)
-    {
-        x = -3;
-        while (x <= 3)
-        {
-            copied_mlx_pixel_put(
-                gen->img_data,
-                px + x,
-                py + y,
-                0xdb27c9
-            );
-            x++;
-        }
-        y++;
-    }
+    for (int y = -3; y <= 3; y++)
+        for (int x = -3; x <= 3; x++)
+            copied_mlx_pixel_put(gen->img_data, px + x, py + y, 0xdb27c9);
 }
 
-
-#define FOV_DEG 66.0
-#define FOV_RAD (FOV_DEG * M_PI / 180.0)
-
-void draw_enemy(t_gen *gen)
+/* === A* Callbacks === */
+int nodeComparator(void *node1, void *node2, void *context)
 {
-    double dx;
-    double dy;
-    double dist;
-    double enemy_dir_x;
-    double enemy_dir_y;
-    double dot;
-    double fov_limit;
-    int screen_x;
-    int screen_y;
-    int x;
-    int y;
+    (void)context;
+    t_node *n1 = (t_node *)node1;
+    t_node *n2 = (t_node *)node2;
 
-    dx = gen->enemy->x - gen->player->x;
-    dy = gen->enemy->y - gen->player->y;
+    if (n1->x < n2->x) return -1;
+    if (n1->x > n2->x) return 1;
+    if (n1->y < n2->y) return -1;
+    if (n1->y > n2->y) return 1;
+    return 0;
+}
 
-    dist = sqrt(dx * dx + dy * dy);
-    if (dist <= 0.01)
-        return;
+void nodeNeighbors(ASNeighborList neighbors, void *currentNode, void *context)
+{
 
-    enemy_dir_x = dx / dist;
-    enemy_dir_y = dy / dist;
+    t_gen *gen = (t_gen *)context;
+    t_node *node = (t_node *)currentNode;
+    int dirs[4][2] = { {0,1}, {1,0}, {0,-1}, {-1,0} };
 
-    dot = enemy_dir_x * gen->player->dir_x
-        + enemy_dir_y * gen->player->dir_y;
-
-    fov_limit = cos((66.0 * M_PI / 180.0) / 2.0);
-    if (dot < fov_limit)
-        return; // ❌ outside FOV
-
-    screen_x = gen->mlx_data->win_width / 2 + (int)(dx * 50);
-    screen_y = gen->mlx_data->win_height / 2 + (int)(dy * 50);
-
-    y = 0;
-    while (y < gen->enemy->size)
+    for (int i = 0; i < 4; i++)
     {
-        x = 0;
-        while (x < gen->enemy->size)
+        int nx = node->x + dirs[i][0];
+        int ny = node->y + dirs[i][1];
+
+        if (ny >= 0 && ny < gen->parse->height && nx >= 0 && nx < gen->parse->width)
         {
-            copied_mlx_pixel_put(
-                gen->img_data,
-                screen_x + x,
-                screen_y + y,
-                0xdb27c9
-            );
-            x++;
+            if (gen->parse->map[ny][nx] != '1')
+            {
+                t_node neighbor = { nx, ny };
+                ASNeighborListAdd(neighbors, &neighbor, 1.0f); // cost = 1
+            }
         }
-        y++;
     }
 }
 
+float pathCostHeuristic(void *a, void *b, void *context)
+{
+    (void)context;
+    t_node *n1 = (t_node *)a;
+    t_node *n2 = (t_node *)b;
+    return abs(n1->x - n2->x) + abs(n1->y - n2->y); // Manhattan distance
+}
 
+void update_enemy(t_gen *gen)
+{
+    t_node start = { (int)gen->enemy->x, (int)gen->enemy->y };
+    t_node goal  = { (int)gen->player->x, (int)gen->player->y };
 
+    ASPathNodeSource source = {0};
+    source.nodeSize = sizeof(t_node);
+    source.nodeNeighbors = nodeNeighbors;
+    source.pathCostHeuristic = pathCostHeuristic;
+    source.nodeComparator = nodeComparator;
+    source.earlyExit = NULL; // optional
+
+    ASPath path = ASPathCreate(&source, gen, &start, &goal);
+
+    if (path && ASPathGetCount(path) > 1)
+    {
+        t_node *nextStep = ASPathGetNode(path, 1); // next node in path
+        gen->enemy->x += (nextStep->x + 0.5 - gen->enemy->x) * gen->enemy->move_speed;
+        gen->enemy->y += (nextStep->y + 0.5 - gen->enemy->y) * gen->enemy->move_speed;
+    }
+
+    if (path)
+        ASPathDestroy(path);
+}

@@ -9,6 +9,8 @@ TEXTURE_DIR = ../textures
 PARSE = ./parsing
 UTILS = ./utils
 MINIMAP = ./minimap
+EXTRA = ./extra
+
 
 SRC = \
 	$(SRCDIR)/main.c struct_new.c window_management.c freedom.c  player_movement.c picasso.c raycast.c mouse_movement.c enemy.c\
@@ -21,7 +23,8 @@ SRC = \
 	$(UTILS)/vini_utils.c \
 	$(UTILS)/utils1.c \
 	$(MINIMAP)/minimap.c \
-	$(MINIMAP)/minimap_utils.c
+	$(MINIMAP)/minimap_utils.c \
+	$(EXTRA)/AStar/AStar.c
 
 
 
@@ -30,7 +33,6 @@ OBJS := $(OBJS:./%.c=$(OBJDIR)/%.o)
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -lXfixes -Wno-incompatible-pointer-types #TIRAR ESSA ULTIMA FLAG DEPOIS ANIMAL CABACO DO KRL
-
 
 MLX_FLAGS = -L . -lmlx -lXext -lX11
 INCLUDES = -I$(MLXDIR) -I$(GNL_DIR) -I. -I$(MAP_DIR)
