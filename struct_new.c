@@ -342,7 +342,7 @@ int enemy_init(t_gen *gen)
 	gen->enemy = malloc(sizeof(t_enemy));
 	if (!gen->enemy)
 		return (0);
-	gen->enemy->move_speed = gen->def_values->player_move_speed - 0.02;
+	gen->enemy->move_speed = gen->def_values->player_move_speed;
 	gen->enemy->size = 20;
 	gen->enemy->x = 0;
 	gen->enemy->y = 0;

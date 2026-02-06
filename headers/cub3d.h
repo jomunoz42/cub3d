@@ -71,7 +71,7 @@ void draw_enemy(t_gen *gen);
 void draw_enemy_minimap(t_gen *gen);
 t_texture *load_xpm_texture(void *mlx_ptr, char *file);
 void draw_enemy(t_gen *gen);
-
+int apply_fog(int color, double dist);
 
 // JHONNY STUFF
 

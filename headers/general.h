@@ -31,7 +31,7 @@
 #define DEFAULT_PLAYER_ROTATE_SPEED  0.045
 #define DEFAULT_PLAYER_FOV           2.0
 
-#define WALL_MARGIN 0.5
+#define WALL_MARGIN 0.3
 
 
 // ###### MOUSE CONFIG ######

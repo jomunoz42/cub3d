@@ -339,13 +339,43 @@ int only_num(char *str)
 	return (1);
 }
 
-bool collision(t_gen *gen, double next_y, double next_x) //collision is fucking up everything
+bool collision(t_gen *gen, double next_y, double next_x)
 {
-    int map_x = (int)next_x;
     int map_y = (int)next_y;
+    int map_x = (int)next_x;
 
-    return (gen->parse->map[map_y][map_x] == '1');
+    if (map_y < 0 || map_y >= gen->parse->height)
+        return true;
+
+    if (map_x < 0 || map_x >= (int)ft_strlen(gen->parse->map[map_y]))
+        return true;
+
+    double radius = 0.2;
+
+    int top    = (int)(next_y - radius);
+    int bottom = (int)(next_y + radius);
+    int left   = (int)(next_x - radius);
+    int right  = (int)(next_x + radius);
+
+    if (top >= 0 && top < gen->parse->height &&
+        left >= 0 && left < (int)ft_strlen(gen->parse->map[top]) &&
+        gen->parse->map[top][left] == '1') return true;
+
+    if (top >= 0 && top < gen->parse->height &&
+        right >= 0 && right < (int)ft_strlen(gen->parse->map[top]) &&
+        gen->parse->map[top][right] == '1') return true;
+
+    if (bottom >= 0 && bottom < gen->parse->height &&
+        left >= 0 && left < (int)ft_strlen(gen->parse->map[bottom]) &&
+        gen->parse->map[bottom][left] == '1') return true;
+
+    if (bottom >= 0 && bottom < gen->parse->height &&
+        right >= 0 && right < (int)ft_strlen(gen->parse->map[bottom]) &&
+        gen->parse->map[bottom][right] == '1') return true;
+
+    return false;
 }
+
 
 int key_press(int key, t_gen *gen)
 {
@@ -367,6 +397,7 @@ int key_press(int key, t_gen *gen)
 		else
 			gen->player->move_speed = gen->def_values->player_move_speed + 0.06 ;
 		gen->player->rotate_speed = 0.060;
+		gen->enemy->move_speed = gen->player->move_speed - 0.001;
 	}
 	if (key == XK_Shift_L)
 	{
@@ -446,6 +477,7 @@ int key_release(int key, t_gen *gen)
 			gen->player->move_speed = 0.05;
 		gen->player->rotate_speed = 0.045;
 		gen->player->fov -= 0.07;
+		gen->enemy->move_speed = gen->player->move_speed - 0.001;
 		gen->kboard->control_left = false;
 	}
 		if (key == XK_Shift_L)

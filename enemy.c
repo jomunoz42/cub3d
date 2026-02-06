@@ -6,7 +6,6 @@ typedef struct s_node
     int y;
 } t_node;
 
-/* === Find Enemy Initial Position === */
 void find_enemy_position(t_gen *gen, char c)
 {
     int row = 0;
@@ -27,7 +26,6 @@ void find_enemy_position(t_gen *gen, char c)
     }
 }
 
-/* === Draw Enemy on Minimap === */
 void draw_enemy_minimap(t_gen *gen)
 {
     int start_x = (int)gen->player->x - gen->minimap->zoom_level / 2;
@@ -44,7 +42,6 @@ void draw_enemy_minimap(t_gen *gen)
             copied_mlx_pixel_put(gen->img_data, px + x, py + y, 0xdb27c9);
 }
 
-/* === A* Callbacks === */
 int nodeComparator(void *node1, void *node2, void *context)
 {
     (void)context;
@@ -113,14 +110,19 @@ void update_enemy(t_gen *gen)
     if (path)
         ASPathDestroy(path);
 }
-
-bool enemy_visible(t_gen *gen)
+bool enemy_visible(t_gen *gen, double *distance_out)
 {
     double dx = gen->enemy->x - gen->player->x;
     double dy = gen->enemy->y - gen->player->y;
     double distance = sqrt(dx*dx + dy*dy);
 
-    double step_x = dx / distance * 0.1; // small step along line
+    if (distance_out)
+        *distance_out = distance;
+
+    if (distance > FOG_END) // Enemy is too far
+        return false;
+
+    double step_x = dx / distance * 0.1;
     double step_y = dy / distance * 0.1;
 
     double x = gen->player->x;
@@ -131,22 +133,23 @@ bool enemy_visible(t_gen *gen)
         int map_x = (int)x;
         int map_y = (int)y;
         if (gen->parse->map[map_y][map_x] == '1')
-            return false; // wall blocks enemy
+            return false; // Wall blocks view
         x += step_x;
         y += step_y;
     }
 
-    return true; // no wall blocking
+    return true;
 }
-
 
 void draw_enemy(t_gen *gen)
 {
     if (!gen->enemy || !gen->enemy_tex)
         return;
 
-    if (!enemy_visible(gen))
-        return ;
+    double distance;
+    if (!enemy_visible(gen, &distance))
+        return;
+
     t_enemy *enemy = gen->enemy;
     t_texture *tex = gen->enemy_tex;
 
@@ -158,17 +161,16 @@ void draw_enemy(t_gen *gen)
     double transform_y = inv_det * (-gen->player->plane_y * sprite_x + gen->player->plane_x * sprite_y);
 
     if (transform_y <= 0)
-        return; // Behind camera
+        return;
 
     int sprite_screen_x = (int)((WIN_WIDTH / 2) * (1 + transform_x / transform_y));
-
     int sprite_height = abs((int)(WIN_HEIGHT / transform_y));
     int draw_start_y = -sprite_height / 2 + WIN_HEIGHT / 2;
     int draw_end_y = sprite_height / 2 + WIN_HEIGHT / 2;
     if (draw_start_y < 0) draw_start_y = 0;
     if (draw_end_y >= WIN_HEIGHT) draw_end_y = WIN_HEIGHT - 1;
 
-    int sprite_width = abs((int)(WIN_HEIGHT / transform_y));
+    int sprite_width = sprite_height;
     int draw_start_x = -sprite_width / 2 + sprite_screen_x;
     int draw_end_x = sprite_width / 2 + sprite_screen_x;
     if (draw_start_x < 0) draw_start_x = 0;
@@ -185,7 +187,10 @@ void draw_enemy(t_gen *gen)
             int color = tex->data[tex_y * tex->width + tex_x];
 
             if ((color & 0x00FFFFFF) != 0)
+            {
+                color = apply_fog(color, distance);
                 copied_mlx_pixel_put(gen->img_data, stripe, y, color);
+            }
         }
     }
 }

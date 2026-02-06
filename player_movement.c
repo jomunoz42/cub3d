@@ -31,40 +31,55 @@ void update_player(t_gen *gen)
     double nx = gen->player->x;
     double ny = gen->player->y;
 
+    // Compute intended movement
+    double move_x = 0;
+    double move_y = 0;
+
     if (gen->kboard->key_w)
     {
-        nx += gen->player->dir_x * gen->player->move_speed;
-        ny += gen->player->dir_y * gen->player->move_speed;
+        move_x += gen->player->dir_x * gen->player->move_speed;
+        move_y += gen->player->dir_y * gen->player->move_speed;
     }
     if (gen->kboard->key_s)
     {
-        nx -= gen->player->dir_x * gen->player->move_speed;
-        ny -= gen->player->dir_y * gen->player->move_speed;
+        move_x -= gen->player->dir_x * gen->player->move_speed;
+        move_y -= gen->player->dir_y * gen->player->move_speed;
     }
     if (gen->kboard->key_a)
     {
-        nx -= gen->player->plane_x * gen->player->move_speed;
-        ny -= gen->player->plane_y * gen->player->move_speed;
+        move_x -= gen->player->plane_x * gen->player->move_speed;
+        move_y -= gen->player->plane_y * gen->player->move_speed;
     }
     if (gen->kboard->key_d)
     {
-        nx += gen->player->plane_x * gen->player->move_speed;
-        ny += gen->player->plane_y * gen->player->move_speed;
+        move_x += gen->player->plane_x * gen->player->move_speed;
+        move_y += gen->player->plane_y * gen->player->move_speed;
     }
+
+    // Rotate player
     if (gen->kboard->key_right)
         rotate_player(gen, gen->player->rotate_speed);
     if (gen->kboard->key_left)
         rotate_player(gen, -gen->player->rotate_speed);
-    if (!collision(gen, gen->player->y, nx + gen->player->dir_x * WALL_MARGIN))
-        gen->player->x = nx;
-    if (!collision(gen, ny + gen->player->dir_y * WALL_MARGIN, gen->player->x))
-        gen->player->y = ny;
-    if (!gen->flags->terror_mode && gen->kboard->control_left == false)
+
+    // --- Smooth collision: slide along walls ---
+    // Check X movement separately
+    if (!collision(gen, gen->player->y, nx + move_x))
+        gen->player->x += move_x;
+
+    // Check Y movement separately
+    if (!collision(gen, ny + move_y, gen->player->x))
+        gen->player->y += move_y;
+
+    // Reset move speed if shift not pressed
+    if (!gen->flags->terror_mode && !gen->kboard->control_left)
     {
-        if (gen->kboard->shift_left == false)
+        if (!gen->kboard->shift_left)
             gen->player->move_speed = 0.05;
     }
 }
+
+
 
 char *ft_dtoa_fixed(double v)
 {
@@ -111,8 +126,8 @@ void print_info(t_gen *gen)
     char *mouse_y = print_helper("Mouse y: ", (double)gen->mouse->y);
     char *zoom_lvl = print_helper("Minimap zoom level: ", gen->minimap->zoom_level);
     char *player_speed = print_helper("Player speed: ", gen->player->move_speed);
-    char *rot_speed = print_helper("Player speed: ", gen->player->rotate_speed);
-
+    char *rot_speed = print_helper("Player rotation speed: ", gen->player->rotate_speed);
+    char *enemy_speed = print_helper("Enemy speed: ", gen->enemy->move_speed);
     int i;
     const double spacing = 11;
     if (gen->flags->minimap)
@@ -151,10 +166,13 @@ void print_info(t_gen *gen)
             INFO_TEXT_COLOR, zoom_lvl);
         mlx_string_put(
         gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, i += spacing,
+            INFO_TEXT_COLOR, rot_speed);
+        mlx_string_put(
+        gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, i += spacing,
             INFO_TEXT_COLOR, player_speed);
         mlx_string_put(
         gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,10, i += spacing,
-            INFO_TEXT_COLOR, rot_speed);
+            INFO_TEXT_COLOR, enemy_speed);
     free(dir_x);
     free(dir_y);
     free(plane_x);
@@ -167,6 +185,7 @@ void print_info(t_gen *gen)
     free(zoom_lvl);
     free(player_speed);
     free(rot_speed);
+    free(enemy_speed);
 }
 
 void apply_vignette_to_image(t_gen *gen, t_img_data *img)
@@ -190,14 +209,15 @@ void apply_vignette_to_image(t_gen *gen, t_img_data *img)
     }
 }
 
-
 int game_loop(t_gen *gen)
 {
     update_player(gen);
-    update_enemy(gen);            
+    if (gen->flags->terror_mode)
+        update_enemy(gen);            
     clear_image(gen->img_data, 0x000000);
     render_scene(gen);
-    draw_enemy(gen);
+    if (gen->flags->terror_mode)
+        draw_enemy(gen);
     mouse_looking(gen);
     if (!gen->flags->terror_mode && gen->flags->minimap)
         draw_minimap(gen);  
@@ -214,5 +234,15 @@ int game_loop(t_gen *gen)
     );
     if (gen->flags->info && !gen->flags->terror_mode)
         print_info(gen);
+    double dx = gen->enemy->x - gen->player->x;
+    double dy = gen->enemy->y - gen->player->y;
+    double distance = sqrt(dx*dx + dy*dy);
+
+    if (distance <= 0.65 && gen->flags->terror_mode)
+    {
+        printf("You are dead\n");
+        super_duper_hiper_free();
+        exit(1);
+    }
     return 0;
 }
