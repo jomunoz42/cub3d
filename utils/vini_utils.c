@@ -437,6 +437,7 @@ int key_press(int key, t_gen *gen)
 	if (key == XK_t && !gen->kboard->key_t)
 	{
 		gen->kboard->key_t = true;
+		stop_all_sounds(gen);
 		gen->player->move_speed = 0.1;
 		gen->enemy->move_speed = gen->player->move_speed ;
 		gen->flags->terror_mode = !gen->flags->terror_mode;
@@ -462,6 +463,28 @@ int key_press(int key, t_gen *gen)
 		gen->kboard->key_e = true;
 		gen->flags->enemy_mini = !gen->flags->enemy_mini;
 	}
+
+	if ((key >= XK_1 && key <= XK_5) && !gen->flags->terror_mode)
+	{
+		const char *audio_files[5] = {
+			"./audio/default1.mp3",
+			"./audio/default2.mp3",
+			"./audio/default3.mp3",
+			"./audio/default4.mp3",
+			"./audio/default5.mp3"
+		};
+		int index = key - XK_1;
+		gen->flags->music_on = !gen->flags->music_on;
+		stop_all_sounds(gen);
+		play_sound(gen, audio_files[index], 1);
+		if (key == XK_1) gen->kboard->key_num_one = true;
+		if (key == XK_2) gen->kboard->key_num_two = true;
+		if (key == XK_3) gen->kboard->key_num_three = true;
+		if (key == XK_4) gen->kboard->key_num_four = true;
+		if (key == XK_5) gen->kboard->key_num_five = true;
+	}
+	if (key == XK_6 && !gen->flags->terror_mode)
+		stop_all_sounds(gen);
     return (0);
 }
 

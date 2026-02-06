@@ -49,6 +49,13 @@ typedef struct s_keyboard
 	bool			key_m;
 	bool			key_caps_lock;
 	bool			key_e;
+	bool			key_num_one;
+	bool			key_num_two;
+	bool			key_num_three;
+	bool			key_num_four;
+	bool			key_num_five;
+	bool			key_num_six;
+
 }					t_keyboard;
 
 typedef struct s_mlx_data
@@ -136,6 +143,7 @@ typedef struct s_flags
 	bool minimap;
 	bool enemy_mini;
 	bool mouse_on;
+	bool music_on;
 }	t_flags;
 
 typedef struct s_sound

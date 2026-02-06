@@ -272,6 +272,12 @@ int keyboard_init(t_gen *gen)
 	gen->kboard->key_m = false;
 	gen->kboard->key_e = false;
 	gen->kboard->key_caps_lock = false;
+	gen->kboard->key_num_one = false;
+	gen->kboard->key_num_two = false;
+	gen->kboard->key_num_three = false;
+	gen->kboard->key_num_four = false;
+	gen->kboard->key_num_five = false;
+	gen->kboard->key_num_six = false;	
 	return (1);
 }
 
@@ -380,6 +386,7 @@ int init_flags(t_gen *gen)
 	gen->flags->minimap = true;
 	gen->flags->mouse_on = true;
 	gen->flags->enemy_mini = true;
+	gen->flags->music_on = false;
 	return (1);
 }
 
