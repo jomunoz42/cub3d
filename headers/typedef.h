@@ -175,6 +175,12 @@ typedef struct s_enemy
 	int size;
 }	t_enemy;
 
+typedef struct s_node
+{
+    int x;
+    int y;
+} t_node;
+
 typedef struct s_general
 {
 	t_flags			*flags;

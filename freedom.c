@@ -49,11 +49,6 @@ void	free_parsing(t_parsing *parse)
 	int	i;
 
 	i = 0;
-	if (parse->fd > 2)
-	{
-		close(parse->fd);
-		parse->fd = -1;
-	}
 	if (parse->textures_info)
 	{
 		while (i < E_COUNT)
@@ -86,8 +81,7 @@ int	super_duper_hiper_free(void)
 		free_texture(gen->mlx_data->mlx_ptr, gen->enemy_tex);
 		gen->enemy_tex = NULL;
 	}
-	if (gen->enemy_tex)
-		free(gen->enemy_tex);
+
 	if (gen->terror_arm)
 	{
 		if (gen->terror_arm->img)

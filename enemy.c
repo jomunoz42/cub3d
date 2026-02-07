@@ -1,11 +1,5 @@
 #include "./headers/cub3d.h"
 
-typedef struct s_node
-{
-    int x;
-    int y;
-} t_node;
-
 void find_enemy_position(t_gen *gen, char c)
 {
     int row = 0;

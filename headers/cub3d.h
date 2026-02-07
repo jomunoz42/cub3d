@@ -17,6 +17,7 @@ void		ft_free_matrix(char **matrix);
 int			super_duper_hiper_free(void);
 void		file_closer(void);
 void		free_parsing(t_parsing *parse);
+int	window_init(t_gen *gen, int w, int h);
 int			handle_exit(int keysys);
 void		ft_free_matrix_partial(char **matrix, int max_index);
 int			png_size_fd(const char *path, uint32_t *w, uint32_t *h);

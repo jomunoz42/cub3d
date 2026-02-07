@@ -387,23 +387,19 @@ int	enemy_init(t_gen *gen)
 	return (1);
 }
 
-int	enemy_texture_init(t_gen *gen)
+int enemy_texture_init(t_gen *gen)
 {
-	gen->enemy_tex = malloc(sizeof(t_texture));
-	if (!gen->enemy_tex)
-		return (0);
-	gen->enemy_tex->data = 0;
-	gen->enemy_tex->height = 0;
-	gen->enemy_tex->img = NULL;
-	gen->enemy_tex->width = 0;
-	gen->enemy_tex = load_xpm_texture(gen->mlx_data->mlx_ptr, ENEMY_SPRITE_XPM);
-	if (!gen->enemy_tex)
-	{
-		ft_putstr_fd("Error\nError: failed to load enemy texture\n", 2);
-		exit(1);
-	}
-	return (1);
+    gen->enemy_tex = load_xpm_texture(
+        gen->mlx_data->mlx_ptr, ENEMY_SPRITE_XPM);
+
+    if (!gen->enemy_tex)
+    {
+        ft_putstr_fd("Error\nError: failed to load enemy texture\n", 2);
+        exit(1);
+    }
+    return (1);
 }
+
 
 int	init_all(t_gen *gen)
 {
