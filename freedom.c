@@ -1,4 +1,5 @@
 #include "./headers/cub3d.h"
+#include "headers/mlx.h"
 
 void	ft_free_matrix_partial(char **matrix, int max_index)
 {
@@ -66,6 +67,18 @@ int	super_duper_hiper_free(void)
 	t_gen	*gen;
 
 	gen = gen_stuff();
+	if (gen->img_data->vignette)
+		free (gen->img_data->vignette);
+	if (gen->flags)
+		free(gen->flags);
+	if (gen->def_values)
+		free(gen->def_values);
+	if (gen->terror_arm)
+	{
+		if (gen->terror_arm->img)
+			mlx_destroy_image(gen->mlx_data->mlx_ptr, gen->terror_arm->img);
+		free(gen->terror_arm);
+	}
 	if (gen->mlx_data)
 	{
 		if (gen->img_data->img)

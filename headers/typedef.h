@@ -43,6 +43,12 @@ typedef struct s_keyboard
 	bool			shift_left;
 	bool			key_f;
 	bool			key_l;
+	bool			key_t;
+	bool			key_i;
+	bool			key_z;
+	bool			key_x;
+	bool			key_m;
+	bool			key_caps_lock;
 }					t_keyboard;
 
 typedef struct s_mlx_data
@@ -57,6 +63,8 @@ typedef struct texture_data
 {
 	uint32_t		arm_width;
 	uint32_t		arm_height;
+	uint32_t		terror_arm_width;
+	uint32_t		terror_arm_height;
 	int				horizon;
 	int				flr_color;
 	int				clng_color;
@@ -92,6 +100,7 @@ typedef struct s_images_data
     int endian;
     int width;
     int height;
+	float	*vignette;
 } t_img_data;
 
 
@@ -101,6 +110,7 @@ typedef struct s_minimap
 	char			**map;
 	int				width;
 	int				height;
+	double				zoom_level;
 }					t_minimap;
 
 typedef enum e_wall_face {
@@ -126,9 +136,36 @@ typedef struct s_rayhit
 	t_hit_type  type;
 }   t_rayhit;
 
+typedef struct s_flags
+{
+	bool terror_mode;
+	bool info;
+	bool minimap;
+	bool mouse_on;
+}	t_flags;
+
+typedef struct s_default_values
+{
+	double player_x;
+	double player_y;
+	double player_move_speed;
+	double player_rotation_speed;
+	double minimap_zoom_level;
+	double fov;
+	double terror_player_move_speed;
+}	t_def_values;
+
+typedef struct s_enemy
+{
+	double x;
+	double y;
+	double move_speed;
+	int size;
+}	t_enemy;
 
 typedef struct s_general
 {
+	t_flags			*flags;
 	t_texture_data	*texture_data;
 	t_parsing		*parse;
 	t_mlx_data		*mlx_data;
@@ -138,9 +175,12 @@ typedef struct s_general
 	t_minimap		*minimap;
 	t_rayhit		*rayhit;
 	t_img_data			*arm;
+	t_img_data			*terror_arm;
 	t_texture		*texture[4];
 
 	t_texture		*door_texture;
 
 	t_mouse			*mouse;
+	t_def_values	*def_values;
+	t_enemy			*enemy;
 }					t_gen;

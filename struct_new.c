@@ -50,8 +50,53 @@ int	avg_img_init(t_gen *gen)
 	gen->img_data->endian = 0;
 	gen->img_data->line_len = 0;
 	gen->img_data->bits_pixel = 0;
+	gen->img_data->vignette = 0;
 	return (1);
 }
+
+void init_vignette(t_img_data *img)
+{
+    double cx = img->width / 2.0;
+    double cy = img->height / 2.0;
+    double max_dist = sqrt(cx * cx + cy * cy);
+
+    double inner_radius = 0.35;   // 👈 tweak this (0.25–0.45)
+    double max_light = 0.6;       // 👈 how dark the center is
+
+    img->vignette = malloc(sizeof(float) * img->width * img->height);
+    if (!img->vignette)
+        return;
+
+    for (int y = 0; y < img->height; y++)
+    {
+        for (int x = 0; x < img->width; x++)
+        {
+            double dx = x - cx;
+            double dy = y - cy;
+            double dist = sqrt(dx * dx + dy * dy);
+            double t = dist / max_dist;
+
+            double factor;
+
+            if (t < inner_radius)
+                factor = 1.0;
+            else
+            {
+                factor = 1.0 - (t - inner_radius) / (1.0 - inner_radius);
+                factor = pow(factor, 2.0);   // darkness curve
+            }
+
+            factor *= max_light;   // overall darkness
+
+            if (factor < 0.0)
+                factor = 0.0;
+
+            img->vignette[y * img->width + x] = factor;
+        }
+    }
+}
+
+
 
 int general_texture_init(t_gen *gen)
 {
@@ -106,11 +151,16 @@ int	texture_data_init(t_gen *gen)
 		return (0);
 	gen->texture_data->arm_width = 0;
 	gen->texture_data->arm_height = 0;
+	gen->texture_data->terror_arm_width = 0;
+	gen->texture_data->terror_arm_height = 0;
 	gen->texture_data->clng_color = color_switch(gen->parse->textures_info[5]);
 	gen->texture_data->flr_color = color_switch(gen->parse->textures_info[4]);
 	gen->texture_data->horizon = gen->mlx_data->win_height / 2;
 	if (!png_size_fd(USER_HAND_PNG, &gen->texture_data->arm_width,
 			&gen->texture_data->arm_height))
+		return (0);
+	if (!png_size_fd(USER_TERROR_HAND_PNG, &gen->texture_data->terror_arm_width,
+			&gen->texture_data->terror_arm_height))
 		return (0);
 	return (1);
 }
@@ -136,6 +186,7 @@ int minimap_init(t_gen *gen)
     );
 	gen->minimap->image.height = gen->mlx_data->win_height;
 	gen->minimap->image.width = gen->mlx_data->win_width;
+	gen->minimap->zoom_level = 14.0;
     return 1;
 }
 
@@ -156,6 +207,12 @@ int keyboard_init(t_gen *gen)
 	gen->kboard->shift_left = false;
 	gen->kboard->key_f = false;
 	gen->kboard->key_l = false;
+	gen->kboard->key_t = false;
+	gen->kboard->key_i = false;
+	gen->kboard->key_z = false;
+	gen->kboard->key_x = false;
+	gen->kboard->key_m = false;
+	gen->kboard->key_caps_lock = false;
 	return (1);
 }
 
@@ -182,7 +239,7 @@ int player_init(t_gen *gen)
 	gen->player->dir_y = 0;
 	gen->player->plane_x = 0;
 	gen->player->plane_y = 0;
-	gen->player->move_speed = DEFAULT_PLAYER_MOVE_SPEED;
+	gen->player->move_speed = 0.05;
 	gen->player->rotate_speed = DEFAULT_PLAYER_ROTATE_SPEED;
 	gen->player->fov = DEFAULT_PLAYER_FOV;
 	return (1);
@@ -213,7 +270,33 @@ int arm_init(t_gen *gen)
 		&gen->arm->endian
 	);
 	return (1);
+}
 
+int terror_arm_init(t_gen *gen)
+{
+	gen->terror_arm = malloc(sizeof(t_img_data));
+	if (!gen->terror_arm)
+		return (0);
+	int img_width = (int)gen->texture_data->terror_arm_width;
+	int img_height = (int)gen->texture_data->terror_arm_height;
+	gen->terror_arm->bits_pixel = 0;
+	gen->terror_arm->line_len = 0;
+	gen->terror_arm->endian = 0;
+	gen->terror_arm->width = 0;
+	gen->terror_arm->height = 0;
+	gen->terror_arm->img = mlx_xpm_file_to_image(
+    gen->mlx_data->mlx_ptr,
+    USER_TERROR_HAND_XPM,
+    &img_width,
+    &img_height
+	);
+	gen->terror_arm->addr = mlx_get_data_addr(
+		gen->terror_arm->img,
+		&gen->terror_arm->bits_pixel,
+		&gen->terror_arm->line_len,
+		&gen->terror_arm->endian
+	);
+	return (1);
 }
 
 int basic_mlx_init(t_gen *gen)
@@ -225,6 +308,47 @@ int basic_mlx_init(t_gen *gen)
 	gen->arm = NULL;
 	gen->mlx_data->win_width = WIN_WIDTH;
 	gen->mlx_data->win_height = WIN_HEIGHT;
+	return (1);
+}
+
+int init_flags(t_gen *gen)
+{
+	gen->flags = malloc(sizeof(t_flags));
+	if (!gen->flags)
+		return (0);
+	gen->flags->info = true;
+	gen->flags->terror_mode = false;
+	gen->flags->minimap = true;
+	gen->flags->mouse_on = true;
+	return (1);
+}
+
+int def_values_init(t_gen *gen)
+{
+	gen->def_values = malloc(sizeof(t_def_values));
+	if (!gen->def_values)
+		return (0);
+	gen->def_values->fov = gen->player->fov;
+	gen->def_values->player_rotation_speed = gen->player->rotate_speed;
+	gen->def_values->player_move_speed = gen->player->move_speed;
+	gen->def_values->player_x = gen->player->x;
+	gen->def_values->player_y = gen->player->y;
+	gen->def_values->minimap_zoom_level = gen->minimap->zoom_level;
+	gen->def_values->terror_player_move_speed = gen->def_values->player_move_speed + 0.05;
+	return (1);
+}
+
+int enemy_init(t_gen *gen)
+{
+	gen->enemy = malloc(sizeof(t_enemy));
+	if (!gen->enemy)
+		return (0);
+	gen->enemy->move_speed = gen->def_values->player_move_speed - 0.02;
+	gen->enemy->size = 20;
+	gen->enemy->x = 0;
+	gen->enemy->y = 0;
+	find_enemy_position(gen, 'X');
+	printf("Enemy position is x[%d][%d]\n", (int)gen->enemy->x, (int)gen->enemy->y);
 	return (1);
 }
 
@@ -241,8 +365,12 @@ int	init_all(t_gen *gen)
 	keyboard_init(gen);
 	rayhit_init(gen);
 	arm_init(gen);
+	terror_arm_init(gen);
 	general_texture_init(gen);
 	wall_textures_init(gen);
 	mouse_init(gen);
+	init_flags(gen);
+	def_values_init(gen);
+	enemy_init(gen);
 	return (0);
 }

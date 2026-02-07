@@ -2,7 +2,7 @@
 
 void draw_minimap_player(t_gen *gen)
 {
-    int center_tile = ZOOM_LEVEL / 2;
+    int center_tile = gen->minimap->zoom_level / 2;
 
     int px = center_tile * MINIMAP_TILE_PIXELS;
     int py = center_tile * MINIMAP_TILE_PIXELS;
@@ -50,12 +50,12 @@ int is_wall(t_gen *gen, int map_x, int map_y)
 
 void draw_minimap(t_gen *gen)
 {
-    int start_x = (int)gen->player->x - ZOOM_LEVEL / 2;
-    int start_y = (int)gen->player->y - ZOOM_LEVEL / 2;
+    int start_x = (int)gen->player->x - gen->minimap->zoom_level / 2;
+    int start_y = (int)gen->player->y - gen->minimap->zoom_level / 2;
 
-    for (int y = 0; y < ZOOM_LEVEL; y++)
+    for (int y = 0; y < gen->minimap->zoom_level; y++)
     {
-        for (int x = 0; x < ZOOM_LEVEL; x++)
+        for (int x = 0; x < gen->minimap->zoom_level; x++)
         {
             int map_x = start_x + x;
             int map_y = start_y + y;
@@ -83,6 +83,7 @@ void draw_minimap(t_gen *gen)
                     );
         }
     }
+    draw_enemy_minimap(gen);
     draw_minimap_player(gen);
     draw_minimap_fov(gen);
 }

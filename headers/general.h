@@ -43,10 +43,9 @@
 #define MINIMAP_OFFSET_X  20
 #define MINIMAP_OFFSET_Y  20
 #define MINIMAP_PIXELS        200
-#define ZOOM_LEVEL            15
 #define MINIMAP_TILES     (MINIMAP_RADIUS * 2 + 1)
 #define MINIMAP_SIZE      (MINIMAP_TILES * MINIMAP_SCALE)
-#define MINIMAP_TILE_PIXELS   (MINIMAP_PIXELS / ZOOM_LEVEL)
+#define MINIMAP_TILE_PIXELS   (MINIMAP_PIXELS / gen->minimap->zoom_level)
 
 
 // ###### COLORS ######
@@ -57,11 +56,18 @@
 #define MINIMAP_PLAYER_CLR 0xFFA500
 #define MINIMAP_WALL_CLR 0xFFFFFF
 #define MINIMAP_GROUND_CLR 0x161616
+#define BLACK_CLR 0X000000
+#define TERROR_ARM_TRANSPARENT 0XA8E61D
 
 // ######ASSETS######
 
 #define USER_HAND_XPM "./imgs/pixil-frame-0.xpm"
 #define USER_HAND_PNG "./imgs/pixil-frame-0.png"
+#define USER_TERROR_HAND_PNG "./imgs/terror_arm.png"
+#define USER_TERROR_HAND_XPM "./imgs/terror_arm.xpm"
 
+// ######SHADOW######
+#define FOG_START 0.3
+#define FOG_END 5.5
 
 #endif

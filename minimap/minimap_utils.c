@@ -2,12 +2,12 @@
 
 void ciclope_dos_xman(t_img_data *img,int x0, int y0, int x1, int y1, int color)
 {
-	int distance_x_total;
-	int distance_y_total;
-	int direction_of_x;
-	int direction_of_y; //quando eu andar em ym vou pra direita ou pra esqueda?
-	int err;
-	int err_times_2;
+	double distance_x_total;
+	double distance_y_total;
+	double direction_of_x;
+	double direction_of_y; //quando eu andar em ym vou pra direita ou pra esqueda?
+	double err;
+	double err_times_2;
 
 	distance_x_total = ft_abs(x1 - x0); //quantos puxels andar no x
 	distance_y_total = ft_abs(y1 - y0); // quantos pixel andar no y
@@ -35,12 +35,12 @@ void ciclope_dos_xman(t_img_data *img,int x0, int y0, int x1, int y1, int color)
 
 void direction_hits_wall(t_gen *gen, double ray_direction_x, double ray_direction_y)
 {
-    int start_x = (int)gen->player->x - ZOOM_LEVEL / 2;
-    int start_y = (int)gen->player->y - ZOOM_LEVEL / 2;
+    double start_x = (int)gen->player->x - gen->minimap->zoom_level / 2;
+    double start_y = (int)gen->player->y - gen->minimap->zoom_level / 2;
 
-    int map_x = (int)gen->player->x;
-    int map_y = (int)gen->player->y;
-    int step_x, step_y, hit = 0;
+    double map_x = (int)gen->player->x;
+    double map_y = (int)gen->player->y;
+    double step_x, step_y, hit = 0;
     double side_dist_x, side_dist_y, delta_dist_x, delta_dist_y;
 
     delta_dist_x = fabs(5 / ray_direction_x);
@@ -68,10 +68,10 @@ void direction_hits_wall(t_gen *gen, double ray_direction_x, double ray_directio
             hit = 1;
     }
 
-    int px0 = MINIMAP_PIXELS / 2;
-    int py0 = MINIMAP_PIXELS / 2;
-    int px1 = (map_x - start_x + 0.5) * MINIMAP_TILE_PIXELS;
-    int py1 = (map_y - start_y + 0.5) * MINIMAP_TILE_PIXELS;
+    double px0 = MINIMAP_PIXELS / 2;
+    double py0 = MINIMAP_PIXELS / 2;
+    double px1 = (map_x - start_x + 0.5) * MINIMAP_TILE_PIXELS;
+    double py1 = (map_y - start_y + 0.5) * MINIMAP_TILE_PIXELS;
     px1 = ft_clamp(px1, 0, MINIMAP_PIXELS - 1);
     py1 = ft_clamp(py1, 0, MINIMAP_PIXELS - 1);
 
