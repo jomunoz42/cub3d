@@ -9,11 +9,13 @@ t_gen	*gen_stuff(void)
 
 int	main(int argc, char *argv[], char **environ)
 {
-	t_gen	*gen;
+	t_gen *gen;
 
 	gen = gen_stuff();
-    if (parser(gen, argc, argv))
-       {return (1);}
+	if (parser(gen, argc, argv))
+	{
+		return (1);
+	}
 	printf("\n==All right from here==\n");
 	main_init(gen, argv[1], environ);
 	start_window(gen, argv[1]);

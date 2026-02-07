@@ -76,6 +76,8 @@ void play_music(t_gen *gen);
 void start_terror_music(t_gen *gen);
 void stop_all_sounds(t_gen *gen);
 void play_sound(t_gen *gen, const char *filename, int loop);
+int	apply_fog(int color, double dist);
+
 
 
 // JHONNY STUFF
