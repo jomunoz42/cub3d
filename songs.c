@@ -65,7 +65,6 @@ void start_terror_music(t_gen *gen)
     {
         setpgid(0, 0); 
         srand(time(NULL) ^ getpid());
-        
         while (1)
         {
             sleep(rand() % 15 + 10);

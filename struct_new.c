@@ -366,7 +366,7 @@ int terror_arm_init(t_gen *gen)
 
 int basic_mlx_init(t_gen *gen)
 {
-	gen->mlx_data->mlx_ptr = mlx_init();
+	gen->mlx_data->mlx_ptr = mlx_init(); 
 	if (!gen->mlx_data->mlx_ptr)
 		return (0);
 	gen->mlx_data->win_ptr = NULL;
@@ -404,6 +404,7 @@ int def_values_init(t_gen *gen)
 	gen->def_values->terror_player_move_speed = gen->def_values->player_move_speed + 0.05;
 	gen->def_values->env = NULL;
 	gen->def_values->sounds.pids = malloc(sizeof(pid_t) * 128);
+	gen->def_values->sounds.terror_music_pid = 0;
 	gen->def_values->sounds.count = 0;
 	gen->def_values->sounds.capacity = 128;
 	return (1);
