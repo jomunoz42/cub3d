@@ -225,6 +225,9 @@ int	game_loop(t_gen *gen)
 	double	distance;
 
 	update_player(gen);
+    //
+    gen->enemy->move_speed = 0.01;
+    //
 	if (gen->flags->terror_mode)
 		update_enemy(gen);
 	clear_image(gen->img_data, 0x000000);

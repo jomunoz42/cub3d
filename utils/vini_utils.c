@@ -410,15 +410,6 @@ int	key_press(int key, t_gen *gen)
 			"./audio/default4.mp3", "./audio/default5.mp3"};
 	int	index;
 
-<<<<<<< HEAD
-	if (key == XK_w) {gen->kboard->key_w = true;}
-	if (key == XK_s) {gen->kboard->key_s = true;}
-	if (key == XK_a) {gen->kboard->key_a = true;}
-	if (key == XK_d) {gen->kboard->key_d = true;}
-	if (key == XK_e) {gen->kboard->key_e = true;}
-	if (key == XK_Left) {gen->kboard->key_left = true;}
-	if (key == XK_Right) {gen->kboard->key_right = true;}
-=======
 	if (key == XK_Escape)
 	{
 		handle_exit(key);
@@ -447,7 +438,6 @@ int	key_press(int key, t_gen *gen)
 	{
 		gen->kboard->key_right = true;
 	}
->>>>>>> origin/vini
 	if (key == XK_Control_L)
 	{
 		gen->kboard->control_left = true;
@@ -548,18 +538,6 @@ int	key_press(int key, t_gen *gen)
 
 int	key_release(int key, t_gen *gen)
 {
-<<<<<<< HEAD
-    if (key == XK_w)
-        {gen->kboard->key_w = false;}
-    if (key == XK_s)
-        {gen->kboard->key_s = false;}
-    if (key == XK_a)
-        {gen->kboard->key_a = false;}
-    if (key == XK_d)
-        {gen->kboard->key_d = false;}
-	if (key == XK_e)
-        {gen->kboard->key_e = false;}
-=======
 	if (key == XK_w)
 	{
 		gen->kboard->key_w = false;
@@ -576,7 +554,6 @@ int	key_release(int key, t_gen *gen)
 	{
 		gen->kboard->key_d = false;
 	}
->>>>>>> origin/vini
 	if (key == XK_Left)
 	{
 		gen->kboard->key_left = false;

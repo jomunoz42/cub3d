@@ -36,7 +36,6 @@ typedef struct s_keyboard
 	bool			key_a;
 	bool			key_s;
 	bool			key_d;
-	bool			key_e;
 	bool			key_right;
 	bool			key_left;
 	bool			control_left;
@@ -203,14 +202,11 @@ typedef struct s_general
 	t_img_data			*arm;
 	t_img_data			*terror_arm;
 	t_texture		*texture[4];
-<<<<<<< HEAD
 
 	t_texture		*door_texture;
 
-=======
 	t_texture		*terror_texture[4];
 	t_texture		*enemy_tex;
->>>>>>> origin/vini
 	t_mouse			*mouse;
 	t_def_values	*def_values;
 	t_enemy			*enemy;

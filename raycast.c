@@ -1,24 +1,6 @@
 #include "./headers/cub3d.h"
 #include "headers/general.h"
 
-
-static t_texture *create_solid_texture(int color)
-{
-    t_texture *tex = malloc(sizeof(t_texture));
-    if (!tex)
-        return NULL;
-
-    tex->width = 1;
-    tex->height = 1;
-    tex->img = NULL;
-    tex->data = malloc(sizeof(int));
-    if (!tex->data)
-        return (free(tex), NULL);
-
-    tex->data[0] = color;
-    return tex;
-}
-
 t_rayhit	castrate(t_gen *gen, double ray_direction_x, double ray_direction_y)
 {
 	t_rayhit	hit;

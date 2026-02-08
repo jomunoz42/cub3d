@@ -65,7 +65,7 @@ void ciclope_dos_xman(t_img_data *img,int x0, int y0, int x1, int y1, int color)
 int png_name_to_xpm(t_gen *gen, char *xpm_files[4]);
 void rotate_player(t_gen *gen, double angle);
 int mouse_looking(t_gen *gen);
-t_rayhit castrate(t_gen *gen, double ray_direction_x, double ray_direction_y, bool interact);
+t_rayhit castrate(t_gen *gen, double ray_direction_x, double ray_direction_y);
 void draw_terror_arm(t_gen *gen);
 void find_enemy_position(t_gen *gen, char c);
 void update_enemy(t_gen *gen);
