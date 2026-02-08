@@ -59,6 +59,11 @@ void	update_player(t_gen *gen)
 		move_x += gen->player->plane_x * gen->player->move_speed;
 		move_y += gen->player->plane_y * gen->player->move_speed;
 	}
+    if (gen->kboard->tab)
+    {
+        open_close_door(gen);
+        gen->kboard->tab = false;
+    }
 	// Rotate player
 	if (gen->kboard->key_right)
 		rotate_player(gen, gen->player->rotate_speed);
@@ -226,7 +231,7 @@ int	game_loop(t_gen *gen)
 
 	update_player(gen);
     //
-    gen->enemy->move_speed = 0.01;
+    gen->enemy->move_speed = 0.02;
     //
 	if (gen->flags->terror_mode)
 		update_enemy(gen);

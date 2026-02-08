@@ -36,6 +36,7 @@ typedef struct s_keyboard
 	bool			key_a;
 	bool			key_s;
 	bool			key_d;
+	bool			tab;
 	bool			key_right;
 	bool			key_left;
 	bool			control_left;

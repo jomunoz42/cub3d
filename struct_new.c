@@ -173,11 +173,13 @@ void	wall_textures_init(t_gen *gen)
 	terror_xpm[3] = ft_strdup("imgs/scary3.xpm");
 	load_wall_textures(gen, gen->texture, normal_xpm);
 	load_wall_textures(gen, gen->terror_texture, terror_xpm);
+	gen->door_texture = load_xpm_texture(gen->mlx_data->mlx_ptr, "imgs/door.xpm");
 	for (int i = 0; i < 4; i++)
 	{
 		free(normal_xpm[i]);
 		free(terror_xpm[i]);
 	}
+	// free door texture on exit?
 }
 
 int	texture_data_init(t_gen *gen)
@@ -230,6 +232,7 @@ int	keyboard_init(t_gen *gen)
 	gen->kboard->key_s = false;
 	gen->kboard->key_d = false;
 	gen->kboard->key_e = false;
+	gen->kboard->tab = false;
 	gen->kboard->key_right = false;
 	gen->kboard->key_left = false;
 	gen->kboard->control_left = false;
@@ -378,7 +381,7 @@ int	enemy_init(t_gen *gen)
 	gen->enemy = malloc(sizeof(t_enemy));
 	if (!gen->enemy)
 		return (0);
-	gen->enemy->move_speed = 0.000001;
+	gen->enemy->move_speed = gen->def_values->player_move_speed;
 	gen->enemy->size = 20;
 	gen->enemy->x = 0;
 	gen->enemy->y = 0;

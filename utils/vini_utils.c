@@ -386,19 +386,23 @@ bool	collision(t_gen *gen, double next_y, double next_x)
 	right = (int)(next_x + radius);
 	if (top >= 0 && top < gen->parse->height && left >= 0
 		&& left < (int)ft_strlen(gen->parse->map[top])
-		&& gen->parse->map[top][left] == '1')
+		&& (gen->parse->map[top][left] == '1'
+		|| gen->parse->map[top][left] == 'D'))
 		return (true);
 	if (top >= 0 && top < gen->parse->height && right >= 0
 		&& right < (int)ft_strlen(gen->parse->map[top])
-		&& gen->parse->map[top][right] == '1')
+		&& (gen->parse->map[top][right] == '1'
+		|| gen->parse->map[top][left] == 'D'))
 		return (true);
 	if (bottom >= 0 && bottom < gen->parse->height && left >= 0
 		&& left < (int)ft_strlen(gen->parse->map[bottom])
-		&& gen->parse->map[bottom][left] == '1')
+		&& (gen->parse->map[bottom][left] == '1'
+		|| gen->parse->map[top][left] == 'D'))
 		return (true);
 	if (bottom >= 0 && bottom < gen->parse->height && right >= 0
 		&& right < (int)ft_strlen(gen->parse->map[bottom])
-		&& gen->parse->map[bottom][right] == '1')
+		&& (gen->parse->map[bottom][right] == '1'
+		|| gen->parse->map[top][left] == 'D'))
 		return (true);
 	return (false);
 }
@@ -429,6 +433,10 @@ int	key_press(int key, t_gen *gen)
 	if (key == XK_d)
 	{
 		gen->kboard->key_d = true;
+	}
+	if (key == XK_Tab)
+	{
+		gen->kboard->tab = true;
 	}
 	if (key == XK_Left)
 	{
@@ -553,6 +561,10 @@ int	key_release(int key, t_gen *gen)
 	if (key == XK_d)
 	{
 		gen->kboard->key_d = false;
+	}
+	if (key == XK_Tab)
+	{
+		gen->kboard->tab = false;
 	}
 	if (key == XK_Left)
 	{
@@ -847,4 +859,23 @@ t_texture	*load_xpm_texture(void *mlx_ptr, char *file)
 	tex->data = (int *)mlx_get_data_addr(tex->img, &(int){0}, &(int){0},
 			&(int){0});
 	return tex;
+}
+
+void open_close_door(t_gen *gen)
+{
+    double ray_x = gen->player->dir_x;
+    double ray_y = gen->player->dir_y;
+
+    t_rayhit hit = castrate(gen, ray_x, ray_y, 1);
+
+    if (hit.type != HIT_DOOR)
+        return;
+    if (hit.dist > 1.5)
+        return;
+    char *cell = &gen->parse->map[hit.map_y][hit.map_x];
+
+    if (*cell == 'D')
+        *cell = 'd';
+    else if (*cell == 'd')
+        *cell = 'D';
 }
