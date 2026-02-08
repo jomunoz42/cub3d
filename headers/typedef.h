@@ -49,6 +49,14 @@ typedef struct s_keyboard
 	bool			key_x;
 	bool			key_m;
 	bool			key_caps_lock;
+	bool			key_e;
+	bool			key_num_one;
+	bool			key_num_two;
+	bool			key_num_three;
+	bool			key_num_four;
+	bool			key_num_five;
+	bool			key_num_six;
+
 }					t_keyboard;
 
 typedef struct s_mlx_data
@@ -141,8 +149,18 @@ typedef struct s_flags
 	bool terror_mode;
 	bool info;
 	bool minimap;
+	bool enemy_mini;
 	bool mouse_on;
+	bool music_on;
 }	t_flags;
+
+typedef struct s_sound
+{
+    pid_t *pids;
+    int count;
+    int capacity;
+	pid_t terror_music_pid;
+} t_sound;
 
 typedef struct s_default_values
 {
@@ -153,6 +171,8 @@ typedef struct s_default_values
 	double minimap_zoom_level;
 	double fov;
 	double terror_player_move_speed;
+	char **env;
+	t_sound sounds;
 }	t_def_values;
 
 typedef struct s_enemy
@@ -162,6 +182,12 @@ typedef struct s_enemy
 	double move_speed;
 	int size;
 }	t_enemy;
+
+typedef struct s_node
+{
+    int x;
+    int y;
+} t_node;
 
 typedef struct s_general
 {
@@ -177,9 +203,14 @@ typedef struct s_general
 	t_img_data			*arm;
 	t_img_data			*terror_arm;
 	t_texture		*texture[4];
+<<<<<<< HEAD
 
 	t_texture		*door_texture;
 
+=======
+	t_texture		*terror_texture[4];
+	t_texture		*enemy_tex;
+>>>>>>> origin/vini
 	t_mouse			*mouse;
 	t_def_values	*def_values;
 	t_enemy			*enemy;

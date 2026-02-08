@@ -17,6 +17,7 @@ void		ft_free_matrix(char **matrix);
 int			super_duper_hiper_free(void);
 void		file_closer(void);
 void		free_parsing(t_parsing *parse);
+int	window_init(t_gen *gen, int w, int h);
 int			handle_exit(int keysys);
 void		ft_free_matrix_partial(char **matrix, int max_index);
 int			png_size_fd(const char *path, uint32_t *w, uint32_t *h);
@@ -53,7 +54,7 @@ int			key_press(int key, t_gen *gen);
 int			key_release(int key, t_gen *gen);
 t_gen		*gen_stuff(void);
 t_parsing	*parsing_init(void);
-int main_init(t_gen *gen, char *argv);
+int main_init(t_gen *gen, char *argv, char **environ);
 int	start_window(t_gen *gen, char *argv);
 void render_scene(t_gen *gen);
 void draw_minimap_fov(t_gen *gen);
@@ -70,6 +71,15 @@ void find_enemy_position(t_gen *gen, char c);
 void update_enemy(t_gen *gen);
 void draw_enemy(t_gen *gen);
 void draw_enemy_minimap(t_gen *gen);
+t_texture *load_xpm_texture(void *mlx_ptr, char *file);
+void draw_enemy(t_gen *gen);
+int apply_fog(int color, double dist);
+void play_music(t_gen *gen);
+void start_terror_music(t_gen *gen);
+void stop_all_sounds(t_gen *gen);
+void play_sound(t_gen *gen, const char *filename, int loop);
+int	apply_fog(int color, double dist);
+
 
 
 // JHONNY STUFF

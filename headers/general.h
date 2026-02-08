@@ -13,6 +13,10 @@
 # include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <X11/extensions/Xfixes.h>
+# include "../extra/AStar/AStar.h"
+# include <sys/wait.h>
+#include <time.h>
 
 // ###### WINDOW | MLX ######
 
@@ -28,7 +32,7 @@
 #define DEFAULT_PLAYER_ROTATE_SPEED  0.045
 #define DEFAULT_PLAYER_FOV           2.0
 
-#define WALL_MARGIN 0.5
+#define WALL_MARGIN 0.3
 
 
 // ###### MOUSE CONFIG ######
@@ -65,6 +69,9 @@
 #define USER_HAND_PNG "./imgs/pixil-frame-0.png"
 #define USER_TERROR_HAND_PNG "./imgs/terror_arm.png"
 #define USER_TERROR_HAND_XPM "./imgs/terror_arm.xpm"
+#define ENEMY_SPRITE_PNG "./imgs/enemy.png"
+#define ENEMY_SPRITE_XPM "./imgs/enemy.xpm"
+
 
 // ######SHADOW######
 #define FOG_START 0.3

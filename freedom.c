@@ -1,6 +1,15 @@
 #include "./headers/cub3d.h"
 #include "headers/mlx.h"
 
+void	free_texture(void *mlx_ptr, t_texture *tex)
+{
+	if (!tex)
+		return ;
+	if (tex->img)
+		mlx_destroy_image(mlx_ptr, tex->img); // free the MLX image
+	free(tex);                                // free the struct
+}
+
 void	ft_free_matrix_partial(char **matrix, int max_index)
 {
 	int	i;
@@ -37,15 +46,10 @@ int	handle_exit(int keysys)
 
 void	free_parsing(t_parsing *parse)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	if (parse->fd > 2)
-	{
-		close(parse->fd);
-		parse->fd = -1;
-	}
-	if (parse->textures_info)	
+	if (parse->textures_info)
 	{
 		while (i < E_COUNT)
 		{
@@ -67,12 +71,17 @@ int	super_duper_hiper_free(void)
 	t_gen	*gen;
 
 	gen = gen_stuff();
+	stop_all_sounds(gen);
 	if (gen->img_data->vignette)
-		free (gen->img_data->vignette);
+		free(gen->img_data->vignette);
 	if (gen->flags)
 		free(gen->flags);
-	if (gen->def_values)
-		free(gen->def_values);
+	if (gen->enemy_tex)
+	{
+		free_texture(gen->mlx_data->mlx_ptr, gen->enemy_tex);
+		gen->enemy_tex = NULL;
+	}
+
 	if (gen->terror_arm)
 	{
 		if (gen->terror_arm->img)
@@ -87,6 +96,7 @@ int	super_duper_hiper_free(void)
 		{
 			if (gen->arm->img)
 				mlx_destroy_image(gen->mlx_data->mlx_ptr, gen->arm->img);
+			gen->arm->img = NULL;
 			free(gen->arm);
 		}
 		for (int i = 0; i < 4; i++)
@@ -96,19 +106,29 @@ int	super_duper_hiper_free(void)
 		}
 		if (gen->minimap->image.img)
 			mlx_destroy_image(gen->mlx_data->mlx_ptr, gen->minimap->image.img);
-
 		if (gen->mlx_data->win_ptr)
 			mlx_destroy_window(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr);
 		if (gen->mlx_data->mlx_ptr)
+		{
 			mlx_destroy_display(gen->mlx_data->mlx_ptr);
+			gen->mlx_data->mlx_ptr = NULL; // prevents double-close
+		}
 		free(gen->mlx_data->mlx_ptr);
 		free(gen->mlx_data);
 		gen->mlx_data = NULL;
 	}
+	for (int i = 0; i < 4; i++)
+		free(gen->terror_texture[i]);
+	if (gen->def_values->env)
+		ft_free_matrix(gen->def_values->env);
+	if (gen->def_values->sounds.pids)
+		free(gen->def_values->sounds.pids);
 	if (gen->mouse)
 		free(gen->mouse);
 	if (gen->rayhit)
 		free(gen->rayhit);
+	if (gen->def_values)
+		free(gen->def_values);
 	if (gen->player)
 		free(gen->player);
 	if (gen->minimap)
@@ -117,6 +137,8 @@ int	super_duper_hiper_free(void)
 			ft_free_matrix(gen->minimap->map);
 		free(gen->minimap);
 	}
+	if (gen->enemy)
+		free(gen->enemy);
 	if (gen->kboard)
 		free(gen->kboard);
 	if (gen->texture_data)

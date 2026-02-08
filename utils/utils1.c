@@ -53,7 +53,7 @@ char	*ft_strdup(const char *s)
 
 char	*ft_strrchr(const char *s, int c)
 {
-	int		length;
+	int	length;
 
 	length = 0;
 	while (s[length] != '\0')
@@ -77,18 +77,18 @@ int	ft_isdigit(int c)
 		return (0);
 }
 
-int contains_tab(char *line)
+int	contains_tab(char *line)
 {
-    int i;
+	int	i;
 
 	i = 0;
-    while (line[i])
-    {
-        if (line[i] == '\t')
-            return (1);
-        i++;
-    }
-    return (0);
+	while (line[i])
+	{
+		if (line[i] == '\t')
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 char	*ft_strchr(const char *s, int c)
