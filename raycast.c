@@ -144,7 +144,6 @@ void	render_scene(t_gen *gen)
 		else
 			wall_x = gen->player->x + hit.dist * ray_direction_x;
 		wall_x -= floor(wall_x);
-        //
         if (hit.type == HIT_WALL)
         {
             if (gen->flags->terror_mode)
@@ -154,7 +153,6 @@ void	render_scene(t_gen *gen)
         }
         else if (hit.type == HIT_DOOR)
             tex = gen->door_texture;
-        //
 		texture_x = (int)(wall_x * (double)tex->width);
 		if ((hit.side == 0 && ray_direction_x < 0) || (hit.side == 1
 				&& ray_direction_y > 0))

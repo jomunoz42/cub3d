@@ -234,7 +234,10 @@ int	game_loop(t_gen *gen)
     gen->enemy->move_speed = 0.02;
     //
 	if (gen->flags->terror_mode)
+	{
 		update_enemy(gen);
+		update_enemy_animation(gen->enemy);
+	}
 	clear_image(gen->img_data, 0x000000);
 	render_scene(gen);
 	if (gen->flags->terror_mode)

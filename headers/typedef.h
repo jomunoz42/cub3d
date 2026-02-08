@@ -175,12 +175,21 @@ typedef struct s_default_values
 	t_sound sounds;
 }	t_def_values;
 
+typedef enum e_enemy_type
+{
+    ENEMY_GHOST,
+    ENEMY_CTHULHU
+} t_enemy_type;
+
 typedef struct s_enemy
 {
-	double x;
-	double y;
-	double move_speed;
-	int size;
+	double 			x;
+	double 			y;
+	double 			move_speed;
+	int 			size;
+	int    			enemy_frame;
+    int   			enemy_timer;
+	t_enemy_type    type;
 }	t_enemy;
 
 typedef struct s_node
@@ -200,14 +209,14 @@ typedef struct s_general
 	t_keyboard		*kboard;
 	t_minimap		*minimap;
 	t_rayhit		*rayhit;
-	t_img_data			*arm;
-	t_img_data			*terror_arm;
+	t_img_data		*arm;
+	t_img_data		*terror_arm;
 	t_texture		*texture[4];
-
-	t_texture		*door_texture;
-
 	t_texture		*terror_texture[4];
+	t_texture		*ghost_enemy[4];
+	t_texture		*cthulhu_enemy[2];
 	t_texture		*enemy_tex;
+	t_texture		*door_texture;
 	t_mouse			*mouse;
 	t_def_values	*def_values;
 	t_enemy			*enemy;

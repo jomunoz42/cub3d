@@ -1,22 +1,26 @@
 #include "./headers/cub3d.h"
 
-void find_enemy_position(t_gen *gen, char c)
+void find_enemy_from_map(t_gen *gen)
 {
-    int row = 0;
-    while (gen->parse->map[row])
+    for (int row = 0; gen->parse->map[row]; row++)
     {
-        int col = 0;
-        while (gen->parse->map[row][col])
+        for (int col = 0; gen->parse->map[row][col]; col++)
         {
-            if (gen->parse->map[row][col] == c)
+            if (gen->parse->map[row][col] == 'X')
             {
                 gen->enemy->x = col + 0.5;
                 gen->enemy->y = row + 0.5;
+                gen->enemy->type = ENEMY_GHOST;
                 return;
             }
-            col++;
+            if (gen->parse->map[row][col] == 'x')
+            {
+                gen->enemy->x = col + 0.5;
+                gen->enemy->y = row + 0.5;
+                gen->enemy->type = ENEMY_CTHULHU;
+                return;
+            }
         }
-        row++;
     }
 }
 
@@ -146,17 +150,60 @@ bool enemy_visible(t_gen *gen, double *distance_out)
     return true;
 }
 
+void update_enemy_animation(t_enemy *e)
+{
+    int max_frames;
+    int speed;
+
+    if (e->type == ENEMY_GHOST)
+    {
+        max_frames = 4;
+        speed = 10;
+    }
+    else if (e->type == ENEMY_CTHULHU)
+    {
+        max_frames = 2;
+        speed = 25;
+    }
+    else
+        return;
+
+    e->enemy_timer++;
+    if (e->enemy_timer >= speed)
+    {
+        e->enemy_timer = 0;
+        e->enemy_frame = (e->enemy_frame + 1) % max_frames;
+    }
+}
+
 void draw_enemy(t_gen *gen)
 {
-    if (!gen->enemy || !gen->enemy_tex)
+    // if (!gen->enemy || !gen->ghost_enemy[0])
+    //     return;
+
+    if (!gen->enemy)
+        return;
+    
+    if (gen->enemy->type == ENEMY_GHOST && !gen->ghost_enemy[0])
+        return;
+    
+    if (gen->enemy->type == ENEMY_CTHULHU && !gen->cthulhu_enemy[0])
         return;
 
     double distance;
     if (!enemy_visible(gen, &distance))
         return;
 
-    t_enemy *enemy = gen->enemy;
-    t_texture *tex = gen->enemy_tex;
+    t_enemy   *enemy = gen->enemy;
+
+    t_texture *tex;
+
+    if (enemy->type == ENEMY_GHOST)
+        tex = gen->ghost_enemy[enemy->enemy_frame];
+    else if (enemy->type == ENEMY_CTHULHU)
+        tex = gen->cthulhu_enemy[enemy->enemy_frame];
+    else
+        return;
 
     double sprite_x = enemy->x - gen->player->x;
     double sprite_y = enemy->y - gen->player->y;

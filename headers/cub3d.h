@@ -67,23 +67,23 @@ void rotate_player(t_gen *gen, double angle);
 int mouse_looking(t_gen *gen);
 t_rayhit castrate(t_gen *gen, double ray_direction_x, double ray_direction_y, bool interact);
 void draw_terror_arm(t_gen *gen);
-void find_enemy_position(t_gen *gen, char c);
-void update_enemy(t_gen *gen);
-void draw_enemy(t_gen *gen);
-void draw_enemy_minimap(t_gen *gen);
-void draw_enemy(t_gen *gen);
 int apply_fog(int color, double dist);
 void play_music(t_gen *gen);
 void start_terror_music(t_gen *gen);
 void stop_all_sounds(t_gen *gen);
 void play_sound(t_gen *gen, const char *filename, int loop);
 int	apply_fog(int color, double dist);
-
 void open_close_door(t_gen *gen);
 t_texture *load_xpm_texture(void *mlx_ptr, char *file);
 
 
-// JHONNY STUFF
+//====================== ENEMY =========================
+
+void        update_enemy_animation(t_enemy *e);
+void        find_enemy_from_map(t_gen *gen);
+void        update_enemy(t_gen *gen);
+void        draw_enemy(t_gen *gen);
+void        draw_enemy_minimap(t_gen *gen);
 
 //===================== PARSING ========================
 
@@ -102,13 +102,13 @@ char		*get_next_line(int fd);
 int         contains_tab(char *s);
 int			is_line_empty(char *line);
 void		free_double(char **arg);
-int ft_clamp(int value, int min, int max);
+int         ft_clamp(int value, int min, int max);
 
 //====================== LIBFT =========================
 
 char	    *ft_strchr(const char *s, int c);
 int     	ft_isdigit(int c);
-char	*ft_strdup(const char *s);
+char	    *ft_strdup(const char *s);
 char	    *ft_strrchr(const char *s, int c);
 void		ft_bzero(void *s, size_t n);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -121,10 +121,10 @@ char		*ft_strcpy(char *s1, char *s2);
 void		*ft_calloc(size_t nmemb, size_t size);
 char		**ft_split(char const *s, char c);
 int			ft_atoi(const char *nptr);
-char *ft_strncpy(char *dst, char *srce, int n);
-char *ft_strcat(char *dst, char *srce);
-char	*ft_itoa(int n);
-char	*ft_strjoin(char *s1, char *s2);
-void	ft_putstr_fd(char *s, int fd);
+char        *ft_strncpy(char *dst, char *srce, int n);
+char        *ft_strcat(char *dst, char *srce);
+char	    *ft_itoa(int n);
+char	    *ft_strjoin(char *s1, char *s2);
+void	    ft_putstr_fd(char *s, int fd);
 
 #endif

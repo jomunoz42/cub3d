@@ -137,13 +137,33 @@ int	general_texture_init(t_gen *gen)
 		gen->terror_texture[i]->width = 0;
 		gen->terror_texture[i]->img = NULL;
 	}
+	for (int i = 0; i < 4; i++)
+	{
+		gen->ghost_enemy[i] = malloc(sizeof(t_texture));
+		if (!gen->ghost_enemy[i])
+			return (0);
+		gen->ghost_enemy[i]->data = NULL;
+		gen->ghost_enemy[i]->height = 0;
+		gen->ghost_enemy[i]->width = 0;
+		gen->ghost_enemy[i]->img = NULL;
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		gen->cthulhu_enemy[i] = malloc(sizeof(t_texture));
+		if (!gen->cthulhu_enemy[i])
+			return (0);
+		gen->cthulhu_enemy[i]->data = NULL;
+		gen->cthulhu_enemy[i]->height = 0;
+		gen->cthulhu_enemy[i]->width = 0;
+		gen->cthulhu_enemy[i]->img = NULL;
+	}
 	return (1);
 }
 
-static void	load_wall_textures(t_gen *gen, t_texture **dst, char **xpm_files)
+static void	load_textures(t_gen *gen, t_texture **dst, char **xpm_files, int count)
 {
 	int bpp, sl, endian;
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < count; i++)
 	{
 		dst[i]->img = mlx_xpm_file_to_image(gen->mlx_data->mlx_ptr,
 				xpm_files[i], &dst[i]->width, &dst[i]->height);
@@ -161,6 +181,8 @@ void	wall_textures_init(t_gen *gen)
 {
 	char	*normal_xpm[4];
 	char	*terror_xpm[4];
+	char	*ghost_xpm[4];
+	char	*cthulhu_xpm[4];
 
 	if (!png_name_to_xpm(gen, normal_xpm))
 	{
@@ -171,15 +193,26 @@ void	wall_textures_init(t_gen *gen)
 	terror_xpm[1] = ft_strdup("imgs/scary1.xpm");
 	terror_xpm[2] = ft_strdup("imgs/scary2.xpm");
 	terror_xpm[3] = ft_strdup("imgs/scary3.xpm");
-	load_wall_textures(gen, gen->texture, normal_xpm);
-	load_wall_textures(gen, gen->terror_texture, terror_xpm);
+	ghost_xpm[0] = ft_strdup("imgs/ghost_1.xpm");
+	ghost_xpm[1] = ft_strdup("imgs/ghost_2.xpm");
+	ghost_xpm[2] = ft_strdup("imgs/ghost_3.xpm");
+	ghost_xpm[3] = ft_strdup("imgs/ghost_4.xpm");
+	cthulhu_xpm[0] = ft_strdup("imgs/cthulhu_1.xpm");
+	cthulhu_xpm[1] = ft_strdup("imgs/cthulhu_2.xpm");
+	printf("%s\n%s\n", cthulhu_xpm[0], cthulhu_xpm[1]);
+	load_textures(gen, gen->texture, normal_xpm, 4);
+	load_textures(gen, gen->terror_texture, terror_xpm, 4);
+	load_textures(gen, gen->ghost_enemy, ghost_xpm, 4);
+	load_textures(gen, gen->cthulhu_enemy, cthulhu_xpm, 2);
 	gen->door_texture = load_xpm_texture(gen->mlx_data->mlx_ptr, "imgs/door.xpm");
 	for (int i = 0; i < 4; i++)
 	{
 		free(normal_xpm[i]);
 		free(terror_xpm[i]);
+		free(ghost_xpm[i]);
+		if (i < 2)
+			free(cthulhu_xpm[i]);
 	}
-	// free door texture on exit?
 }
 
 int	texture_data_init(t_gen *gen)
@@ -385,7 +418,10 @@ int	enemy_init(t_gen *gen)
 	gen->enemy->size = 20;
 	gen->enemy->x = 0;
 	gen->enemy->y = 0;
-	find_enemy_position(gen, 'X');
+	gen->enemy->enemy_frame = 0;
+	gen->enemy->enemy_timer = 0;
+	gen->enemy->type = ENEMY_GHOST;
+	find_enemy_from_map(gen);
 	printf("Enemy position is x[%d][%d]\n", (int)gen->enemy->x,
 		(int)gen->enemy->y);
 	return (1);
