@@ -174,8 +174,8 @@ void update_enemy_animation(t_enemy *e)
     }
     else if (e->type == ENEMY_SKELETON)
     {
-        max_frames = 8;
-        speed = 10;
+        max_frames = 7;
+        speed = 4;
     }
     else
         return;

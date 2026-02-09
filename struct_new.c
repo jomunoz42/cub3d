@@ -211,9 +211,9 @@ void	wall_textures_init(t_gen *gen)
 	cthulhu_xpm[0] = ft_strdup("imgs/cthulhu_1.xpm");
 	cthulhu_xpm[1] = ft_strdup("imgs/cthulhu_2.xpm");
 	skeleton_xpm[0] = ft_strdup("imgs/skel_1.xpm");
-	skeleton_xpm[1] = ft_strdup("imgs/skel_2_4.xpm");
+	skeleton_xpm[1] = ft_strdup("imgs/skel_2.xpm");
 	skeleton_xpm[2] = ft_strdup("imgs/skel_3.xpm");
-	skeleton_xpm[3] = ft_strdup("imgs/skel_2_4.xpm");
+	skeleton_xpm[3] = ft_strdup("imgs/skel_4.xpm");
 	skeleton_xpm[4] = ft_strdup("imgs/skel_5.xpm");
 	skeleton_xpm[5] = ft_strdup("imgs/skel_6.xpm");
 	skeleton_xpm[6] = ft_strdup("imgs/skel_7.xpm");

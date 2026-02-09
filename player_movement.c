@@ -235,7 +235,8 @@ int	game_loop(t_gen *gen)
     //
 	if (gen->flags->terror_mode)
 	{
-		update_enemy(gen);
+		if (gen->enemy->type != ENEMY_SKELETON)
+			update_enemy(gen);
 		update_enemy_animation(gen->enemy);
 	}
 	clear_image(gen->img_data, 0x000000);
