@@ -215,6 +215,7 @@ typedef struct s_general
 	t_texture		*terror_texture[4];
 	t_texture		*ghost_enemy[4];
 	t_texture		*cthulhu_enemy[2];
+	t_texture		*skeleton_enemy[7];
 	t_texture		*enemy_tex;
 	t_texture		*door_texture;
 	t_mouse			*mouse;

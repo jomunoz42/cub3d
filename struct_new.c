@@ -183,6 +183,7 @@ void	wall_textures_init(t_gen *gen)
 	char	*terror_xpm[4];
 	char	*ghost_xpm[4];
 	char	*cthulhu_xpm[4];
+	char	*skeleton_xpm[7];
 
 	if (!png_name_to_xpm(gen, normal_xpm))
 	{
@@ -199,6 +200,14 @@ void	wall_textures_init(t_gen *gen)
 	ghost_xpm[3] = ft_strdup("imgs/ghost_4.xpm");
 	cthulhu_xpm[0] = ft_strdup("imgs/cthulhu_1.xpm");
 	cthulhu_xpm[1] = ft_strdup("imgs/cthulhu_2.xpm");
+	skeleton_xpm[0] = ft_strdup("imgs/skel_1.xpm");
+	skeleton_xpm[1] = ft_strdup("imgs/skel_2.xpm");
+	skeleton_xpm[2] = ft_strdup("imgs/skel_3.xpm");
+	skeleton_xpm[3] = ft_strdup("imgs/skel_2_4.xpm");
+	skeleton_xpm[4] = ft_strdup("imgs/skel_5.xpm");
+	skeleton_xpm[5] = ft_strdup("imgs/skel_6.xpm");
+	skeleton_xpm[6] = ft_strdup("imgs/skel_7.xpm");
+	skeleton_xpm[7] = ft_strdup("imgs/skel_8.xpm");
 	printf("%s\n%s\n", cthulhu_xpm[0], cthulhu_xpm[1]);
 	load_textures(gen, gen->texture, normal_xpm, 4);
 	load_textures(gen, gen->terror_texture, terror_xpm, 4);
