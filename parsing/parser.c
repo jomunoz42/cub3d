@@ -1,7 +1,7 @@
 
 #include "../headers/cub3d.h"
 
-static int	find_invalid_char(t_parsing *data) // I am accepting F and D
+static int	find_invalid_char(t_parsing *data)
 {
 	int len;
 	int y;
@@ -17,7 +17,8 @@ static int	find_invalid_char(t_parsing *data) // I am accepting F and D
 		{
 			c = data->map[y][x];
 			if (c != '0' && c != '1' && c != 'N' && c != 'S' && c != 'E'
-				&& c != 'W' && c != ' ' && c != 'D' && c != 'x' && c != '\n' && c != 'X')
+				&& c != 'W' && c != ' ' && c != 'D' && c != 'x' && c != '\n' 
+				&& c != 'X' && c != 'Z')
 			{
 				write(2, "Error\n", 6);
 				write(2, "Invalid char in map.\n", 22);

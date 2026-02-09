@@ -178,7 +178,8 @@ typedef struct s_default_values
 typedef enum e_enemy_type
 {
     ENEMY_GHOST,
-    ENEMY_CTHULHU
+    ENEMY_CTHULHU,
+    ENEMY_SKELETON
 } t_enemy_type;
 
 typedef struct s_enemy

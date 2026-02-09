@@ -9,7 +9,7 @@ TEXTURE_DIR = ../textures
 PARSE = ./parsing
 UTILS = ./utils
 MINIMAP = ./minimap
-EXTRA = ./.extra
+EXTRA = ./extra
 
 
 SRC = \

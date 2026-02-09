@@ -157,6 +157,16 @@ int	general_texture_init(t_gen *gen)
 		gen->cthulhu_enemy[i]->width = 0;
 		gen->cthulhu_enemy[i]->img = NULL;
 	}
+	for (int i = 0; i < 8; i++)
+	{
+		gen->skeleton_enemy[i] = malloc(sizeof(t_texture));
+		if (!gen->skeleton_enemy[i])
+			return (0);
+		gen->skeleton_enemy[i]->data = NULL;
+		gen->skeleton_enemy[i]->height = 0;
+		gen->skeleton_enemy[i]->width = 0;
+		gen->skeleton_enemy[i]->img = NULL;
+	}
 	return (1);
 }
 
@@ -183,7 +193,7 @@ void	wall_textures_init(t_gen *gen)
 	char	*terror_xpm[4];
 	char	*ghost_xpm[4];
 	char	*cthulhu_xpm[4];
-	char	*skeleton_xpm[7];
+	char	*skeleton_xpm[8];
 
 	if (!png_name_to_xpm(gen, normal_xpm))
 	{
@@ -201,26 +211,30 @@ void	wall_textures_init(t_gen *gen)
 	cthulhu_xpm[0] = ft_strdup("imgs/cthulhu_1.xpm");
 	cthulhu_xpm[1] = ft_strdup("imgs/cthulhu_2.xpm");
 	skeleton_xpm[0] = ft_strdup("imgs/skel_1.xpm");
-	skeleton_xpm[1] = ft_strdup("imgs/skel_2.xpm");
+	skeleton_xpm[1] = ft_strdup("imgs/skel_2_4.xpm");
 	skeleton_xpm[2] = ft_strdup("imgs/skel_3.xpm");
 	skeleton_xpm[3] = ft_strdup("imgs/skel_2_4.xpm");
 	skeleton_xpm[4] = ft_strdup("imgs/skel_5.xpm");
 	skeleton_xpm[5] = ft_strdup("imgs/skel_6.xpm");
 	skeleton_xpm[6] = ft_strdup("imgs/skel_7.xpm");
 	skeleton_xpm[7] = ft_strdup("imgs/skel_8.xpm");
-	printf("%s\n%s\n", cthulhu_xpm[0], cthulhu_xpm[1]);
 	load_textures(gen, gen->texture, normal_xpm, 4);
 	load_textures(gen, gen->terror_texture, terror_xpm, 4);
 	load_textures(gen, gen->ghost_enemy, ghost_xpm, 4);
 	load_textures(gen, gen->cthulhu_enemy, cthulhu_xpm, 2);
+	load_textures(gen, gen->skeleton_enemy, skeleton_xpm, 8);
 	gen->door_texture = load_xpm_texture(gen->mlx_data->mlx_ptr, "imgs/door.xpm");
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 8; i++)
 	{
-		free(normal_xpm[i]);
-		free(terror_xpm[i]);
-		free(ghost_xpm[i]);
 		if (i < 2)
 			free(cthulhu_xpm[i]);
+		if (i < 4)
+		{
+			free(normal_xpm[i]);
+			free(terror_xpm[i]);
+			free(ghost_xpm[i]);
+		}
+		free(skeleton_xpm[i]);
 	}
 }
 

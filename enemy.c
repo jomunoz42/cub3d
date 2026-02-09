@@ -20,6 +20,13 @@ void find_enemy_from_map(t_gen *gen)
                 gen->enemy->type = ENEMY_CTHULHU;
                 return;
             }
+            if (gen->parse->map[row][col] == 'Z')
+            {
+                gen->enemy->x = col + 0.5;
+                gen->enemy->y = row + 0.5;
+                gen->enemy->type = ENEMY_SKELETON;
+                return;
+            }
         }
     }
 }
@@ -165,9 +172,13 @@ void update_enemy_animation(t_enemy *e)
         max_frames = 2;
         speed = 25;
     }
+    else if (e->type == ENEMY_SKELETON)
+    {
+        max_frames = 8;
+        speed = 10;
+    }
     else
         return;
-
     e->enemy_timer++;
     if (e->enemy_timer >= speed)
     {
@@ -178,16 +189,13 @@ void update_enemy_animation(t_enemy *e)
 
 void draw_enemy(t_gen *gen)
 {
-    // if (!gen->enemy || !gen->ghost_enemy[0])
-    //     return;
-
     if (!gen->enemy)
         return;
-    
     if (gen->enemy->type == ENEMY_GHOST && !gen->ghost_enemy[0])
         return;
-    
     if (gen->enemy->type == ENEMY_CTHULHU && !gen->cthulhu_enemy[0])
+        return;
+    if (gen->enemy->type == ENEMY_SKELETON && !gen->skeleton_enemy[0])
         return;
 
     double distance;
@@ -202,6 +210,8 @@ void draw_enemy(t_gen *gen)
         tex = gen->ghost_enemy[enemy->enemy_frame];
     else if (enemy->type == ENEMY_CTHULHU)
         tex = gen->cthulhu_enemy[enemy->enemy_frame];
+    else if (enemy->type == ENEMY_SKELETON)
+        tex = gen->skeleton_enemy[enemy->enemy_frame];
     else
         return;
 
