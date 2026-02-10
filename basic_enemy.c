@@ -49,7 +49,7 @@ void update_enemy_animation(t_enemy *enemy, int i)
     else if (enemy[i].type == ENEMY_SKELETON)
     {
         max_frames = 7;
-        speed = 4;
+        speed = 8;
     }
     else
         return;
@@ -132,13 +132,13 @@ void draw_enemy(t_gen *gen, int i)
     }
 }
 
-void draw_enemy_minimap(t_gen *gen)
+void draw_enemy_minimap(t_gen *gen, int i)
 {
     int start_x = (int)gen->player->x - gen->minimap->zoom_level / 2;
     int start_y = (int)gen->player->y - gen->minimap->zoom_level / 2;
 
-    int px = (gen->enemy->x - start_x) * MINIMAP_TILE_PIXELS;
-    int py = (gen->enemy->y - start_y) * MINIMAP_TILE_PIXELS;
+    int px = (gen->enemy[i].x - start_x) * MINIMAP_TILE_PIXELS;
+    int py = (gen->enemy[i].y - start_y) * MINIMAP_TILE_PIXELS;
 
     if (px < 0 || py < 0 || px >= MINIMAP_PIXELS || py >= MINIMAP_PIXELS)
         return;

@@ -230,31 +230,26 @@ int	game_loop(t_gen *gen)
 	double	distance;
 
 	update_player(gen);
-	//
 	int i = 0;
 	while (i < gen->enemy_count)
 	{
 		gen->enemy[i].move_speed = 0.02;
-		if (gen->flags->terror_mode)
-		{
-			// if (gen->enemy[i].type != ENEMY_SKELETON)
-			// 	update_enemy(gen, i);
-			update_enemy_animation(gen->enemy, i);
-		}
+		// if (gen->enemy[i].type != ENEMY_SKELETON)
+		// 	update_enemy(gen, i);
+		update_enemy_animation(gen->enemy, i);
 		i++;
 	}
-	//
 	clear_image(gen->img_data, 0x000000);
 	render_scene(gen);
-	//
 	i = 0;
 	while (i < gen->enemy_count)
 	{
-		if (gen->flags->terror_mode) // implement skel here
+		if (!gen->flags->terror_mode && gen->enemy[i].type == ENEMY_SKELETON)
+			draw_enemy(gen, i);
+		if (gen->flags->terror_mode)
 			draw_enemy(gen, i);
 		i++;
 	}
-	//
 	mouse_looking(gen);
 	if (!gen->flags->terror_mode && gen->flags->minimap)
 		draw_minimap(gen);
@@ -267,7 +262,6 @@ int	game_loop(t_gen *gen)
 		gen->img_data->img, 0, 0);
 	if (gen->flags->info && !gen->flags->terror_mode)
 		print_info(gen);
-	//
 	i = 0;
 	while (i < gen->enemy_count)
 	{
@@ -282,6 +276,5 @@ int	game_loop(t_gen *gen)
 		}
 		i++;
 	}
-	//
 	return (0);
 }

@@ -77,7 +77,10 @@ void	draw_minimap(t_gen *gen)
 		}
 	}
 	if (gen->flags->enemy_mini)
-		draw_enemy_minimap(gen);
+	{
+		for (int i = 0; i < gen->enemy_count; i++)
+			draw_enemy_minimap(gen, i);
+	}
 	draw_minimap_player(gen);
 	draw_minimap_fov(gen);
 }

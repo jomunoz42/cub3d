@@ -83,7 +83,7 @@ void        update_enemy_animation(t_enemy *enemy, int i);
 void        find_enemy_from_map(t_gen *gen, int i);
 void        update_enemy(t_gen *gen, int i);
 void        draw_enemy(t_gen *gen, int i);
-void        draw_enemy_minimap(t_gen *gen);
+void        draw_enemy_minimap(t_gen *gen, int i);
 int         count_enemies_in_map(t_gen *gen);
 bool        enemy_visible(t_gen *gen, double *distance_out, int i);
 
