@@ -237,8 +237,8 @@ int	game_loop(t_gen *gen)
 		gen->enemy[i].move_speed = 0.02;
 		if (gen->flags->terror_mode)
 		{
-			if (gen->enemy[i].type != ENEMY_SKELETON)
-				update_enemy(gen, i);
+			// if (gen->enemy[i].type != ENEMY_SKELETON)
+			// 	update_enemy(gen, i);
 			update_enemy_animation(gen->enemy, i);
 		}
 		i++;
