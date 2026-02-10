@@ -26,6 +26,7 @@ static int identify_header(char *line)
 static int	    is_texture_path_invalid(t_parsing *data, char *line, int type)
 {
 	char	*path;
+	int	    len;
 	int	    fd;
     int     i;
 
@@ -33,6 +34,7 @@ static int	    is_texture_path_invalid(t_parsing *data, char *line, int type)
     while (line[i] == ' ')
 		i++;
     i += 3;
+
     path = ft_strtrim(&line[i], " \n");
     fd = open(path, O_RDONLY);
 	if (fd < 0)
@@ -44,6 +46,12 @@ static int	    is_texture_path_invalid(t_parsing *data, char *line, int type)
 			return (write(2, " does not exist\n", 17), 1);
 		else if (errno == EACCES)
 			return (write(2, " has no reading permissions\n", 29), 1);
+	}
+    len = ft_strlen(path);
+	if (len < 4 || ft_strncmp(&path[len - 4], ".xpm\0", 5))
+	{
+		write(2, "Error\nFile doesn't have the right extension\n", 45);
+		return (1);
 	}
     if (data->textures_info[type])
 		free(data->textures_info[type]);

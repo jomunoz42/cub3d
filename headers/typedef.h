@@ -219,6 +219,7 @@ typedef struct s_general
 	t_texture		*skeleton_enemy[7];
 	t_texture		*enemy_tex;
 	t_texture		*door_texture;
+	t_texture		*door_texture2;
 	t_mouse			*mouse;
 	t_def_values	*def_values;
 

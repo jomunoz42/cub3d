@@ -223,7 +223,8 @@ void	wall_textures_init(t_gen *gen)
 	load_textures(gen, gen->ghost_enemy, ghost_xpm, 4);
 	load_textures(gen, gen->cthulhu_enemy, cthulhu_xpm, 2);
 	load_textures(gen, gen->skeleton_enemy, skeleton_xpm, 8);
-	gen->door_texture = load_xpm_texture(gen->mlx_data->mlx_ptr, "imgs/door.xpm");
+	gen->door_texture = load_xpm_texture(gen->mlx_data->mlx_ptr, "imgs/porta_normal.xpm");
+	gen->door_texture2 = load_xpm_texture(gen->mlx_data->mlx_ptr, "imgs/terror_door.xpm");
 	for (int i = 0; i < 8; i++)
 	{
 		if (i < 2)

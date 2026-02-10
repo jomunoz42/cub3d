@@ -152,7 +152,12 @@ void	render_scene(t_gen *gen)
 			    tex = gen->texture[hit.face];
         }
         else if (hit.type == HIT_DOOR)
-            tex = gen->door_texture;
+        {
+			if (gen->flags->terror_mode)
+				tex = gen->door_texture2;
+			else
+				tex = gen->door_texture;
+		}
 		texture_x = (int)(wall_x * (double)tex->width);
 		if ((hit.side == 0 && ray_direction_x < 0) || (hit.side == 1
 				&& ray_direction_y > 0))
