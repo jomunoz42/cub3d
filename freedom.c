@@ -138,7 +138,10 @@ int	super_duper_hiper_free(void)
 		free(gen->minimap);
 	}
 	if (gen->enemy)
-		free(gen->enemy);
+	{
+		for (int i = 0; i < gen->enemy_count; i++)
+			free(&gen->enemy[i]);
+	}
 	if (gen->kboard)
 		free(gen->kboard);
 	if (gen->texture_data)

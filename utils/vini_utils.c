@@ -384,7 +384,7 @@ bool	collision(t_gen *gen, double next_y, double next_x)
 	bottom = (int)(next_y + radius);
 	left = (int)(next_x - radius);
 	right = (int)(next_x + radius);
-	if (top >= 0 && top < gen->parse->height && left >= 0
+if (top >= 0 && top < gen->parse->height && left >= 0
 		&& left < (int)ft_strlen(gen->parse->map[top])
 		&& (gen->parse->map[top][left] == '1'
 		|| gen->parse->map[top][left] == 'D'))

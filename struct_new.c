@@ -434,19 +434,32 @@ int	def_values_init(t_gen *gen)
 
 int	enemy_init(t_gen *gen)
 {
-	gen->enemy = malloc(sizeof(t_enemy));
+	int i;
+
+	i = 0;
+	gen->enemy_count = count_enemies_in_map(gen);
+	if (gen->enemy_count == 0)
+        return (1);
+	printf("Enemies in map: %d\n", gen->enemy_count);
+
+	gen->enemy = malloc(sizeof(t_enemy) * gen->enemy_count);
 	if (!gen->enemy)
 		return (0);
-	gen->enemy->move_speed = gen->def_values->player_move_speed;
-	gen->enemy->size = 20;
-	gen->enemy->x = 0;
-	gen->enemy->y = 0;
-	gen->enemy->enemy_frame = 0;
-	gen->enemy->enemy_timer = 0;
-	gen->enemy->type = ENEMY_GHOST;
-	find_enemy_from_map(gen);
-	printf("Enemy position is x[%d][%d]\n", (int)gen->enemy->x,
-		(int)gen->enemy->y);
+
+	while (i < gen->enemy_count)
+	{
+		gen->enemy[i].move_speed = gen->def_values->player_move_speed;
+		gen->enemy[i].size = 20;
+		gen->enemy[i].x = 0;
+		gen->enemy[i].y = 0;
+		gen->enemy[i].enemy_frame = 0;
+		gen->enemy[i].enemy_timer = 0;
+		gen->enemy->type = ENEMY_SKELETON;
+		find_enemy_from_map(gen, i);
+		printf("Enemy position is x[%d][%d]\n", (int)gen->enemy[i].x,
+		(int)gen->enemy[i].y);
+		i++;
+	}
 	return (1);
 }
 

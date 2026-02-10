@@ -1,6 +1,32 @@
 #include "./headers/cub3d.h"
 
-void find_enemy_from_map(t_gen *gen)
+int count_enemies_in_map(t_gen *gen)
+{
+    int count;
+    int row;
+    int col;
+
+    count = 0;
+    row = 0;
+    while (gen->parse->map[row])
+    {
+        col = 0;
+        while (gen->parse->map[row][col])
+        {
+            if (gen->parse->map[row][col] == 'X'
+                || gen->parse->map[row][col] == 'x'
+                || gen->parse->map[row][col] == 'Z')
+            {
+                count++;
+            }
+            col++;
+        }
+        row++;
+    }
+    return (count);
+}
+
+void find_enemy_from_map(t_gen *gen, int i)
 {
     for (int row = 0; gen->parse->map[row]; row++)
     {
@@ -8,23 +34,26 @@ void find_enemy_from_map(t_gen *gen)
         {
             if (gen->parse->map[row][col] == 'X')
             {
-                gen->enemy->x = col + 0.5;
-                gen->enemy->y = row + 0.5;
-                gen->enemy->type = ENEMY_GHOST;
+                gen->parse->map[row][col] = '0';
+                gen->enemy[i].x = col + 0.5;
+                gen->enemy[i].y = row + 0.5;
+                gen->enemy[i].type = ENEMY_GHOST;
                 return;
             }
             if (gen->parse->map[row][col] == 'x')
             {
-                gen->enemy->x = col + 0.5;
-                gen->enemy->y = row + 0.5;
-                gen->enemy->type = ENEMY_CTHULHU;
+                gen->parse->map[row][col] = '0';
+                gen->enemy[i].x = col + 0.5;
+                gen->enemy[i].y = row + 0.5;
+                gen->enemy[i].type = ENEMY_CTHULHU;
                 return;
             }
             if (gen->parse->map[row][col] == 'Z')
             {
-                gen->enemy->x = col + 0.5;
-                gen->enemy->y = row + 0.5;
-                gen->enemy->type = ENEMY_SKELETON;
+                gen->parse->map[row][col] = '0';
+                gen->enemy[i].x = col + 0.5;
+                gen->enemy[i].y = row + 0.5;
+                gen->enemy[i].type = ENEMY_SKELETON;
                 return;
             }
         }
@@ -91,9 +120,9 @@ float pathCostHeuristic(void *a, void *b, void *context)
     return abs(n1->x - n2->x) + abs(n1->y - n2->y); // Manhattan distance
 }
 
-void update_enemy(t_gen *gen)
+void update_enemy(t_gen *gen, int i)
 {
-    t_node start = { (int)gen->enemy->x, (int)gen->enemy->y };
+    t_node start = { (int)gen->enemy[i].x, (int)gen->enemy[i].y };
     t_node goal  = { (int)gen->player->x, (int)gen->player->y };
 
     ASPathNodeSource source = {0};
@@ -109,8 +138,8 @@ void update_enemy(t_gen *gen)
     {
         t_node *nextStep;
 
-        double dx = gen->player->x - gen->enemy->x;
-        double dy = gen->player->y - gen->enemy->y;
+        double dx = gen->player->x - gen->enemy[i].x;
+        double dy = gen->player->y - gen->enemy[i].y;
         double distance = sqrt(dx*dx + dy*dy);
         if (distance > 0.5 && ASPathGetCount(path) > 1)
             nextStep = ASPathGetNode(path, 1);
@@ -119,24 +148,24 @@ void update_enemy(t_gen *gen)
             t_node direct = { (int)gen->player->x, (int)gen->player->y };
             nextStep = &direct;
         }
-        gen->enemy->x += (nextStep->x + 0.5 - gen->enemy->x) * gen->enemy->move_speed;
-        gen->enemy->y += (nextStep->y + 0.5 - gen->enemy->y) * gen->enemy->move_speed;
+        gen->enemy[i].x += (nextStep->x + 0.5 - gen->enemy[i].x) * gen->enemy[i].move_speed;
+        gen->enemy[i].y += (nextStep->y + 0.5 - gen->enemy[i].y) * gen->enemy[i].move_speed;
     }
     if (path)
         ASPathDestroy(path);
 }
 
-bool enemy_visible(t_gen *gen, double *distance_out)
+bool enemy_visible(t_gen *gen, double *distance_out, int i)
 {
-    double dx = gen->enemy->x - gen->player->x;
-    double dy = gen->enemy->y - gen->player->y;
+    double dx = gen->enemy[i].x - gen->player->x;
+    double dy = gen->enemy[i].y - gen->player->y;
     double distance = sqrt(dx*dx + dy*dy);
 
     if (distance_out)
         *distance_out = distance;
 
     if (distance > FOG_END) // Enemy is too far
-        return false;
+        return (false);
 
     double step_x = dx / distance * 0.1;
     double step_y = dy / distance * 0.1;
@@ -149,7 +178,7 @@ bool enemy_visible(t_gen *gen, double *distance_out)
         int map_x = (int)x;
         int map_y = (int)y;
         if (gen->parse->map[map_y][map_x] == '1')
-            return false; // Wall blocks view
+            return (false); // Wall blocks view
         x += step_x;
         y += step_y;
     }
@@ -157,53 +186,52 @@ bool enemy_visible(t_gen *gen, double *distance_out)
     return true;
 }
 
-void update_enemy_animation(t_enemy *e)
+void update_enemy_animation(t_enemy *enemy, int i)
 {
     int max_frames;
     int speed;
 
-    if (e->type == ENEMY_GHOST)
+    if (enemy[i].type == ENEMY_GHOST)
     {
         max_frames = 4;
         speed = 10;
     }
-    else if (e->type == ENEMY_CTHULHU)
+    else if (enemy[i].type == ENEMY_CTHULHU)
     {
         max_frames = 2;
         speed = 25;
     }
-    else if (e->type == ENEMY_SKELETON)
+    else if (enemy[i].type == ENEMY_SKELETON)
     {
         max_frames = 7;
         speed = 4;
     }
     else
         return;
-    e->enemy_timer++;
-    if (e->enemy_timer >= speed)
+    enemy[i].enemy_timer++;
+    if (enemy[i].enemy_timer >= speed)
     {
-        e->enemy_timer = 0;
-        e->enemy_frame = (e->enemy_frame + 1) % max_frames;
+        enemy[i].enemy_timer = 0;
+        enemy[i].enemy_frame = (enemy[i].enemy_frame + 1) % max_frames;
     }
 }
 
-void draw_enemy(t_gen *gen)
+void draw_enemy(t_gen *gen, int i)
 {
     if (!gen->enemy)
         return;
-    if (gen->enemy->type == ENEMY_GHOST && !gen->ghost_enemy[0])
+    if (gen->enemy[i].type == ENEMY_GHOST && !gen->ghost_enemy[0])
         return;
-    if (gen->enemy->type == ENEMY_CTHULHU && !gen->cthulhu_enemy[0])
+    if (gen->enemy[i].type == ENEMY_CTHULHU && !gen->cthulhu_enemy[0])
         return;
-    if (gen->enemy->type == ENEMY_SKELETON && !gen->skeleton_enemy[0])
+    if (gen->enemy[i].type == ENEMY_SKELETON && !gen->skeleton_enemy[0])
         return;
 
     double distance;
-    if (!enemy_visible(gen, &distance))
+    if (!enemy_visible(gen, &distance, i))
         return;
 
-    t_enemy   *enemy = gen->enemy;
-
+    t_enemy   *enemy = &gen->enemy[i];
     t_texture *tex;
 
     if (enemy->type == ENEMY_GHOST)
@@ -231,7 +259,10 @@ void draw_enemy(t_gen *gen)
     int draw_end_y = sprite_height / 2 + WIN_HEIGHT / 2;
     if (draw_start_y < 0) draw_start_y = 0;
     if (draw_end_y >= WIN_HEIGHT) draw_end_y = WIN_HEIGHT - 1;
-
+    int color = 0;
+    int tex_y = 0;
+    // int tex_x = 0;
+    int d = 0;
     int sprite_width = sprite_height;
     int draw_start_x = -sprite_width / 2 + sprite_screen_x;
     int draw_end_x = sprite_width / 2 + sprite_screen_x;
@@ -244,10 +275,9 @@ void draw_enemy(t_gen *gen)
 
         for (int y = draw_start_y; y < draw_end_y; y++)
         {
-            int d = y * 256 - WIN_HEIGHT * 128 + sprite_height * 128;
-            int tex_y = ((d * tex->height) / sprite_height) / 256;
-            int color = tex->data[tex_y * tex->width + tex_x];
-
+            d = y * 256 - WIN_HEIGHT * 128 + sprite_height * 128;
+            tex_y = ((d * tex->height) / sprite_height) / 256;
+            color = tex->data[tex_y * tex->width + tex_x];
             if ((color & 0x00FFFFFF) != 0)
             {
                 color = apply_fog(color, distance);
