@@ -24,16 +24,14 @@ t_rayhit	castrate(t_gen *gen, double ray_x, double ray_y, bool interact)
 	return (hit);
 }
 
-void	calculate_ray_params(int x, t_player *player, double *camera_x,
-		double *ray_dir_x, double *ray_dir_y)
+void	calculate_ray_params(int x, t_player *player, double *camera_x, double *ray_dir_x, double *ray_dir_y)
 {
 	*camera_x = player->fov * x / (double)WIN_WIDTH - 1.0;
 	*ray_dir_x = player->dir_x + player->plane_x * *camera_x;
 	*ray_dir_y = player->dir_y + player->plane_y * *camera_x;
 }
 
-void	calculate_wall_dimensions(double dist, int *line_h, int *draw_start,
-		int *draw_end)
+void	calculate_wall_dimensions(double dist, int *line_h, int *draw_start,int *draw_end)
 {
 	*line_h = (int)(WIN_HEIGHT / dist);
 	*draw_start = -*line_h / 2 + WIN_HEIGHT / 2;
@@ -44,8 +42,7 @@ void	calculate_wall_dimensions(double dist, int *line_h, int *draw_start,
 		*draw_end = WIN_HEIGHT - 1;
 }
 
-void	calculate_wall_x(t_gen *gen, t_rayhit hit, double ray_dir_x,
-		double ray_dir_y, double *wall_x)
+void	calculate_wall_x(t_gen *gen, t_rayhit hit, double ray_dir_x,double ray_dir_y, double *wall_x)
 {
 	if (hit.side == 0)
 		*wall_x = gen->player->y + hit.dist * ray_dir_y;
@@ -72,16 +69,14 @@ void	get_wall_texture(t_gen *gen, t_rayhit hit, t_texture **tex)
 	}
 }
 
-void	calculate_texture_x(t_rayhit hit, double ray_dir_x,
-		double ray_dir_y, double wall_x, t_texture *tex, int *texture_x)
+void	calculate_texture_x(t_rayhit hit, double ray_dir_x, double ray_dir_y, double wall_x, t_texture *tex, int *texture_x)
 {
 	*texture_x = (int)(wall_x * (double)tex->width);
 	if ((hit.side == 0 && ray_dir_x < 0) || (hit.side == 1 && ray_dir_y > 0))
 		*texture_x = tex->width - *texture_x - 1;
 }
 
-void	draw_wall_slice(t_gen *gen, int x, int draw_start, int draw_end,
-		int line_height, t_texture *tex, int texture_x, double hit_dist)
+void	draw_wall_slice(t_gen *gen, int x, int draw_start, int draw_end,int line_height, t_texture *tex, int texture_x, double hit_dist)
 {
 	int	y;
 	int	d;

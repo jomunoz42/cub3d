@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:11:59 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/11 15:15:39 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/11 15:32:05 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,9 @@ static int	is_texture_path_invalid(t_parsing *data, char *line, int type)
 	char		*path;
 	int			len;
 	int			fd;
-	static int	i;
+	int	i;
 
+	i = 0;
 	while (line[i] == ' ')
 		i++;
 	i += 3;

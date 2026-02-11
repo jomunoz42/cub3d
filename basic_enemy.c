@@ -6,45 +6,48 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:56:34 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/11 11:56:41 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/11 15:33:28 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "headers/cub3d.h"
 
-bool	enemy_visible(t_gen *gen, double *distance_out, int i)
+static bool	raycast_clear(t_gen *gen, double dx, double dy, double distance)
 {
-	double	dx;
-	double	dy;
-	double	distance;
-	double	step_x;
-	double	step_y;
 	double	x;
 	double	y;
-	int		map_x;
-	int		map_y;
+	double	step[2];
+	double	traveled;
 
-	dx = gen->enemy[i].x - gen->player->x;
-	dy = gen->enemy[i].y - gen->player->y;
-	distance = sqrt(dx * dx + dy * dy);
-	if (distance_out)
-		*distance_out = distance;
-	if (distance > FOG_END) // Enemy is too far
-		return (false);
-	step_x = dx / distance * 0.1;
-	step_y = dy / distance * 0.1;
+	step[0] = dx / distance * 0.1;
+	step[1] = dy / distance * 0.1;
 	x = gen->player->x;
 	y = gen->player->y;
-	for (double i = 0; i < distance; i += 0.1)
+	traveled = 0;
+	while (traveled < distance)
 	{
-		map_x = (int)x;
-		map_y = (int)y;
-		if (gen->parse->map[map_y][map_x] == '1')
-			return (false); // Wall blocks view
-		x += step_x;
-		y += step_y;
+		if (gen->parse->map[(int)y][(int)x] == '1')
+			return (false);
+		x += step[0];
+		y += step[1];
+		traveled += 0.1;
 	}
 	return (true);
+}
+
+bool	enemy_visible(t_gen *gen, double *distance_out, int i)
+{
+	double	delta[2];
+	double	distance;
+
+	delta[0] = gen->enemy[i].x - gen->player->x;
+	delta[1] = gen->enemy[i].y - gen->player->y;
+	distance = sqrt(delta[0] * delta[0] + delta[1] * delta[1]);
+	if (distance_out)
+		*distance_out = distance;
+	if (distance > FOG_END)
+		return (false);
+	return (raycast_clear(gen, delta[0], delta[1], distance));
 }
 
 void	update_enemy_animation(t_enemy *enemy, int i)
@@ -97,7 +100,7 @@ void	draw_enemy(t_gen *gen, int i)
 	int			draw_start_x;
 	int			draw_end_x;
 	int			tex_x;
-						double distance;
+	double		distance;
 
 	if (!gen->enemy)
 		return ;
