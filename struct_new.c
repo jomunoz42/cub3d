@@ -82,7 +82,7 @@ void	init_vignette(t_img_data *img)
 	double	dy;
 	double	dist;
 	double	t;
-			double factor;
+	double	factor;
 
 	cx = img->width / 2.0;
 	cy = img->height / 2.0;
@@ -170,7 +170,8 @@ int	general_texture_init(t_gen *gen)
 	return (1);
 }
 
-static void	load_textures(t_gen *gen, t_texture **dst, char **xpm_files, int count)
+static void	load_textures(t_gen *gen, t_texture **dst, char **xpm_files,
+		int count)
 {
 	int bpp, sl, endian;
 	for (int i = 0; i < count; i++)
@@ -223,8 +224,10 @@ void	wall_textures_init(t_gen *gen)
 	load_textures(gen, gen->ghost_enemy, ghost_xpm, 4);
 	load_textures(gen, gen->cthulhu_enemy, cthulhu_xpm, 2);
 	load_textures(gen, gen->skeleton_enemy, skeleton_xpm, 8);
-	gen->door_texture = load_xpm_texture(gen->mlx_data->mlx_ptr, "imgs/porta_normal.xpm");
-	gen->door_texture2 = load_xpm_texture(gen->mlx_data->mlx_ptr, "imgs/terror_door.xpm");
+	gen->door_texture = load_xpm_texture(gen->mlx_data->mlx_ptr,
+			"imgs/porta_normal.xpm");
+	gen->door_texture2 = load_xpm_texture(gen->mlx_data->mlx_ptr,
+			"imgs/terror_door.xpm");
 	for (int i = 0; i < 8; i++)
 	{
 		if (i < 2)
@@ -436,18 +439,16 @@ int	def_values_init(t_gen *gen)
 
 int	enemy_init(t_gen *gen)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	gen->enemy_count = count_enemies_in_map(gen);
 	if (gen->enemy_count == 0)
-        return (1);
+		return (1);
 	printf("Enemies in map: %d\n", gen->enemy_count);
-
 	gen->enemy = malloc(sizeof(t_enemy) * gen->enemy_count);
 	if (!gen->enemy)
 		return (0);
-
 	while (i < gen->enemy_count)
 	{
 		gen->enemy[i].move_speed = gen->def_values->player_move_speed;
@@ -459,26 +460,24 @@ int	enemy_init(t_gen *gen)
 		gen->enemy->type = ENEMY_SKELETON;
 		find_enemy_from_map(gen, i);
 		printf("Enemy position is x[%d][%d]\n", (int)gen->enemy[i].x,
-		(int)gen->enemy[i].y);
+			(int)gen->enemy[i].y);
 		i++;
 	}
 	return (1);
 }
 
-int enemy_texture_init(t_gen *gen)
+int	enemy_texture_init(t_gen *gen)
 {
-    gen->enemy_tex = load_xpm_texture(
-        gen->mlx_data->mlx_ptr, ENEMY_SPRITE_XPM);
-
-    if (!gen->enemy_tex)
-    {
-        ft_putstr_fd("Error\nError: failed to load enemy texture\n", 2);
-        exit(1);
-    }
-    return (1);
+	gen->enemy_tex = load_xpm_texture(gen->mlx_data->mlx_ptr, ENEMY_SPRITE_XPM);
+	if (!gen->enemy_tex)
+	{
+		ft_putstr_fd("Error\nError: failed to load enemy texture\n", 2);
+		exit(1);
+	}
+	return (1);
 }
 
-int dda_init(t_gen *gen)
+int	dda_init(t_gen *gen)
 {
 	gen->dda = malloc(sizeof(t_dda));
 	if (!gen->dda)
@@ -494,7 +493,6 @@ int dda_init(t_gen *gen)
 	gen->dda->start_x = 0;
 	gen->dda->start_y = 0;
 	return (1);
-
 }
 
 int	init_all(t_gen *gen)

@@ -118,7 +118,24 @@ void	free_enemies(t_gen *gen);
 void	free_game_objects(t_gen *gen);
 void	free_input_and_raycast(t_gen *gen);
 void	free_config_and_parsing(t_gen *gen);
-
+char	*print_helper(char *which_info, double what_to_convert);
+void	print_info(t_gen *gen);
+void	clear_image(t_img_data *img, int color);
+void	rotate_player(t_gen *gen, double angle);
+void	calculate_player_movement(t_gen *gen, double *move_x, double *move_y);
+char	*ft_dtoa_fixed(double v);
+char	*print_helper(char *which_info, double what_to_convert);
+void	apply_vignette_to_image(t_gen *gen, t_img_data *img);
+void	apply_vignette_pixel(t_img_data *img, int x, int y);
+void	draw_minimap_player(t_gen *gen);
+void	process_fov_ray(t_gen *gen, int i, int num_rays);
+void	draw_minimap_fov(t_gen *gen);
+int	is_wall(t_gen *gen, int map_x, int map_y);
+void	draw_minimap_tile_one(t_gen *gen, int x, int y, int color);
+int	get_minimap_tile_color(t_gen *gen, int map_x, int map_y);
+void	draw_minimap_area(t_gen *gen, int start_x, int start_y);
+void	draw_minimap_enemies(t_gen *gen);
+void	draw_minimap(t_gen *gen);
 
 
 //====================== UTILS =========================
