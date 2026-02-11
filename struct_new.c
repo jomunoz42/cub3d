@@ -502,6 +502,7 @@ int	init_all(t_gen *gen)
 		return (1);
 	basic_mlx_init(gen);
 	texture_data_init(gen);
+	dda_init(gen);
 	avg_img_init(gen);
 	player_init(gen);
 	minimap_init(gen);
@@ -516,6 +517,5 @@ int	init_all(t_gen *gen)
 	def_values_init(gen);
 	enemy_init(gen);
 	enemy_texture_init(gen);
-	dda_init(gen);
 	return (0);
 }
