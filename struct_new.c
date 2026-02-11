@@ -321,6 +321,7 @@ int	rayhit_init(t_gen *gen)
 	gen->rayhit->map_x = 0;
 	gen->rayhit->map_y = 0;
 	gen->rayhit->side = -1;
+	ft_memset(gen->rayhit->zbuffer, 0, sizeof(gen->rayhit->zbuffer));
 	return (1);
 }
 

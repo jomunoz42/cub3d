@@ -91,7 +91,7 @@ val: re
 	./$(NAME) map.cub
 
 run: re
-	@./$(NAME) map.cub
+	@./$(NAME) maps/testing.cub
 
 norm:
 	@norminette --use-gitignore \

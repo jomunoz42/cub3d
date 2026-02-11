@@ -1,7 +1,7 @@
     NO         ./imgs/north.xpm
-SO ./imgs/south.png
-WE ./imgs/west.png
-EA ./imgs/east.png
+SO ./imgs/south.xpm
+WE ./imgs/west.xpm
+EA ./imgs/east.xpm
 
 
 F 0,100,0

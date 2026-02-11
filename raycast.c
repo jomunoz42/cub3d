@@ -132,6 +132,7 @@ void	render_scene(t_gen *gen)
 		ray_direction_x = gen->player->dir_x + gen->player->plane_x * camera_x;
 		ray_direction_y = gen->player->dir_y + gen->player->plane_y * camera_x;
 		hit = castrate(gen, ray_direction_x, ray_direction_y, 0);
+		gen->rayhit->zbuffer[x] = hit.dist;
 		line_height = (int)(WIN_HEIGHT / hit.dist);
 		draw_start = -line_height / 2 + WIN_HEIGHT / 2;
 		draw_end = line_height / 2 + WIN_HEIGHT / 2;

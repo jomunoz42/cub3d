@@ -140,6 +140,7 @@ typedef struct s_rayhit
     int     map_y;
     int     side;
     double  dist;
+	double zbuffer[WIN_WIDTH];
 	t_wall_face face;
 	t_hit_type  type;
 }   t_rayhit;
@@ -222,7 +223,6 @@ typedef struct s_general
 	t_texture		*door_texture2;
 	t_mouse			*mouse;
 	t_def_values	*def_values;
-
-	int				enemy_count;
 	t_enemy			*enemy;
+	int				enemy_count;
 }					t_gen;

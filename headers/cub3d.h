@@ -75,7 +75,7 @@ void play_sound(t_gen *gen, const char *filename, int loop);
 int	apply_fog(int color, double dist);
 void open_close_door(t_gen *gen);
 t_texture *load_xpm_texture(void *mlx_ptr, char *file);
-
+void	*ft_memset(void *b, int c, size_t len);
 
 //====================== ENEMY =========================
 
