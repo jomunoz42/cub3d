@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vini_utils13.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/11 11:02:47 by vvazzs            #+#    #+#             */
+/*   Updated: 2026/02/11 11:04:08 by vvazzs           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../headers/cub3d.h"
 
 int	ft_abs(int n)
@@ -40,10 +52,12 @@ void	ft_free_matrix_partial(char **matrix, int max_index)
 
 	if (!matrix)
 		return ;
-	for (i = 0; i < max_index; i++)
+	i = 0;
+	while (i < max_index)
 	{
 		if (matrix && matrix[i])
 			free(matrix[i]);
+		i++;
 	}
 	free(matrix);
 }

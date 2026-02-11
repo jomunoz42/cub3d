@@ -51,7 +51,7 @@ void	draw_minimap(t_gen *gen)
 	int	map_x;
 	int	map_y;
 	int	row_len;
-			int color;
+	int	color;
 
 	start_x = (int)gen->player->x - gen->minimap->zoom_level / 2;
 	start_y = (int)gen->player->y - gen->minimap->zoom_level / 2;
