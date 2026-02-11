@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:05:41 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/11 11:05:42 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/11 23:25:15 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	free_all_resources(t_gen *gen)
 {
 	free_images(gen);
 	free_textures(gen);
+	if (gen->render)
+		free(gen->render);
 }
 
 int	super_duper_hiper_free(void)

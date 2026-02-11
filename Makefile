@@ -54,6 +54,7 @@ SRC_BASE = \
 	$(UTILS)/vini_utils17.c \
 	$(UTILS)/vini_utils18.c \
 	$(UTILS)/vini_utils19.c \
+	$(UTILS)/vini_utils20.c \
 	$(UTILS)/utils1.c \
 	$(MINIMAP)/minimap.c \
 	$(MINIMAP)/minimap_utils.c
@@ -90,13 +91,16 @@ $(OBJDIR)/%.o: ./%.c
 extra: SRC += $(SRC_EXTRA)
 extra:
 	mkdir -p extra
+	@echo "[Creating extra directory]"
 	@if [ -f enemy.txt ]; then \
 		cp enemy.txt $(EXTRA)/enemy.c; \
 	fi
+	@echo "[Creating enemy.c]"
 	@sed -i '17i\# include "../extra/AStar/AStar.h"' ./headers/general.h;
 	@if [ ! -d "$(EXTRA)/AStar" ]; then \
 		git clone https://github.com/BigZaphod/AStar.git $(EXTRA)/AStar; \
 	fi
+	@echo "[Finished clonning]"
 	@$(MAKE) all SRC="$(SRC_BASE) $(SRC_EXTRA)"
 
 # ============== CLEAN ======================
@@ -112,6 +116,8 @@ fclean:
 	@if grep -q 'AStar/AStar.h' ./headers/general.h; then \
 		sed -i '/AStar\/AStar.h/d' ./headers/general.h; \
 	fi
+	@echo "Deleting extra directory"
+	@rm -rf extra
 	@$(MAKE) clean
 	@rm -f $(NAME)
 

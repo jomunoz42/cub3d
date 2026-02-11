@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 14:50:44 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/11 15:01:01 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/11 23:35:12 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void	direction_hits_wall(t_gen *gen, double ray_dir_x, double ray_dir_y)
 {
 	double	vars[8];
 
+	init_map_and_delta(gen, ray_dir_x, ray_dir_y, vars);
 	init_steps_and_sidedist(gen, ray_dir_x, ray_dir_y, vars);
 	perform_dda(gen, vars);
 	draw_ray_minimap(gen, vars);

@@ -214,6 +214,18 @@ typedef struct s_dda
 	int		wall_hit;
 }	t_dda;
 
+typedef struct s_render_scene
+{
+	double camera_x;
+	double		ray_dir_x;
+	double		ray_dir_y;
+	int			line_height;
+	int			draw_start;
+	int			draw_end;
+	double		wall_x;
+	int			texture_x;
+}	t_render_scene;
+
 typedef struct s_general
 {
 	t_flags			*flags;
@@ -239,5 +251,6 @@ typedef struct s_general
 	t_def_values	*def_values;
 	t_enemy			*enemy;
 	t_dda			*dda;
+	t_render_scene	*render;
 	int				enemy_count;
 }					t_gen;

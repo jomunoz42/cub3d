@@ -87,6 +87,19 @@ void release_toggle_keys(int key, t_gen *gen);
 void	init_line(int *coords, int *vars);
 void	draw_line(t_img_data *img, int *coords, int *vars, int color);
 void	perform_dda(t_gen *gen, double *vars);
+void	calculate_ray_params(t_gen *gen, int x);
+void	calculate_wall_dimensions(double dist, int *line_h, int *draw_start,
+		int *draw_end);
+void	calculate_wall_x(t_gen *gen, t_rayhit hit);
+void	get_wall_texture(t_gen *gen, t_rayhit hit, t_texture **tex);
+void	calculate_texture_x(t_gen *gen, t_rayhit hit, t_texture *tex,
+		int *texture_x);
+void	draw_wall_slice(t_gen *gen, int x, t_texture *tex, double hit_dist);
+void	draw_ceiling_slice(t_gen *gen, int x, int draw_start);
+void	draw_floor_slice(t_gen *gen, int x, int draw_end);
+
+
+
 
 //====================== ENEMY =========================
 
