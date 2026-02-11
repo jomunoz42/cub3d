@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:11:59 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/11 15:32:05 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/11 23:57:21 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	write_free(char *path)
 	free(path);
 }
 
-static int	is_texture_path_invalid(t_parsing *data, char *line, int type)
+int	is_texture_path_invalid(t_parsing *data, char *line, int type)
 {
 	char		*path;
 	int			len;

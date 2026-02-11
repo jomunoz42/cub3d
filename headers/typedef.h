@@ -226,6 +226,12 @@ typedef struct s_render_scene
 	int			texture_x;
 }	t_render_scene;
 
+typedef struct s_player_move
+{
+	double	move_x;
+	double	move_y;
+}	t_player_move;
+
 typedef struct s_general
 {
 	t_flags			*flags;
@@ -252,5 +258,6 @@ typedef struct s_general
 	t_enemy			*enemy;
 	t_dda			*dda;
 	t_render_scene	*render;
+	t_player_move	*player_move;
 	int				enemy_count;
 }					t_gen;

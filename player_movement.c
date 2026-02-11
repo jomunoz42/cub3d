@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player_movement.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/11 23:45:44 by vvazzs            #+#    #+#             */
+/*   Updated: 2026/02/11 23:54:45 by vvazzs           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./headers/cub3d.h"
 #include "headers/general.h"
 #include "headers/mlx.h"
@@ -19,8 +31,7 @@ void	rotate_player(t_gen *gen, double angle)
 		* cos(angle);
 }
 
-void	apply_player_movement(t_gen *gen, double move_x, double move_y,
-		double nx, double ny)
+void	apply_player_movement(t_gen *gen, double nx, double ny)
 {
 	if (gen->kboard->tab)
 	{
@@ -31,10 +42,10 @@ void	apply_player_movement(t_gen *gen, double move_x, double move_y,
 		rotate_player(gen, gen->player->rotate_speed);
 	if (gen->kboard->key_left)
 		rotate_player(gen, -gen->player->rotate_speed);
-	if (!collision(gen, gen->player->y, nx + move_x))
-		gen->player->x += move_x;
-	if (!collision(gen, ny + move_y, gen->player->x))
-		gen->player->y += move_y;
+	if (!collision(gen, gen->player->y, nx + gen->player_move->move_x))
+		gen->player->x += gen->player_move->move_x;
+	if (!collision(gen, ny + gen->player_move->move_y, gen->player->x))
+		gen->player->y += gen->player_move->move_y;
 	if (!gen->flags->terror_mode && !gen->kboard->control_left)
 	{
 		if (!gen->kboard->shift_left)
@@ -46,68 +57,41 @@ void	update_player(t_gen *gen)
 {
 	double	nx;
 	double	ny;
-	double	move_x;
-	double	move_y;
 
 	nx = gen->player->x;
 	ny = gen->player->y;
-	calculate_player_movement(gen, &move_x, &move_y);
-	apply_player_movement(gen, move_x, move_y, nx, ny);
+	calculate_player_movement(gen);
+	apply_player_movement(gen, nx, ny);
 }
 
-int	game_loop(t_gen *gen)
+void	render_frame(t_gen *gen)
 {
-	double	dx;
-	double	dy;
-	double	distance;
-	int		i;
+	int	i;
 
-	update_player(gen);
-	i = 0;
-	while (i < gen->enemy_count)
-	{
-		gen->enemy[i].move_speed = 0.02;
-		// if (gen->enemy[i].type != ENEMY_SKELETON)
-		// 	update_enemy(gen, i);
-		update_enemy_animation(gen->enemy, i);
-		i++;
-	}
 	clear_image(gen->img_data, 0x000000);
 	render_scene(gen);
-	i = 0;
-	while (i < gen->enemy_count)
+	i = -1;
+	while (++i < gen->enemy_count)
 	{
-		if (!gen->flags->terror_mode && gen->enemy[i].type == ENEMY_SKELETON)
+		if (gen->flags->terror_mode || gen->enemy[i].type != ENEMY_SKELETON)
 			draw_enemy(gen, i);
-		if (gen->flags->terror_mode)
-			draw_enemy(gen, i);
-		i++;
 	}
-	mouse_looking(gen);
 	if (!gen->flags->terror_mode && gen->flags->minimap)
 		draw_minimap(gen);
-	if (!gen->flags->terror_mode)
-		draw_arm(gen);
-	else
+	if (gen->flags->terror_mode)
 		draw_terror_arm(gen);
+	else
+		draw_arm(gen);
 	apply_vignette_to_image(gen, gen->img_data);
 	mlx_put_image_to_window(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,
 		gen->img_data->img, 0, 0);
 	if (gen->flags->info && !gen->flags->terror_mode)
 		print_info(gen);
-	i = 0;
-	while (i < gen->enemy_count)
-	{
-		dx = gen->enemy[i].x - gen->player->x;
-		dy = gen->enemy[i].y - gen->player->y;
-		distance = sqrt(dx * dx + dy * dy);
-		if (distance <= 0.65 && gen->flags->terror_mode)
-		{
-			printf("You are dead\n");
-			super_duper_hiper_free();
-			exit(1);
-		}
-		i++;
-	}
+}
+
+int	game_loop(t_gen *gen)
+{
+	update_game_state(gen);
+	render_frame(gen);
 	return (0);
 }

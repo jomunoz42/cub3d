@@ -136,7 +136,7 @@ char	*print_helper(char *which_info, double what_to_convert);
 void	print_info(t_gen *gen);
 void	clear_image(t_img_data *img, int color);
 void	rotate_player(t_gen *gen, double angle);
-void	calculate_player_movement(t_gen *gen, double *move_x, double *move_y);
+void	calculate_player_movement(t_gen *gen);
 char	*ft_dtoa_fixed(double v);
 char	*print_helper(char *which_info, double what_to_convert);
 void	apply_vignette_to_image(t_gen *gen, t_img_data *img);
@@ -158,6 +158,8 @@ void	dda_step(t_gen *gen);
  int	check_hit(t_gen *gen, bool interact, t_rayhit *hit);
 void	finalize_hit(t_gen *gen, double ray_x, double ray_y, t_rayhit *hit);
 t_rayhit	castrate(t_gen *gen, double ray_x, double ray_y, bool interact);
+void	update_game_state(t_gen *gen);
+void	update_player(t_gen *gen);
 
 
 //====================== UTILS =========================

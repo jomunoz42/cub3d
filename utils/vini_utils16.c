@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:17:33 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/11 11:20:11 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/11 23:50:36 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,28 +91,34 @@ void	clear_image(t_img_data *img, int color)
 	}
 }
 
-void	calculate_player_movement(t_gen *gen, double *move_x, double *move_y)
+void	calculate_player_movement(t_gen *gen)
 {
-	*move_x = 0;
-	*move_y = 0;
 	if (gen->kboard->key_w)
 	{
-		*move_x += gen->player->dir_x * gen->player->move_speed;
-		*move_y += gen->player->dir_y * gen->player->move_speed;
+		gen->player_move->move_x += gen->player->dir_x
+			* gen->player->move_speed;
+		gen->player_move->move_y += gen->player->dir_y
+			* gen->player->move_speed;
 	}
 	if (gen->kboard->key_s)
 	{
-		*move_x -= gen->player->dir_x * gen->player->move_speed;
-		*move_y -= gen->player->dir_y * gen->player->move_speed;
+		gen->player_move->move_x -= gen->player->dir_x
+			* gen->player->move_speed;
+		gen->player_move->move_y -= gen->player->dir_y
+			* gen->player->move_speed;
 	}
 	if (gen->kboard->key_a)
 	{
-		*move_x -= gen->player->plane_x * gen->player->move_speed;
-		*move_y -= gen->player->plane_y * gen->player->move_speed;
+		gen->player_move->move_x -= gen->player->plane_x
+			* gen->player->move_speed;
+		gen->player_move->move_y -= gen->player->plane_y
+			* gen->player->move_speed;
 	}
 	if (gen->kboard->key_d)
 	{
-		*move_x += gen->player->plane_x * gen->player->move_speed;
-		*move_y += gen->player->plane_y * gen->player->move_speed;
+		gen->player_move->move_x += gen->player->plane_x
+			* gen->player->move_speed;
+		gen->player_move->move_y += gen->player->plane_y
+			* gen->player->move_speed;
 	}
 }

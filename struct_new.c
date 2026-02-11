@@ -511,6 +511,16 @@ int render_scene_init(t_gen *gen)
 	return (1);
 }
 
+int player_move_init(t_gen *gen)
+{
+	gen->player_move = malloc(sizeof(t_player_move));
+	if (!gen->player_move)
+		return (0);
+	gen->player_move->move_x = 0;
+	gen->player_move->move_y = 0;
+	return (1);
+}
+
 int	init_all(t_gen *gen)
 {
 	gen->mlx_data = malloc(sizeof(t_mlx_data));
@@ -519,6 +529,7 @@ int	init_all(t_gen *gen)
 	basic_mlx_init(gen);
 	texture_data_init(gen);
 	render_scene_init(gen);
+	player_move_init(gen);
 	dda_init(gen);
 	avg_img_init(gen);
 	player_init(gen);
