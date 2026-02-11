@@ -49,3 +49,12 @@ bool	collision(t_gen *gen, double next_y, double next_x)
 		return (true);
 	return (false);
 }
+
+void	free_arm_object(t_gen *gen, t_img_data *arm)
+{
+	if (!arm)
+		return ;
+	if (arm->img && gen->mlx_data && gen->mlx_data->mlx_ptr)
+		mlx_destroy_image(gen->mlx_data->mlx_ptr, arm->img);
+	free(arm);
+}

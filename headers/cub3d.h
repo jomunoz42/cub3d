@@ -109,6 +109,17 @@ int	        is_rgb_colours_invalid(t_parsing *data, char *line, char c, int type
 int         is_header_line_with_validation(t_parsing *data, char *line);
 void	free_parsing(t_parsing *parse);
 void	free_texture(void *mlx_ptr, t_texture *tex);
+void	free_images(t_gen *gen);
+void	free_textures(t_gen *gen);
+void	free_all_resources(t_gen *gen);
+void	free_arm_object(t_gen *gen, t_img_data *arm);
+void	free_minimap(t_gen *gen);
+void	free_enemies(t_gen *gen);
+void	free_game_objects(t_gen *gen);
+void	free_input_and_raycast(t_gen *gen);
+void	free_config_and_parsing(t_gen *gen);
+
+
 
 //====================== UTILS =========================
 
