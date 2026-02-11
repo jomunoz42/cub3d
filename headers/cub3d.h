@@ -61,7 +61,7 @@ void draw_minimap_fov(t_gen *gen);
 int get_pixel_color(t_gen *gen, int x, int y);
 int get_pixel_color_img(t_img_data *img, int x, int y);
 void init_vignette(t_img_data *img);
-void ciclope_dos_xman(t_img_data *img,int x0, int y0, int x1, int y1, int color);
+void	ciclope_dos_xman(t_img_data *img, int *coords, int color);
 int png_name_to_xpm(t_gen *gen, char *xpm_files[4]);
 void rotate_player(t_gen *gen, double angle);
 int mouse_looking(t_gen *gen);
@@ -136,6 +136,14 @@ int	get_minimap_tile_color(t_gen *gen, int map_x, int map_y);
 void	draw_minimap_area(t_gen *gen, int start_x, int start_y);
 void	draw_minimap_enemies(t_gen *gen);
 void	draw_minimap(t_gen *gen);
+ void	init_start(t_gen *gen);
+ void	init_delta(t_gen *gen, double ray_x, double ray_y);
+ void	init_step_x(t_gen *gen, double ray_x);
+void	init_step_y(t_gen *gen, double ray_y);
+void	dda_step(t_gen *gen);
+ int	check_hit(t_gen *gen, bool interact, t_rayhit *hit);
+void	finalize_hit(t_gen *gen, double ray_x, double ray_y, t_rayhit *hit);
+t_rayhit	castrate(t_gen *gen, double ray_x, double ray_y, bool interact);
 
 
 //====================== UTILS =========================

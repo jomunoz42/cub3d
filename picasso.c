@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   picasso.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/11 14:31:30 by vvazzs            #+#    #+#             */
+/*   Updated: 2026/02/11 14:32:23 by vvazzs           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./headers/cub3d.h"
 #include "headers/general.h"
 
@@ -34,20 +46,26 @@ void	draw_arm(t_gen *gen)
 	int	start_x;
 	int	start_y;
 	int	color;
+	int	x;
+	int	y;
 
 	if (!gen || !gen->arm)
 		return ;
 	start_x = gen->mlx_data->win_width - gen->texture_data->arm_width;
 	start_y = gen->mlx_data->win_height - gen->texture_data->arm_height;
-	for (int y = 0; y < (int)gen->texture_data->arm_height; y++)
+	y = 0;
+	while (y < (int)gen->texture_data->arm_height)
 	{
-		for (int x = 0; x < (int)gen->texture_data->arm_width; x++)
+		x = 0;
+		while (x < (int)gen->texture_data->arm_width)
 		{
 			color = get_pixel_color(gen, x, y);
 			if (color != TRANSPARENT_COLOR)
 				copied_mlx_pixel_put(gen->img_data, start_x + x, start_y + y,
 					color);
+			x++;
 		}
+		y++;
 	}
 }
 
@@ -56,19 +74,25 @@ void	draw_terror_arm(t_gen *gen)
 	int	start_x;
 	int	start_y;
 	int	color;
+	int	x;
+	int	y;
 
 	if (!gen || !gen->arm)
 		return ;
 	start_x = gen->mlx_data->win_width - gen->texture_data->terror_arm_width;
 	start_y = gen->mlx_data->win_height - gen->texture_data->terror_arm_height;
-	for (int y = 0; y < (int)gen->texture_data->terror_arm_height; y++)
+	y = 0;
+	while (y < (int)gen->texture_data->terror_arm_height)
 	{
-		for (int x = 0; x < (int)gen->texture_data->terror_arm_width; x++)
+		x = 0;
+		while (x < (int)gen->texture_data->terror_arm_width)
 		{
 			color = get_pixel_color_img(gen->terror_arm, x, y);
 			if (color != TERROR_ARM_TRANSPARENT)
 				copied_mlx_pixel_put(gen->img_data, start_x + x, start_y + y,
 					color);
+			x++;
 		}
+		y++;
 	}
 }

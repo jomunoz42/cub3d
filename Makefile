@@ -52,6 +52,8 @@ SRC_BASE = \
 	$(UTILS)/vini_utils15.c \
 	$(UTILS)/vini_utils16.c \
 	$(UTILS)/vini_utils17.c \
+	$(UTILS)/vini_utils18.c \
+	$(UTILS)/vini_utils19.c \
 	$(UTILS)/utils1.c \
 	$(MINIMAP)/minimap.c \
 	$(MINIMAP)/minimap_utils.c
@@ -87,13 +89,15 @@ $(OBJDIR)/%.o: ./%.c
 
 extra: SRC += $(SRC_EXTRA)
 extra:
-	@mkdir -p $(EXTRA)
+	mkdir -p extra
+	@if [ -f enemy.txt ]; then \
+		cp enemy.txt $(EXTRA)/enemy.c; \
+	fi
 	@sed -i '17i\# include "../extra/AStar/AStar.h"' ./headers/general.h;
 	@if [ ! -d "$(EXTRA)/AStar" ]; then \
 		git clone https://github.com/BigZaphod/AStar.git $(EXTRA)/AStar; \
 	fi
 	@$(MAKE) all SRC="$(SRC_BASE) $(SRC_EXTRA)"
-
 
 # ============== CLEAN ======================
 
@@ -103,6 +107,8 @@ clean:
 fclean:
 	@echo "Removing AStar..."
 	@rm -rf ./extra/AStar
+	@echo "Removing enemy.c"
+	@rm -rf ./extra/enemy.c
 	@if grep -q 'AStar/AStar.h' ./headers/general.h; then \
 		sed -i '/AStar\/AStar.h/d' ./headers/general.h; \
 	fi

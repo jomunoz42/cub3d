@@ -1,121 +1,6 @@
 #include "./headers/cub3d.h"
 #include "headers/general.h"
 
-static void	init_start(t_gen *gen)
-{
-	gen->dda->start_x = (int)gen->player->x;
-	gen->dda->start_y = (int)gen->player->y;
-	gen->dda->wall_hit = 0;
-	gen->dda->side = 0;
-}
-
-static void	init_delta(t_gen *gen, double ray_x, double ray_y)
-{
-	gen->dda->delta_x = fabs(1.0 / ray_x);
-	gen->dda->delta_y = fabs(1.0 / ray_y);
-}
-
-static void	init_step_x(t_gen *gen, double ray_x)
-{
-	if (ray_x < 0)
-	{
-		gen->dda->step_x = -1;
-		gen->dda->side_x = (gen->player->x - gen->dda->start_x)
-			* gen->dda->delta_x;
-	}
-	else
-	{
-		gen->dda->step_x = 1;
-		gen->dda->side_x = (gen->dda->start_x + 1.0 - gen->player->x)
-			* gen->dda->delta_x;
-	}
-}
-
-static void	init_step_y(t_gen *gen, double ray_y)
-{
-	if (ray_y < 0)
-	{
-		gen->dda->step_y = -1;
-		gen->dda->side_y = (gen->player->y - gen->dda->start_y)
-			* gen->dda->delta_y;
-	}
-	else
-	{
-		gen->dda->step_y = 1;
-		gen->dda->side_y = (gen->dda->start_y + 1.0 - gen->player->y)
-			* gen->dda->delta_y;
-	}
-}
-
-static void	dda_step(t_gen *gen)
-{
-	if (gen->dda->side_x < gen->dda->side_y)
-	{
-		gen->dda->side_x += gen->dda->delta_x;
-		gen->dda->start_x += gen->dda->step_x;
-		gen->dda->side = 0;
-	}
-	else
-	{
-		gen->dda->side_y += gen->dda->delta_y;
-		gen->dda->start_y += gen->dda->step_y;
-		gen->dda->side = 1;
-	}
-}
-
-static int	check_hit(t_gen *gen, bool interact, t_rayhit *hit)
-{
-	char	cell;
-
-	if (gen->dda->start_y < 0 || gen->dda->start_y >= gen->parse->height)
-		return (1);
-	if (gen->dda->start_x < 0
-		|| gen->dda->start_x >= (int)ft_strlen(gen->parse->map[gen->dda->start_y]))
-		return (1);
-	cell = gen->parse->map[gen->dda->start_y][gen->dda->start_x];
-	if (cell == '1')
-	{
-		hit->type = HIT_WALL;
-		return (1);
-	}
-	if (cell == 'D')
-	{
-		hit->type = HIT_DOOR;
-		return (1);
-	}
-	if (cell == 'd' && interact)
-	{
-		hit->type = HIT_DOOR;
-		return (1);
-	}
-	return (0);
-}
-
-static void	finalize_hit(t_gen *gen, double ray_x, double ray_y, t_rayhit *hit)
-{
-	if (gen->dda->side == 0)
-	{
-		hit->dist = (gen->dda->start_x - gen->player->x + (1 - gen->dda->step_x)
-				/ 2.0) / ray_x;
-		if (ray_x > 0)
-			hit->face = EAST;
-		else
-			hit->face = WEST;
-	}
-	else
-	{
-		hit->dist = (gen->dda->start_y - gen->player->y + (1 - gen->dda->step_y)
-				/ 2.0) / ray_y;
-		if (ray_y > 0)
-			hit->face = NORTH;
-		else
-			hit->face = SOUTH;
-	}
-	hit->map_x = gen->dda->start_x;
-	hit->map_y = gen->dda->start_y;
-	hit->side = gen->dda->side;
-}
-
 t_rayhit	castrate(t_gen *gen, double ray_x, double ray_y, bool interact)
 {
 	t_rayhit	hit;
@@ -139,7 +24,7 @@ t_rayhit	castrate(t_gen *gen, double ray_x, double ray_y, bool interact)
 	return (hit);
 }
 
-static void	calculate_ray_params(int x, t_player *player, double *camera_x,
+void	calculate_ray_params(int x, t_player *player, double *camera_x,
 		double *ray_dir_x, double *ray_dir_y)
 {
 	*camera_x = player->fov * x / (double)WIN_WIDTH - 1.0;
@@ -147,7 +32,7 @@ static void	calculate_ray_params(int x, t_player *player, double *camera_x,
 	*ray_dir_y = player->dir_y + player->plane_y * *camera_x;
 }
 
-static void	calculate_wall_dimensions(double dist, int *line_h, int *draw_start,
+void	calculate_wall_dimensions(double dist, int *line_h, int *draw_start,
 		int *draw_end)
 {
 	*line_h = (int)(WIN_HEIGHT / dist);
@@ -159,7 +44,7 @@ static void	calculate_wall_dimensions(double dist, int *line_h, int *draw_start,
 		*draw_end = WIN_HEIGHT - 1;
 }
 
-static void	calculate_wall_x(t_gen *gen, t_rayhit hit, double ray_dir_x,
+void	calculate_wall_x(t_gen *gen, t_rayhit hit, double ray_dir_x,
 		double ray_dir_y, double *wall_x)
 {
 	if (hit.side == 0)
@@ -169,7 +54,7 @@ static void	calculate_wall_x(t_gen *gen, t_rayhit hit, double ray_dir_x,
 	*wall_x -= floor(*wall_x);
 }
 
-static void	get_wall_texture(t_gen *gen, t_rayhit hit, t_texture **tex)
+void	get_wall_texture(t_gen *gen, t_rayhit hit, t_texture **tex)
 {
 	if (hit.type == HIT_WALL)
 	{
@@ -187,7 +72,7 @@ static void	get_wall_texture(t_gen *gen, t_rayhit hit, t_texture **tex)
 	}
 }
 
-static void	calculate_texture_x(t_rayhit hit, double ray_dir_x,
+void	calculate_texture_x(t_rayhit hit, double ray_dir_x,
 		double ray_dir_y, double wall_x, t_texture *tex, int *texture_x)
 {
 	*texture_x = (int)(wall_x * (double)tex->width);
@@ -195,7 +80,7 @@ static void	calculate_texture_x(t_rayhit hit, double ray_dir_x,
 		*texture_x = tex->width - *texture_x - 1;
 }
 
-static void	draw_wall_slice(t_gen *gen, int x, int draw_start, int draw_end,
+void	draw_wall_slice(t_gen *gen, int x, int draw_start, int draw_end,
 		int line_height, t_texture *tex, int texture_x, double hit_dist)
 {
 	int	y;
@@ -216,7 +101,7 @@ static void	draw_wall_slice(t_gen *gen, int x, int draw_start, int draw_end,
 	}
 }
 
-static void	draw_ceiling_slice(t_gen *gen, int x, int draw_start)
+void	draw_ceiling_slice(t_gen *gen, int x, int draw_start)
 {
 	int	y;
 	int	color;
@@ -233,7 +118,7 @@ static void	draw_ceiling_slice(t_gen *gen, int x, int draw_start)
 	}
 }
 
-static void	draw_floor_slice(t_gen *gen, int x, int draw_end)
+void	draw_floor_slice(t_gen *gen, int x, int draw_end)
 {
 	int	y;
 	int	color;
