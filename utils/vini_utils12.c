@@ -68,3 +68,25 @@ void	release_toggle_keys(int key, t_gen *gen)
 	if (key == XK_e)
 		gen->kboard->key_e = false;
 }
+
+void	free_parsing(t_parsing *parse)
+{
+	int	i;
+
+	i = 0;
+	if (parse->textures_info)
+	{
+		while (i < E_COUNT)
+		{
+			free(parse->textures_info[i]);
+			parse->textures_info[i] = NULL;
+			i++;
+		}
+		free(parse->textures_info);
+		parse->textures_info = NULL;
+	}
+	if (parse->map)
+		free_double(parse->map);
+	if (parse)
+		free(parse);
+}

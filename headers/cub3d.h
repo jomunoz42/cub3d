@@ -107,6 +107,8 @@ int			is_header_line(t_parsing *data, char *line);
 int         check_all_elements(t_parsing *data, char *line);
 int	        is_rgb_colours_invalid(t_parsing *data, char *line, char c, int type);
 int         is_header_line_with_validation(t_parsing *data, char *line);
+void	free_parsing(t_parsing *parse);
+void	free_texture(void *mlx_ptr, t_texture *tex);
 
 //====================== UTILS =========================
 
@@ -115,9 +117,6 @@ int         contains_tab(char *s);
 int			is_line_empty(char *line);
 void		free_double(char **arg);
 int         ft_clamp(int value, int min, int max);
-
-//====================== LIBFT =========================
-
 char	    *ft_strchr(const char *s, int c);
 int     	ft_isdigit(int c);
 char	    *ft_strdup(const char *s);

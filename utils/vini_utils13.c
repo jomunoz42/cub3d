@@ -24,3 +24,39 @@ char	*ft_strncpy(char *dst, char *srce, int n)
 	dest[i] = '\0';
 	return ((char *)dest);
 }
+
+void	free_texture(void *mlx_ptr, t_texture *tex)
+{
+	if (!tex)
+		return ;
+	if (tex->img)
+		mlx_destroy_image(mlx_ptr, tex->img);
+	free(tex);
+}
+
+void	ft_free_matrix_partial(char **matrix, int max_index)
+{
+	int	i;
+
+	if (!matrix)
+		return ;
+	for (i = 0; i < max_index; i++)
+	{
+		if (matrix && matrix[i])
+			free(matrix[i]);
+	}
+	free(matrix);
+}
+
+void	ft_free_matrix(char **matrix)
+{
+	int	i;
+
+	i = 0;
+	while (matrix[i])
+	{
+		free(matrix[i]);
+		i++;
+	}
+	free(matrix);
+}
