@@ -76,6 +76,16 @@ int	apply_fog(int color, double dist);
 void open_close_door(t_gen *gen);
 t_texture *load_xpm_texture(void *mlx_ptr, char *file);
 void	*ft_memset(void *b, int c, size_t len);
+void handle_movement_keys(int key, t_gen *gen);
+void handle_modifier_keys(int key, t_gen *gen);
+void handle_view_keys(int key, t_gen *gen);
+void handle_toggle_keys(int key, t_gen *gen);
+void handle_audio_keys(int key, t_gen *gen);
+void release_movement_keys(int key, t_gen *gen);
+void release_modifier_keys(int key, t_gen *gen);
+void release_toggle_keys(int key, t_gen *gen);
+
+
 
 //====================== ENEMY =========================
 

@@ -34,7 +34,10 @@ int	png_name_to_xpm(t_gen *gen, char *xpm_files[4])
 		if (!name)
 			return (0);
 		dot = strrchr(name, '.');
-		len = dot ? (size_t)(dot - name) : strlen(name);
+		if (dot)
+			len = (int)(dot - name);
+		else
+			len = (int)strlen(name);
 		xpm_files[i] = malloc(len + ft_strlen(".xpm") + 1);
 		if (!xpm_files[i])
 			return (0);

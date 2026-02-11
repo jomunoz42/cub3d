@@ -45,6 +45,8 @@ SRC_BASE = \
 	$(UTILS)/vini_utils8.c \
 	$(UTILS)/vini_utils9.c \
 	$(UTILS)/vini_utils10.c \
+	$(UTILS)/vini_utils11.c \
+	$(UTILS)/vini_utils12.c \
 	$(UTILS)/utils1.c \
 	$(MINIMAP)/minimap.c \
 	$(MINIMAP)/minimap_utils.c
