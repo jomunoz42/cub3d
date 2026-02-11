@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   construct_map.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/11 15:09:42 by vvazzs            #+#    #+#             */
+/*   Updated: 2026/02/11 15:11:10 by vvazzs           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../headers/cub3d.h"
 
-static int allocate_textures(t_parsing *data)
+static int	allocate_textures(t_parsing *data)
 {
 	data->textures_info = ft_calloc(E_COUNT + 1, sizeof(char *));
 	if (!data->textures_info)
@@ -43,8 +54,8 @@ static char	*skip_header_and_empty_lines(t_parsing *data)
 
 static char	**get_map_with_style(t_parsing *data, int count)
 {
-	char 	*const line = get_next_line(data->fd);
-	char	**map;
+	char		**map;
+	char *const	line = get_next_line(data->fd);
 
 	map = NULL;
 	if (line != NULL)
@@ -70,14 +81,18 @@ static void	get_height_and_max_width(t_parsing *data)
 	while (data->map[data->height])
 	{
 		length = ft_strlen(data->map[data->height]);
-		data->width = (int[]){data->width, length}[data->width < length];
+		data->width = (int []){
+			data->width,
+			length
+		}
+		[data->width < length];
 		data->height++;
 	}
 }
 
 int	construct_map_and_textures(t_parsing *data)
 {
-	char		*line;
+	char	*line;
 
 	if (allocate_textures(data))
 		return (1);

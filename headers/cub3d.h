@@ -84,8 +84,9 @@ void handle_audio_keys(int key, t_gen *gen);
 void release_movement_keys(int key, t_gen *gen);
 void release_modifier_keys(int key, t_gen *gen);
 void release_toggle_keys(int key, t_gen *gen);
-
-
+void	init_line(int *coords, int *vars);
+void	draw_line(t_img_data *img, int *coords, int *vars, int color);
+void	perform_dda(t_gen *gen, double *vars);
 
 //====================== ENEMY =========================
 

@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_validation.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/11 15:05:53 by vvazzs            #+#    #+#             */
+/*   Updated: 2026/02/11 15:05:54 by vvazzs           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../headers/cub3d.h"
 
@@ -48,7 +59,8 @@ static char	**create_copy_map(t_parsing *data)
 	{
 		copy[i] = malloc(sizeof(char) * (data->width + 1));
 		if (!copy[i])
-			return (write(2, "Error: Allocation failed\n", 26), free_partial_copy(copy, i), NULL);
+			return (write(2, "Error: Allocation failed\n", 26),
+				free_partial_copy(copy, i), NULL);
 		j = 0;
 		while (j < data->width)
 			copy[i][j++] = ' ';
