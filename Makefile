@@ -71,10 +71,11 @@ $(OBJDIR)/%.o: ./%.c
 extra: SRC += $(SRC_EXTRA)
 extra:
 	@mkdir -p $(EXTRA)
+	@sed -i '17i\# include "../extra/AStar/AStar.h"' ./headers/general.h;
 	@if [ ! -d "$(EXTRA)/AStar" ]; then \
 		git clone https://github.com/BigZaphod/AStar.git $(EXTRA)/AStar; \
 	fi
-	@$(MAKE) re SRC="$(SRC_BASE) $(SRC_EXTRA)"
+	@$(MAKE) all SRC="$(SRC_BASE) $(SRC_EXTRA)"
 
 
 # ============== CLEAN ======================
@@ -82,8 +83,15 @@ extra:
 clean:
 	@rm -rf $(OBJDIR)
 
-fclean: clean
+fclean:
+	@echo "Removing AStar..."
+	@rm -rf ./extra/AStar
+	@if grep -q 'AStar/AStar.h' ./headers/general.h; then \
+		sed -i '/AStar\/AStar.h/d' ./headers/general.h; \
+	fi
+	@$(MAKE) clean
 	@rm -f $(NAME)
+
 
 re: fclean all
 
