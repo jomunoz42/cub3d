@@ -72,7 +72,6 @@ void draw_enemy(t_gen *gen, int i)
     if (gen->enemy[i].type == ENEMY_SKELETON && !gen->skeleton_enemy[0])
         return;
 
-
     t_enemy   *enemy = &gen->enemy[i];
     t_texture *tex;
 
@@ -113,9 +112,9 @@ void draw_enemy(t_gen *gen, int i)
 
     for (int stripe = draw_start_x; stripe < draw_end_x; stripe++)
     {
-        if (transform_y > 0 && stripe > 0 && stripe < WIN_WIDTH
-            && transform_y < gen->rayhit->zbuffer[stripe])
-            {
+    if (transform_y > 0 && stripe > 0 && stripe < WIN_WIDTH
+        && transform_y < gen->rayhit->zbuffer[stripe])
+    {
         int tex_x = (int)((stripe - draw_start_x) * tex->width / (draw_end_x - draw_start_x));
 
         for (int y = draw_start_y; y < draw_end_y; y++)
@@ -124,7 +123,16 @@ void draw_enemy(t_gen *gen, int i)
             tex_y = ((d * tex->height) / sprite_height) / 256;
             color = tex->data[tex_y * tex->width + tex_x];
             if ((color & 0x00FFFFFF) != 0)
+            {
+                if (gen->flags->terror_mode)
+                {
+                     double distance;
+                    if (!enemy_visible(gen, &distance, i))
+                        return;
+                    color = apply_fog(color, distance);
+                }
                 copied_mlx_pixel_put(gen->img_data, stripe, y, color);
+            }
         }
     }
 }

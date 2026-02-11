@@ -67,8 +67,15 @@ $(OBJDIR)/%.o: ./%.c
 
 # =============== EXTRA =====================
 
+
 extra: SRC += $(SRC_EXTRA)
-extra: re
+extra:
+	@mkdir -p $(EXTRA)
+	@if [ ! -d "$(EXTRA)/AStar" ]; then \
+		git clone https://github.com/BigZaphod/AStar.git $(EXTRA)/AStar; \
+	fi
+	@$(MAKE) re SRC="$(SRC_BASE) $(SRC_EXTRA)"
+
 
 # ============== CLEAN ======================
 
