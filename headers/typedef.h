@@ -200,6 +200,20 @@ typedef struct s_node
     int y;
 } t_node;
 
+typedef struct s_dda
+{
+	int		start_x;
+	int		start_y;
+	double	delta_x;
+	double	delta_y;
+	double	side_x;
+	double	side_y;
+	int		step_x;
+	int		step_y;
+	int		side;
+	int		wall_hit;
+}	t_dda;
+
 typedef struct s_general
 {
 	t_flags			*flags;
@@ -224,5 +238,6 @@ typedef struct s_general
 	t_mouse			*mouse;
 	t_def_values	*def_values;
 	t_enemy			*enemy;
+	t_dda			*dda;
 	int				enemy_count;
 }					t_gen;

@@ -478,6 +478,24 @@ int enemy_texture_init(t_gen *gen)
     return (1);
 }
 
+int dda_init(t_gen *gen)
+{
+	gen->dda = malloc(sizeof(t_dda));
+	if (!gen->dda)
+		return (0);
+	gen->dda->delta_x = 0;
+	gen->dda->delta_y = 0;
+	gen->dda->side = 0;
+	gen->dda->side_x = 0;
+	gen->dda->side_y = 0;
+	gen->dda->wall_hit = 0;
+	gen->dda->step_x = 0;
+	gen->dda->step_y = 0;
+	gen->dda->start_x = 0;
+	gen->dda->start_y = 0;
+	return (1);
+
+}
 
 int	init_all(t_gen *gen)
 {
@@ -500,5 +518,6 @@ int	init_all(t_gen *gen)
 	def_values_init(gen);
 	enemy_init(gen);
 	enemy_texture_init(gen);
+	dda_init(gen);
 	return (0);
 }
