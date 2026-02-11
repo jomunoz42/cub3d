@@ -35,6 +35,16 @@ SRC_BASE = \
 	$(PARSE)/rgb_validation.c \
 	$(UTILS)/gnl.c \
 	$(UTILS)/vini_utils.c \
+	$(UTILS)/vini_utils1.c \
+	$(UTILS)/vini_utils2.c \
+	$(UTILS)/vini_utils3.c \
+	$(UTILS)/vini_utils4.c \
+	$(UTILS)/vini_utils5.c \
+	$(UTILS)/vini_utils6.c \
+	$(UTILS)/vini_utils7.c \
+	$(UTILS)/vini_utils8.c \
+	$(UTILS)/vini_utils9.c \
+	$(UTILS)/vini_utils10.c \
 	$(UTILS)/utils1.c \
 	$(MINIMAP)/minimap.c \
 	$(MINIMAP)/minimap_utils.c
