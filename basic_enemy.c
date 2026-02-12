@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:56:34 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 09:05:22 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/12 09:28:51 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,94 +80,86 @@ void	update_enemy_animation(t_enemy *enemy, int i)
 	}
 }
 
+int enemy_dealer(t_gen *gen, t_texture **tex, t_enemy **enemy, int i)
+
+{
+	if (!gen->enemy)
+		return(0) ;
+	if (gen->enemy[i].type == ENEMY_GHOST && !gen->ghost_enemy[0])
+		return(0) ;
+	if (gen->enemy[i].type == ENEMY_CTHULHU && !gen->cthulhu_enemy[0]
+		&& gen->flags->terror_mode)
+		return(0) ;
+	if (gen->enemy[i].type == ENEMY_SKELETON && !gen->skeleton_enemy[0])
+		return(0) ;
+	*enemy = &gen->enemy[i];
+	if ((*enemy)->type == ENEMY_GHOST && gen->flags->terror_mode)
+		*tex = gen->ghost_enemy[(*enemy)->enemy_frame];
+	else if ((*enemy)->type == ENEMY_CTHULHU)
+		*tex = gen->cthulhu_enemy[(*enemy)->enemy_frame];
+	else if ((*enemy)->type == ENEMY_SKELETON)
+		*tex = gen->skeleton_enemy[(*enemy)->enemy_frame];
+	else
+		return(0) ;
+	return (1);
+}
+
 void	draw_enemy(t_gen *gen, int i)
 {
 	t_enemy		*enemy;
 	t_texture	*tex;
-	double		sprite_x;
-	double		sprite_y;
-	double		inv_det;
-	double		transform_x;
-	double		transform_y;
-	int			sprite_screen_x;
-	int			sprite_height;
-	int			draw_start_y;
-	int			draw_end_y;
-	int			color;
-	int			tex_y;
-	int			d;
-	int			sprite_width;
-	int			draw_start_x;
-	int			draw_end_x;
-	int			tex_x;
-	double		distance;
 
-	if (!gen->enemy)
+	if (enemy_dealer(gen, &tex, &enemy, i) == 0)
 		return ;
-	if (gen->enemy[i].type == ENEMY_GHOST && !gen->ghost_enemy[0])
-		return ;
-	if (gen->enemy[i].type == ENEMY_CTHULHU && !gen->cthulhu_enemy[0] && gen->flags->terror_mode)
-		return ;
-	if (gen->enemy[i].type == ENEMY_SKELETON && !gen->skeleton_enemy[0])
-		return ;
-	enemy = &gen->enemy[i];
-	if (enemy->type == ENEMY_GHOST && gen->flags->terror_mode)
-		tex = gen->ghost_enemy[enemy->enemy_frame];
-	else if (enemy->type == ENEMY_CTHULHU)
-		tex = gen->cthulhu_enemy[enemy->enemy_frame];
-	else if (enemy->type == ENEMY_SKELETON)
-		tex = gen->skeleton_enemy[enemy->enemy_frame];
-	else
-		return ;
-	sprite_x = enemy->x - gen->player->x;
-	sprite_y = enemy->y - gen->player->y;
-	inv_det = 1.0 / (gen->player->plane_x * gen->player->dir_y
+	gen->draw_enemy->sprite_x = enemy->x - gen->player->x;
+	gen->draw_enemy->sprite_y = enemy->y - gen->player->y;
+	gen->draw_enemy->inv_det = 1.0 / (gen->player->plane_x * gen->player->dir_y
 			- gen->player->dir_x * gen->player->plane_y);
-	transform_x = inv_det * (gen->player->dir_y * sprite_x - gen->player->dir_x
-			* sprite_y);
-	transform_y = inv_det * (-gen->player->plane_y * sprite_x
-			+ gen->player->plane_x * sprite_y);
-	if (transform_y <= 0)
+	gen->draw_enemy->transform_x = gen->draw_enemy->inv_det * (gen->player->dir_y * gen->draw_enemy->sprite_x - gen->player->dir_x
+			* gen->draw_enemy->sprite_y);
+	gen->draw_enemy->transform_y = gen->draw_enemy->inv_det * (-gen->player->plane_y * gen->draw_enemy->sprite_x
+			+ gen->player->plane_x * gen->draw_enemy->sprite_y);
+	if (gen->draw_enemy->transform_y <= 0)
 		return ;
-	sprite_screen_x = (int)((WIN_WIDTH / 2) * (1 + transform_x / transform_y));
-	sprite_height = abs((int)(WIN_HEIGHT / transform_y));
-	draw_start_y = -sprite_height / 2 + WIN_HEIGHT / 2;
-	draw_end_y = sprite_height / 2 + WIN_HEIGHT / 2;
-	if (draw_start_y < 0)
-		draw_start_y = 0;
-	if (draw_end_y >= WIN_HEIGHT)
-		draw_end_y = WIN_HEIGHT - 1;
-	color = 0;
-	tex_y = 0;
-	d = 0;
-	sprite_width = sprite_height;
-	draw_start_x = -sprite_width / 2 + sprite_screen_x;
-	draw_end_x = sprite_width / 2 + sprite_screen_x;
-	if (draw_start_x < 0)
-		draw_start_x = 0;
-	if (draw_end_x >= WIN_WIDTH)
-		draw_end_x = WIN_WIDTH - 1;
-	for (int stripe = draw_start_x; stripe < draw_end_x; stripe++)
+	gen->draw_enemy->sprite_screen_x = (int)((WIN_WIDTH / 2) * (1 + gen->draw_enemy->transform_x / gen->draw_enemy->transform_y));
+	gen->draw_enemy->sprite_height = abs((int)(WIN_HEIGHT / gen->draw_enemy->transform_y));
+	gen->draw_enemy->draw_start_y = -gen->draw_enemy->sprite_height / 2 + WIN_HEIGHT / 2;
+	gen->draw_enemy->draw_end_y = gen->draw_enemy->sprite_height / 2 + WIN_HEIGHT / 2;
+	if (gen->draw_enemy->draw_start_y < 0)
+		gen->draw_enemy->draw_start_y = 0;
+	if (gen->draw_enemy->draw_end_y >= WIN_HEIGHT)
+		gen->draw_enemy->draw_end_y = WIN_HEIGHT - 1;
+	gen->draw_enemy->color = 0;
+	gen->draw_enemy->tex_y = 0;
+	gen->draw_enemy->d = 0;
+	gen->draw_enemy->sprite_width = gen->draw_enemy->sprite_height;
+	gen->draw_enemy->draw_start_x = -gen->draw_enemy->sprite_width / 2 + gen->draw_enemy->sprite_screen_x;
+	gen->draw_enemy->draw_end_x = gen->draw_enemy->sprite_width / 2 + gen->draw_enemy->sprite_screen_x;
+	if (gen->draw_enemy->draw_start_x < 0)
+		gen->draw_enemy->draw_start_x = 0;
+	if (gen->draw_enemy->draw_end_x >= WIN_WIDTH)
+		gen->draw_enemy->draw_end_x = WIN_WIDTH - 1;
+	for (int stripe = gen->draw_enemy->draw_start_x; stripe < gen->draw_enemy->draw_end_x; stripe++)
 	{
-		if (transform_y > 0 && stripe > 0 && stripe < WIN_WIDTH
-			&& transform_y < gen->rayhit->zbuffer[stripe])
+		if (gen->draw_enemy->transform_y > 0 && stripe > 0 && stripe < WIN_WIDTH
+			&& gen->draw_enemy->transform_y < gen->rayhit->zbuffer[stripe])
 		{
-			tex_x = (int)((stripe - draw_start_x) * tex->width / (draw_end_x
-						- draw_start_x));
-			for (int y = draw_start_y; y < draw_end_y; y++)
+			gen->draw_enemy->tex_x = (int)((stripe - gen->draw_enemy->draw_start_x) * tex->width / (gen->draw_enemy->draw_end_x
+						- gen->draw_enemy->draw_start_x));
+			for (int y = gen->draw_enemy->draw_start_y; y < gen->draw_enemy->draw_end_y; y++)
 			{
-				d = y * 256 - WIN_HEIGHT * 128 + sprite_height * 128;
-				tex_y = ((d * tex->height) / sprite_height) / 256;
-				color = tex->data[tex_y * tex->width + tex_x];
-				if ((color & 0x00FFFFFF) != 0)
+				gen->draw_enemy->d = y * 256 - WIN_HEIGHT * 128 + gen->draw_enemy->sprite_height * 128;
+				gen->draw_enemy->tex_y = ((gen->draw_enemy->d * tex->height) / gen->draw_enemy->sprite_height) / 256;
+				gen->draw_enemy->color = tex->data[gen->draw_enemy->tex_y * tex->width + gen->draw_enemy->tex_x];
+				if ((gen->draw_enemy->color & 0x00FFFFFF) != 0)
 				{
 					if (gen->flags->terror_mode)
 					{
-						if (!enemy_visible(gen, &distance, i))
+						if (!enemy_visible(gen, &gen->draw_enemy->distance, i))
 							return ;
-						color = apply_fog(color, distance);
+						gen->draw_enemy->color = apply_fog(gen->draw_enemy->color, gen->draw_enemy->distance);
 					}
-					copied_mlx_pixel_put(gen->img_data, stripe, y, color);
+					copied_mlx_pixel_put(gen->img_data, stripe, y, gen->draw_enemy->color);
 				}
 			}
 		}

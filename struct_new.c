@@ -521,6 +521,30 @@ int player_move_init(t_gen *gen)
 	return (1);
 }
 
+int init_draw_enemy(t_gen *gen)
+{
+	gen->draw_enemy = malloc(sizeof(t_draw_enemy));
+	if (!gen->draw_enemy)
+		return (0);
+	gen->draw_enemy->sprite_x = 0;
+	gen->draw_enemy->sprite_y = 0;
+	gen->draw_enemy->inv_det = 0;
+	gen->draw_enemy->transform_x = 0;
+	gen->draw_enemy->transform_y = 0;
+	gen->draw_enemy->sprite_screen_x = 0;
+	gen->draw_enemy->sprite_height = 0;
+	gen->draw_enemy->draw_start_y = 0;
+	gen->draw_enemy->draw_end_y = 0;
+	gen->draw_enemy->color = 0;
+	gen->draw_enemy->tex_y = 0;
+	gen->draw_enemy->d = 0;
+	gen->draw_enemy->sprite_width = 0;
+	gen->draw_enemy->draw_start_x = 0;
+	gen->draw_enemy->draw_end_x = 0;
+	gen->draw_enemy->tex_x = 0;
+	gen->draw_enemy->distance = 0;
+	return (1);
+}
 int	init_all(t_gen *gen)
 {
 	gen->mlx_data = malloc(sizeof(t_mlx_data));
@@ -529,6 +553,7 @@ int	init_all(t_gen *gen)
 	basic_mlx_init(gen);
 	texture_data_init(gen);
 	render_scene_init(gen);
+	init_draw_enemy(gen);
 	player_move_init(gen);
 	dda_init(gen);
 	avg_img_init(gen);
