@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   general.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 17:37:13 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/12 19:45:03 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include "mlx.h"
 # include <X11/X.h>
 # include <X11/extensions/Xfixes.h>
+#include <sys/wait.h>
 # include <X11/keysym.h>
 # include <errno.h>
 # include <fcntl.h>

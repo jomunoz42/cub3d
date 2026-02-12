@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vini_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:02:23 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/11 11:02:24 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/12 20:06:47 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	handle_audio_keys(int key, t_gen *gen)
 {
-	const char	*audio_files[5] = {"./audio/default1.mp3",
-		"./audio/default2.mp3", "./audio/default3.mp3",
-		"./audio/default4.mp3", "./audio/default5.mp3"};
+	const char	*audio_files[5] = {"./audio/default1.ogg",
+		"./audio/default2.ogg", "./audio/default3.ogg",
+		"./audio/default4.ogg", "./audio/default5.ogg"};
 	int			index;
 
 	if ((key >= XK_1 && key <= XK_5) && !gen->flags->terror_mode)
@@ -24,7 +24,7 @@ void	handle_audio_keys(int key, t_gen *gen)
 		index = key - XK_1;
 		gen->flags->music_on = !gen->flags->music_on;
 		stop_all_sounds(gen);
-		play_sound(gen, audio_files[index], 1);
+		play_sound(gen, audio_files[index]);
 		if (key == XK_1)
 			gen->kboard->key_num_one = true;
 		if (key == XK_2)

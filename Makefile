@@ -118,7 +118,7 @@ extra:
 
 lib:
 	git clone git@github.com:42paris/minilibx-linux.git
-	cd minilibx-linux && make && cp libmlx.a ../ && cd .. && rm -rf minilibx-linux
+	cd minilibx-linux && make && cp libmlx.a ../ && cp mlx.h ../headers && cd .. && rm -rf minilibx-linux
 
 # ============== CLEAN ======================
 

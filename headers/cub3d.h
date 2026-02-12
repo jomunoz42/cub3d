@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:24 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 14:18:09 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/12 20:06:25 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int			apply_fog(int color, double dist);
 void		play_music(t_gen *gen);
 void		start_terror_music(t_gen *gen);
 void		stop_all_sounds(t_gen *gen);
-void		play_sound(t_gen *gen, const char *filename, int loop);
+void play_sound(t_gen *gen, const char *filename);
 int			apply_fog(int color, double dist);
 void		open_close_door(t_gen *gen);
 t_texture	*load_xpm_texture(void *mlx_ptr, char *file);
