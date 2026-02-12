@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 14:50:44 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/11 23:35:12 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/12 17:36:55 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ void	draw_ray_minimap(t_gen *gen, double *vars)
 
 	start_x = (int)gen->player->x - gen->minimap->zoom_level / 2;
 	start_y = (int)gen->player->y - gen->minimap->zoom_level / 2;
-	px1 = (vars[0] - start_x + 0.5) * MINIMAP_TILE_PIXELS;
-	py1 = (vars[1] - start_y + 0.5) * MINIMAP_TILE_PIXELS;
+	px1 = (vars[0] - start_x + 0.5) * MINIMAP_PIXELS / gen->minimap->zoom_level;
+	py1 = (vars[1] - start_y + 0.5) * MINIMAP_PIXELS / gen->minimap->zoom_level;
 	px1 = ft_clamp(px1, 0, MINIMAP_PIXELS - 1);
 	py1 = ft_clamp(py1, 0, MINIMAP_PIXELS - 1);
 	coords[0] = MINIMAP_PIXELS / 2;

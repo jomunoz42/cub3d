@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 14:16:22 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/12 17:37:13 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,10 @@
 # define MINIMAP_OFFSET_X 20
 # define MINIMAP_OFFSET_Y 20
 # define MINIMAP_PIXELS 200
-# define MINIMAP_TILES (MINIMAP_RADIUS * 2 + 1)
-# define MINIMAP_SIZE (MINIMAP_TILES * MINIMAP_SCALE)
-# define MINIMAP_TILE_PIXELS (MINIMAP_PIXELS / gen->minimap->zoom_level)
 
 // ###### COLORS ######
 
 # define RED_CLR 0xFF0000
-# define TRANSPARENT_COLOR 0xB3FF00
 # define INFO_TEXT_COLOR 0xFFFFFF
 # define MINIMAP_PLAYER_CLR 0xFFA500
 # define MINIMAP_WALL_CLR 0xFFFFFF

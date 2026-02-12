@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:21:27 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/11 11:45:36 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/12 17:36:55 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	draw_minimap_player(t_gen *gen)
 	int	y;
 
 	center_tile = gen->minimap->zoom_level / 2;
-	px = center_tile * MINIMAP_TILE_PIXELS;
-	py = center_tile * MINIMAP_TILE_PIXELS;
+	px = center_tile * MINIMAP_PIXELS / gen->minimap->zoom_level;
+	py = center_tile * MINIMAP_PIXELS / gen->minimap->zoom_level;
 	y = 0;
-	while (y < MINIMAP_TILE_PIXELS)
+	while (y < MINIMAP_PIXELS / gen->minimap->zoom_level)
 	{
 		x = 0;
-		while (x < MINIMAP_TILE_PIXELS)
+		while (x < MINIMAP_PIXELS / gen->minimap->zoom_level)
 		{
 			copied_mlx_pixel_put(gen->img_data, px + x, py + y,
 				MINIMAP_PLAYER_CLR);
