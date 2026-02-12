@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:24 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 20:06:25 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/02/12 20:25:47 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int			apply_fog(int color, double dist);
 void		play_music(t_gen *gen);
 void		start_terror_music(t_gen *gen);
 void		stop_all_sounds(t_gen *gen);
-void play_sound(t_gen *gen, const char *filename);
+void		play_sound(t_gen *gen, const char *filename);
 int			apply_fog(int color, double dist);
 void		open_close_door(t_gen *gen);
 t_texture	*load_xpm_texture(void *mlx_ptr, char *file);
@@ -157,6 +157,13 @@ int			render_scene_init(t_gen *gen);
 int			player_move_init(t_gen *gen);
 int			init_draw_enemy(t_gen *gen);
 int			init_all(t_gen *gen);
+void		stop_background_and_terror(t_sound *sounds);
+void		play_looped_background(t_gen *gen, const char *filename,
+				int is_terror);
+void		background_supervisor(t_gen *gen, const char *filename,
+				int is_terror);
+void		stop_background_music(t_sound *sounds);
+void		exec_sound(t_gen *gen, const char *filename);
 
 //====================== ENEMY =========================
 

@@ -65,6 +65,7 @@ SRC_BASE = \
 	$(UTILS)/vini_utils28.c \
 	$(UTILS)/vini_utils29.c \
 	$(UTILS)/vini_utils30.c \
+	$(UTILS)/songs_helper.c \
 	$(UTILS)/utils1.c \
 	$(MINIMAP)/minimap.c \
 	$(MINIMAP)/minimap_utils.c
@@ -110,16 +111,22 @@ extra:
 		sed -i '25i\		if (gen->enemy[i].type != ENEMY_SKELETON && gen->flags->terror_mode)' ./utils/vini_utils21.c; \
 		sed -i '26i\			update_enemy(gen, i);' ./utils/vini_utils21.c; \
 	fi
+	@echo "[Injecting mlx include into general.h]"
 	@sed -i '17i\# include "../extra/AStar/AStar.h"' ./headers/general.h;
 	@if [ ! -d "$(EXTRA)/AStar" ]; then \
 		git clone https://github.com/BigZaphod/AStar.git $(EXTRA)/AStar; \
 	fi
-	@$(MAKE) all SRC="$(SRC_BASE) $(SRC_EXTRA)"
+	@$(MAKE) all SRC="$(SRC_BASE) $(SRC_EXTRA)" CFLAGS=""
+
+
+
 
 lib:
 	git clone git@github.com:42paris/minilibx-linux.git
 	cd minilibx-linux && make && cp libmlx.a ../ && cp mlx.h ../headers && cd .. && rm -rf minilibx-linux
-
+	@if ! grep -q '# include "mlx.h"' ./headers/general.h; then \
+		sed -i '15i\# include "mlx.h"' ./headers/general.h; \
+	fi
 # ============== CLEAN ======================
 
 clean:
@@ -129,16 +136,21 @@ fclean:
 	@echo "Removing AStar and extra logic..."
 	@rm -rf ./extra/AStar
 	@rm -rf ./extra/enemy.c
-	@# Remove the injected lines from vini_utils21.c
 	@sed -i '/ENEMY_SKELETON/d' ./utils/vini_utils21.c
 	@sed -i '/update_enemy(gen, i);/d' ./utils/vini_utils21.c
-	@# Remove the header inclusion
 	@if grep -q 'AStar/AStar.h' ./headers/general.h; then \
 		sed -i '/AStar\/AStar.h/d' ./headers/general.h; \
 	fi
+	@if grep -q '# include "mlx.h"' ./headers/general.h; then \
+		sed -i '/# include "mlx.h"/d' ./headers/general.h; \
+	fi
 	@rm -rf extra
+	@echo "Deleting extra directory"
+	@rm -rf headers/mlx.h
+	@echo "Removing mlx.h from headers"
 	@$(MAKE) clean
 	@rm -f $(NAME)
+
 
 
 re: fclean all

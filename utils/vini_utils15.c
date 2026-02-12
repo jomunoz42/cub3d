@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:09:56 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 19:41:43 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/02/12 20:18:56 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,10 @@ static void	print_mouse_minimap_info(t_gen *gen, int *y)
 
 static void	print_speed_info(t_gen *gen, int *y)
 {
-	
 	print_line(gen, y, "Player rotation speed: ", gen->player->rotate_speed);
 	print_line(gen, y, "Player speed: ", gen->player->move_speed);
 	print_line(gen, y, "Enemy speed: ", gen->enemy->move_speed);
 	print_line(gen, y, "pbongiov's wallet this ammount of sigma coins: ", 20);
-
 }
 
 void	print_info(t_gen *gen)

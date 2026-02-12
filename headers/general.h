@@ -6,16 +6,15 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 19:45:03 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/02/12 20:19:56 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GENERAL_H
 # define GENERAL_H
-# include "mlx.h"
 # include <X11/X.h>
 # include <X11/extensions/Xfixes.h>
-#include <sys/wait.h>
+# include <sys/wait.h>
 # include <X11/keysym.h>
 # include <errno.h>
 # include <fcntl.h>
