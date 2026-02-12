@@ -389,7 +389,7 @@ int key_press(int key, t_gen *gen)
 		if (gen->flags->terror_mode)
 		{
 			gen->player->move_speed = gen->def_values->terror_player_move_speed /* + 0.03 */;
-			gen->enemy->move_speed = gen->player->move_speed - 0.01;
+			gen->enemy->move_speed = gen->player->move_speed;
 		}
 		else
 		{
@@ -503,7 +503,7 @@ int key_release(int key, t_gen *gen)
 		if (gen->flags->terror_mode)
 		{
 			gen->player->move_speed = gen->def_values->terror_player_move_speed;
-			gen->enemy->move_speed = gen->player->move_speed - 0.001;
+			gen->enemy->move_speed = gen->player->move_speed;
 		}
 		else
 		{

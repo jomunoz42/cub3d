@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:02:46 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/11 11:03:24 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/12 14:07:44 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	release_modifier_keys(int key, t_gen *gen)
 		if (gen->flags->terror_mode)
 		{
 			gen->player->move_speed = gen->def_values->terror_player_move_speed;
-			gen->enemy->move_speed = gen->player->move_speed - 0.001;
+			gen->enemy->move_speed = gen->player->move_speed;
 		}
 		else
 		{

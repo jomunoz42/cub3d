@@ -107,8 +107,8 @@ extra:
 	fi
 	@echo "[Injecting enemy logic into vini_utils21.c]"
 	@if ! grep -q "update_enemy(gen, i);" ./utils/vini_utils21.c; then \
-		sed -i '24i\		if (gen->enemy[i].type != ENEMY_SKELETON && gen->flags->terror_mode)' ./utils/vini_utils21.c; \
-		sed -i '25i\			update_enemy(gen, i);' ./utils/vini_utils21.c; \
+		sed -i '25i\		if (gen->enemy[i].type != ENEMY_SKELETON && gen->flags->terror_mode)' ./utils/vini_utils21.c; \
+		sed -i '26i\			update_enemy(gen, i);' ./utils/vini_utils21.c; \
 	fi
 	@sed -i '17i\# include "../extra/AStar/AStar.h"' ./headers/general.h;
 	@if [ ! -d "$(EXTRA)/AStar" ]; then \
