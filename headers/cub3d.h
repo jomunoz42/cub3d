@@ -126,6 +126,25 @@ int	avg_img_init(t_gen *gen);
 void	init_vignette(t_img_data *img);
 int	general_texture_init(t_gen *gen);
 void	wall_textures_init(t_gen *gen);
+void	load_textures(t_gen *gen, t_texture **dst, char **xpm_files, int count);
+int	texture_data_init(t_gen *gen);
+int	minimap_init(t_gen *gen);
+void	init_extra_keys(t_keyboard *kb);
+int	keyboard_init(t_gen *gen);
+int	rayhit_init(t_gen *gen);
+int	player_init(t_gen *gen);
+int	arm_init(t_gen *gen);
+int	terror_arm_init(t_gen *gen);
+int	basic_mlx_init(t_gen *gen);
+int	init_flags(t_gen *gen);
+int	def_values_init(t_gen *gen);
+int	enemy_init(t_gen *gen);
+int	enemy_texture_init(t_gen *gen);
+int	dda_init(t_gen *gen);
+int	render_scene_init(t_gen *gen);
+int	player_move_init(t_gen *gen);
+int	init_draw_enemy(t_gen *gen);
+int	init_all(t_gen *gen);
 
 
 

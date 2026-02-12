@@ -40,3 +40,43 @@ int	general_texture_init(t_gen *gen)
 		return (0);
 	return (1);
 }
+
+
+int	player_init(t_gen *gen)
+{
+	gen->player = malloc(sizeof(t_player));
+	if (!gen->player)
+		return (0);
+	gen->player->x = 1;
+	gen->player->y = 1;
+	gen->player->dir_x = 0;
+	gen->player->dir_y = 0;
+	gen->player->plane_x = 0;
+	gen->player->plane_y = 0;
+	gen->player->move_speed = 0.05;
+	gen->player->rotate_speed = DEFAULT_PLAYER_ROTATE_SPEED;
+	gen->player->fov = DEFAULT_PLAYER_FOV;
+	return (1);
+}
+
+int	arm_init(t_gen *gen)
+{
+	int	img_width;
+	int	img_height;
+
+	gen->arm = malloc(sizeof(t_img_data));
+	if (!gen->arm)
+		return (0);
+	img_width = (int)gen->texture_data->arm_width;
+	img_height = (int)gen->texture_data->arm_height;
+	gen->arm->bits_pixel = 0;
+	gen->arm->line_len = 0;
+	gen->arm->endian = 0;
+	gen->arm->width = 0;
+	gen->arm->height = 0;
+	gen->arm->img = mlx_xpm_file_to_image(gen->mlx_data->mlx_ptr, USER_HAND_XPM,
+			&img_width, &img_height);
+	gen->arm->addr = mlx_get_data_addr(gen->arm->img, &gen->arm->bits_pixel,
+			&gen->arm->line_len, &gen->arm->endian);
+	return (1);
+}
