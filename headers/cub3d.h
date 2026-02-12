@@ -118,6 +118,13 @@ void	update_enemy_animation(t_enemy *enemy, int i);
 void	get_enemy_anim_stats(int type, int *max_frames, int *speed);
 bool	enemy_visible(t_gen *gen, double *distance_out, int i);
 bool	raycast_clear(t_gen *gen, double dx, double dy, double distance);
+t_parsing	*parsing_init(void);
+void	copy_matrix(char **original_matrix, char ***matrix_to_copy_ptr);
+int	main_init(t_gen *gen, char *argv, char **environ);
+int	mouse_init(t_gen *gen);
+int	avg_img_init(t_gen *gen);
+void	init_vignette(t_img_data *img);
+int	general_texture_init(t_gen *gen);
 
 
 
