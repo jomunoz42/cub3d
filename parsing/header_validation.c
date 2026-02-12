@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:11:59 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/11 23:57:21 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/12 09:09:28 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,41 +34,35 @@ static int	identify_header(char *line)
 	return (-1);
 }
 
-static void	write_free(char *path)
+void	write_free(char *path)
 {
 	write(2, "Error\nInvalid texture: ", 24);
 	write(2, path, ft_strlen(path));
 	free(path);
 }
 
-int	is_texture_path_invalid(t_parsing *data, char *line, int type)
+int	validate_texture_file(char *path)
 {
-	char		*path;
-	int			len;
-	int			fd;
-	int	i;
+	int	fd;
+	int	len;
 
-	i = 0;
-	while (line[i] == ' ')
-		i++;
-	i += 3;
-	path = ft_strtrim(&line[i], " \n");
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 	{
-		write_free(path);
 		if (errno == ENOENT)
-			return (write(2, " does not exist\n", 17), 1);
+			write(2, "Error\nFile does not exist\n", 26);
 		else if (errno == EACCES)
-			return (write(2, " has no reading permissions\n", 29), 1);
+			write(2, "Error\nNo reading permissions\n", 29);
+		return (1);
 	}
+	close(fd);
 	len = ft_strlen(path);
-	if (len < 4 || ft_strncmp(&path[len - 4], ".xpm\0", 5))
-		return (write(2, "Error\nFile doesn't have right extension\n", 41), 1);
-	if (data->textures_info[type])
-		free(data->textures_info[type]);
-	data->textures_info[type] = path;
-	return (close(fd), 0);
+	if (len < 4 || ft_strncmp(&path[len - 4], ".xpm", 4))
+	{
+		write(2, "Error\nFile doesn't have right extension\n", 41);
+		return (1);
+	}
+	return (0);
 }
 
 int	is_header_line_with_validation(t_parsing *data, char *line)

@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:17:33 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 00:08:58 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/12 09:06:52 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,55 +72,26 @@ char	*print_helper(char *which_info, double what_to_convert)
 	return (text);
 }
 
-void	clear_image(t_img_data *img, int color)
+static void	apply_move(t_player_move *move, double dir_x, double dir_y,
+		double speed)
 {
-	int	x;
-	int	y;
-
-	x = 0;
-	y = 0;
-	while (y < WIN_HEIGHT)
-	{
-		x = 0;
-		while (x < WIN_WIDTH)
-		{
-			copied_mlx_pixel_put(img, x, y, color);
-			x++;
-		}
-		y++;
-	}
+	move->move_x += dir_x * speed;
+	move->move_y += dir_y * speed;
 }
 
 void	calculate_player_movement(t_gen *gen)
 {
-	gen->player_move->move_x = 0;	
-	gen->player_move->move_y = 0;	
+	t_player	*p;
+
+	p = gen->player;
+	gen->player_move->move_x = 0;
+	gen->player_move->move_y = 0;
 	if (gen->kboard->key_w)
-	{
-		gen->player_move->move_x += gen->player->dir_x
-			* gen->player->move_speed;
-		gen->player_move->move_y += gen->player->dir_y
-			* gen->player->move_speed;
-	}
+		apply_move(gen->player_move, p->dir_x, p->dir_y, p->move_speed);
 	if (gen->kboard->key_s)
-	{
-		gen->player_move->move_x -= gen->player->dir_x
-			* gen->player->move_speed;
-		gen->player_move->move_y -= gen->player->dir_y
-			* gen->player->move_speed;
-	}
+		apply_move(gen->player_move, p->dir_x, p->dir_y, -p->move_speed);
 	if (gen->kboard->key_a)
-	{
-		gen->player_move->move_x -= gen->player->plane_x
-			* gen->player->move_speed;
-		gen->player_move->move_y -= gen->player->plane_y
-			* gen->player->move_speed;
-	}
+		apply_move(gen->player_move, p->plane_x, p->plane_y, -p->move_speed);
 	if (gen->kboard->key_d)
-	{
-		gen->player_move->move_x += gen->player->plane_x
-			* gen->player->move_speed;
-		gen->player_move->move_y += gen->player->plane_y
-			* gen->player->move_speed;
-	}
+		apply_move(gen->player_move, p->plane_x, p->plane_y, p->move_speed);
 }

@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 23:45:44 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 00:34:49 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/12 08:58:25 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,65 +91,26 @@ void	render_frame(t_gen *gen)
 
 int	game_loop(t_gen *gen)
 {
-	mouse_looking(gen);
-	update_game_state(gen);
-	render_frame(gen);
+	double	dx;
+	double	dy;
+	double	distance;
+	int		i;
+
+	game_loop_part_one(gen);
+	game_loop_part_two(gen);
+	i = 0;
+	while (i < gen->enemy_count)
+	{
+		dx = gen->enemy[i].x - gen->player->x;
+		dy = gen->enemy[i].y - gen->player->y;
+		distance = sqrt(dx * dx + dy * dy);
+		if (distance <= 0.65 && gen->flags->terror_mode)
+		{
+			printf("You are dead\n");
+			super_duper_hiper_free();
+			exit(1);
+		}
+		i++;
+	}
 	return (0);
 }
-
-// int	game_loop(t_gen *gen)
-// {
-// 	double	dx;
-// 	double	dy;
-// 	double	distance;
-// 	int		i;
-
-// 	update_player(gen);
-// 	i = 0;
-// 	while (i < gen->enemy_count)
-// 	{
-// 		gen->enemy[i].move_speed = 0.02;
-// 		// if (gen->enemy[i].type != ENEMY_SKELETON)
-// 		// 	update_enemy(gen, i);
-// 		update_enemy_animation(gen->enemy, i);
-// 		i++;
-// 	}
-// 	clear_image(gen->img_data, 0x000000);
-// 	render_scene(gen);
-// 	i = 0;
-// 	while (i < gen->enemy_count)
-// 	{
-// 		if (!gen->flags->terror_mode && gen->enemy[i].type == ENEMY_SKELETON)
-// 			draw_enemy(gen, i);
-// 		if (gen->flags->terror_mode)
-// 			draw_enemy(gen, i);
-// 		i++;
-// 	}
-// 	mouse_looking(gen);
-// 	if (!gen->flags->terror_mode && gen->flags->minimap)
-// 		draw_minimap(gen);
-// 	if (!gen->flags->terror_mode)
-// 		draw_arm(gen);
-// 	else
-// 		draw_terror_arm(gen);
-// 	apply_vignette_to_image(gen, gen->img_data);
-// 	mlx_put_image_to_window(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,
-// 		gen->img_data->img, 0, 0);
-// 	if (gen->flags->info && !gen->flags->terror_mode)
-// 		print_info(gen);
-// 	i = 0;
-// 	while (i < gen->enemy_count)
-// 	{
-// 		dx = gen->enemy[i].x - gen->player->x;
-// 		dy = gen->enemy[i].y - gen->player->y;
-// 		distance = sqrt(dx * dx + dy * dy);
-// 		if (distance <= 0.65 && gen->flags->terror_mode)
-// 		{
-// 			printf("You are dead\n");
-// 			super_duper_hiper_free();
-// 			exit(1);
-// 		}
-// 		i++;
-// 	}
-// 	return (0);
-// }

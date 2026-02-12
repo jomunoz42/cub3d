@@ -91,17 +91,20 @@ $(OBJDIR)/%.o: ./%.c
 
 extra: SRC += $(SRC_EXTRA)
 extra:
-	mkdir -p extra
+	@mkdir -p extra
 	@echo "[Creating extra directory]"
 	@if [ -f enemy.txt ]; then \
 		cp enemy.txt $(EXTRA)/enemy.c; \
 	fi
-	@echo "[Creating enemy.c]"
+	@echo "[Injecting enemy logic into vini_utils21.c]"
+	@if ! grep -q "update_enemy(gen, i);" ./utils/vini_utils21.c; then \
+		sed -i '24i\		if (gen->enemy[i].type != ENEMY_SKELETON && gen->flags->terror_mode)' ./utils/vini_utils21.c; \
+		sed -i '25i\			update_enemy(gen, i);' ./utils/vini_utils21.c; \
+	fi
 	@sed -i '17i\# include "../extra/AStar/AStar.h"' ./headers/general.h;
 	@if [ ! -d "$(EXTRA)/AStar" ]; then \
 		git clone https://github.com/BigZaphod/AStar.git $(EXTRA)/AStar; \
 	fi
-	@echo "[Finished clonning]"
 	@$(MAKE) all SRC="$(SRC_BASE) $(SRC_EXTRA)"
 
 # ============== CLEAN ======================
@@ -110,14 +113,16 @@ clean:
 	@rm -rf $(OBJDIR)
 
 fclean:
-	@echo "Removing AStar..."
+	@echo "Removing AStar and extra logic..."
 	@rm -rf ./extra/AStar
-	@echo "Removing enemy.c"
 	@rm -rf ./extra/enemy.c
+	@# Remove the injected lines from vini_utils21.c
+	@sed -i '/ENEMY_SKELETON/d' ./utils/vini_utils21.c
+	@sed -i '/update_enemy(gen, i);/d' ./utils/vini_utils21.c
+	@# Remove the header inclusion
 	@if grep -q 'AStar/AStar.h' ./headers/general.h; then \
 		sed -i '/AStar\/AStar.h/d' ./headers/general.h; \
 	fi
-	@echo "Deleting extra directory"
 	@rm -rf extra
 	@$(MAKE) clean
 	@rm -f $(NAME)

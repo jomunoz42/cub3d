@@ -6,33 +6,90 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 23:54:34 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/11 23:55:03 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/12 09:09:04 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/cub3d.h"
 
-void	update_game_state(t_gen *gen)
+void	game_loop_part_one(t_gen *gen)
 {
-	int		i;
-	double	dist;
+	int	i;
 
 	update_player(gen);
-	i = -1;
-	while (++i < gen->enemy_count)
+	i = 0;
+	while (i < gen->enemy_count)
 	{
 		gen->enemy[i].move_speed = 0.02;
-		// if (gen->enemy[i].type != ENEMY_SKELETON)
-		// 	update_enemy(gen, i);
 		update_enemy_animation(gen->enemy, i);
-		dist = sqrt(pow(gen->enemy[i].x - gen->player->x, 2)
-				+ pow(gen->enemy[i].y - gen->player->y, 2));
-		if (dist <= 0.65 && gen->flags->terror_mode)
-		{
-			printf("You are dead\n");
-			super_duper_hiper_free();
-			exit(1);
-		}
+		i++;
+	}
+	clear_image(gen->img_data, 0x000000);
+	render_scene(gen);
+	i = 0;
+	while (i < gen->enemy_count)
+	{
+		draw_enemy(gen, i);
+		if (gen->flags->terror_mode)
+			draw_enemy(gen, i);
+		i++;
 	}
 	mouse_looking(gen);
+}
+
+void	game_loop_part_two(t_gen *gen)
+{
+	if (!gen->flags->terror_mode && gen->flags->minimap)
+		draw_minimap(gen);
+	if (!gen->flags->terror_mode)
+		draw_arm(gen);
+	else
+		draw_terror_arm(gen);
+	apply_vignette_to_image(gen, gen->img_data);
+	mlx_put_image_to_window(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,
+		gen->img_data->img, 0, 0);
+	if (gen->flags->info && !gen->flags->terror_mode)
+		print_info(gen);
+}
+
+void	clear_image(t_img_data *img, int color)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
+	while (y < WIN_HEIGHT)
+	{
+		x = 0;
+		while (x < WIN_WIDTH)
+		{
+			copied_mlx_pixel_put(img, x, y, color);
+			x++;
+		}
+		y++;
+	}
+}
+
+int	is_texture_path_invalid(t_parsing *data, char *line, int type)
+{
+	char	*path;
+	int		i;
+
+	i = 0;
+	while (line[i] && (line[i] == ' ' || (line[i] >= 9 && line[i] <= 13)))
+		i++;
+	i += 2;
+	path = ft_strtrim(&line[i], " \n\t\v\f\r");
+	if (!path)
+		return (1);
+	if (validate_texture_file(path))
+	{
+		free(path);
+		return (1);
+	}
+	if (data->textures_info[type])
+		free(data->textures_info[type]);
+	data->textures_info[type] = path;
+	return (0);
 }

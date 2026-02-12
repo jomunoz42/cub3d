@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:56:34 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/11 15:33:28 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/12 09:05:22 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,12 +106,12 @@ void	draw_enemy(t_gen *gen, int i)
 		return ;
 	if (gen->enemy[i].type == ENEMY_GHOST && !gen->ghost_enemy[0])
 		return ;
-	if (gen->enemy[i].type == ENEMY_CTHULHU && !gen->cthulhu_enemy[0])
+	if (gen->enemy[i].type == ENEMY_CTHULHU && !gen->cthulhu_enemy[0] && gen->flags->terror_mode)
 		return ;
 	if (gen->enemy[i].type == ENEMY_SKELETON && !gen->skeleton_enemy[0])
 		return ;
 	enemy = &gen->enemy[i];
-	if (enemy->type == ENEMY_GHOST)
+	if (enemy->type == ENEMY_GHOST && gen->flags->terror_mode)
 		tex = gen->ghost_enemy[enemy->enemy_frame];
 	else if (enemy->type == ENEMY_CTHULHU)
 		tex = gen->cthulhu_enemy[enemy->enemy_frame];

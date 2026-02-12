@@ -97,8 +97,11 @@ void	calculate_texture_x(t_gen *gen, t_rayhit hit, t_texture *tex,
 void	draw_wall_slice(t_gen *gen, int x, t_texture *tex, double hit_dist);
 void	draw_ceiling_slice(t_gen *gen, int x, int draw_start);
 void	draw_floor_slice(t_gen *gen, int x, int draw_end);
-
-
+void game_loop_part_one(t_gen *gen);
+void game_loop_part_two(t_gen *gen);
+int	is_texture_path_invalid(t_parsing *data, char *line, int type);
+int	validate_texture_file(char *path);
+void	write_free(char *path);
 
 
 //====================== ENEMY =========================
