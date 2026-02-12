@@ -1,59 +1,59 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   songs.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/11 14:32:50 by vvazzs            #+#    #+#             */
+/*   Updated: 2026/02/12 20:17:38 by vivaz-ca         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./headers/cub3d.h"
 
-void	play_sound(t_gen *gen, const char *filename, int loop)
+void	exec_sound(t_gen *gen, const char *filename)
+{
+	char	*args[3];
+	char	*path;
+
+	path = "/usr/bin/paplay";
+	args[0] = "paplay";
+	args[1] = (char *)filename;
+	args[2] = NULL;
+	execve(path, args, gen->def_values->env);
+	perror("execve");
+	exit(EXIT_FAILURE);
+}
+
+void	play_sound(t_gen *gen, const char *filename)
 {
 	t_sound	*sounds;
 	pid_t	pid;
-		char *args[7];
-	char	*path;
 
-	printf("Playing: %s\n", filename);
 	sounds = &gen->def_values->sounds;
 	if (sounds->count >= sounds->capacity)
-		return ; // too many sounds
-	pid = fork();
-	if (pid < 0)
-	{
-		perror("fork");
 		return ;
-	}
-	else if (pid == 0)
+	pid = fork();
+	if (pid == 0)
 	{
-		args[0] = "ffplay";
-		args[1] = "-nodisp";
-		args[2] = "-autoexit";
-		if (loop)
-		{
-			args[3] = "-loop";
-			args[4] = "0";
-			args[5] = (char *)filename;
-			args[6] = NULL;
-		}
-		else
-		{
-			args[3] = (char *)filename;
-			args[4] = NULL;
-		}
-		path = "/usr/bin/ffplay";
-		execve(path, args, gen->def_values->env);
-		perror("execve");
-		exit(EXIT_FAILURE);
+		if (sounds->terror_music_pid > 0)
+			setpgid(0, sounds->terror_music_pid);
+		exec_sound(gen, filename);
 	}
-	else
-	{
+	else if (pid > 0)
 		sounds->pids[sounds->count++] = pid;
-	}
 }
 
 const char	*random_effect(void)
 {
-	int	n;
-
-	const char *effects[] = {
-		"./audio/Come Out and Play With Me.mp3",
-		"./audio/Creepy Little Girl Whispering Horror Sounds (HD) (FREE).mp3",
-		"./audio/The Last Of Us - Clicker Sound Effect.mp3",
+	int			n;
+	const char	*effects[] = {
+		"./audio/Come Out and Play With Me.ogg",
+		"./audio/Creepy Little Girl Whispering Horror Sounds (HD) (FREE).ogg",
+		"./audio/The Last Of Us - Clicker Sound Effect.ogg",
 	};
+
 	n = sizeof(effects) / sizeof(effects[0]);
 	return (effects[rand() % n]);
 }
@@ -61,47 +61,51 @@ const char	*random_effect(void)
 void	start_terror_music(t_gen *gen)
 {
 	t_sound	*sounds;
-	pid_t	pid;
+	pid_t	effects_pid;
 
 	sounds = &gen->def_values->sounds;
-	if (sounds->terror_music_pid > 0)
+	if (sounds->background_music_pid > 0)
 		return ;
-	play_sound(gen, "./audio/Background.mp3", 1);
-	pid = fork();
-	if (pid < 0)
-		perror("fork");
-	else if (pid == 0)
+	stop_all_sounds(gen);
+	play_looped_background(gen, "./audio/Background.ogg", 1);
+	effects_pid = fork();
+	if (effects_pid == 0)
 	{
-		setpgid(0, 0);
+		if (sounds->background_music_pid > 0)
+			setpgid(0, sounds->background_music_pid);
 		srand(time(NULL) ^ getpid());
 		while (1)
 		{
 			sleep(rand() % 15 + 10);
-			play_sound(gen, random_effect(), 0);
+			play_sound(gen, random_effect());
 		}
 		exit(0);
 	}
-	else
-		sounds->terror_music_pid = pid;
 }
 
 void	stop_all_sounds(t_gen *gen)
 {
-	t_sound	*sounds;
+	t_sound		*sounds;
+	pid_t		pk;
+	const char	*args[] = {"pkill", "-u", getenv("USER"), "-x", "paplay", NULL};
+	int			i;
 
 	sounds = &gen->def_values->sounds;
-	if (sounds->terror_music_pid > 0)
-	{
-		kill(-sounds->terror_music_pid, SIGTERM);
-		sounds->terror_music_pid = 0;
-	}
-	for (int i = 0; i < sounds->count; i++)
+	stop_background_and_terror(sounds);
+	i = 0;
+	while (i < sounds->count)
 	{
 		if (sounds->pids[i] > 0)
-		{
-			kill(sounds->pids[i], SIGTERM);
-			sounds->pids[i] = 0;
-		}
+			kill(sounds->pids[i], SIGKILL);
+		i++;
 	}
 	sounds->count = 0;
+	pk = fork();
+	if (pk == 0)
+	{
+		execvp("pkill", (char *const *)args);
+		exit(1);
+	}
+	if (pk > 0)
+		waitpid(pk, NULL, 0);
 }

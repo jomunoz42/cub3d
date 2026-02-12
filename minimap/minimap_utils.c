@@ -1,86 +1,96 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minimap_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/11 14:50:44 by vvazzs            #+#    #+#             */
+/*   Updated: 2026/02/12 17:36:55 by vvazzs           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../headers/cub3d.h"
 
-void	ciclope_dos_xman(t_img_data *img, int x0, int y0, int x1, int y1,
-		int color)
+void	ciclope_dos_xman(t_img_data *img, int *coords, int color)
 {
-	double	distance_x_total;
-	double	distance_y_total;
-	double	direction_of_x;
-	double	err;
-	double	err_times_2;
+	int	vars[5];
 
-	double direction_of_y;
-		// quando eu andar em ym vou pra direita ou pra esqueda?
-	distance_x_total = ft_abs(x1 - x0); // quantos puxels andar no x
-	distance_y_total = ft_abs(y1 - y0); // quantos pixel andar no y
-	direction_of_x = (x0 < x1) ? 1 : -1;
-	direction_of_y = (y0 < y1) ? 1 : -1;
-	err = distance_x_total - distance_y_total;
-	while (1)
-	{
-		copied_mlx_pixel_put(img, x0, y0, color);
-		if (x0 == x1 && y0 == y1)
-			break ;
-		err_times_2 = 2 * err;
-		if (err_times_2 > -distance_y_total)
-		{
-			err -= distance_y_total;
-			x0 += direction_of_x;
-		}
-		if (err_times_2 < distance_x_total)
-		{
-			err += distance_x_total;
-			y0 += direction_of_y;
-		}
-	}
+	init_line(coords, vars);
+	draw_line(img, coords, vars, color);
 }
 
-void	direction_hits_wall(t_gen *gen, double ray_direction_x,
-		double ray_direction_y)
+void	init_map_and_delta(t_gen *gen, double ray_dir_x, double ray_dir_y,
+		double *vars)
+{
+	double	player_x;
+	double	player_y;
+	double	map_x;
+	double	map_y;
+
+	player_x = gen->player->x;
+	player_y = gen->player->y;
+	map_x = (int)player_x;
+	map_y = (int)player_y;
+	vars[0] = map_x;
+	vars[1] = map_y;
+	vars[2] = fabs(5 / ray_dir_x);
+	vars[3] = fabs(5 / ray_dir_y);
+}
+
+void	init_steps_and_sidedist(t_gen *gen, double ray_dir_x, double ray_dir_y,
+		double *vars)
+{
+	double	player_x;
+	double	player_y;
+
+	player_x = gen->player->x;
+	player_y = gen->player->y;
+	if (ray_dir_x < 0)
+		vars[4] = -1;
+	else
+		vars[4] = 1;
+	if (ray_dir_x < 0)
+		vars[5] = (player_x - vars[0]) * vars[2];
+	else
+		vars[5] = (vars[0] + 1.0 - player_x) * vars[2];
+	if (ray_dir_y < 0)
+		vars[6] = -1;
+	else
+		vars[6] = 1;
+	if (ray_dir_y < 0)
+		vars[7] = (player_y - vars[1]) * vars[3];
+	else
+		vars[7] = (vars[1] + 1.0 - player_y) * vars[3];
+}
+
+void	draw_ray_minimap(t_gen *gen, double *vars)
 {
 	double	start_x;
 	double	start_y;
-	double	map_x;
-	double	map_y;
-	double	px0;
-	double	py0;
 	double	px1;
 	double	py1;
+	int		coords[4];
 
 	start_x = (int)gen->player->x - gen->minimap->zoom_level / 2;
 	start_y = (int)gen->player->y - gen->minimap->zoom_level / 2;
-	map_x = (int)gen->player->x;
-	map_y = (int)gen->player->y;
-	double step_x, step_y, hit = 0;
-	double side_dist_x, side_dist_y, delta_dist_x, delta_dist_y;
-	delta_dist_x = fabs(5 / ray_direction_x);
-	delta_dist_y = fabs(5 / ray_direction_y);
-	step_x = (ray_direction_x < 0) ? -1 : 1;
-	side_dist_x = (ray_direction_x < 0) ? (gen->player->x - map_x)
-		* delta_dist_x : (map_x + 1.0 - gen->player->x) * delta_dist_x;
-	step_y = (ray_direction_y < 0) ? -1 : 1;
-	side_dist_y = (ray_direction_y < 0) ? (gen->player->y - map_y)
-		* delta_dist_y : (map_y + 1.0 - gen->player->y) * delta_dist_y;
-	while (!hit)
-	{
-		if (side_dist_x < side_dist_y)
-		{
-			side_dist_x += delta_dist_x;
-			map_x += step_x;
-		}
-		else
-		{
-			side_dist_y += delta_dist_y;
-			map_y += step_y;
-		}
-		if (is_wall(gen, map_x, map_y))
-			hit = 1;
-	}
-	px0 = MINIMAP_PIXELS / 2;
-	py0 = MINIMAP_PIXELS / 2;
-	px1 = (map_x - start_x + 0.5) * MINIMAP_TILE_PIXELS;
-	py1 = (map_y - start_y + 0.5) * MINIMAP_TILE_PIXELS;
+	px1 = (vars[0] - start_x + 0.5) * MINIMAP_PIXELS / gen->minimap->zoom_level;
+	py1 = (vars[1] - start_y + 0.5) * MINIMAP_PIXELS / gen->minimap->zoom_level;
 	px1 = ft_clamp(px1, 0, MINIMAP_PIXELS - 1);
 	py1 = ft_clamp(py1, 0, MINIMAP_PIXELS - 1);
-	ciclope_dos_xman(gen->img_data, px0, py0, px1, py1, RED_CLR);
+	coords[0] = MINIMAP_PIXELS / 2;
+	coords[1] = MINIMAP_PIXELS / 2;
+	coords[2] = (int)px1;
+	coords[3] = (int)py1;
+	ciclope_dos_xman(gen->img_data, coords, RED_CLR);
+}
+
+void	direction_hits_wall(t_gen *gen, double ray_dir_x, double ray_dir_y)
+{
+	double	vars[8];
+
+	init_map_and_delta(gen, ray_dir_x, ray_dir_y, vars);
+	init_steps_and_sidedist(gen, ray_dir_x, ray_dir_y, vars);
+	perform_dda(gen, vars);
+	draw_ray_minimap(gen, vars);
 }

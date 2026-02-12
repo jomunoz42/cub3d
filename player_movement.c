@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player_movement.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/11 23:45:44 by vvazzs            #+#    #+#             */
+/*   Updated: 2026/02/12 23:03:56 by jomunoz          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./headers/cub3d.h"
 #include "headers/general.h"
-#include "headers/mlx.h"
 
 void	rotate_player(t_gen *gen, double angle)
 {
@@ -19,64 +30,21 @@ void	rotate_player(t_gen *gen, double angle)
 		* cos(angle);
 }
 
-void	clear_image(t_img_data *img, int color)
+void	apply_player_movement(t_gen *gen, double nx, double ny)
 {
-	int x, y;
-	for (y = 0; y < WIN_HEIGHT; y++)
-		for (x = 0; x < WIN_WIDTH; x++)
-			copied_mlx_pixel_put(img, x, y, color);
-}
-
-void	update_player(t_gen *gen)
-{
-	double	nx;
-	double	ny;
-	double	move_x;
-	double	move_y;
-
-	nx = gen->player->x;
-	ny = gen->player->y;
-	// Compute intended movement
-	move_x = 0;
-	move_y = 0;
-	if (gen->kboard->key_w)
+	if (gen->kboard->tab)
 	{
-		move_x += gen->player->dir_x * gen->player->move_speed;
-		move_y += gen->player->dir_y * gen->player->move_speed;
+		open_close_door(gen);
+		gen->kboard->tab = false;
 	}
-	if (gen->kboard->key_s)
-	{
-		move_x -= gen->player->dir_x * gen->player->move_speed;
-		move_y -= gen->player->dir_y * gen->player->move_speed;
-	}
-	if (gen->kboard->key_a)
-	{
-		move_x -= gen->player->plane_x * gen->player->move_speed;
-		move_y -= gen->player->plane_y * gen->player->move_speed;
-	}
-	if (gen->kboard->key_d)
-	{
-		move_x += gen->player->plane_x * gen->player->move_speed;
-		move_y += gen->player->plane_y * gen->player->move_speed;
-	}
-    if (gen->kboard->tab)
-    {
-        open_close_door(gen);
-        gen->kboard->tab = false;
-    }
-	// Rotate player
 	if (gen->kboard->key_right)
 		rotate_player(gen, gen->player->rotate_speed);
 	if (gen->kboard->key_left)
 		rotate_player(gen, -gen->player->rotate_speed);
-	// --- Smooth collision: slide along walls ---
-	// Check X movement separately
-	if (!collision(gen, gen->player->y, nx + move_x))
-		gen->player->x += move_x;
-	// Check Y movement separately
-	if (!collision(gen, ny + move_y, gen->player->x))
-		gen->player->y += move_y;
-	// Reset move speed if shift not pressed
+	if (!collision(gen, gen->player->y, nx + gen->player_move->move_x))
+		gen->player->x += gen->player_move->move_x;
+	if (!collision(gen, ny + gen->player_move->move_y, gen->player->x))
+		gen->player->y += gen->player_move->move_y;
 	if (!gen->flags->terror_mode && !gen->kboard->control_left)
 	{
 		if (!gen->kboard->shift_left)
@@ -84,143 +52,40 @@ void	update_player(t_gen *gen)
 	}
 }
 
-char	*ft_dtoa_fixed(double v)
+void	update_player(t_gen *gen)
 {
-	char	*a;
-	char	*b;
-	char	*tmp;
-	int		iv;
-	int		frac;
+	double	nx;
+	double	ny;
 
-	iv = (int)v;
-	frac = (int)((v - iv) * 1000);
-	a = ft_itoa(iv);
-	b = ft_itoa(frac < 0 ? -frac : frac);
-	tmp = ft_strjoin(a, ".");
-	free(a);
-	a = ft_strjoin(tmp, b);
-	free(tmp);
-	free(b);
-	return (a);
+	nx = gen->player->x;
+	ny = gen->player->y;
+	calculate_player_movement(gen);
+	apply_player_movement(gen, nx, ny);
 }
 
-char	*print_helper(char *which_info, double what_to_convert)
+void	render_frame(t_gen *gen)
 {
-	char	*num;
-	char	*text;
+	int	i;
 
-	num = ft_dtoa_fixed(what_to_convert);
-	if (!num)
-		return (NULL);
-	text = ft_strjoin(which_info, num);
-	if (!text)
+	clear_image(gen->img_data, 0x000000);
+	render_scene(gen);
+	i = -1;
+	while (++i < gen->enemy_count)
 	{
-		free(num);
-		return (NULL);
+		if (gen->flags->terror_mode || gen->enemy[i].type != ENEMY_SKELETON)
+			draw_enemy(gen, i);
 	}
-	free(num);
-	return (text);
-}
-void	print_info(t_gen *gen)
-{
-	char			*dir_x;
-	char			*dir_y;
-	char			*plane_x;
-	char			*plane_y;
-	char			*x;
-	char			*y;
-	char			*fov;
-	char			*mouse_x;
-	char			*mouse_y;
-	char			*zoom_lvl;
-	char			*player_speed;
-	char			*rot_speed;
-	char			*enemy_speed;
-	int				i;
-	const double	spacing = 11;
-
-	dir_x = print_helper("Direction x: ", gen->player->dir_x);
-	dir_y = print_helper("Direction y: ", gen->player->dir_y);
-	plane_x = print_helper("Plane x: ", gen->player->plane_x);
-	plane_y = print_helper("Plane y: ", gen->player->plane_y);
-	x = print_helper("X: ", gen->player->x);
-	y = print_helper("Y: ", gen->player->y);
-	fov = print_helper("FOV: ", gen->player->fov);
-	mouse_x = print_helper("Mouse x: ", (double)gen->mouse->x);
-	mouse_y = print_helper("Mouse y: ", (double)gen->mouse->y);
-	zoom_lvl = print_helper("Minimap zoom level: ", gen->minimap->zoom_level);
-	player_speed = print_helper("Player speed: ", gen->player->move_speed);
-	rot_speed = print_helper("Player rotation speed: ",
-			gen->player->rotate_speed);
-	enemy_speed = print_helper("Enemy speed: ", gen->enemy->move_speed);
-	if (gen->flags->minimap)
-		i = 220;
-	else
-		i = 10;
-	mlx_string_put(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr, 10, i
-		+= spacing, INFO_TEXT_COLOR, dir_x);
-	mlx_string_put(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr, 10, i
-		+= spacing, INFO_TEXT_COLOR, dir_y);
-	mlx_string_put(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr, 10, i
-		+= spacing, INFO_TEXT_COLOR, plane_x);
-	mlx_string_put(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr, 10, i
-		+= spacing, INFO_TEXT_COLOR, plane_y);
-	mlx_string_put(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr, 10, i
-		+= spacing, INFO_TEXT_COLOR, x);
-	mlx_string_put(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr, 10, i
-		+= spacing, INFO_TEXT_COLOR, y);
-	mlx_string_put(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr, 10, i
-		+= spacing, INFO_TEXT_COLOR, fov);
-	mlx_string_put(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr, 10, i
-		+= spacing, INFO_TEXT_COLOR, mouse_x);
-	mlx_string_put(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr, 10, i
-		+= spacing, INFO_TEXT_COLOR, mouse_y);
-	mlx_string_put(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr, 10, i
-		+= spacing, INFO_TEXT_COLOR, zoom_lvl);
-	mlx_string_put(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr, 10, i
-		+= spacing, INFO_TEXT_COLOR, rot_speed);
-	mlx_string_put(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr, 10, i
-		+= spacing, INFO_TEXT_COLOR, player_speed);
-	mlx_string_put(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr, 10, i
-		+= spacing, INFO_TEXT_COLOR, enemy_speed);
-	free(dir_x);
-	free(dir_y);
-	free(plane_x);
-	free(plane_y);
-	free(x);
-	free(y);
-	free(fov);
-	free(mouse_x);
-	free(mouse_y);
-	free(zoom_lvl);
-	free(player_speed);
-	free(rot_speed);
-	free(enemy_speed);
-}
-
-void	apply_vignette_to_image(t_gen *gen, t_img_data *img)
-{
-	int		color;
-	float	f;
-	int		r;
-	int		g;
-	int		b;
-
+	if (!gen->flags->terror_mode && gen->flags->minimap)
+		draw_minimap(gen);
 	if (gen->flags->terror_mode)
-	{
-		for (int y = 0; y < img->height; y++)
-		{
-			for (int x = 0; x < img->width; x++)
-			{
-				color = get_pixel_color_img(img, x, y);
-				f = img->vignette[y * img->width + x];
-				r = ((color >> 16) & 0xFF) * f;
-				g = ((color >> 8) & 0xFF) * f;
-				b = (color & 0xFF) * f;
-				copied_mlx_pixel_put(img, x, y, (r << 16) | (g << 8) | b);
-			}
-		}
-	}
+		draw_terror_arm(gen);
+	else
+		draw_arm(gen);
+	apply_vignette_to_image(gen, gen->img_data);
+	mlx_put_image_to_window(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,
+		gen->img_data->img, 0, 0);
+	if (gen->flags->info && !gen->flags->terror_mode)
+		print_info(gen);
 }
 
 int	game_loop(t_gen *gen)
@@ -228,59 +93,18 @@ int	game_loop(t_gen *gen)
 	double	dx;
 	double	dy;
 	double	distance;
+	int		i;
 
-	update_player(gen);
-	int i = 0;
-	while (i < gen->enemy_count)
-	{
-		gen->enemy[i].move_speed = 0.02;
-		// if (gen->enemy[i].type != ENEMY_SKELETON)
-		// 	update_enemy(gen, i);
-		update_enemy_animation(gen->enemy, i);
-		i++;
-	}
-	clear_image(gen->img_data, 0x000000);
-	render_scene(gen);
-	i = 0;
-	while (i < gen->enemy_count)
-	{
-		if (!gen->flags->terror_mode && (gen->enemy[i].type == ENEMY_SKELETON
-			|| gen->enemy[i].type == ENEMY_SKELETON2))
-			draw_enemy(gen, i);
-		if (gen->flags->terror_mode)
-			draw_enemy(gen, i);
-		i++;
-	}
-	if (gen->exit.active)
-	{
-	    update_enemy_animation(gen->enemy, gen->enemy_count);
-	    draw_enemy(gen, gen->enemy_count);
-	}
-	mouse_looking(gen);
-	if (!gen->flags->terror_mode && gen->flags->minimap)
-		draw_minimap(gen);
-	if (!gen->flags->terror_mode)
-		draw_arm(gen);
-	else
-		draw_terror_arm(gen);
-	apply_vignette_to_image(gen, gen->img_data);
-	mlx_put_image_to_window(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,
-		gen->img_data->img, 0, 0);
-	if (gen->flags->info && !gen->flags->terror_mode)
-		print_info(gen);
+	game_loop_part_one(gen);
+	game_loop_part_two(gen);
 	i = 0;
 	while (i < gen->enemy_count + 1)
 	{
 		dx = gen->enemy[i].x - gen->player->x;
 		dy = gen->enemy[i].y - gen->player->y;
 		distance = sqrt(dx * dx + dy * dy);
-		if (distance <= 0.65 && gen->flags->terror_mode && i == gen->enemy_count)
-		{
-			printf("YOU WIN\n");
-			super_duper_hiper_free();
-			exit(1);
-		}
-		else if (distance <= 0.65 && gen->flags->terror_mode)
+		if (distance <= 0.65 && gen->flags->terror_mode
+			&& gen->enemy[i].type != ENEMY_SKELETON)
 		{
 			printf("You are dead\n");
 			super_duper_hiper_free();

@@ -1,12 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/11 23:56:19 by vvazzs            #+#    #+#             */
+/*   Updated: 2026/02/11 23:56:24 by vvazzs           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../headers/cub3d.h"
 
 static int	find_invalid_char(t_parsing *data)
 {
-	int len;
-	int y;
-	int x;
-	char c;
+	int		len;
+	int		y;
+	int		x;
+	char	c;
 
 	y = -1;
 	while (++y < data->height)
@@ -17,7 +28,7 @@ static int	find_invalid_char(t_parsing *data)
 		{
 			c = data->map[y][x];
 			if (c != '0' && c != '1' && c != 'N' && c != 'S' && c != 'E'
-				&& c != 'W' && c != ' ' && c != 'D' && c != 'x' && c != '\n' 
+				&& c != 'W' && c != ' ' && c != 'D' && c != 'x' && c != '\n'
 				&& c != 'X' && c != 'Z')
 			{
 				write(2, "Error\n", 6);
@@ -88,7 +99,7 @@ static int	find_no_player(t_parsing *data)
 
 static int	file_parsing(t_parsing *data, int argc, char *file_path)
 {
-	int len;
+	int	len;
 
 	len = ft_strlen(file_path);
 	if (argc != 2)
@@ -129,4 +140,3 @@ int	parser(t_gen *gen, int argc, char **argv)
 		return (free_parsing(gen->parse), 1);
 	return (0);
 }
-

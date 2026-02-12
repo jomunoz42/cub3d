@@ -1,234 +1,120 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   basic_enemy.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/11 11:56:34 by vvazzs            #+#    #+#             */
+/*   Updated: 2026/02/12 23:03:23 by jomunoz          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "headers/cub3d.h"
 
-bool enemy_visible(t_gen *gen, double *distance_out, int i)
+void	draw_enemy(t_gen *gen, int i)
 {
-    double dx = gen->enemy[i].x - gen->player->x;
-    double dy = gen->enemy[i].y - gen->player->y;
-    double distance = sqrt(dx*dx + dy*dy);
+	t_enemy		*enemy;
+	t_texture	*tex;
+	int			stripe;
 
-    if (distance_out)
-        *distance_out = distance;
-
-    if (distance > FOG_END) // Enemy is too far
-        return (false);
-
-    double step_x = dx / distance * 0.1;
-    double step_y = dy / distance * 0.1;
-
-    double x = gen->player->x;
-    double y = gen->player->y;
-
-    for (double i = 0; i < distance; i += 0.1)
-    {
-        int map_x = (int)x;
-        int map_y = (int)y;
-        if (gen->parse->map[map_y][map_x] == '1')
-            return (false); // Wall blocks view
-        x += step_x;
-        y += step_y;
-    }
-
-    return true;
+	if (enemy_dealer(gen, &tex, &enemy, i) == 0)
+		return ;
+	draw_enemy_variable_initialization(gen, enemy);
+	if (gen->draw_enemy->transform_y <= 0)
+		return ;
+	crazy_math_operations(gen);
+	if (gen->flags->terror_mode && !enemy_visible(gen,
+			&gen->draw_enemy->distance, i))
+		return ;
+	stripe = gen->draw_enemy->draw_start_x;
+	while (stripe < gen->draw_enemy->draw_end_x)
+	{
+		if (stripe > 0 && stripe < WIN_WIDTH && gen->draw_enemy->transform_y > 0
+			&& gen->draw_enemy->transform_y < gen->rayhit->zbuffer[stripe])
+			render_enemy_stripe(gen, tex, stripe);
+		stripe++;
+	}
 }
 
-void update_enemy_animation(t_enemy *enemy, int i)
+void	draw_enemy_minimap(t_gen *gen, int i)
 {
-    int max_frames;
-    int speed;
+	int	start_x;
+	int	start_y;
+	int	px;
+	int	py;
 
-    if (enemy[i].type == ENEMY_GHOST)
-    {
-        max_frames = 4;
-        speed = 10;
-    }
-    else if (enemy[i].type == ENEMY_CTHULHU)
-    {
-        max_frames = 2;
-        speed = 25;
-    }
-    else if (enemy[i].type == ENEMY_SKELETON)
-    {
-        max_frames = 7;
-        speed = 8;
-    }
-    else if (enemy[i].type == ENEMY_SKELETON2)
-    {
-        max_frames = 3;
-        speed = 6;
-    }
-    else if (enemy[i].type == WINNING_STAR)
-    {
-        max_frames = 3;
-        speed = 3;
-    }
-    else
-        return;
-    enemy[i].enemy_timer++;
-    if (enemy[i].enemy_timer >= speed)
-    {
-        enemy[i].enemy_timer = 0;
-        enemy[i].enemy_frame = (enemy[i].enemy_frame + 1) % max_frames;
-    }
+	start_x = (int)gen->player->x - gen->minimap->zoom_level / 2;
+	start_y = (int)gen->player->y - gen->minimap->zoom_level / 2;
+	px = (gen->enemy[i].x - start_x) * MINIMAP_PIXELS
+		/ gen->minimap->zoom_level;
+	py = (gen->enemy[i].y - start_y) * MINIMAP_PIXELS
+		/ gen->minimap->zoom_level;
+	if (px < 0 || py < 0 || px >= MINIMAP_PIXELS || py >= MINIMAP_PIXELS)
+		return ;
+	draw_enemy_square(gen, px, py);
 }
 
-void draw_enemy(t_gen *gen, int i)
+int	count_enemies_in_map(t_gen *gen)
 {
-    if (!gen->enemy)
-        return;
-    if (gen->enemy[i].type == ENEMY_GHOST && !gen->ghost_enemy[0])
-        return;
-    if (gen->enemy[i].type == ENEMY_CTHULHU && !gen->cthulhu_enemy[0])
-        return;
-    if (gen->enemy[i].type == ENEMY_SKELETON && !gen->skeleton_enemy[0])
-        return;
-    if (gen->enemy[i].type == ENEMY_SKELETON2 && !gen->skeleton_enemy[0])
-        return;
-    if (gen->enemy[i].type == WINNING_STAR && (!gen->winning_exit[0] || !gen->exit.active))
-        return;
+	int	count;
+	int	row;
+	int	col;
 
-    double distance;
-    if (!enemy_visible(gen, &distance, i))
-        return;
-
-    t_enemy   *enemy = &gen->enemy[i];
-    t_texture *tex;
-
-    if (enemy->type == ENEMY_GHOST)
-        tex = gen->ghost_enemy[enemy->enemy_frame];
-    else if (enemy->type == ENEMY_CTHULHU)
-        tex = gen->cthulhu_enemy[enemy->enemy_frame];
-    else if (enemy->type == ENEMY_SKELETON)
-        tex = gen->skeleton_enemy[enemy->enemy_frame];
-    else if (enemy->type == ENEMY_SKELETON2)
-        tex = gen->skeleton_enemy[enemy->enemy_frame];
-    else if (enemy->type == WINNING_STAR)
-        tex = gen->winning_exit[enemy->enemy_frame];
-    else
-        return;
-
-    double sprite_x = enemy->x - gen->player->x;
-    double sprite_y = enemy->y - gen->player->y;
-
-    double inv_det = 1.0 / (gen->player->plane_x * gen->player->dir_y - gen->player->dir_x * gen->player->plane_y);
-    double transform_x = inv_det * (gen->player->dir_y * sprite_x - gen->player->dir_x * sprite_y);
-    double transform_y = inv_det * (-gen->player->plane_y * sprite_x + gen->player->plane_x * sprite_y);
-
-    if (transform_y <= 0)
-        return;
-
-    int sprite_screen_x = (int)((WIN_WIDTH / 2) * (1 + transform_x / transform_y));
-    int sprite_height = abs((int)(WIN_HEIGHT / transform_y));
-    int draw_start_y = -sprite_height / 2 + WIN_HEIGHT / 2;
-    int draw_end_y = sprite_height / 2 + WIN_HEIGHT / 2;
-    if (draw_start_y < 0) draw_start_y = 0;
-    if (draw_end_y >= WIN_HEIGHT) draw_end_y = WIN_HEIGHT - 1;
-    int color = 0;
-    int tex_y = 0;
-    // int tex_x = 0;
-    int d = 0;
-    int sprite_width = sprite_height;
-    int draw_start_x = -sprite_width / 2 + sprite_screen_x;
-    int draw_end_x = sprite_width / 2 + sprite_screen_x;
-    if (draw_start_x < 0) draw_start_x = 0;
-    if (draw_end_x >= WIN_WIDTH) draw_end_x = WIN_WIDTH - 1;
-
-    for (int stripe = draw_start_x; stripe < draw_end_x; stripe++)
-    {
-        int tex_x = (int)((stripe - draw_start_x) * tex->width / (draw_end_x - draw_start_x));
-
-        for (int y = draw_start_y; y < draw_end_y; y++)
-        {
-            d = y * 256 - WIN_HEIGHT * 128 + sprite_height * 128;
-            tex_y = ((d * tex->height) / sprite_height) / 256;
-            color = tex->data[tex_y * tex->width + tex_x];
-            if ((color & 0x00FFFFFF) != 0)
-            {
-                color = apply_fog(color, distance);
-                copied_mlx_pixel_put(gen->img_data, stripe, y, color);
-            }
-        }
-    }
+	count = 0;
+	row = 0;
+	while (gen->parse->map[row])
+	{
+		col = 0;
+		while (gen->parse->map[row][col])
+		{
+			if (gen->parse->map[row][col] == 'X'
+				|| gen->parse->map[row][col] == 'x'
+				|| gen->parse->map[row][col] == 'Z')
+				count++;
+			col++;
+		}
+		row++;
+	}
+	return (count);
 }
 
-void draw_enemy_minimap(t_gen *gen, int i)
+void	set_enemy(t_gen *gen, t_enemy *enemy, int row, int col)
 {
-    int start_x = (int)gen->player->x - gen->minimap->zoom_level / 2;
-    int start_y = (int)gen->player->y - gen->minimap->zoom_level / 2;
+	char	c;
 
-    int px = (gen->enemy[i].x - start_x) * MINIMAP_TILE_PIXELS;
-    int py = (gen->enemy[i].y - start_y) * MINIMAP_TILE_PIXELS;
-
-    if (px < 0 || py < 0 || px >= MINIMAP_PIXELS || py >= MINIMAP_PIXELS)
-        return;
-
-    for (int y = -3; y <= 3; y++)
-        for (int x = -3; x <= 3; x++)
-            copied_mlx_pixel_put(gen->img_data, px + x, py + y, 0xdb27c9);
+	c = gen->parse->map[row][col];
+	gen->parse->map[row][col] = '0';
+	enemy->x = col + 0.5;
+	enemy->y = row + 0.5;
+	if (c == 'X')
+		enemy->type = ENEMY_GHOST;
+	else if (c == 'x')
+		enemy->type = ENEMY_CTHULHU;
+	else if (c == 'Z')
+		enemy->type = ENEMY_SKELETON;
 }
 
-
-int count_enemies_in_map(t_gen *gen)
+void	find_enemy_from_map(t_gen *gen, int i)
 {
-    int count;
-    int row;
-    int col;
+	int	row;
+	int	col;
 
-    count = 0;
-    row = 0;
-    while (gen->parse->map[row])
-    {
-        col = 0;
-        while (gen->parse->map[row][col])
-        {
-            if (gen->parse->map[row][col] == 'X'
-                || gen->parse->map[row][col] == 'x'
-                || gen->parse->map[row][col] == 'Z')
-            {
-                count++;
-            }
-            col++;
-        }
-        row++;
-    }
-    return (count);
-}
-
-void find_enemy_from_map(t_gen *gen, int i)
-{
-    static bool flag;
-
-    for (int row = 0; gen->parse->map[row]; row++)
-    {
-        for (int col = 0; gen->parse->map[row][col]; col++)
-        {
-            if (gen->parse->map[row][col] == 'X')
-            {
-                gen->parse->map[row][col] = '0';
-                gen->enemy[i].x = col + 0.5;
-                gen->enemy[i].y = row + 0.5;
-                gen->enemy[i].type = ENEMY_GHOST;
-                return;
-            }
-            if (gen->parse->map[row][col] == 'x')
-            {
-                gen->parse->map[row][col] = '0';
-                gen->enemy[i].x = col + 0.5;
-                gen->enemy[i].y = row + 0.5;
-                gen->enemy[i].type = ENEMY_CTHULHU;
-                return;
-            }
-            if (gen->parse->map[row][col] == 'Z')
-            {
-                flag = !flag;
-                gen->parse->map[row][col] = '0';
-                gen->enemy[i].x = col + 0.5;
-                gen->enemy[i].y = row + 0.5;
-                if (flag)
-                    gen->enemy[i].type = ENEMY_SKELETON;
-                else if (!flag)
-                    gen->enemy[i].type = ENEMY_SKELETON2;
-                return;
-            }
-        }
-    }
+	row = 0;
+	while (gen->parse->map[row])
+	{
+		col = 0;
+		while (gen->parse->map[row][col])
+		{
+			if (gen->parse->map[row][col] == 'X'
+				|| gen->parse->map[row][col] == 'x'
+				|| gen->parse->map[row][col] == 'Z')
+			{
+				set_enemy(gen, &gen->enemy[i], row, col);
+				return ;
+			}
+			col++;
+		}
+		row++;
+	}
 }

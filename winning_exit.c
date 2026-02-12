@@ -124,7 +124,7 @@ static int try_quadrant(t_gen *gen, char **copy, int quadrant)
 				gen->enemy[gen->enemy_count].x = x;
 				gen->enemy[gen->enemy_count].y = y;
 	            gen->enemy[gen->enemy_count].type = WINNING_STAR;
-				gen->exit.active = true;
+				gen->exit->active = true;
 				return (1);
 			}
 			x--;
@@ -146,7 +146,7 @@ void	set_valid_exit(t_gen *gen)
 	flood_from_player(gen, copy, (int)gen->player->x, (int)gen->player->y);
 	player_q = find_player_quadrant(gen);
 	get_quadrant_priority(player_q, order);
-	gen->exit.active = false;
+	gen->exit->active = false;
 	while (i < 4)
     {
         if (try_quadrant(gen, copy, order[i]))
@@ -166,7 +166,7 @@ void	set_valid_exit(t_gen *gen)
 // void	    set_valid_exit(t_gen *gen);
 
 //makefile
-// winning_exit.c
+// winning_exit->c
 
 
 // typedef struct s_exit
@@ -248,11 +248,11 @@ void	set_valid_exit(t_gen *gen)
 
 	// if (gen->flags->terror_mode)
 	// 	{
-	// 		if (gen->exit.active == false)
+	// 		if (gen->exit->active == false)
 	// 			set_valid_exit(gen);
 	// 	}
 	// 	else if (!gen->flags->terror_mode)
-	// 		gen->exit.active = false;
+	// 		gen->exit->active = false;
 
 
 
@@ -277,7 +277,7 @@ void	set_valid_exit(t_gen *gen)
 
     // if (gen->enemy[i].type == ENEMY_SKELETON2 && !gen->skeleton_enemy[0])
     //     return;
-    // if (gen->enemy[i].type == WINNING_STAR && (!gen->winning_exit[0] || !gen->exit.active))
+    // if (gen->enemy[i].type == WINNING_STAR && (!gen->winning_exit[0] || !gen->exit->active))
     //     return;
 
     // else if (enemy->type == ENEMY_SKELETON2)
@@ -308,7 +308,7 @@ void	set_valid_exit(t_gen *gen)
 // 			|| gen->enemy[i].type == ENEMY_SKELETON2))
 
 // after that loop
-// if (gen->exit.active)
+// if (gen->exit->active)
 // {
 //     update_enemy_animation(gen->enemy, gen->enemy_count);
 //     draw_enemy(gen, gen->enemy_count);

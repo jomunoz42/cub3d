@@ -1,33 +1,45 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   typedef.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/12 14:16:27 by vvazzs            #+#    #+#             */
+/*   Updated: 2026/02/12 23:06:24 by jomunoz          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "general.h"
 
 typedef enum e_element
 {
-    E_NO = 0,
-    E_SO,
-    E_WE,
-    E_EA,
-    E_F,
-    E_C,
-    E_COUNT
-} t_element;
+	E_NO = 0,
+	E_SO,
+	E_WE,
+	E_EA,
+	E_F,
+	E_C,
+	E_COUNT
+}					t_element;
 
 typedef struct s_mouse
 {
-	int	previous_x;
-	int	x;
-	int y;
-	double	sens;
-}	t_mouse;
+	int				previous_x;
+	int				x;
+	int				y;
+	double			sens;
+}					t_mouse;
 
 typedef struct s_parsing
 {
-	char 			**textures_info;
+	char			**textures_info;
 	char			**map;
 	char			player;
 	int				width;
 	int				height;
 	int				fd;
-	int     		elements[E_COUNT];
+	int				elements[E_COUNT];
 }					t_parsing;
 
 typedef struct s_keyboard
@@ -80,11 +92,11 @@ typedef struct texture_data
 
 typedef struct s_texture
 {
-	void *img;
-	int *data;
-	int width;
-	int height;
-}	t_texture;
+	void			*img;
+	int				*data;
+	int				width;
+	int				height;
+}					t_texture;
 
 typedef struct s_player
 {
@@ -101,16 +113,15 @@ typedef struct s_player
 
 typedef struct s_images_data
 {
-    void *img;
-    char *addr;
-    int bits_pixel;
-    int line_len;
-    int endian;
-    int width;
-    int height;
-	float	*vignette;
-} t_img_data;
-
+	void			*img;
+	char			*addr;
+	int				bits_pixel;
+	int				line_len;
+	int				endian;
+	int				width;
+	int				height;
+	float			*vignette;
+}					t_img_data;
 
 typedef struct s_minimap
 {
@@ -118,88 +129,152 @@ typedef struct s_minimap
 	char			**map;
 	int				width;
 	int				height;
-	double				zoom_level;
+	double			zoom_level;
 }					t_minimap;
 
-typedef enum e_wall_face {
-    NORTH,
-    SOUTH,
-    EAST,
-    WEST
-} t_wall_face;
-
-typedef enum e_hit_type 
+typedef enum e_wall_face
 {
-    HIT_WALL,
-    HIT_DOOR
-} t_hit_type;
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST
+}					t_wall_face;
+
+typedef enum e_hit_type
+{
+	HIT_WALL,
+	HIT_DOOR
+}					t_hit_type;
 
 typedef struct s_rayhit
 {
-    int     map_x;
-    int     map_y;
-    int     side;
-    double  dist;
-	t_wall_face face;
-	t_hit_type  type;
-}   t_rayhit;
+	int				map_x;
+	int				map_y;
+	int				side;
+	double			dist;
+	double			zbuffer[WIN_WIDTH];
+	t_wall_face		face;
+	t_hit_type		type;
+}					t_rayhit;
 
 typedef struct s_flags
 {
-	bool terror_mode;
-	bool info;
-	bool minimap;
-	bool enemy_mini;
-	bool mouse_on;
-	bool music_on;
-}	t_flags;
+	bool			terror_mode;
+	bool			info;
+	bool			minimap;
+	bool			enemy_mini;
+	bool			mouse_on;
+	bool			music_on;
+}					t_flags;
 
 typedef struct s_sound
 {
-    pid_t *pids;
-    int count;
-    int capacity;
-	pid_t terror_music_pid;
-} t_sound;
+	pid_t			*pids;
+	int				count;
+	int				capacity;
+	pid_t			terror_music_pid;
+	pid_t			background_music_pid;
+}					t_sound;
 
 typedef struct s_default_values
 {
-	double player_x;
-	double player_y;
-	double player_move_speed;
-	double player_rotation_speed;
-	double minimap_zoom_level;
-	double fov;
-	double terror_player_move_speed;
-	char **env;
-	t_sound sounds;
-}	t_def_values;
+	double			player_x;
+	double			player_y;
+	double			player_move_speed;
+	double			player_rotation_speed;
+	double			minimap_zoom_level;
+	double			fov;
+	double			terror_player_move_speed;
+	char			**env;
+	t_sound			sounds;
+}					t_def_values;
 
 typedef enum e_enemy_type
 {
-    ENEMY_GHOST,
-    ENEMY_CTHULHU,
-    ENEMY_SKELETON,
-    ENEMY_SKELETON2,
+	ENEMY_GHOST,
+	ENEMY_CTHULHU,
+	ENEMY_SKELETON,
 	WINNING_STAR
-} t_enemy_type;
+}					t_enemy_type;
 
 typedef struct s_enemy
 {
-	double 			x;
-	double 			y;
-	double 			move_speed;
-	int 			size;
-	int    			enemy_frame;
-    int   			enemy_timer;
-	t_enemy_type    type;
-}	t_enemy;
+	double			x;
+	double			y;
+	double			move_speed;
+	int				size;
+	int				enemy_frame;
+	int				enemy_timer;
+	t_enemy_type	type;
+}					t_enemy;
 
 typedef struct s_node
 {
-    int x;
-    int y;
-} t_node;
+	int				x;
+	int				y;
+}					t_node;
+
+typedef struct s_dda
+{
+	int				start_x;
+	int				start_y;
+	double			delta_x;
+	double			delta_y;
+	double			side_x;
+	double			side_y;
+	int				step_x;
+	int				step_y;
+	int				side;
+	int				wall_hit;
+}					t_dda;
+
+typedef struct s_render_scene
+{
+	double			camera_x;
+	double			ray_dir_x;
+	double			ray_dir_y;
+	int				line_height;
+	int				draw_start;
+	int				draw_end;
+	double			wall_x;
+	int				texture_x;
+}					t_render_scene;
+
+typedef struct s_player_move
+{
+	double			move_x;
+	double			move_y;
+}					t_player_move;
+
+typedef struct s_draw_enemy
+{
+	double			sprite_x;
+	double			sprite_y;
+	double			inv_det;
+	double			transform_x;
+	double			transform_y;
+	int				sprite_screen_x;
+	int				sprite_height;
+	int				draw_start_y;
+	int				draw_end_y;
+	int				color;
+	int				tex_y;
+	int				d;
+	int				sprite_width;
+	int				draw_start_x;
+	int				draw_end_x;
+	int				tex_x;
+	double			distance;
+}					t_draw_enemy;
+
+typedef struct s_xpm_paths
+{
+	char			*normal[4];
+	char			*terror[4];
+	char			*ghost[4];
+	char			*cthulhu[2];
+	char			*skeleton[8];
+}					t_xpm_paths;
 
 typedef struct s_quad_bounds
 {
@@ -238,7 +313,12 @@ typedef struct s_general
 	t_texture		*door_texture2;
 	t_mouse			*mouse;
 	t_def_values	*def_values;
-	t_exit 			exit;
 	t_enemy			*enemy;
+	t_dda			*dda;
+	t_render_scene	*render;
+	t_player_move	*player_move;
+	t_draw_enemy	*draw_enemy;
+	t_xpm_paths		*xpm_paths;
+	t_exit			*exit;
 	int				enemy_count;
 }					t_gen;
