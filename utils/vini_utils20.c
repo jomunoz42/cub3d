@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 23:41:46 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/11 23:44:41 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/12 11:00:18 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,26 @@ void	draw_wall_slice(t_gen *gen, int x, t_texture *tex, double hit_dist)
 	int	d;
 	int	tex_y;
 	int	color;
+	int	tex_x;
 
-	y = gen->render->draw_start;
-	while (y < gen->render->draw_end)
+	tex_x = gen->render->texture_x;
+	if (tex_x < 0)
+		tex_x = 0;
+	if (tex_x >= tex->width)
+		tex_x = tex->width - 1;
+	y = gen->render->draw_start - 1;
+	while (++y < gen->render->draw_end)
 	{
 		d = y * 256 - WIN_HEIGHT * 128 + gen->render->line_height * 128;
 		tex_y = ((d * tex->height) / gen->render->line_height) / 256;
-		color = tex->data[tex_y * tex->width + gen->render->texture_x];
+		if (tex_y < 0)
+			tex_y = 0;
+		if (tex_y >= tex->height)
+			tex_y = tex->height - 1;
+		color = tex->data[tex_y * tex->width + tex_x];
 		if (gen->flags->terror_mode)
 			color = apply_fog(color, hit_dist);
 		copied_mlx_pixel_put(gen->img_data, x, y, color);
-		y++;
 	}
 }
 

@@ -142,7 +142,7 @@ re: fclean all
 # ============== TOOLS ======================
 
 deb:
-	lldb ./$(NAME) map.cub
+	lldb ./$(NAME) maps/testing.cub
 
 val: re
 	valgrind --leak-check=full --track-fds=yes \
