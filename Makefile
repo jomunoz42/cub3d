@@ -28,6 +28,7 @@ SRC_BASE = \
 	mouse_movement.c \
 	songs.c \
 	basic_enemy.c \
+	winning_exit.c \
 	$(PARSE)/parser.c \
 	$(PARSE)/header_validation.c \
 	$(PARSE)/construct_map.c \

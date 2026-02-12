@@ -501,6 +501,13 @@ int	key_press(int key, t_gen *gen)
 		gen->enemy->move_speed = gen->player->move_speed;
 		gen->flags->terror_mode = !gen->flags->terror_mode;
 		start_terror_music(gen);
+		if (gen->flags->terror_mode)
+		{
+			if (gen->exit.active == false)
+				set_valid_exit(gen);
+		}
+		else if (!gen->flags->terror_mode)
+			gen->exit.active = false;
 	}
 	if (key == XK_Caps_Lock && !gen->kboard->key_caps_lock)
 	{

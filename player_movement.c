@@ -244,11 +244,17 @@ int	game_loop(t_gen *gen)
 	i = 0;
 	while (i < gen->enemy_count)
 	{
-		if (!gen->flags->terror_mode && gen->enemy[i].type == ENEMY_SKELETON)
+		if (!gen->flags->terror_mode && (gen->enemy[i].type == ENEMY_SKELETON
+			|| gen->enemy[i].type == ENEMY_SKELETON2))
 			draw_enemy(gen, i);
 		if (gen->flags->terror_mode)
 			draw_enemy(gen, i);
 		i++;
+	}
+	if (gen->exit.active)
+	{
+	    update_enemy_animation(gen->enemy, gen->enemy_count);
+	    draw_enemy(gen, gen->enemy_count);
 	}
 	mouse_looking(gen);
 	if (!gen->flags->terror_mode && gen->flags->minimap)
@@ -263,12 +269,18 @@ int	game_loop(t_gen *gen)
 	if (gen->flags->info && !gen->flags->terror_mode)
 		print_info(gen);
 	i = 0;
-	while (i < gen->enemy_count)
+	while (i < gen->enemy_count + 1)
 	{
 		dx = gen->enemy[i].x - gen->player->x;
 		dy = gen->enemy[i].y - gen->player->y;
 		distance = sqrt(dx * dx + dy * dy);
-		if (distance <= 0.65 && gen->flags->terror_mode)
+		if (distance <= 0.65 && gen->flags->terror_mode && i == gen->enemy_count)
+		{
+			printf("YOU WIN\n");
+			super_duper_hiper_free();
+			exit(1);
+		}
+		else if (distance <= 0.65 && gen->flags->terror_mode)
 		{
 			printf("You are dead\n");
 			super_duper_hiper_free();

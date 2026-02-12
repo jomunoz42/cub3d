@@ -51,6 +51,16 @@ void update_enemy_animation(t_enemy *enemy, int i)
         max_frames = 7;
         speed = 8;
     }
+    else if (enemy[i].type == ENEMY_SKELETON2)
+    {
+        max_frames = 3;
+        speed = 6;
+    }
+    else if (enemy[i].type == WINNING_STAR)
+    {
+        max_frames = 3;
+        speed = 3;
+    }
     else
         return;
     enemy[i].enemy_timer++;
@@ -71,6 +81,10 @@ void draw_enemy(t_gen *gen, int i)
         return;
     if (gen->enemy[i].type == ENEMY_SKELETON && !gen->skeleton_enemy[0])
         return;
+    if (gen->enemy[i].type == ENEMY_SKELETON2 && !gen->skeleton_enemy[0])
+        return;
+    if (gen->enemy[i].type == WINNING_STAR && (!gen->winning_exit[0] || !gen->exit.active))
+        return;
 
     double distance;
     if (!enemy_visible(gen, &distance, i))
@@ -85,6 +99,10 @@ void draw_enemy(t_gen *gen, int i)
         tex = gen->cthulhu_enemy[enemy->enemy_frame];
     else if (enemy->type == ENEMY_SKELETON)
         tex = gen->skeleton_enemy[enemy->enemy_frame];
+    else if (enemy->type == ENEMY_SKELETON2)
+        tex = gen->skeleton_enemy[enemy->enemy_frame];
+    else if (enemy->type == WINNING_STAR)
+        tex = gen->winning_exit[enemy->enemy_frame];
     else
         return;
 
@@ -177,6 +195,8 @@ int count_enemies_in_map(t_gen *gen)
 
 void find_enemy_from_map(t_gen *gen, int i)
 {
+    static bool flag;
+
     for (int row = 0; gen->parse->map[row]; row++)
     {
         for (int col = 0; gen->parse->map[row][col]; col++)
@@ -199,10 +219,14 @@ void find_enemy_from_map(t_gen *gen, int i)
             }
             if (gen->parse->map[row][col] == 'Z')
             {
+                flag = !flag;
                 gen->parse->map[row][col] = '0';
                 gen->enemy[i].x = col + 0.5;
                 gen->enemy[i].y = row + 0.5;
-                gen->enemy[i].type = ENEMY_SKELETON;
+                if (flag)
+                    gen->enemy[i].type = ENEMY_SKELETON;
+                else if (!flag)
+                    gen->enemy[i].type = ENEMY_SKELETON2;
                 return;
             }
         }

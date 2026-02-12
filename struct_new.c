@@ -167,6 +167,16 @@ int	general_texture_init(t_gen *gen)
 		gen->skeleton_enemy[i]->width = 0;
 		gen->skeleton_enemy[i]->img = NULL;
 	}
+	for (int i = 0; i < 3; i++)
+	{
+		gen->winning_exit[i] = malloc(sizeof(t_texture));
+		if (!gen->winning_exit[i])
+			return (0);
+		gen->winning_exit[i]->data = NULL;
+		gen->winning_exit[i]->height = 0;
+		gen->winning_exit[i]->width = 0;
+		gen->winning_exit[i]->img = NULL;
+	}
 	return (1);
 }
 
@@ -194,6 +204,7 @@ void	wall_textures_init(t_gen *gen)
 	char	*ghost_xpm[4];
 	char	*cthulhu_xpm[4];
 	char	*skeleton_xpm[8];
+	char	*star_xpm[3];
 
 	if (!png_name_to_xpm(gen, normal_xpm))
 	{
@@ -218,17 +229,23 @@ void	wall_textures_init(t_gen *gen)
 	skeleton_xpm[5] = ft_strdup("imgs/skel_6.xpm");
 	skeleton_xpm[6] = ft_strdup("imgs/skel_7.xpm");
 	skeleton_xpm[7] = ft_strdup("imgs/skel_8.xpm");
+	star_xpm[0] = ft_strdup("imgs/star_1.xpm");
+	star_xpm[1] = ft_strdup("imgs/star_2.xpm");
+	star_xpm[2] = ft_strdup("imgs/star_3.xpm");
 	load_textures(gen, gen->texture, normal_xpm, 4);
 	load_textures(gen, gen->terror_texture, terror_xpm, 4);
 	load_textures(gen, gen->ghost_enemy, ghost_xpm, 4);
 	load_textures(gen, gen->cthulhu_enemy, cthulhu_xpm, 2);
 	load_textures(gen, gen->skeleton_enemy, skeleton_xpm, 8);
+	load_textures(gen, gen->winning_exit, star_xpm, 3);
 	gen->door_texture = load_xpm_texture(gen->mlx_data->mlx_ptr, "imgs/porta_normal.xpm");
 	gen->door_texture2 = load_xpm_texture(gen->mlx_data->mlx_ptr, "imgs/terror_door.xpm");
 	for (int i = 0; i < 8; i++)
 	{
 		if (i < 2)
 			free(cthulhu_xpm[i]);
+		if (i < 3)
+			free(star_xpm[i]);
 		if (i < 4)
 		{
 			free(normal_xpm[i]);
@@ -443,7 +460,7 @@ int	enemy_init(t_gen *gen)
         return (1);
 	printf("Enemies in map: %d\n", gen->enemy_count);
 
-	gen->enemy = malloc(sizeof(t_enemy) * gen->enemy_count);
+	gen->enemy = malloc(sizeof(t_enemy) * (gen->enemy_count + 1));
 	if (!gen->enemy)
 		return (0);
 
@@ -461,6 +478,13 @@ int	enemy_init(t_gen *gen)
 		(int)gen->enemy[i].y);
 		i++;
 	}
+	gen->enemy[i].move_speed = 0;
+	gen->enemy[i].size = 20;
+	gen->enemy[i].x = 0;
+	gen->enemy[i].y = 0;
+	gen->enemy[i].enemy_frame = 0;
+	gen->enemy[i].enemy_timer = 0;
+	gen->enemy[i].type = WINNING_STAR;
 	return (1);
 }
 

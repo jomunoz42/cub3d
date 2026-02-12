@@ -179,7 +179,9 @@ typedef enum e_enemy_type
 {
     ENEMY_GHOST,
     ENEMY_CTHULHU,
-    ENEMY_SKELETON
+    ENEMY_SKELETON,
+    ENEMY_SKELETON2,
+	WINNING_STAR
 } t_enemy_type;
 
 typedef struct s_enemy
@@ -199,6 +201,19 @@ typedef struct s_node
     int y;
 } t_node;
 
+typedef struct s_quad_bounds
+{
+    int 	start_x;
+    int 	end_x;
+    int 	start_y;
+    int 	end_y;
+}   		t_quad_bounds;
+
+typedef struct s_exit
+{
+    bool 	active;
+} 			t_exit;
+
 typedef struct s_general
 {
 	t_flags			*flags;
@@ -217,12 +232,13 @@ typedef struct s_general
 	t_texture		*ghost_enemy[4];
 	t_texture		*cthulhu_enemy[2];
 	t_texture		*skeleton_enemy[7];
+	t_texture		*winning_exit[3];
 	t_texture		*enemy_tex;
 	t_texture		*door_texture;
 	t_texture		*door_texture2;
 	t_mouse			*mouse;
 	t_def_values	*def_values;
-
-	int				enemy_count;
+	t_exit 			exit;
 	t_enemy			*enemy;
+	int				enemy_count;
 }					t_gen;

@@ -87,6 +87,11 @@ void        draw_enemy_minimap(t_gen *gen, int i);
 int         count_enemies_in_map(t_gen *gen);
 bool        enemy_visible(t_gen *gen, double *distance_out, int i);
 
+//=================== WINNING EXIT ======================
+
+void	    set_valid_exit(t_gen *gen);
+
+
 //===================== PARSING ========================
 
 int	        parser(t_gen *gen, int argc, char **argv);
@@ -97,6 +102,8 @@ int			is_header_line(t_parsing *data, char *line);
 int         check_all_elements(t_parsing *data, char *line);
 int	        is_rgb_colours_invalid(t_parsing *data, char *line, char c, int type);
 int         is_header_line_with_validation(t_parsing *data, char *line);
+char	    **create_copy_map(t_parsing *data);
+
 
 //====================== UTILS =========================
 
