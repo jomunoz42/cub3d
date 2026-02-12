@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 14:31:30 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 17:36:15 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/12 17:41:35 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	draw_arm(t_gen *gen)
 		while (x < (int)gen->texture_data->arm_width)
 		{
 			color = get_pixel_color(gen, x, y);
-			if (color != 0xB3FF00)
+			if (color != (0xB30000 | 0x00FF00))
 				copied_mlx_pixel_put(gen->img_data, start_x + x, start_y + y,
 					color);
 			x++;

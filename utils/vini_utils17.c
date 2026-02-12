@@ -51,8 +51,9 @@ void	draw_minimap_tile_one(t_gen *gen, int x, int y, int color)
 		px = 0;
 		while (px < MINIMAP_PIXELS / gen->minimap->zoom_level)
 		{
-			copied_mlx_pixel_put(gen->img_data, x * MINIMAP_PIXELS / gen->minimap->zoom_level + px, y
-				* MINIMAP_PIXELS / gen->minimap->zoom_level + py, color);
+			copied_mlx_pixel_put(gen->img_data, x * MINIMAP_PIXELS
+				/ gen->minimap->zoom_level + px, y * MINIMAP_PIXELS
+				/ gen->minimap->zoom_level + py, color);
 			px++;
 		}
 		py++;

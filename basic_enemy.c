@@ -46,8 +46,10 @@ void	draw_enemy_minimap(t_gen *gen, int i)
 
 	start_x = (int)gen->player->x - gen->minimap->zoom_level / 2;
 	start_y = (int)gen->player->y - gen->minimap->zoom_level / 2;
-	px = (gen->enemy[i].x - start_x) * MINIMAP_PIXELS / gen->minimap->zoom_level;
-	py = (gen->enemy[i].y - start_y) * MINIMAP_PIXELS / gen->minimap->zoom_level;
+	px = (gen->enemy[i].x - start_x) * MINIMAP_PIXELS
+		/ gen->minimap->zoom_level;
+	py = (gen->enemy[i].y - start_y) * MINIMAP_PIXELS
+		/ gen->minimap->zoom_level;
 	if (px < 0 || py < 0 || px >= MINIMAP_PIXELS || py >= MINIMAP_PIXELS)
 		return ;
 	draw_enemy_square(gen, px, py);
