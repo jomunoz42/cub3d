@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:17:33 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/11 23:50:36 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/12 00:08:58 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ void	clear_image(t_img_data *img, int color)
 
 void	calculate_player_movement(t_gen *gen)
 {
+	gen->player_move->move_x = 0;	
+	gen->player_move->move_y = 0;	
 	if (gen->kboard->key_w)
 	{
 		gen->player_move->move_x += gen->player->dir_x
