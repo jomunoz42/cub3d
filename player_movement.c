@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 23:45:44 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 08:58:25 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/12 17:26:05 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,8 @@ int	game_loop(t_gen *gen)
 		dx = gen->enemy[i].x - gen->player->x;
 		dy = gen->enemy[i].y - gen->player->y;
 		distance = sqrt(dx * dx + dy * dy);
-		if (distance <= 0.65 && gen->flags->terror_mode)
+		if (distance <= 0.65 && gen->flags->terror_mode
+			&& gen->enemy[i].type != ENEMY_SKELETON)
 		{
 			printf("You are dead\n");
 			super_duper_hiper_free();
