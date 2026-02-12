@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vini_utils22.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 09:43:03 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 16:49:17 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/12 23:41:56 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,11 @@ void	get_enemy_anim_stats(int type, int *max_frames, int *speed)
 		*max_frames = 7;
 		*speed = 8;
 	}
+	else if (type == ENEMY_SKELETON2)
+    {
+        *max_frames = 3;
+        *speed = 6;
+    }
 	else
 	{
 		*max_frames = 0;
@@ -99,14 +104,16 @@ int	enemy_dealer(t_gen *gen, t_texture **tex, t_enemy **enemy, int i)
 	if (gen->enemy[i].type == ENEMY_CTHULHU && !gen->cthulhu_enemy[0]
 		&& gen->flags->terror_mode)
 		return (0);
-	if (gen->enemy[i].type == ENEMY_SKELETON && !gen->skeleton_enemy[0])
+	if ((gen->enemy[i].type == ENEMY_SKELETON || gen->enemy[i].type == ENEMY_SKELETON2) 
+		&& !gen->skeleton_enemy[0])
 		return (0);
 	*enemy = &gen->enemy[i];
 	if ((*enemy)->type == ENEMY_GHOST && gen->flags->terror_mode)
 		*tex = gen->ghost_enemy[(*enemy)->enemy_frame];
 	else if ((*enemy)->type == ENEMY_CTHULHU && gen->flags->terror_mode)
 		*tex = gen->cthulhu_enemy[(*enemy)->enemy_frame];
-	else if ((*enemy)->type == ENEMY_SKELETON && !gen->flags->terror_mode)
+	else if (((*enemy)->type == ENEMY_SKELETON || (*enemy)->type == ENEMY_SKELETON2) 
+		&& !gen->flags->terror_mode)
 		*tex = gen->skeleton_enemy[(*enemy)->enemy_frame];
 	else
 		return (0);

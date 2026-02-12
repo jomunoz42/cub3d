@@ -256,6 +256,18 @@ void	set_valid_exit(t_gen *gen)
 
 
 
+
+
+
+
+
+
+
+
+
+    
+
+
 // void find_enemy_from_map(t_gen *gen, int i)
 
 //     static bool flag;
@@ -306,6 +318,36 @@ void	set_valid_exit(t_gen *gen)
 // in the while that draws enemy:
 // 		if (!gen->flags->terror_mode && (gen->enemy[i].type == ENEMY_SKELETON
 // 			|| gen->enemy[i].type == ENEMY_SKELETON2))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // after that loop
 // if (gen->exit->active)

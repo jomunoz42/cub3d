@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:56:34 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 23:03:23 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/12 23:34:56 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	count_enemies_in_map(t_gen *gen)
 
 void	set_enemy(t_gen *gen, t_enemy *enemy, int row, int col)
 {
+	static bool flag;
 	char	c;
 
 	c = gen->parse->map[row][col];
@@ -92,7 +93,14 @@ void	set_enemy(t_gen *gen, t_enemy *enemy, int row, int col)
 	else if (c == 'x')
 		enemy->type = ENEMY_CTHULHU;
 	else if (c == 'Z')
-		enemy->type = ENEMY_SKELETON;
+	{
+		flag = !flag;
+		if (flag)
+            enemy->type = ENEMY_SKELETON;
+        else if (!flag)
+            enemy->type = ENEMY_SKELETON2;
+        return;
+	}
 }
 
 void	find_enemy_from_map(t_gen *gen, int i)

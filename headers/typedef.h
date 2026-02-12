@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:27 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 23:06:24 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/12 23:30:29 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,7 @@ typedef enum e_enemy_type
 	ENEMY_GHOST,
 	ENEMY_CTHULHU,
 	ENEMY_SKELETON,
+	ENEMY_SKELETON2,
 	WINNING_STAR
 }					t_enemy_type;
 
