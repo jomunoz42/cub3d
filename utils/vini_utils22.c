@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 09:43:03 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 09:46:41 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/12 14:01:49 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	enemy_dealer(t_gen *gen, t_texture **tex, t_enemy **enemy, int i)
 	*enemy = &gen->enemy[i];
 	if ((*enemy)->type == ENEMY_GHOST && gen->flags->terror_mode)
 		*tex = gen->ghost_enemy[(*enemy)->enemy_frame];
-	else if ((*enemy)->type == ENEMY_CTHULHU)
+	else if ((*enemy)->type == ENEMY_CTHULHU && gen->flags->terror_mode)
 		*tex = gen->cthulhu_enemy[(*enemy)->enemy_frame];
 	else if ((*enemy)->type == ENEMY_SKELETON)
 		*tex = gen->skeleton_enemy[(*enemy)->enemy_frame];
