@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 23:45:44 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 00:33:25 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/12 00:34:49 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,10 @@ void	render_frame(t_gen *gen)
 int	game_loop(t_gen *gen)
 {
 	mouse_looking(gen);
-
 	update_game_state(gen);
 	render_frame(gen);
 	return (0);
 }
-
 
 // int	game_loop(t_gen *gen)
 // {
