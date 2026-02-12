@@ -125,6 +125,7 @@ int	mouse_init(t_gen *gen);
 int	avg_img_init(t_gen *gen);
 void	init_vignette(t_img_data *img);
 int	general_texture_init(t_gen *gen);
+void	wall_textures_init(t_gen *gen);
 
 
 
