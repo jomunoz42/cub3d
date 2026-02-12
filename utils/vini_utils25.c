@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vini_utils25.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/12 10:37:48 by vvazzs            #+#    #+#             */
+/*   Updated: 2026/02/12 10:38:20 by vvazzs           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../headers/cub3d.h"
 
 static double	get_normalized_dist(int x, int y, t_img_data *img)
@@ -12,7 +24,8 @@ static double	get_normalized_dist(int x, int y, t_img_data *img)
 	return (sqrt(dx * dx + dy * dy) / max_dist);
 }
 
-static float	get_vignette_factor(double t, double inner_radius, double max_light)
+static float	get_vignette_factor(double t, double inner_radius,
+		double max_light)
 {
 	double	factor;
 
@@ -29,7 +42,8 @@ static float	get_vignette_factor(double t, double inner_radius, double max_light
 	return ((float)factor);
 }
 
-static void	process_vignette_row(t_img_data *img, int y, double inner, double max_l)
+static void	process_vignette_row(t_img_data *img, int y, double inner,
+		double max_l)
 {
 	int		x;
 	double	t;

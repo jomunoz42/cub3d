@@ -1,5 +1,16 @@
-#include "../headers/cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vini_utils28.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/12 10:40:07 by vvazzs            #+#    #+#             */
+/*   Updated: 2026/02/12 10:40:38 by vvazzs           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "../headers/cub3d.h"
 
 int	terror_arm_init(t_gen *gen)
 {
@@ -61,7 +72,8 @@ int	def_values_init(t_gen *gen)
 	gen->def_values->player_x = gen->player->x;
 	gen->def_values->player_y = gen->player->y;
 	gen->def_values->minimap_zoom_level = gen->minimap->zoom_level;
-	gen->def_values->terror_player_move_speed = gen->def_values->player_move_speed
+	gen->def_values->terror_player_move_speed
+		= gen->def_values->player_move_speed
 		+ 0.05;
 	gen->def_values->env = NULL;
 	gen->def_values->sounds.pids = malloc(sizeof(pid_t) * 128);

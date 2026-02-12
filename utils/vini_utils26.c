@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vini_utils26.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/12 10:40:59 by vvazzs            #+#    #+#             */
+/*   Updated: 2026/02/12 10:41:06 by vvazzs           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../headers/cub3d.h"
 
 static int	init_texture_array(t_texture **array, int size)
@@ -40,7 +52,6 @@ int	general_texture_init(t_gen *gen)
 		return (0);
 	return (1);
 }
-
 
 int	player_init(t_gen *gen)
 {

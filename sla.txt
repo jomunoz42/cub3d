@@ -1,0 +1,49 @@
+Process 22798 stopped
+
+* thread #1, name = 'cub3d', stop reason = signal SIGSEGV: address not mapped to object (fault address=0x7ffff524b664)
+
+    frame #0: 0x00005555555637b6 cub3d`draw_wall_slice(gen=0x0000555555574340, x=0, tex=0x000055555558afc0, hit_dist=0.013772074191902652) at vini_utils20.c:36:9
+
+   33          {
+
+   34              d = y * 256 - WIN_HEIGHT * 128 + gen->render->line_height * 128;
+
+   35              tex_y = ((d * tex->height) / gen->render->line_height) / 256;
+
+-> 36              color = tex->data[tex_y * tex->width + gen->render->texture_x];
+
+                      ^
+
+   37              if (gen->flags->terror_mode)
+
+   38                  color = apply_fog(color, hit_dist);
+
+   39              copied_mlx_pixel_put(gen->img_data, x, y, color);
+
+(lldb) bt
+
+* thread #1, name = 'cub3d', stop reason = signal SIGSEGV: address not mapped to object (fault address=0x7ffff524b664)
+
+  * frame #0: 0x00005555555637b6 cub3d`draw_wall_slice(gen=0x0000555555574340, x=0, tex=0x000055555558afc0, hit_dist=0.013772074191902652) at vini_utils20.c:36:9
+
+    frame #1: 0x000055555555d1ff cub3d`render_scene(gen=0x0000555555574340) at raycast.c:87:3
+
+    frame #2: 0x0000555555563a1c cub3d`game_loop_part_one(gen=0x0000555555574340) at vini_utils21.c:28:2
+
+    frame #3: 0x000055555555c7c0 cub3d`game_loop(gen=0x0000555555574340) at player_movement.c:99:2
+
+    frame #4: 0x0000555555567355 cub3d`mlx_loop + 213
+
+    frame #5: 0x000055555555bea8 cub3d`start_window(gen=0x0000555555574340, argv="maps/testing.cub") at window_management.c:47:2
+
+    frame #6: 0x000055555555b749 cub3d`main(argc=2, argv=0x00007fffffffe298, environ=0x00007fffffffe2b0) at main.c:31:2
+
+    frame #7: 0x00007ffff7b6d635 libc.so.6`__libc_start_call_main(main=(cub3d`main at main.c:23:1), argc=2, argv=0x00007fffffffe298) at libc_start_call_main.h:58:16
+
+    frame #8: 0x00007ffff7b6d6e9 libc.so.6`__libc_start_main_impl(main=(cub3d`main at main.c:23:1), argc=2, argv=0x00007fffffffe298, init=<unavailable>, fini=<unavailable>, rtld_fini=<unavailable>, stack_end=0x00007fffffffe288) at libc-start.c:360:3
+
+    frame #9: 0x000055555555b5e5 cub3d`_start + 37
+
+(lldb) ^D
+
+[vvazzs@viniarch cub3d]$
