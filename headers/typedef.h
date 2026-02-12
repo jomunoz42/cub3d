@@ -232,26 +232,35 @@ typedef struct s_player_move
 	double			move_y;
 }					t_player_move;
 
-typedef struct  s_draw_enemy
+typedef struct s_draw_enemy
 {
-	double		sprite_x;
-	double		sprite_y;
-	double		inv_det;
-	double		transform_x;
-	double		transform_y;
-	int			sprite_screen_x;
-	int			sprite_height;
-	int			draw_start_y;
-	int			draw_end_y;
-	int			color;
-	int			tex_y;
-	int			d;
-	int			sprite_width;
-	int			draw_start_x;
-	int			draw_end_x;
-	int			tex_x;
-	double		distance;
-}	t_draw_enemy;
+	double			sprite_x;
+	double			sprite_y;
+	double			inv_det;
+	double			transform_x;
+	double			transform_y;
+	int				sprite_screen_x;
+	int				sprite_height;
+	int				draw_start_y;
+	int				draw_end_y;
+	int				color;
+	int				tex_y;
+	int				d;
+	int				sprite_width;
+	int				draw_start_x;
+	int				draw_end_x;
+	int				tex_x;
+	double			distance;
+}					t_draw_enemy;
+
+typedef struct s_xpm_paths
+{
+	char			*normal[4];
+	char			*terror[4];
+	char			*ghost[4];
+	char			*cthulhu[2];
+	char			*skeleton[8];
+}					t_xpm_paths;
 
 typedef struct s_general
 {
@@ -280,6 +289,7 @@ typedef struct s_general
 	t_dda			*dda;
 	t_render_scene	*render;
 	t_player_move	*player_move;
-	t_draw_enemy *draw_enemy;
+	t_draw_enemy	*draw_enemy;
+	t_xpm_paths		*xpm_paths;
 	int				enemy_count;
 }					t_gen;
