@@ -116,6 +116,10 @@ extra:
 	fi
 	@$(MAKE) all SRC="$(SRC_BASE) $(SRC_EXTRA)"
 
+lib:
+	git clone git@github.com:42paris/minilibx-linux.git
+	cd minilibx-linux && make && cp libmlx.a ../ && cd .. && rm -rf minilibx-linux
+
 # ============== CLEAN ======================
 
 clean:
