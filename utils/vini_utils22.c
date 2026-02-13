@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 09:43:03 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 16:49:17 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/13 13:30:35 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ bool	raycast_clear(t_gen *gen, double dx, double dy, double distance)
 	traveled = 0;
 	while (traveled < distance)
 	{
-		if (gen->parse->map[(int)y][(int)x] == '1')
+		if (gen->parse->map[(int)y][(int)x] == '1' || gen->parse->map[(int)y][(int)x] == 'D')
 			return (false);
 		x += step[0];
 		y += step[1];

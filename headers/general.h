@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   general.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 20:19:56 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/02/13 13:32:32 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@
 # define INFO_TEXT_COLOR 0xFFFFFF
 # define MINIMAP_PLAYER_CLR 0xFFA500
 # define MINIMAP_WALL_CLR 0xFFFFFF
+# define DOOR_CLR 0x5ea7c4
 # define MINIMAP_GROUND_CLR 0x161616
 # define BLACK_CLR 0X000000
 # define TERROR_ARM_TRANSPARENT 0XA8E61D

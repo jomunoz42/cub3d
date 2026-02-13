@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:19:49 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 17:36:55 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/13 13:33:17 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	is_wall(t_gen *gen, int map_x, int map_y)
 	row_len = ft_strlen(gen->parse->map[map_y]);
 	if (map_x < 0 || map_x >= row_len)
 		return (1);
-	return (gen->parse->map[map_y][map_x] == '1');
+	return (gen->parse->map[map_y][map_x] == '1' || gen->parse->map[map_y][map_x] == 'D');
 }
 
 void	draw_minimap_tile_one(t_gen *gen, int x, int y, int color)
@@ -71,6 +71,8 @@ int	get_minimap_tile_color(t_gen *gen, int map_x, int map_y)
 		return (MINIMAP_GROUND_CLR);
 	if (gen->parse->map[map_y][map_x] == '1')
 		return (MINIMAP_WALL_CLR);
+	else if (gen->parse->map[map_y][map_x] == 'D')
+		return (DOOR_CLR);
 	else
 		return (MINIMAP_GROUND_CLR);
 }
