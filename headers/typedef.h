@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:27 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 23:30:29 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/13 20:22:25 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,6 +275,7 @@ typedef struct s_xpm_paths
 	char			*ghost[4];
 	char			*cthulhu[2];
 	char			*skeleton[8];
+	char			*star[3];
 }					t_xpm_paths;
 
 typedef struct s_quad_bounds

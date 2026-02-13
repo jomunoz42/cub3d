@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 09:43:03 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 23:41:56 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/13 20:36:09 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,11 @@ void	get_enemy_anim_stats(int type, int *max_frames, int *speed)
         *max_frames = 3;
         *speed = 6;
     }
+	else if (type == WINNING_STAR)
+    {
+        *max_frames = 3;
+        *speed = 3;
+    }
 	else
 	{
 		*max_frames = 0;
@@ -115,6 +120,8 @@ int	enemy_dealer(t_gen *gen, t_texture **tex, t_enemy **enemy, int i)
 	else if (((*enemy)->type == ENEMY_SKELETON || (*enemy)->type == ENEMY_SKELETON2) 
 		&& !gen->flags->terror_mode)
 		*tex = gen->skeleton_enemy[(*enemy)->enemy_frame];
+	else if ((*enemy)->type == WINNING_STAR && gen->flags->terror_mode && gen->exit->active)
+        *tex = gen->winning_exit[(*enemy)->enemy_frame];
 	else
 		return (0);
 	return (1);
