@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 09:43:03 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/13 20:36:09 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/13 22:54:50 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,11 @@ void	get_enemy_anim_stats(int type, int *max_frames, int *speed)
         *max_frames = 3;
         *speed = 6;
     }
+	else if (type == HANGED_SKELETON)
+    {
+        *max_frames = 3;
+        *speed = 12;
+    }
 	else if (type == WINNING_STAR)
     {
         *max_frames = 3;
@@ -112,6 +117,8 @@ int	enemy_dealer(t_gen *gen, t_texture **tex, t_enemy **enemy, int i)
 	if ((gen->enemy[i].type == ENEMY_SKELETON || gen->enemy[i].type == ENEMY_SKELETON2) 
 		&& !gen->skeleton_enemy[0])
 		return (0);
+	if (gen->enemy[i].type == HANGED_SKELETON && !gen->hanged_skel[0])
+		return (0);
 	*enemy = &gen->enemy[i];
 	if ((*enemy)->type == ENEMY_GHOST && gen->flags->terror_mode)
 		*tex = gen->ghost_enemy[(*enemy)->enemy_frame];
@@ -120,6 +127,8 @@ int	enemy_dealer(t_gen *gen, t_texture **tex, t_enemy **enemy, int i)
 	else if (((*enemy)->type == ENEMY_SKELETON || (*enemy)->type == ENEMY_SKELETON2) 
 		&& !gen->flags->terror_mode)
 		*tex = gen->skeleton_enemy[(*enemy)->enemy_frame];
+	else if ((*enemy)->type == HANGED_SKELETON && gen->flags->terror_mode)
+		*tex = gen->hanged_skel[(*enemy)->enemy_frame];
 	else if ((*enemy)->type == WINNING_STAR && gen->flags->terror_mode && gen->exit->active)
         *tex = gen->winning_exit[(*enemy)->enemy_frame];
 	else

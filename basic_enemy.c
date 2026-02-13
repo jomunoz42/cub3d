@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:56:34 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 23:34:56 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/13 22:37:20 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void	set_enemy(t_gen *gen, t_enemy *enemy, int row, int col)
             enemy->type = ENEMY_SKELETON;
         else if (!flag)
             enemy->type = ENEMY_SKELETON2;
+		enemy->first_type = enemy->type;
         return;
 	}
 }

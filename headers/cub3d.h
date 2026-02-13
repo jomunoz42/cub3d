@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:24 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 23:07:49 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/13 22:36:09 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ void		background_supervisor(t_gen *gen, const char *filename,
 void		stop_background_music(t_sound *sounds);
 void		exec_sound(t_gen *gen, const char *filename);
 int exit_init(t_gen *gen);
+void	update_enemy_modes(t_gen *gen);
 
 //====================== ENEMY =========================
 

@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:02:43 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/13 20:29:26 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/13 22:35:28 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void	handle_toggle_keys(int key, t_gen *gen)
 		gen->enemy->move_speed = gen->player->move_speed;
 		gen->flags->terror_mode = !gen->flags->terror_mode;
 		start_terror_music(gen);
+		update_enemy_modes(gen);
 		if (gen->flags->terror_mode)
 		{
 			if (gen->exit->active == false)

@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:27 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/13 20:22:25 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/13 22:38:19 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,7 @@ typedef enum e_enemy_type
 	ENEMY_CTHULHU,
 	ENEMY_SKELETON,
 	ENEMY_SKELETON2,
+	HANGED_SKELETON,
 	WINNING_STAR
 }					t_enemy_type;
 
@@ -206,6 +207,7 @@ typedef struct s_enemy
 	int				size;
 	int				enemy_frame;
 	int				enemy_timer;
+	t_enemy_type	first_type;
 	t_enemy_type	type;
 }					t_enemy;
 
@@ -275,6 +277,7 @@ typedef struct s_xpm_paths
 	char			*ghost[4];
 	char			*cthulhu[2];
 	char			*skeleton[8];
+	char			*hanged_skel[3];
 	char			*star[3];
 }					t_xpm_paths;
 
@@ -310,6 +313,7 @@ typedef struct s_general
 	t_texture		*cthulhu_enemy[2];
 	t_texture		*skeleton_enemy[7];
 	t_texture		*winning_exit[3];
+	t_texture		*hanged_skel[3];
 	t_texture		*enemy_tex;
 	t_texture		*door_texture;
 	t_texture		*door_texture2;

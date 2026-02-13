@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 23:45:44 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/13 20:42:13 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/13 22:57:03 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ int	game_loop(t_gen *gen)
 		if (distance <= 0.65 && gen->flags->terror_mode && i == gen->enemy_count)
 			(printf("YOU WIN\n"), super_duper_hiper_free(), exit(1));
 		else if (distance <= 0.65 && gen->flags->terror_mode
-			&& (gen->enemy[i].type != ENEMY_SKELETON && gen->enemy[i].type != ENEMY_SKELETON2))
+			&& (gen->enemy[i].type != ENEMY_SKELETON && gen->enemy[i].type != ENEMY_SKELETON2
+			&& gen->enemy[i].type != HANGED_SKELETON))
 			(printf("YOU ARE DEAD\n"), super_duper_hiper_free(), exit(1));
 		i++;
 	}

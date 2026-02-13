@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:40:59 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/13 20:27:27 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/13 22:19:25 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ static int	init_enemy_textures(t_gen *gen)
 	if (!init_texture_array(gen->skeleton_enemy, 8))
 		return (0);
 	if (!init_texture_array(gen->winning_exit, 3))
+		return (0);
+	if (!init_texture_array(gen->hanged_skel, 3))
 		return (0);
 	return (1);
 }
