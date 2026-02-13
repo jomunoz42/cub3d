@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   basic_enemy.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:56:34 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 17:36:55 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/13 22:37:20 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	count_enemies_in_map(t_gen *gen)
 
 void	set_enemy(t_gen *gen, t_enemy *enemy, int row, int col)
 {
+	static bool flag;
 	char	c;
 
 	c = gen->parse->map[row][col];
@@ -92,7 +93,15 @@ void	set_enemy(t_gen *gen, t_enemy *enemy, int row, int col)
 	else if (c == 'x')
 		enemy->type = ENEMY_CTHULHU;
 	else if (c == 'Z')
-		enemy->type = ENEMY_SKELETON;
+	{
+		flag = !flag;
+		if (flag)
+            enemy->type = ENEMY_SKELETON;
+        else if (!flag)
+            enemy->type = ENEMY_SKELETON2;
+		enemy->first_type = enemy->type;
+        return;
+	}
 }
 
 void	find_enemy_from_map(t_gen *gen, int i)

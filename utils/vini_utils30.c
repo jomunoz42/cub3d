@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vini_utils30.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:39:38 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 10:39:40 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/13 22:42:21 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,34 @@ void	load_textures(t_gen *gen, t_texture **dst, char **xpm_files, int count)
 		}
 		dst[i]->data = (int *)mlx_get_data_addr(dst[i]->img, &bpp, &sl,
 				&endian);
+		i++;
+	}
+}
+
+int exit_init(t_gen *gen)
+{
+	gen->exit = malloc(sizeof(t_exit));
+	if (!gen->exit)
+		return (0);
+	gen->exit->active = false;
+	return (1);
+}
+
+void	update_enemy_modes(t_gen *gen)
+{
+	int	i;
+
+	i = 0;
+	while (i < gen->enemy_count)
+	{
+		if (gen->flags->terror_mode)
+		{
+			if (gen->enemy[i].type == ENEMY_SKELETON
+				|| gen->enemy[i].type == ENEMY_SKELETON2)
+				gen->enemy[i].type = HANGED_SKELETON;
+		}
+		else
+			gen->enemy[i].type = gen->enemy[i].first_type;
 		i++;
 	}
 }

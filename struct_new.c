@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_new.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:34:24 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 10:54:12 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/13 22:18:40 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,12 @@ int	init_xpm_paths(t_gen *gen)
 	gen->xpm_paths->skeleton[5] = ft_strdup("imgs/skel_6.xpm");
 	gen->xpm_paths->skeleton[6] = ft_strdup("imgs/skel_7.xpm");
 	gen->xpm_paths->skeleton[7] = ft_strdup("imgs/skel_8.xpm");
+	gen->xpm_paths->star[0] = ft_strdup("imgs/star_1.xpm");
+	gen->xpm_paths->star[1] = ft_strdup("imgs/star_2.xpm");
+	gen->xpm_paths->star[2] = ft_strdup("imgs/star_3.xpm");
+	gen->xpm_paths->hanged_skel[0] = ft_strdup("imgs/hanged_skel_1.xpm");
+	gen->xpm_paths->hanged_skel[1] = ft_strdup("imgs/hanged_skel_2.xpm");
+	gen->xpm_paths->hanged_skel[2] = ft_strdup("imgs/hanged_skel_3.xpm");
 	return (1);
 }
 
@@ -50,6 +56,11 @@ void	free_xpm_paths(t_xpm_paths *paths)
 	{
 		if (i < 2)
 			free(paths->cthulhu[i]);
+		if (i < 3)
+		{
+			free(paths->star[i]);
+			free(paths->hanged_skel[i]);
+		}
 		if (i < 4)
 		{
 			free(paths->normal[i]);
@@ -68,6 +79,8 @@ static void	load_all_textures(t_gen *gen, t_xpm_paths *paths)
 	load_textures(gen, gen->ghost_enemy, paths->ghost, 4);
 	load_textures(gen, gen->cthulhu_enemy, paths->cthulhu, 2);
 	load_textures(gen, gen->skeleton_enemy, paths->skeleton, 8);
+	load_textures(gen, gen->winning_exit, paths->star, 3);
+	load_textures(gen, gen->hanged_skel, paths->hanged_skel, 3);
 	gen->door_texture = load_xpm_texture(gen->mlx_data->mlx_ptr,
 			"imgs/porta_normal.xpm");
 	gen->door_texture2 = load_xpm_texture(gen->mlx_data->mlx_ptr,
@@ -95,6 +108,7 @@ int	init_all(t_gen *gen)
 	basic_mlx_init(gen);
 	texture_data_init(gen);
 	render_scene_init(gen);
+	exit_init(gen);
 	init_draw_enemy(gen);
 	player_move_init(gen);
 	dda_init(gen);

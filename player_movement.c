@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   player_movement.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 23:45:44 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/13 11:15:07 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/13 23:48:47 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./headers/cub3d.h"
 #include "headers/general.h"
-#include "headers/mlx.h"
 
 void	rotate_player(t_gen *gen, double angle)
 {
@@ -64,31 +63,6 @@ void	update_player(t_gen *gen)
 	apply_player_movement(gen, nx, ny);
 }
 
-void	render_frame(t_gen *gen)
-{
-	int	i;
-
-	clear_image(gen->img_data, 0x000000);
-	render_scene(gen);
-	i = -1;
-	while (++i < gen->enemy_count)
-	{
-		if (gen->flags->terror_mode || gen->enemy[i].type != ENEMY_SKELETON)
-			draw_enemy(gen, i);
-	}
-	if (!gen->flags->terror_mode && gen->flags->minimap)
-		draw_minimap(gen);
-	if (gen->flags->terror_mode)
-		draw_terror_arm(gen);
-	else
-		draw_arm(gen);
-	apply_vignette_to_image(gen, gen->img_data);
-	mlx_put_image_to_window(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,
-		gen->img_data->img, 0, 0);
-	if (gen->flags->info && !gen->flags->terror_mode)
-		print_info(gen);
-}
-
 int	game_loop(t_gen *gen)
 {
 	double	dx;
@@ -99,18 +73,17 @@ int	game_loop(t_gen *gen)
 	game_loop_part_one(gen);
 	game_loop_part_two(gen);
 	i = 0;
-	while (i < gen->enemy_count)
+	while (i < gen->enemy_count + 1)
 	{
 		dx = gen->enemy[i].x - gen->player->x;
 		dy = gen->enemy[i].y - gen->player->y;
 		distance = sqrt(dx * dx + dy * dy);
-		if (distance <= 0.65 && gen->flags->terror_mode
-			&& gen->enemy[i].type != ENEMY_SKELETON)
-		{
-			printf("You are dead\n");
-			super_duper_hiper_free();
-			exit(1);
-		}
+		if (distance <= 0.65 && gen->flags->terror_mode && i == gen->enemy_count)
+			(printf("YOU WIN\n"), super_duper_hiper_free(), exit(1));
+		else if (distance <= 0.65 && gen->flags->terror_mode
+			&& (gen->enemy[i].type != ENEMY_SKELETON && gen->enemy[i].type != ENEMY_SKELETON2
+			&& gen->enemy[i].type != HANGED_SKELETON))
+			(printf("YOU ARE DEAD\n"), super_duper_hiper_free(), exit(1));
 		i++;
 	}
 	return (0);

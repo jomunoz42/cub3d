@@ -31,9 +31,9 @@ static int	ft_floodfill(char **map, int y, int x)
 {
 	if (y < 0 || x < 0 || !map[y] || !map[y][x] || map[y][x] == ' ')
 		return (1);
-	if (map[y][x] == '1' || map[y][x] == 'Z')
+	if (map[y][x] == '1' || map[y][x] == 'L')
 		return (0);
-	map[y][x] = 'Z';
+	map[y][x] = 'L';
 	if (ft_floodfill(map, y + 1, x))
 		return (1);
 	if (ft_floodfill(map, y - 1, x))
@@ -45,7 +45,7 @@ static int	ft_floodfill(char **map, int y, int x)
 	return (0);
 }
 
-static char	**create_copy_map(t_parsing *data)
+char	**create_copy_map(t_parsing *data)
 {
 	char	**copy;
 	int		i;

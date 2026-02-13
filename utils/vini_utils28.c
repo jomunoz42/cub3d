@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vini_utils28.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:40:07 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 10:40:38 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/13 22:51:04 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	enemy_init(t_gen *gen)
 	if (gen->enemy_count == 0)
 		return (1);
 	printf("Enemies in map: %d\n", gen->enemy_count);
-	gen->enemy = malloc(sizeof(t_enemy) * gen->enemy_count);
+	gen->enemy = malloc(sizeof(t_enemy) * (gen->enemy_count + 1));
 	if (!gen->enemy)
 		return (0);
 	while (i < gen->enemy_count)
@@ -103,11 +103,18 @@ int	enemy_init(t_gen *gen)
 		gen->enemy[i].y = 0;
 		gen->enemy[i].enemy_frame = 0;
 		gen->enemy[i].enemy_timer = 0;
-		gen->enemy->type = ENEMY_SKELETON;
+		gen->enemy[i].type = ENEMY_SKELETON;
 		find_enemy_from_map(gen, i);
 		printf("Enemy position is x[%d][%d]\n", (int)gen->enemy[i].x,
 			(int)gen->enemy[i].y);
 		i++;
 	}
+	gen->enemy[i].move_speed = 0;
+	gen->enemy[i].size = 20;
+	gen->enemy[i].x = 0;
+	gen->enemy[i].y = 0;
+	gen->enemy[i].enemy_frame = 0;
+	gen->enemy[i].enemy_timer = 0;
+	gen->enemy[i].type = WINNING_STAR;
 	return (1);
 }

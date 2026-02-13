@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   typedef.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:27 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/13 11:15:33 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/13 23:48:36 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,10 @@ typedef enum e_enemy_type
 {
 	ENEMY_GHOST,
 	ENEMY_CTHULHU,
-	ENEMY_SKELETON
+	ENEMY_SKELETON,
+	ENEMY_SKELETON2,
+	HANGED_SKELETON,
+	WINNING_STAR
 }					t_enemy_type;
 
 typedef struct s_enemy
@@ -204,6 +207,7 @@ typedef struct s_enemy
 	int				size;
 	int				enemy_frame;
 	int				enemy_timer;
+	t_enemy_type	first_type;
 	t_enemy_type	type;
 }					t_enemy;
 
@@ -273,7 +277,22 @@ typedef struct s_xpm_paths
 	char			*ghost[4];
 	char			*cthulhu[2];
 	char			*skeleton[8];
+	char			*hanged_skel[3];
+	char			*star[3];
 }					t_xpm_paths;
+
+typedef struct s_quad_bounds
+{
+    int 	start_x;
+    int 	end_x;
+    int 	start_y;
+    int 	end_y;
+}   		t_quad_bounds;
+
+typedef struct s_exit
+{
+    bool 	active;
+} 			t_exit;
 
 typedef struct s_general
 {
@@ -293,6 +312,8 @@ typedef struct s_general
 	t_texture		*ghost_enemy[4];
 	t_texture		*cthulhu_enemy[2];
 	t_texture		*skeleton_enemy[7];
+	t_texture		*winning_exit[3];
+	t_texture		*hanged_skel[3];
 	t_texture		*enemy_tex;
 	t_texture		*door_texture;
 	t_texture		*door_texture2;
@@ -304,5 +325,6 @@ typedef struct s_general
 	t_player_move	*player_move;
 	t_draw_enemy	*draw_enemy;
 	t_xpm_paths		*xpm_paths;
+	t_exit			*exit;
 	int				enemy_count;
 }					t_gen;

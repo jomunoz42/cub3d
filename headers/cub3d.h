@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:24 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 20:25:47 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/02/13 22:36:09 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,8 @@ void		background_supervisor(t_gen *gen, const char *filename,
 				int is_terror);
 void		stop_background_music(t_sound *sounds);
 void		exec_sound(t_gen *gen, const char *filename);
+int exit_init(t_gen *gen);
+void	update_enemy_modes(t_gen *gen);
 
 //====================== ENEMY =========================
 
@@ -174,6 +176,11 @@ void		draw_enemy(t_gen *gen, int i);
 void		draw_enemy_minimap(t_gen *gen, int i);
 int			count_enemies_in_map(t_gen *gen);
 bool		enemy_visible(t_gen *gen, double *distance_out, int i);
+
+//=================== WINNING EXIT ======================
+
+void	    set_valid_exit(t_gen *gen);
+
 
 //===================== PARSING ========================
 
@@ -193,6 +200,7 @@ void		free_textures(t_gen *gen);
 void		free_all_resources(t_gen *gen);
 void		free_arm_object(t_gen *gen, t_img_data *arm);
 void		free_minimap(t_gen *gen);
+char	**create_copy_map(t_parsing *data);
 void		free_enemies(t_gen *gen);
 void		free_game_objects(t_gen *gen);
 void		free_input_and_raycast(t_gen *gen);

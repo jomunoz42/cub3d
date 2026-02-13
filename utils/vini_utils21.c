@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vini_utils21.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 23:54:34 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 14:10:17 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/13 20:40:05 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	game_loop_part_one(t_gen *gen)
 	update_player(gen);
 	i = 0;
 	gen->enemy->move_speed = gen->player->move_speed - 0.001;
-	while (i < gen->enemy_count)
+	while (i < gen->enemy_count + 1)
 	{
 		gen->enemy[i].move_speed = gen->player->move_speed - 0.01;
 		update_enemy_animation(gen->enemy, i);
@@ -28,11 +28,9 @@ void	game_loop_part_one(t_gen *gen)
 	clear_image(gen->img_data, 0x000000);
 	render_scene(gen);
 	i = 0;
-	while (i < gen->enemy_count)
+	while (i < gen->enemy_count + 1)
 	{
 		draw_enemy(gen, i);
-		if (gen->flags->terror_mode)
-			draw_enemy(gen, i);
 		i++;
 	}
 	mouse_looking(gen);
