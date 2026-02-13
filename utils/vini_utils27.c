@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:39:19 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 10:41:28 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/13 11:15:07 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	keyboard_init(t_gen *gen)
 	gen->kboard->key_s = false;
 	gen->kboard->key_d = false;
 	gen->kboard->key_e = false;
-	gen->kboard->tab = false;
+	gen->kboard->space = false;
 	gen->kboard->key_right = false;
 	gen->kboard->key_left = false;
 	gen->kboard->control_left = false;

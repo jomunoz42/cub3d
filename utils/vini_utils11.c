@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:02:43 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/11 11:02:44 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/13 11:16:20 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ void	toggle_flag(bool *key_state, bool *flag)
 
 void	handle_toggle_keys(int key, t_gen *gen)
 {
-	if (key == XK_Tab)
-		gen->kboard->tab = true;
+	if (key == XK_space)
+		gen->kboard->space = true;
 	if (key == XK_t && !gen->kboard->key_t)
 	{
 		gen->kboard->key_t = true;
