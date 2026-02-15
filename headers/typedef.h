@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:27 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/15 18:52:33 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/15 20:40:41 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -311,10 +311,9 @@ typedef struct s_general
 	t_texture		*terror_texture[4];
 	t_texture		*ghost_enemy[4];
 	t_texture		*cthulhu_enemy[2];
-	t_texture		*skeleton_enemy[7];
+	t_texture		*skeleton_enemy[8];
 	t_texture		*winning_exit[3];
 	t_texture		*hanged_skel[4];
-	t_texture		*enemy_tex;
 	t_texture		*door_texture;
 	t_texture		*door_texture2;
 	t_mouse			*mouse;

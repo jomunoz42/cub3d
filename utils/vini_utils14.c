@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vini_utils14.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:02:49 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/11 11:03:33 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/15 19:21:40 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,6 @@ void	free_minimap(t_gen *gen)
 	free(gen->minimap);
 }
 
-void	free_enemies(t_gen *gen)
-{
-	int	i;
-
-	if (!gen->enemy)
-		return ;
-	i = 0;
-	while (i < 8)
-	{
-		if (gen->skeleton_enemy[i])
-			free(gen->skeleton_enemy[i]);
-		i++;
-	}
-	free(gen->enemy);
-}
-
 void	free_game_objects(t_gen *gen)
 {
 	if (!gen)
@@ -48,7 +32,6 @@ void	free_game_objects(t_gen *gen)
 	free_minimap(gen);
 	if (gen->player)
 		free(gen->player);
-	free_enemies(gen);
 }
 
 void	free_input_and_raycast(t_gen *gen)
@@ -61,10 +44,6 @@ void	free_input_and_raycast(t_gen *gen)
 	{
 		free(gen->mouse);
 	}
-	if (gen->door_texture)
-		free(gen->door_texture);
-	if (gen->door_texture2)
-		free(gen->door_texture2);
 	if (gen->flags)
 		free(gen->flags);
 }

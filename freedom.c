@@ -6,19 +6,12 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:05:41 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/15 18:53:06 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/15 21:18:10 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./headers/cub3d.h"
 #include "headers/mlx.h"
-
-int	handle_exit(int keysys)
-{
-	if (keysys == XK_Escape)
-		return (super_duper_hiper_free(), 1);
-	return (0);
-}
 
 void	free_images(t_gen *gen)
 {
@@ -32,41 +25,47 @@ void	free_images(t_gen *gen)
 	gen->img_data = NULL;
 }
 
-void	free_textures(t_gen *gen)
+static void	free_single_texture(t_gen *gen, t_texture *tex)
+{
+	if (!tex)
+		return ;
+	if (gen->mlx_data && gen->mlx_data->mlx_ptr && tex->img)
+		mlx_destroy_image(gen->mlx_data->mlx_ptr, tex->img);
+	free(tex);
+}
+
+static void	free_texture_array(t_gen *gen, t_texture **tex, int count)
 {
 	int	i;
 
-	if (!gen)
+	if (!tex)
 		return ;
-	i = -1;
-	while (++i < 4)
+	i = 0;
+	while (i < count)
 	{
-		if (gen->texture[i])
+		if (tex[i])
 		{
-			if (gen->mlx_data && gen->mlx_data->mlx_ptr)
-				mlx_destroy_image(gen->mlx_data->mlx_ptr, gen->texture[i]->img);
-			free(gen->texture[i]);
-			gen->texture[i] = NULL;
+			if (gen->mlx_data && gen->mlx_data->mlx_ptr && tex[i]->img)
+				mlx_destroy_image(gen->mlx_data->mlx_ptr, tex[i]->img);
+			free(tex[i]);
+            tex[i] = NULL;
 		}
-		if (gen->terror_texture[i])
-		{
-			free(gen->terror_texture[i]);
-			gen->terror_texture[i] = NULL;
-		}
-	}
-	if (gen->enemy_tex && gen->mlx_data)
-	{
-		free_texture(gen->mlx_data->mlx_ptr, gen->enemy_tex);
-		gen->enemy_tex = NULL;
+		i++;
 	}
 }
-
-// ghost_enemy    cthulhu_enemy  skeleton_enemy   winning_exit   hanged_skel terror_texture
 
 void	free_all_resources(t_gen *gen)
 {
 	free_images(gen);
-	free_textures(gen);
+	free_texture_array(gen, gen->texture, 4);
+	free_texture_array(gen, gen->terror_texture, 4);
+	free_texture_array(gen, gen->ghost_enemy, 4);	
+	free_texture_array(gen, gen->cthulhu_enemy, 2);
+	free_texture_array(gen, gen->skeleton_enemy, 8);
+	free_texture_array(gen, gen->hanged_skel, 4);
+	free_texture_array(gen, gen->winning_exit, 3);
+	free_single_texture(gen, gen->door_texture);
+	free_single_texture(gen, gen->door_texture2);
 	if (gen->render)
 		free(gen->render);
 	if (gen->player_move)
@@ -81,8 +80,8 @@ int	super_duper_hiper_free(void)
 
 	gen = gen_stuff();
 	stop_all_sounds(gen);
-	free_all_resources(gen);
 	free_game_objects(gen);
+	free_all_resources(gen);
 	free_input_and_raycast(gen);
 	free_config_and_parsing(gen);
 	if (gen->mlx_data)

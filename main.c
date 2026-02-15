@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:16:24 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/11 15:16:25 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/15 21:38:53 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	main(int argc, char *argv[], char **environ)
 	gen = gen_stuff();
 	if (parser(gen, argc, argv))
 		return (1);
-	printf("\n==All right from here==\n");
 	main_init(gen, argv[1], environ);
 	start_window(gen, argv[1]);
 	return (0);

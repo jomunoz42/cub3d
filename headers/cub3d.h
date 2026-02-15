@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:24 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/13 22:36:09 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/15 20:25:58 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,6 @@ int			basic_mlx_init(t_gen *gen);
 int			init_flags(t_gen *gen);
 int			def_values_init(t_gen *gen);
 int			enemy_init(t_gen *gen);
-int			enemy_texture_init(t_gen *gen);
 int			dda_init(t_gen *gen);
 int			render_scene_init(t_gen *gen);
 int			player_move_init(t_gen *gen);
@@ -164,11 +163,8 @@ void		background_supervisor(t_gen *gen, const char *filename,
 				int is_terror);
 void		stop_background_music(t_sound *sounds);
 void		exec_sound(t_gen *gen, const char *filename);
-int exit_init(t_gen *gen);
-void	update_enemy_modes(t_gen *gen);
-
-//====================== ENEMY =========================
-
+int			exit_init(t_gen *gen);
+void		update_enemy_modes(t_gen *gen);
 void		update_enemy_animation(t_enemy *enemy, int i);
 void		find_enemy_from_map(t_gen *gen, int i);
 void		update_enemy(t_gen *gen, int i);
@@ -176,14 +172,7 @@ void		draw_enemy(t_gen *gen, int i);
 void		draw_enemy_minimap(t_gen *gen, int i);
 int			count_enemies_in_map(t_gen *gen);
 bool		enemy_visible(t_gen *gen, double *distance_out, int i);
-
-//=================== WINNING EXIT ======================
-
-void	    set_valid_exit(t_gen *gen);
-
-
-//===================== PARSING ========================
-
+void		set_valid_exit(t_gen *gen);
 int			parser(t_gen *gen, int argc, char **argv);
 int			is_map_valid(t_parsing *data);
 int			construct_map_and_textures(t_parsing *data);
@@ -200,7 +189,7 @@ void		free_textures(t_gen *gen);
 void		free_all_resources(t_gen *gen);
 void		free_arm_object(t_gen *gen, t_img_data *arm);
 void		free_minimap(t_gen *gen);
-char	**create_copy_map(t_parsing *data);
+char		**create_copy_map(t_parsing *data);
 void		free_enemies(t_gen *gen);
 void		free_game_objects(t_gen *gen);
 void		free_input_and_raycast(t_gen *gen);
@@ -233,9 +222,6 @@ void		finalize_hit(t_gen *gen, double ray_x, double ray_y, t_rayhit *hit);
 t_rayhit	castrate(t_gen *gen, double ray_x, double ray_y, bool interact);
 void		update_game_state(t_gen *gen);
 void		update_player(t_gen *gen);
-
-//====================== UTILS =========================
-
 char		*get_next_line(int fd);
 int			contains_tab(char *s);
 int			is_line_empty(char *line);

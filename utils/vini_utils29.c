@@ -3,25 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   vini_utils29.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:39:35 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 10:40:00 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/15 20:25:04 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/cub3d.h"
-
-int	enemy_texture_init(t_gen *gen)
-{
-	gen->enemy_tex = load_xpm_texture(gen->mlx_data->mlx_ptr, ENEMY_SPRITE_XPM);
-	if (!gen->enemy_tex)
-	{
-		ft_putstr_fd("Error\nError: failed to load enemy texture\n", 2);
-		exit(1);
-	}
-	return (1);
-}
 
 int	dda_init(t_gen *gen)
 {

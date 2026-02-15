@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:34:24 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/15 18:13:57 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/15 21:45:20 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void	load_all_textures(t_gen *gen, t_xpm_paths *paths)
 	load_textures(gen, gen->cthulhu_enemy, paths->cthulhu, 2);
 	load_textures(gen, gen->skeleton_enemy, paths->skeleton, 8);
 	load_textures(gen, gen->winning_exit, paths->star, 3);
-	load_textures(gen, gen->hanged_skel, paths->hanged_skel, 3);
+	load_textures(gen, gen->hanged_skel, paths->hanged_skel, 4);
 	gen->door_texture = load_xpm_texture(gen->mlx_data->mlx_ptr,
 			"imgs/porta_normal.xpm");
 	gen->door_texture2 = load_xpm_texture(gen->mlx_data->mlx_ptr,
@@ -124,6 +124,5 @@ int	init_all(t_gen *gen)
 	init_flags(gen);
 	def_values_init(gen);
 	enemy_init(gen);
-	enemy_texture_init(gen);
 	return (0);
 }

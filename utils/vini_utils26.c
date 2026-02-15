@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:40:59 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/15 18:48:26 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/15 21:44:47 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,11 @@ static int	init_texture_array(t_texture **array, int size)
 	{
 		array[i] = malloc(sizeof(t_texture));
 		if (!array[i])
+		{
+			while (--i >= 0)
+                free(array[i]);
 			return (0);
+		}
 		array[i]->data = NULL;
 		array[i]->height = 0;
 		array[i]->width = 0;
@@ -79,6 +83,8 @@ int	arm_init(t_gen *gen)
 	int	img_width;
 	int	img_height;
 
+	if (gen->arm)
+		free_arm_object(gen, gen->arm);	
 	gen->arm = malloc(sizeof(t_img_data));
 	if (!gen->arm)
 		return (0);

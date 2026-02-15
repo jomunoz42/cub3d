@@ -72,34 +72,14 @@ static t_quad_bounds get_quadrant_bounds(t_gen *gen, int quadrant)
 
 static void get_quadrant_priority(int player_q, int order[4])
 {
-    if (player_q == 1)
-    {
-        order[0] = 4;
-        order[1] = 3;
-        order[2] = 2;
-        order[3] = 1;
-    }
-    else if (player_q == 2)
-    {
-        order[0] = 3;
-        order[1] = 4;
-        order[2] = 1;
-        order[3] = 2;
-    }
-    else if (player_q == 3)
-    {
-        order[0] = 2;
-        order[1] = 1;
-        order[2] = 4;
-        order[3] = 3;
-    }
-    else
-    {
-        order[0] = 1;
-        order[1] = 2;
-        order[2] = 3;
-        order[3] = 4;
-    }
+	if (player_q == 1)
+		ft_memcpy(order, (int [4]){4, 3, 2, 1}, sizeof(int) * 4);
+	else if (player_q == 2)
+		ft_memcpy(order, (int [4]){3, 4, 1, 2}, sizeof(int) * 4);
+	else if (player_q == 3)
+		ft_memcpy(order, (int [4]){2, 1, 4, 3}, sizeof(int) * 4);
+	else
+		ft_memcpy(order, (int [4]){1, 2, 3, 4}, sizeof(int) * 4);
 }
 
 static int try_quadrant(t_gen *gen, char **copy, int quadrant)
@@ -117,10 +97,7 @@ static int try_quadrant(t_gen *gen, char **copy, int quadrant)
 		{
 			if (copy[y][x] == 'F')
        		{
-                gen->enemy[gen->enemy_count].move_speed = 0;
 	            gen->enemy[gen->enemy_count].size = 40;
-	            gen->enemy[gen->enemy_count].enemy_frame = 0;
-	            gen->enemy[gen->enemy_count].enemy_timer = 0;
 				gen->enemy[gen->enemy_count].x = x + 0.5;
 				gen->enemy[gen->enemy_count].y = y + 0.5;
 	            gen->enemy[gen->enemy_count].type = WINNING_STAR;
