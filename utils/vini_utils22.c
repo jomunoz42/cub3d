@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 09:43:03 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/13 23:48:58 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/15 22:05:51 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ void	get_enemy_anim_stats(int type, int *max_frames, int *speed)
     }
 	else if (type == HANGED_SKELETON)
     {
-        *max_frames = 3;
-        *speed = 12;
+        *max_frames = 4;
+        *speed = 15;
     }
 	else if (type == WINNING_STAR)
     {

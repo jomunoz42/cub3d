@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:34:24 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/13 22:18:40 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/15 21:45:20 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	init_xpm_paths(t_gen *gen)
 	gen->xpm_paths->hanged_skel[0] = ft_strdup("imgs/hanged_skel_1.xpm");
 	gen->xpm_paths->hanged_skel[1] = ft_strdup("imgs/hanged_skel_2.xpm");
 	gen->xpm_paths->hanged_skel[2] = ft_strdup("imgs/hanged_skel_3.xpm");
+	gen->xpm_paths->hanged_skel[3] = ft_strdup("imgs/hanged_skel_4.xpm");
 	return (1);
 }
 
@@ -57,15 +58,13 @@ void	free_xpm_paths(t_xpm_paths *paths)
 		if (i < 2)
 			free(paths->cthulhu[i]);
 		if (i < 3)
-		{
 			free(paths->star[i]);
-			free(paths->hanged_skel[i]);
-		}
 		if (i < 4)
 		{
 			free(paths->normal[i]);
 			free(paths->terror[i]);
 			free(paths->ghost[i]);
+			free(paths->hanged_skel[i]);
 		}
 		free(paths->skeleton[i]);
 		i++;
@@ -80,7 +79,7 @@ static void	load_all_textures(t_gen *gen, t_xpm_paths *paths)
 	load_textures(gen, gen->cthulhu_enemy, paths->cthulhu, 2);
 	load_textures(gen, gen->skeleton_enemy, paths->skeleton, 8);
 	load_textures(gen, gen->winning_exit, paths->star, 3);
-	load_textures(gen, gen->hanged_skel, paths->hanged_skel, 3);
+	load_textures(gen, gen->hanged_skel, paths->hanged_skel, 4);
 	gen->door_texture = load_xpm_texture(gen->mlx_data->mlx_ptr,
 			"imgs/porta_normal.xpm");
 	gen->door_texture2 = load_xpm_texture(gen->mlx_data->mlx_ptr,
@@ -125,6 +124,5 @@ int	init_all(t_gen *gen)
 	init_flags(gen);
 	def_values_init(gen);
 	enemy_init(gen);
-	enemy_texture_init(gen);
 	return (0);
 }

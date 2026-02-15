@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:40:07 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/13 22:51:04 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/15 21:29:55 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ int	terror_arm_init(t_gen *gen)
 	int	img_width;
 	int	img_height;
 
+	if (gen->terror_arm)
+		free_arm_object(gen, gen->terror_arm);
+		
 	gen->terror_arm = malloc(sizeof(t_img_data));
 	if (!gen->terror_arm)
 		return (0);
@@ -78,6 +81,8 @@ int	def_values_init(t_gen *gen)
 	gen->def_values->env = NULL;
 	gen->def_values->sounds.pids = malloc(sizeof(pid_t) * 128);
 	gen->def_values->sounds.terror_music_pid = 0;
+	gen->def_values->sounds.background_music_pid = 0;
+	gen->def_values->sounds.terror_music_pid = 0;
 	gen->def_values->sounds.count = 0;
 	gen->def_values->sounds.capacity = 128;
 	return (1);
@@ -91,11 +96,10 @@ int	enemy_init(t_gen *gen)
 	gen->enemy_count = count_enemies_in_map(gen);
 	if (gen->enemy_count == 0)
 		return (1);
-	printf("Enemies in map: %d\n", gen->enemy_count);
 	gen->enemy = malloc(sizeof(t_enemy) * (gen->enemy_count + 1));
 	if (!gen->enemy)
 		return (0);
-	while (i < gen->enemy_count)
+	while (i <= gen->enemy_count)
 	{
 		gen->enemy[i].move_speed = gen->def_values->player_move_speed;
 		gen->enemy[i].size = 20;
@@ -104,17 +108,11 @@ int	enemy_init(t_gen *gen)
 		gen->enemy[i].enemy_frame = 0;
 		gen->enemy[i].enemy_timer = 0;
 		gen->enemy[i].type = ENEMY_SKELETON;
-		find_enemy_from_map(gen, i);
-		printf("Enemy position is x[%d][%d]\n", (int)gen->enemy[i].x,
-			(int)gen->enemy[i].y);
+		if (i == gen->enemy_count)
+			gen->enemy[i].type = WINNING_STAR;
+		else
+			find_enemy_from_map(gen, i);
 		i++;
 	}
-	gen->enemy[i].move_speed = 0;
-	gen->enemy[i].size = 20;
-	gen->enemy[i].x = 0;
-	gen->enemy[i].y = 0;
-	gen->enemy[i].enemy_frame = 0;
-	gen->enemy[i].enemy_timer = 0;
-	gen->enemy[i].type = WINNING_STAR;
 	return (1);
 }

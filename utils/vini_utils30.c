@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:39:38 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/13 22:42:21 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/15 20:39:47 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,11 @@ void	update_enemy_modes(t_gen *gen)
 			gen->enemy[i].type = gen->enemy[i].first_type;
 		i++;
 	}
+}
+
+int	handle_exit(int keysys)
+{
+	if (keysys == XK_Escape)
+		return (super_duper_hiper_free(), 1);
+	return (0);
 }
