@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:27 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/13 22:38:19 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/15 18:52:33 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,7 +277,7 @@ typedef struct s_xpm_paths
 	char			*ghost[4];
 	char			*cthulhu[2];
 	char			*skeleton[8];
-	char			*hanged_skel[3];
+	char			*hanged_skel[4];
 	char			*star[3];
 }					t_xpm_paths;
 
@@ -313,7 +313,7 @@ typedef struct s_general
 	t_texture		*cthulhu_enemy[2];
 	t_texture		*skeleton_enemy[7];
 	t_texture		*winning_exit[3];
-	t_texture		*hanged_skel[3];
+	t_texture		*hanged_skel[4];
 	t_texture		*enemy_tex;
 	t_texture		*door_texture;
 	t_texture		*door_texture2;

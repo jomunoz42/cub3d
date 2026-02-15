@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   freedom.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:05:41 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 10:51:14 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/15 18:53:06 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	free_textures(t_gen *gen)
 		gen->enemy_tex = NULL;
 	}
 }
+
+// ghost_enemy    cthulhu_enemy  skeleton_enemy   winning_exit   hanged_skel terror_texture
 
 void	free_all_resources(t_gen *gen)
 {
