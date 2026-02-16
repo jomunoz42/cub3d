@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   freedom_helper.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:02:49 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/16 19:11:46 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/02/16 19:57:22 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,10 @@ void	free_config_and_parsing(t_gen *gen)
 	}
 	if (gen->dda)
 		free(gen->dda);
+}
+
+void	free_exit(t_gen *gen)
+{
+	if (gen->exit)
+		free(gen->exit);
 }

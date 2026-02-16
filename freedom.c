@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:05:41 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/15 21:18:10 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/16 20:00:43 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ void	free_all_resources(t_gen *gen)
 	free_texture_array(gen, gen->winning_exit, 3);
 	free_single_texture(gen, gen->door_texture);
 	free_single_texture(gen, gen->door_texture2);
+	if (gen->enemy)
+		free(gen->enemy);
 	if (gen->render)
 		free(gen->render);
 	if (gen->player_move)
@@ -84,6 +86,7 @@ int	super_duper_hiper_free(void)
 	free_all_resources(gen);
 	free_input_and_raycast(gen);
 	free_config_and_parsing(gen);
+	free_exit(gen);
 	if (gen->mlx_data)
 	{
 		if (gen->mlx_data->win_ptr)

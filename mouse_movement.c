@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse_movement.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:02:56 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/11 11:02:57 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/16 19:52:23 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	mouse_looking(t_gen *gen)
 	cursor_y = WIN_HEIGHT / 2;
 	if (gen->flags->mouse_on)
 	{
-		mlx_mouse_hide(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr);
 		mlx_mouse_get_pos(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,
 			&gen->mouse->x, &gen->mouse->y);
 		if (!first_frame)

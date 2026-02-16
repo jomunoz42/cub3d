@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_new_utils4.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:40:59 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/16 19:12:00 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/02/16 20:05:43 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,5 @@ int	arm_init(t_gen *gen)
 	gen->arm->endian = 0;
 	gen->arm->width = 0;
 	gen->arm->height = 0;
-	gen->arm->img = mlx_xpm_file_to_image(gen->mlx_data->mlx_ptr, USER_HAND_XPM,
-			&img_width, &img_height);
-	gen->arm->addr = mlx_get_data_addr(gen->arm->img, &gen->arm->bits_pixel,
-			&gen->arm->line_len, &gen->arm->endian);
 	return (1);
 }

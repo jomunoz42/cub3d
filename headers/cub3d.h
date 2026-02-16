@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:24 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/15 20:25:58 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/16 19:57:36 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ void		load_textures(t_gen *gen, t_texture **dst, char **xpm_files,
 				int count);
 int			texture_data_init(t_gen *gen);
 int			minimap_init(t_gen *gen);
+void	free_exit(t_gen *gen);
 void		init_extra_keys(t_keyboard *kb);
 int			keyboard_init(t_gen *gen);
 int			rayhit_init(t_gen *gen);
@@ -151,6 +152,7 @@ int			basic_mlx_init(t_gen *gen);
 int			init_flags(t_gen *gen);
 int			def_values_init(t_gen *gen);
 int			enemy_init(t_gen *gen);
+int	goated_checker(t_draw_enemy *d, t_texture *t);
 int			dda_init(t_gen *gen);
 int			render_scene_init(t_gen *gen);
 int			player_move_init(t_gen *gen);

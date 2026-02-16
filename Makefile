@@ -152,14 +152,14 @@ fclean:
 
 
 
-re: fclean all
+re: fclean lib all
 
 # ============== TOOLS ======================
 
 deb:
 	lldb ./$(NAME) maps/testing.cub
 
-val: re
+val:
 	valgrind --leak-check=full --track-fds=yes \
 	--show-leak-kinds=all --track-origins=yes \
 	./$(NAME) map.cub

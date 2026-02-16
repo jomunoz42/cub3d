@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window_management.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:02:06 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/11 11:02:07 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/16 20:04:57 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	window_init(t_gen *gen, int w, int h)
 			&w, &h);
 	if (!gen->arm->img)
 		return (printf("Error\nError: failed to load arm image\n"), 1);
+	gen->arm->addr = mlx_get_data_addr(gen->arm->img, &gen->arm->bits_pixel,
+			&gen->arm->line_len, &gen->arm->endian);
 	return (0);
 }
 
