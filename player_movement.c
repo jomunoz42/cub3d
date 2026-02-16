@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 23:45:44 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 17:26:05 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/13 11:15:07 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ void	rotate_player(t_gen *gen, double angle)
 
 void	apply_player_movement(t_gen *gen, double nx, double ny)
 {
-	if (gen->kboard->tab)
+	if (gen->kboard->space)
 	{
 		open_close_door(gen);
-		gen->kboard->tab = false;
+		gen->kboard->space = false;
 	}
 	if (gen->kboard->key_right)
 		rotate_player(gen, gen->player->rotate_speed);

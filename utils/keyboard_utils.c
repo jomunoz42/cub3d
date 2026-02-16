@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:02:46 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/16 18:56:58 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/02/16 19:10:44 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	release_movement_keys(int key, t_gen *gen)
 	if (key == XK_Right)
 		gen->kboard->key_right = false;
 	if (key == XK_Tab)
-		gen->kboard->tab = false;
+		gen->kboard->space = false;
 }
 
 void	release_modifier_keys(int key, t_gen *gen)

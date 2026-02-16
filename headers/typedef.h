@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   typedef.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:27 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 20:04:30 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/02/13 11:15:33 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_keyboard
 	bool			key_a;
 	bool			key_s;
 	bool			key_d;
-	bool			tab;
+	bool			space;
 	bool			key_right;
 	bool			key_left;
 	bool			control_left;
