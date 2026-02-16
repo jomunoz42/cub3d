@@ -52,6 +52,7 @@ SRC_BASE = \
 	src/player/mouse_movement.c \
 	src/player/player_movement.c \
 	src/player/player_movement2.c \
+	src/player/player_position.c \
 	src/render_raycast/dda_utils1.c \
 	src/render_raycast/dda_utils2.c \
 	src/render_raycast/picasso1.c \
@@ -71,10 +72,12 @@ SRC_BASE = \
 	src/utils/print_stuff.c \
 	src/utils/vignette_utils.c \
 	src/utils/vignette_utils2.c \
-# 	$(EXTRA)/AStar/AStar.c \
-# 	$(EXTRA)/enemy.c
 
 SRC = $(SRC_BASE)
+
+SRC_EXTRA = \
+	$(EXTRA)/enemy.c \
+	$(EXTRA)/AStar/AStar.c
 
 # ================ OBJECTS ==================
 
@@ -99,24 +102,36 @@ $(OBJDIR)/%.o: ./%.c
 # =============== EXTRA =====================
 
 
-extra: SRC += $(SRC_EXTRA)
 extra:
-	@mkdir -p extra
 	@echo "[Creating extra directory]"
+	@mkdir -p $(EXTRA)
+	@echo "[Done]"
+	@echo "[Copying enemy.txt]"
 	@if [ -f enemy.txt ]; then \
 		cp enemy.txt $(EXTRA)/enemy.c; \
 	fi
+	@echo "[Done]"
 	@echo "[Injecting enemy logic into game_loop_helper.c]"
-	@if ! grep -q "update_enemy(gen, i);" ./utils/game_loop_helper.c; then \
-		sed -i '25i\		if (gen->enemy[i].type != ENEMY_SKELETON && gen->flags->terror_mode)' ./utils/game_loop_helper.c; \
-		sed -i '26i\			update_enemy(gen, i);' ./utils/game_loop_helper.c; \
+	@if ! grep -q "update_enemy(gen, i);" src/game_loop/game_loop_helper.c; then \
+		sed -i '25i\		if (gen->enemy[i].type != ENEMY_SKELETON && gen->flags->terror_mode)' src/game_loop/game_loop_helper.c; \
+		sed -i '26i\			update_enemy(gen, i);' src/game_loop/game_loop_helper.c; \
 	fi
+	@echo "[Done]"
 	@echo "[Injecting mlx include into general.h]"
-	@sed -i '17i\# include "../extra/AStar/AStar.h"' ./inc/general.h;
+	@	sed -i '17i\# include "../extra/AStar/AStar.h"' ./inc/general.h;
+	@echo "[Done]"
+	@echo "[Injecting AStar include]"
+	@if ! grep -q 'AStar.h' inc/general.h; then \
+		sed -i '17i\# include "../extra/AStar/AStar.h"' inc/general.h; \
+	fi
+	@echo "[Done]"
+	@echo "cloning AStar repository"
 	@if [ ! -d "$(EXTRA)/AStar" ]; then \
 		git clone https://github.com/BigZaphod/AStar.git $(EXTRA)/AStar; \
 	fi
-	@$(MAKE) all SRC="$(SRC_BASE) $(SRC_EXTRA)" CFLAGS=""
+	@echo "[Done]"
+	@echo "Compiling now"
+	@$(MAKE) SRC="$(SRC_BASE) $(SRC_EXTRA)" CFLAGS="-Iinc"
 
 
 lib:
@@ -131,6 +146,8 @@ clean:
 	@rm -rf $(OBJDIR)
 
 fclean:
+	@echo "Removing minilibx if it exists"
+	@rm -rf minilibx-linux
 	@echo "Removing AStar and extra logic..."
 	@rm -rf ./extra/AStar
 	@rm -rf ./extra/enemy.c

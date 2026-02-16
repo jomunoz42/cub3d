@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:24 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/16 21:13:15 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/02/16 22:35:00 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -297,7 +297,6 @@ void			copied_mlx_pixel_put(t_img_data *img_data, int x, int y,
 int				only_num(char *str);
 void			set_player_dir(t_player *p, char c);
 void			search_in_matrix(t_gen *gen, char c);
-int				get_player_position(t_gen *gen);
 int				ft_abs(int n);
 char			*ft_strncpy(char *dst, char *srce, int n);
 char			*ft_strcat(char *dst, char *srce);
