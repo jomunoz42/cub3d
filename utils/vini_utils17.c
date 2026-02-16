@@ -37,7 +37,8 @@ int	is_wall(t_gen *gen, int map_x, int map_y)
 	row_len = ft_strlen(gen->parse->map[map_y]);
 	if (map_x < 0 || map_x >= row_len)
 		return (1);
-	return (gen->parse->map[map_y][map_x] == '1' || gen->parse->map[map_y][map_x] == 'D');
+	return (gen->parse->map[map_y][map_x] == '1'
+		|| gen->parse->map[map_y][map_x] == 'D');
 }
 
 void	draw_minimap_tile_one(t_gen *gen, int x, int y, int color)

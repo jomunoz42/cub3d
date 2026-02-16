@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:02:23 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/16 20:54:07 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/02/16 21:00:32 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,19 @@ void	wall_textures_init(t_gen *gen)
 	free_xpm_paths(gen->xpm_paths);
 	free(gen->xpm_paths);
 	gen->xpm_paths = NULL;
+}
+
+bool	enemy_visible(t_gen *gen, double *distance_out, int i)
+{
+	double	delta[2];
+	double	distance;
+
+	delta[0] = gen->enemy[i].x - gen->player->x;
+	delta[1] = gen->enemy[i].y - gen->player->y;
+	distance = sqrt(delta[0] * delta[0] + delta[1] * delta[1]);
+	if (distance_out)
+		*distance_out = distance;
+	if (distance > FOG_END)
+		return (false);
+	return (raycast_clear(gen, delta[0], delta[1], distance));
 }

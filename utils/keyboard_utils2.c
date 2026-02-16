@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:02:43 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/16 19:11:51 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/02/16 21:03:00 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,31 +93,6 @@ void	toggle_flag(bool *key_state, bool *flag)
 
 void	handle_toggle_keys(int key, t_gen *gen)
 {
-	if (key == XK_space)
-		gen->kboard->space = true;
-	if (key == XK_t && !gen->kboard->key_t)
-	{
-		gen->kboard->key_t = true;
-		stop_all_sounds(gen);
-		gen->player->move_speed = 0.1;
-		gen->enemy->move_speed = gen->player->move_speed;
-		gen->flags->terror_mode = !gen->flags->terror_mode;
-		start_terror_music(gen);
-		update_enemy_modes(gen);
-		if (gen->flags->terror_mode)
-		{
-			if (gen->exit->active == false)
-				set_valid_exit(gen);
-		}
-		else if (!gen->flags->terror_mode)
-			gen->exit->active = false;
-	}
-	if (key == XK_Caps_Lock)
-		toggle_flag(&gen->kboard->key_caps_lock, &gen->flags->mouse_on);
-	if (key == XK_i)
-		toggle_flag(&gen->kboard->key_i, &gen->flags->info);
-	if (key == XK_m)
-		toggle_flag(&gen->kboard->key_m, &gen->flags->minimap);
-	if (key == XK_e)
-		toggle_flag(&gen->kboard->key_e, &gen->flags->enemy_mini);
+	handle_terror_toggle(key, gen);
+	handle_misc_toggles(key, gen);
 }

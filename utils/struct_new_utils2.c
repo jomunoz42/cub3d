@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_new_utils2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:40:07 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/16 20:46:19 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/16 21:08:06 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	terror_arm_init(t_gen *gen)
 
 	if (gen->terror_arm)
 		free_arm_object(gen, gen->terror_arm);
-		
 	gen->terror_arm = malloc(sizeof(t_img_data));
 	if (!gen->terror_arm)
 		return (0);
@@ -92,14 +91,14 @@ int	enemy_init(t_gen *gen)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	gen->enemy_count = count_enemies_in_map(gen);
 	if (gen->enemy_count == 0)
 		return (1);
 	gen->enemy = calloc((gen->enemy_count + 1), sizeof(t_enemy));
 	if (!gen->enemy)
 		return (0);
-	while (i <= gen->enemy_count)
+	while (++i <= gen->enemy_count)
 	{
 		gen->enemy[i].move_speed = gen->def_values->player_move_speed;
 		gen->enemy[i].size = 20;
@@ -113,7 +112,6 @@ int	enemy_init(t_gen *gen)
 			gen->enemy[i].type = WINNING_STAR;
 		else
 			find_enemy_from_map(gen, i);
-		i++;
 	}
 	return (1);
 }

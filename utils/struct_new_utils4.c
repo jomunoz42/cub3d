@@ -23,7 +23,7 @@ static int	init_texture_array(t_texture **array, int size)
 		if (!array[i])
 		{
 			while (--i >= 0)
-                free(array[i]);
+				free(array[i]);
 			return (0);
 		}
 		array[i]->data = NULL;
@@ -84,7 +84,7 @@ int	arm_init(t_gen *gen)
 	int	img_height;
 
 	if (gen->arm)
-		free_arm_object(gen, gen->arm);	
+		free_arm_object(gen, gen->arm);
 	gen->arm = malloc(sizeof(t_img_data));
 	if (!gen->arm)
 		return (0);

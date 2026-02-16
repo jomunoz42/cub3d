@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 18:52:20 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2026/02/16 19:12:02 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/02/16 21:08:28 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	load_textures(t_gen *gen, t_texture **dst, char **xpm_files, int count)
 	}
 }
 
-int exit_init(t_gen *gen)
+int	exit_init(t_gen *gen)
 {
 	gen->exit = malloc(sizeof(t_exit));
 	if (!gen->exit)
@@ -68,4 +68,25 @@ int	handle_exit(int keysys)
 	if (keysys == XK_Escape)
 		return (super_duper_hiper_free(), 1);
 	return (0);
+}
+
+void	handle_terror_toggle(int key, t_gen *gen)
+{
+	if (key == XK_t && !gen->kboard->key_t)
+	{
+		gen->kboard->key_t = true;
+		stop_all_sounds(gen);
+		gen->player->move_speed = 0.1;
+		gen->enemy->move_speed = gen->player->move_speed;
+		gen->flags->terror_mode = !gen->flags->terror_mode;
+		start_terror_music(gen);
+		update_enemy_modes(gen);
+		if (gen->flags->terror_mode)
+		{
+			if (gen->exit->active == false)
+				set_valid_exit(gen);
+		}
+		else
+			gen->exit->active = false;
+	}
 }

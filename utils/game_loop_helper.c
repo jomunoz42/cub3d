@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 23:54:34 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/16 19:11:48 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/02/16 21:03:31 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,18 @@ int	is_texture_path_invalid(t_parsing *data, char *line, int type)
 		free(data->textures_info[type]);
 	data->textures_info[type] = path;
 	return (0);
+}
+
+void	handle_misc_toggles(int key, t_gen *gen)
+{
+	if (key == XK_space)
+		gen->kboard->space = true;
+	if (key == XK_Caps_Lock)
+		toggle_flag(&gen->kboard->key_caps_lock, &gen->flags->mouse_on);
+	if (key == XK_i)
+		toggle_flag(&gen->kboard->key_i, &gen->flags->info);
+	if (key == XK_m)
+		toggle_flag(&gen->kboard->key_m, &gen->flags->minimap);
+	if (key == XK_e)
+		toggle_flag(&gen->kboard->key_e, &gen->flags->enemy_mini);
 }

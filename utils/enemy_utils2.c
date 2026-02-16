@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 09:43:03 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/16 19:11:44 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/02/16 21:00:10 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,58 +36,27 @@ bool	raycast_clear(t_gen *gen, double dx, double dy, double distance)
 	return (true);
 }
 
-bool	enemy_visible(t_gen *gen, double *distance_out, int i)
+int	get_anim_stat_value(int type, int column)
 {
-	double	delta[2];
-	double	distance;
+	static int	stats[][3] = {{ENEMY_GHOST, 4, 10}, {ENEMY_CTHULHU, 2, 25},
+	{ENEMY_SKELETON, 7, 8}, {ENEMY_SKELETON2, 3, 6}, {HANGED_SKELETON,
+		4, 15}, {WINNING_STAR, 3, 3}, {-1, 0, 0}};
+	int			i;
 
-	delta[0] = gen->enemy[i].x - gen->player->x;
-	delta[1] = gen->enemy[i].y - gen->player->y;
-	distance = sqrt(delta[0] * delta[0] + delta[1] * delta[1]);
-	if (distance_out)
-		*distance_out = distance;
-	if (distance > FOG_END)
-		return (false);
-	return (raycast_clear(gen, delta[0], delta[1], distance));
+	i = 0;
+	while (stats[i][0] != -1)
+	{
+		if (stats[i][0] == type)
+			return (stats[i][column]);
+		i++;
+	}
+	return (0);
 }
 
 void	get_enemy_anim_stats(int type, int *max_frames, int *speed)
 {
-	if (type == ENEMY_GHOST)
-	{
-		*max_frames = 4;
-		*speed = 10;
-	}
-	else if (type == ENEMY_CTHULHU)
-	{
-		*max_frames = 2;
-		*speed = 25;
-	}
-	else if (type == ENEMY_SKELETON)
-	{
-		*max_frames = 7;
-		*speed = 8;
-	}
-	else if (type == ENEMY_SKELETON2)
-	{
-		*max_frames = 3;
-		*speed = 6;
-	}
-	else if (type == HANGED_SKELETON)
-	{
-		*max_frames = 4;
-		*speed = 15;
-	}
-	else if (type == WINNING_STAR)
-	{
-		*max_frames = 3;
-		*speed = 3;
-	}
-	else
-	{
-		*max_frames = 0;
-		*speed = 0;
-	}
+	*max_frames = get_anim_stat_value(type, 1);
+	*speed = get_anim_stat_value(type, 2);
 }
 
 void	update_enemy_animation(t_enemy *enemy, int i)
@@ -108,18 +77,12 @@ void	update_enemy_animation(t_enemy *enemy, int i)
 
 int	enemy_dealer(t_gen *gen, t_texture **tex, t_enemy **enemy, int i)
 {
-	if (!gen->enemy)
-		return (0);
-	if (gen->enemy[i].type == ENEMY_GHOST && !gen->ghost_enemy[0])
-		return (0);
-	if (gen->enemy[i].type == ENEMY_CTHULHU && !gen->cthulhu_enemy[0]
-		&& gen->flags->terror_mode)
-		return (0);
-	if ((gen->enemy[i].type == ENEMY_SKELETON
-			|| gen->enemy[i].type == ENEMY_SKELETON2)
-		&& !gen->skeleton_enemy[0])
-		return (0);
-	if (gen->enemy[i].type == HANGED_SKELETON && !gen->hanged_skel[0])
+	if (!gen->enemy || (gen->enemy[i].type == ENEMY_GHOST
+			&& !gen->ghost_enemy[0]) || (gen->enemy[i].type == ENEMY_CTHULHU
+			&& !gen->cthulhu_enemy[0] && gen->flags->terror_mode)
+		|| ((gen->enemy[i].type == ENEMY_SKELETON
+				|| gen->enemy[i].type == ENEMY_SKELETON2)
+			&& !gen->skeleton_enemy[0]))
 		return (0);
 	*enemy = &gen->enemy[i];
 	if ((*enemy)->type == ENEMY_GHOST && gen->flags->terror_mode)

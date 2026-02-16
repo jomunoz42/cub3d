@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:24 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/16 20:56:18 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/02/16 21:06:49 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ void		game_loop_part_two(t_gen *gen);
 int			is_texture_path_invalid(t_parsing *data, char *line, int type);
 int			validate_texture_file(char *path);
 void		write_free(char *path);
+bool	enemy_visible(t_gen *gen, double *distance_out, int i);
 void		find_enemy_from_map(t_gen *gen, int i);
 void		set_enemy(t_gen *gen, t_enemy *enemy, int row, int col);
 int			count_enemies_in_map(t_gen *gen);
@@ -234,6 +235,7 @@ int			ft_clamp(int value, int min, int max);
 void	load_all_textures(t_gen *gen, t_xpm_paths *paths);
 char		*ft_strchr(const char *s, int c);
 void	free_xpm_paths(t_xpm_paths *paths);
+void	toggle_flag(bool *key_state, bool *flag);
 int			ft_isdigit(int c);
 char		*ft_strdup(const char *s);
 char		*ft_strrchr(const char *s, int c);
@@ -241,6 +243,8 @@ void		ft_bzero(void *s, size_t n);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 void		*ft_memcpy(void *dest, const void *src, size_t n);
 int			ft_strlen(const char *str);
+void	handle_terror_toggle(int key, t_gen *gen);
+void	handle_misc_toggles(int key, t_gen *gen);
 int			ft_strcmp(char *s1, char *s2);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 char		*ft_strtrim(char const *s1, char const *set);
