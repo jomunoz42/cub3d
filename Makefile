@@ -35,7 +35,29 @@ SRC_BASE = \
 	$(PARSE)/map_validation.c \
 	$(PARSE)/rgb_validation.c \
 	$(UTILS)/gnl.c \
-	$(UTILS)/vini_utils.c \
+	$(UTILS)/dda_utils1.c \
+	$(UTILS)/enemy_utils1.c \
+	$(UTILS)/enemy_utils2.c \
+	$(UTILS)/freedom_helper.c \
+	$(UTILS)/game_loop_helper.c \
+	$(UTILS)/keyboard_utils2.c \
+	$(UTILS)/keyboard_utils.c \
+	$(UTILS)/picasso_helper.c \
+	$(UTILS)/print_stuff.c \
+	$(UTILS)/songs_helper.c \
+	$(UTILS)/struct_new_utils1.c \
+	$(UTILS)/struct_new_utils2.c \
+	$(UTILS)/struct_new_utils3.c \
+	$(UTILS)/struct_new_utils4.c \
+	$(UTILS)/struct_new_utils5.c \
+	$(UTILS)/texture_utils1.c \
+	$(UTILS)/utils1.c \
+	$(UTILS)/vignette_utils.c \
+	$(UTILS)/vini_utils10.c \
+	$(UTILS)/vini_utils13.c \
+	$(UTILS)/vini_utils16.c \
+	$(UTILS)/vini_utils17.c \
+	$(UTILS)/vini_utils19.c \
 	$(UTILS)/vini_utils1.c \
 	$(UTILS)/vini_utils2.c \
 	$(UTILS)/vini_utils3.c \
@@ -45,29 +67,7 @@ SRC_BASE = \
 	$(UTILS)/vini_utils7.c \
 	$(UTILS)/vini_utils8.c \
 	$(UTILS)/vini_utils9.c \
-	$(UTILS)/vini_utils10.c \
-	$(UTILS)/vini_utils11.c \
-	$(UTILS)/vini_utils12.c \
-	$(UTILS)/vini_utils13.c \
-	$(UTILS)/vini_utils14.c \
-	$(UTILS)/vini_utils15.c \
-	$(UTILS)/vini_utils16.c \
-	$(UTILS)/vini_utils17.c \
-	$(UTILS)/vini_utils18.c \
-	$(UTILS)/vini_utils19.c \
-	$(UTILS)/vini_utils20.c \
-	$(UTILS)/vini_utils21.c \
-	$(UTILS)/vini_utils22.c \
-	$(UTILS)/vini_utils23.c \
-	$(UTILS)/vini_utils24.c \
-	$(UTILS)/vini_utils25.c \
-	$(UTILS)/vini_utils26.c \
-	$(UTILS)/vini_utils27.c \
-	$(UTILS)/vini_utils28.c \
-	$(UTILS)/vini_utils29.c \
-	$(UTILS)/vini_utils30.c \
-	$(UTILS)/songs_helper.c \
-	$(UTILS)/utils1.c \
+	$(UTILS)/vini_utils.c \
 	$(MINIMAP)/minimap.c \
 	$(MINIMAP)/minimap_utils.c
 
@@ -107,10 +107,10 @@ extra:
 	@if [ -f enemy.txt ]; then \
 		cp enemy.txt $(EXTRA)/enemy.c; \
 	fi
-	@echo "[Injecting enemy logic into vini_utils21.c]"
-	@if ! grep -q "update_enemy(gen, i);" ./utils/vini_utils21.c; then \
-		sed -i '25i\		if (gen->enemy[i].type != ENEMY_SKELETON && gen->flags->terror_mode)' ./utils/vini_utils21.c; \
-		sed -i '26i\			update_enemy(gen, i);' ./utils/vini_utils21.c; \
+	@echo "[Injecting enemy logic into game_loop_helper.c]"
+	@if ! grep -q "update_enemy(gen, i);" ./utils/game_loop_helper.c; then \
+		sed -i '25i\		if (gen->enemy[i].type != ENEMY_SKELETON && gen->flags->terror_mode)' ./utils/game_loop_helper.c; \
+		sed -i '26i\			update_enemy(gen, i);' ./utils/game_loop_helper.c; \
 	fi
 	@echo "[Injecting mlx include into general.h]"
 	@sed -i '17i\# include "../extra/AStar/AStar.h"' ./headers/general.h;
@@ -118,8 +118,6 @@ extra:
 		git clone https://github.com/BigZaphod/AStar.git $(EXTRA)/AStar; \
 	fi
 	@$(MAKE) all SRC="$(SRC_BASE) $(SRC_EXTRA)" CFLAGS=""
-
-
 
 
 lib:
@@ -137,8 +135,8 @@ fclean:
 	@echo "Removing AStar and extra logic..."
 	@rm -rf ./extra/AStar
 	@rm -rf ./extra/enemy.c
-	@sed -i '/ENEMY_SKELETON/d' ./utils/vini_utils21.c
-	@sed -i '/update_enemy(gen, i);/d' ./utils/vini_utils21.c
+	@sed -i '/ENEMY_SKELETON/d' ./utils/game_loop_helper.c
+	@sed -i '/update_enemy(gen, i);/d' ./utils/game_loop_helper.c
 	@if grep -q 'AStar/AStar.h' ./headers/general.h; then \
 		sed -i '/AStar\/AStar.h/d' ./headers/general.h; \
 	fi
