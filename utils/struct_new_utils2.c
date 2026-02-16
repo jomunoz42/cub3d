@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_new_utils2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:40:07 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/16 19:11:58 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/02/16 20:46:19 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	enemy_init(t_gen *gen)
 	gen->enemy_count = count_enemies_in_map(gen);
 	if (gen->enemy_count == 0)
 		return (1);
-	gen->enemy = malloc(sizeof(t_enemy) * (gen->enemy_count + 1));
+	gen->enemy = calloc((gen->enemy_count + 1), sizeof(t_enemy));
 	if (!gen->enemy)
 		return (0);
 	while (i <= gen->enemy_count)
@@ -108,6 +108,7 @@ int	enemy_init(t_gen *gen)
 		gen->enemy[i].enemy_frame = 0;
 		gen->enemy[i].enemy_timer = 0;
 		gen->enemy[i].type = ENEMY_SKELETON;
+		gen->enemy[i].first_type = ENEMY_SKELETON;
 		if (i == gen->enemy_count)
 			gen->enemy[i].type = WINNING_STAR;
 		else
