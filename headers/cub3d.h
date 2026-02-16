@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:24 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/16 19:57:36 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/16 20:56:18 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,9 +227,13 @@ void		update_player(t_gen *gen);
 char		*get_next_line(int fd);
 int			contains_tab(char *s);
 int			is_line_empty(char *line);
+void	wall_textures_init(t_gen *gen);
+int	init_xpm_paths(t_gen *gen);
 void		free_double(char **arg);
 int			ft_clamp(int value, int min, int max);
+void	load_all_textures(t_gen *gen, t_xpm_paths *paths);
 char		*ft_strchr(const char *s, int c);
+void	free_xpm_paths(t_xpm_paths *paths);
 int			ft_isdigit(int c);
 char		*ft_strdup(const char *s);
 char		*ft_strrchr(const char *s, int c);

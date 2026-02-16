@@ -48,7 +48,7 @@ static void	free_texture_array(t_gen *gen, t_texture **tex, int count)
 			if (gen->mlx_data && gen->mlx_data->mlx_ptr && tex[i]->img)
 				mlx_destroy_image(gen->mlx_data->mlx_ptr, tex[i]->img);
 			free(tex[i]);
-            tex[i] = NULL;
+			tex[i] = NULL;
 		}
 		i++;
 	}
@@ -59,7 +59,7 @@ void	free_all_resources(t_gen *gen)
 	free_images(gen);
 	free_texture_array(gen, gen->texture, 4);
 	free_texture_array(gen, gen->terror_texture, 4);
-	free_texture_array(gen, gen->ghost_enemy, 4);	
+	free_texture_array(gen, gen->ghost_enemy, 4);
 	free_texture_array(gen, gen->cthulhu_enemy, 2);
 	free_texture_array(gen, gen->skeleton_enemy, 8);
 	free_texture_array(gen, gen->hanged_skel, 4);

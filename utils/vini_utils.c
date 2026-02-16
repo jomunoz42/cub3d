@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vini_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:02:23 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 23:04:15 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/16 20:54:07 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,17 @@ int	key_release(int key, t_gen *gen)
 	release_modifier_keys(key, gen);
 	release_toggle_keys(key, gen);
 	return (0);
+}
+
+void	wall_textures_init(t_gen *gen)
+{
+	if (!init_xpm_paths(gen))
+	{
+		ft_putstr_fd("Failed to convert normal PNG names\n", 2);
+		exit(1);
+	}
+	load_all_textures(gen, gen->xpm_paths);
+	free_xpm_paths(gen->xpm_paths);
+	free(gen->xpm_paths);
+	gen->xpm_paths = NULL;
 }

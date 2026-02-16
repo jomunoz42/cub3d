@@ -3,15 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   struct_new.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:34:24 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/15 21:45:20 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/16 20:55:32 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./headers/cub3d.h"
 #include "headers/general.h"
+
+int	fill_xpm_paths(t_gen *gen)
+{
+	gen->xpm_paths->skeleton[0] = ft_strdup("imgs/skel_1.xpm");
+	gen->xpm_paths->skeleton[1] = ft_strdup("imgs/skel_2.xpm");
+	gen->xpm_paths->skeleton[2] = ft_strdup("imgs/skel_3.xpm");
+	gen->xpm_paths->skeleton[3] = ft_strdup("imgs/skel_4.xpm");
+	gen->xpm_paths->skeleton[4] = ft_strdup("imgs/skel_5.xpm");
+	gen->xpm_paths->skeleton[5] = ft_strdup("imgs/skel_6.xpm");
+	gen->xpm_paths->skeleton[6] = ft_strdup("imgs/skel_7.xpm");
+	gen->xpm_paths->skeleton[7] = ft_strdup("imgs/skel_8.xpm");
+	gen->xpm_paths->star[0] = ft_strdup("imgs/star_1.xpm");
+	gen->xpm_paths->star[1] = ft_strdup("imgs/star_2.xpm");
+	gen->xpm_paths->star[2] = ft_strdup("imgs/star_3.xpm");
+	gen->xpm_paths->hanged_skel[0] = ft_strdup("imgs/hanged_skel_1.xpm");
+	gen->xpm_paths->hanged_skel[1] = ft_strdup("imgs/hanged_skel_2.xpm");
+	gen->xpm_paths->hanged_skel[2] = ft_strdup("imgs/hanged_skel_3.xpm");
+	gen->xpm_paths->hanged_skel[3] = ft_strdup("imgs/hanged_skel_4.xpm");
+	return (1);
+}
 
 int	init_xpm_paths(t_gen *gen)
 {
@@ -30,22 +50,7 @@ int	init_xpm_paths(t_gen *gen)
 	gen->xpm_paths->ghost[3] = ft_strdup("imgs/ghost_4.xpm");
 	gen->xpm_paths->cthulhu[0] = ft_strdup("imgs/cthulhu_1.xpm");
 	gen->xpm_paths->cthulhu[1] = ft_strdup("imgs/cthulhu_2.xpm");
-	gen->xpm_paths->skeleton[0] = ft_strdup("imgs/skel_1.xpm");
-	gen->xpm_paths->skeleton[1] = ft_strdup("imgs/skel_2.xpm");
-	gen->xpm_paths->skeleton[2] = ft_strdup("imgs/skel_3.xpm");
-	gen->xpm_paths->skeleton[3] = ft_strdup("imgs/skel_4.xpm");
-	gen->xpm_paths->skeleton[4] = ft_strdup("imgs/skel_5.xpm");
-	gen->xpm_paths->skeleton[5] = ft_strdup("imgs/skel_6.xpm");
-	gen->xpm_paths->skeleton[6] = ft_strdup("imgs/skel_7.xpm");
-	gen->xpm_paths->skeleton[7] = ft_strdup("imgs/skel_8.xpm");
-	gen->xpm_paths->star[0] = ft_strdup("imgs/star_1.xpm");
-	gen->xpm_paths->star[1] = ft_strdup("imgs/star_2.xpm");
-	gen->xpm_paths->star[2] = ft_strdup("imgs/star_3.xpm");
-	gen->xpm_paths->hanged_skel[0] = ft_strdup("imgs/hanged_skel_1.xpm");
-	gen->xpm_paths->hanged_skel[1] = ft_strdup("imgs/hanged_skel_2.xpm");
-	gen->xpm_paths->hanged_skel[2] = ft_strdup("imgs/hanged_skel_3.xpm");
-	gen->xpm_paths->hanged_skel[3] = ft_strdup("imgs/hanged_skel_4.xpm");
-	return (1);
+	return (fill_xpm_paths(gen));
 }
 
 void	free_xpm_paths(t_xpm_paths *paths)
@@ -71,7 +76,7 @@ void	free_xpm_paths(t_xpm_paths *paths)
 	}
 }
 
-static void	load_all_textures(t_gen *gen, t_xpm_paths *paths)
+void	load_all_textures(t_gen *gen, t_xpm_paths *paths)
 {
 	load_textures(gen, gen->texture, paths->normal, 4);
 	load_textures(gen, gen->terror_texture, paths->terror, 4);
@@ -84,19 +89,6 @@ static void	load_all_textures(t_gen *gen, t_xpm_paths *paths)
 			"imgs/porta_normal.xpm");
 	gen->door_texture2 = load_xpm_texture(gen->mlx_data->mlx_ptr,
 			"imgs/terror_door.xpm");
-}
-
-void	wall_textures_init(t_gen *gen)
-{
-	if (!init_xpm_paths(gen))
-	{
-		ft_putstr_fd("Failed to convert normal PNG names\n", 2);
-		exit(1);
-	}
-	load_all_textures(gen, gen->xpm_paths);
-	free_xpm_paths(gen->xpm_paths);
-	free(gen->xpm_paths);
-	gen->xpm_paths = NULL;
 }
 
 int	init_all(t_gen *gen)

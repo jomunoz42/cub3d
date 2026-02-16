@@ -78,11 +78,13 @@ int	game_loop(t_gen *gen)
 		dx = gen->enemy[i].x - gen->player->x;
 		dy = gen->enemy[i].y - gen->player->y;
 		distance = sqrt(dx * dx + dy * dy);
-		if (distance <= 0.65 && gen->flags->terror_mode && i == gen->enemy_count)
+		if (distance <= 0.65 && gen->flags->terror_mode
+			&& i == gen->enemy_count)
 			(printf("YOU WIN\n"), super_duper_hiper_free(), exit(1));
 		else if (distance <= 0.65 && gen->flags->terror_mode
-			&& (gen->enemy[i].type != ENEMY_SKELETON && gen->enemy[i].type != ENEMY_SKELETON2
-			&& gen->enemy[i].type != HANGED_SKELETON))
+			&& (gen->enemy[i].type != ENEMY_SKELETON
+				&& gen->enemy[i].type != ENEMY_SKELETON2
+				&& gen->enemy[i].type != HANGED_SKELETON))
 			(printf("YOU ARE DEAD\n"), super_duper_hiper_free(), exit(1));
 		i++;
 	}

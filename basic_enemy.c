@@ -19,30 +19,23 @@ void	draw_enemy(t_gen *gen, int i)
 	int			stripe;
 
 	if (enemy_dealer(gen, &tex, &enemy, i) == 0)
-		return;
-
+		return ;
 	draw_enemy_variable_initialization(gen, enemy);
 	if (gen->draw_enemy->transform_y <= 0)
-		return;
-
+		return ;
 	crazy_math_operations(gen);
-
-	if (gen->flags->terror_mode
-		&& !enemy_visible(gen, &gen->draw_enemy->distance, i))
-		return;
-
+	if (gen->flags->terror_mode && !enemy_visible(gen,
+			&gen->draw_enemy->distance, i))
+		return ;
 	stripe = gen->draw_enemy->draw_start_x;
 	while (stripe < gen->draw_enemy->draw_end_x)
 	{
-		if (stripe > 0 && stripe < WIN_WIDTH
-			&& gen->draw_enemy->transform_y > 0
-			&& gen->draw_enemy->transform_y
-				< gen->rayhit->zbuffer[stripe])
+		if (stripe > 0 && stripe < WIN_WIDTH && gen->draw_enemy->transform_y > 0
+			&& gen->draw_enemy->transform_y < gen->rayhit->zbuffer[stripe])
 			render_enemy_stripe(gen, tex, stripe);
 		stripe++;
 	}
 }
-
 
 void	draw_enemy_minimap(t_gen *gen, int i)
 {
@@ -106,7 +99,7 @@ void	set_enemy(t_gen *gen, t_enemy *enemy, int row, int col)
 			enemy->type = ENEMY_SKELETON2;
 	}
 	else
-		return;
+		return ;
 	enemy->first_type = enemy->type;
 }
 

@@ -26,7 +26,8 @@ bool	raycast_clear(t_gen *gen, double dx, double dy, double distance)
 	traveled = 0;
 	while (traveled < distance)
 	{
-		if (gen->parse->map[(int)y][(int)x] == '1' || gen->parse->map[(int)y][(int)x] == 'D')
+		if (gen->parse->map[(int)y][(int)x] == '1'
+			|| gen->parse->map[(int)y][(int)x] == 'D')
 			return (false);
 		x += step[0];
 		y += step[1];
@@ -68,20 +69,20 @@ void	get_enemy_anim_stats(int type, int *max_frames, int *speed)
 		*speed = 8;
 	}
 	else if (type == ENEMY_SKELETON2)
-    {
-        *max_frames = 3;
-        *speed = 6;
-    }
+	{
+		*max_frames = 3;
+		*speed = 6;
+	}
 	else if (type == HANGED_SKELETON)
-    {
-        *max_frames = 4;
-        *speed = 15;
-    }
+	{
+		*max_frames = 4;
+		*speed = 15;
+	}
 	else if (type == WINNING_STAR)
-    {
-        *max_frames = 3;
-        *speed = 3;
-    }
+	{
+		*max_frames = 3;
+		*speed = 3;
+	}
 	else
 	{
 		*max_frames = 0;
@@ -114,7 +115,8 @@ int	enemy_dealer(t_gen *gen, t_texture **tex, t_enemy **enemy, int i)
 	if (gen->enemy[i].type == ENEMY_CTHULHU && !gen->cthulhu_enemy[0]
 		&& gen->flags->terror_mode)
 		return (0);
-	if ((gen->enemy[i].type == ENEMY_SKELETON || gen->enemy[i].type == ENEMY_SKELETON2) 
+	if ((gen->enemy[i].type == ENEMY_SKELETON
+			|| gen->enemy[i].type == ENEMY_SKELETON2)
 		&& !gen->skeleton_enemy[0])
 		return (0);
 	if (gen->enemy[i].type == HANGED_SKELETON && !gen->hanged_skel[0])
@@ -124,13 +126,14 @@ int	enemy_dealer(t_gen *gen, t_texture **tex, t_enemy **enemy, int i)
 		*tex = gen->ghost_enemy[(*enemy)->enemy_frame];
 	else if ((*enemy)->type == ENEMY_CTHULHU && gen->flags->terror_mode)
 		*tex = gen->cthulhu_enemy[(*enemy)->enemy_frame];
-	else if (((*enemy)->type == ENEMY_SKELETON || (*enemy)->type == ENEMY_SKELETON2) 
-		&& !gen->flags->terror_mode)
+	else if (((*enemy)->type == ENEMY_SKELETON
+			|| (*enemy)->type == ENEMY_SKELETON2) && !gen->flags->terror_mode)
 		*tex = gen->skeleton_enemy[(*enemy)->enemy_frame];
 	else if ((*enemy)->type == HANGED_SKELETON && gen->flags->terror_mode)
 		*tex = gen->hanged_skel[(*enemy)->enemy_frame];
-	else if ((*enemy)->type == WINNING_STAR && gen->flags->terror_mode && gen->exit->active)
-        *tex = gen->winning_exit[(*enemy)->enemy_frame];
+	else if ((*enemy)->type == WINNING_STAR && gen->flags->terror_mode
+		&& gen->exit->active)
+		*tex = gen->winning_exit[(*enemy)->enemy_frame];
 	else
 		return (0);
 	return (1);
