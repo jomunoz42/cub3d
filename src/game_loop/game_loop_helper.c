@@ -27,6 +27,8 @@ void	game_loop_part_one(t_gen *gen)
 		if ((gen->enemy[i].type == ENEMY_CTHULHU || gen->enemy[i].type == ENEMY_GHOST) && gen->flags->terror_mode)
 		if ((gen->enemy[i].type == ENEMY_CTHULHU || gen->enemy[i].type == ENEMY_GHOST) && gen->flags->terror_mode)
 		if ((gen->enemy[i].type == ENEMY_CTHULHU || gen->enemy[i].type == ENEMY_GHOST) && gen->flags->terror_mode)
+		if ((gen->enemy[i].type == ENEMY_CTHULHU || gen->enemy[i].type == ENEMY_GHOST) && gen->flags->terror_mode)
+		if ((gen->enemy[i].type == ENEMY_CTHULHU || gen->enemy[i].type == ENEMY_GHOST) && gen->flags->terror_mode)
 		update_enemy_animation(gen->enemy, i);
 		i++;
 	}
