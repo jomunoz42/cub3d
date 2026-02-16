@@ -3,78 +3,76 @@ NAME = cub3d
 SRCDIR = .
 OBJDIR = objs
 MLXDIR = ../.minilibx-linux
-GNL_DIR = ./gnl
 MAP_DIR = maps
-PARSE = ./parsing
-UTILS = ./utils
-MINIMAP = ./minimap
 EXTRA = ./extra
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -Wno-incompatible-pointer-types
+CFLAGS = -Iinc -Wall -Wextra -Werror -g -Wno-incompatible-pointer-types
 MLX_FLAGS = -L . -lmlx -lXext -lX11
 INCLUDES = -I$(MLXDIR) -I$(GNL_DIR) -I. -I$(MAP_DIR)
 
 # ================= SOURCES =================
 
 SRC_BASE = \
-	$(SRCDIR)/main.c \
-	struct_new.c \
-	window_management.c \
-	freedom.c \
-	player_movement.c \
-	picasso.c \
-	raycast.c \
-	mouse_movement.c \
-	songs.c \
-	basic_enemy.c \
-	winning_exit.c \
-	$(PARSE)/parser.c \
-	$(PARSE)/header_validation.c \
-	$(PARSE)/construct_map.c \
-	$(PARSE)/map_validation.c \
-	$(PARSE)/rgb_validation.c \
-	$(UTILS)/gnl.c \
-	$(UTILS)/dda_utils1.c \
-	$(UTILS)/enemy_utils1.c \
-	$(UTILS)/enemy_utils2.c \
-	$(UTILS)/freedom_helper.c \
-	$(UTILS)/game_loop_helper.c \
-	$(UTILS)/keyboard_utils2.c \
-	$(UTILS)/keyboard_utils.c \
-	$(UTILS)/picasso_helper.c \
-	$(UTILS)/print_stuff.c \
-	$(UTILS)/songs_helper.c \
-	$(UTILS)/struct_new_utils1.c \
-	$(UTILS)/struct_new_utils2.c \
-	$(UTILS)/struct_new_utils3.c \
-	$(UTILS)/struct_new_utils4.c \
-	$(UTILS)/struct_new_utils5.c \
-	$(UTILS)/texture_utils1.c \
-	$(UTILS)/utils1.c \
-	$(UTILS)/vignette_utils.c \
-	$(UTILS)/vini_utils10.c \
-	$(UTILS)/vini_utils13.c \
-	$(UTILS)/vini_utils16.c \
-	$(UTILS)/vini_utils17.c \
-	$(UTILS)/vini_utils19.c \
-	$(UTILS)/vini_utils1.c \
-	$(UTILS)/vini_utils2.c \
-	$(UTILS)/vini_utils3.c \
-	$(UTILS)/vini_utils4.c \
-	$(UTILS)/vini_utils5.c \
-	$(UTILS)/vini_utils6.c \
-	$(UTILS)/vini_utils7.c \
-	$(UTILS)/vini_utils8.c \
-	$(UTILS)/vini_utils9.c \
-	$(UTILS)/vini_utils.c \
-	$(UTILS)/winnin_helper.c \
-	$(MINIMAP)/minimap.c \
-	$(MINIMAP)/minimap_utils.c
-
-SRC_EXTRA = \
-	$(EXTRA)/AStar/AStar.c \
-	$(EXTRA)/enemy.c
+	src/main.c \
+	src/enemies/basic_enemy.c \
+	src/enemies/enemy_utils1.c \
+	src/enemies/enemy_utils2.c \
+	src/enemies/enemy_utils3.c \
+	src/exit_door/winning_exit.c \
+	src/exit_door/winnin_helper.c \
+	src/frees/freedom.c \
+	src/frees/freedom2.c \
+	src/frees/freedom3.c \
+	src/game_loop/game_loop_helper.c \
+	src/game_loop/window_management.c \
+	src/inits/struct_new.c \
+	src/inits/struct_new_utils1.c \
+	src/inits/struct_new_utils2.c \
+	src/inits/struct_new_utils3.c \
+	src/inits/struct_new_utils4.c \
+	src/inits/struct_new_utils5.c \
+	src/inits/struct_new_utils6.c \
+	src/inits/struct_new_utils7.c \
+	src/key_inputs/keyboard_utils.c \
+	src/key_inputs/keyboard_utils2.c \
+	src/key_inputs/keyboard_utils3.c \
+	src/minimap/minimap.c \
+	src/minimap/minimap_utils.c \
+	src/minimap/minimap_utils2.c \
+	src/music/songs.c \
+	src/music/songs_helper.c \
+	src/parsing/parser.c \
+	src/parsing/construct_map.c \
+	src/parsing/header_validation.c \
+	src/parsing/header_validation2.c \
+	src/parsing/map_validation.c \
+	src/parsing/rgb_validation.c \
+	src/player/collision.c \
+	src/player/mouse_movement.c \
+	src/player/player_movement.c \
+	src/player/player_movement2.c \
+	src/render_raycast/dda_utils1.c \
+	src/render_raycast/dda_utils2.c \
+	src/render_raycast/picasso1.c \
+	src/render_raycast/picasso2.c \
+	src/render_raycast/picasso3.c \
+	src/render_raycast/raycast.c \
+	src/utils/get_next_line.c \
+	src/utils/lib_utils1.c \
+	src/utils/lib_utils2.c \
+	src/utils/lib_utils3.c \
+	src/utils/lib_utils4.c \
+	src/utils/lib_utils5.c \
+	src/utils/lib_utils6.c \
+	src/utils/lib_utils7.c \
+	src/utils/lib_utils8.c \
+	src/utils/lib_utils9.c \
+	src/utils/print_stuff.c \
+	src/utils/vignette_utils.c \
+	src/utils/vignette_utils2.c \
+# 	$(EXTRA)/AStar/AStar.c \
+# 	$(EXTRA)/enemy.c
 
 SRC = $(SRC_BASE)
 
@@ -114,7 +112,7 @@ extra:
 		sed -i '26i\			update_enemy(gen, i);' ./utils/game_loop_helper.c; \
 	fi
 	@echo "[Injecting mlx include into general.h]"
-	@sed -i '17i\# include "../extra/AStar/AStar.h"' ./headers/general.h;
+	@sed -i '17i\# include "../extra/AStar/AStar.h"' ./inc/general.h;
 	@if [ ! -d "$(EXTRA)/AStar" ]; then \
 		git clone https://github.com/BigZaphod/AStar.git $(EXTRA)/AStar; \
 	fi
@@ -123,9 +121,9 @@ extra:
 
 lib:
 	git clone git@github.com:42paris/minilibx-linux.git
-	cd minilibx-linux && make && cp libmlx.a ../ && cp mlx.h ../headers && cd .. && rm -rf minilibx-linux
-	@if ! grep -q '# include "mlx.h"' ./headers/general.h; then \
-		sed -i '15i\# include "mlx.h"' ./headers/general.h; \
+	cd minilibx-linux && make && cp libmlx.a ../ && cp mlx.h ../inc && cd .. && rm -rf minilibx-linux
+	@if ! grep -q '# include "mlx.h"' ./inc/general.h; then \
+		sed -i '15i\# include "mlx.h"' ./inc/general.h; \
 	fi
 # ============== CLEAN ======================
 
@@ -136,18 +134,18 @@ fclean:
 	@echo "Removing AStar and extra logic..."
 	@rm -rf ./extra/AStar
 	@rm -rf ./extra/enemy.c
-	@sed -i '/ENEMY_SKELETON/d' ./utils/game_loop_helper.c
-	@sed -i '/update_enemy(gen, i);/d' ./utils/game_loop_helper.c
-	@if grep -q 'AStar/AStar.h' ./headers/general.h; then \
-		sed -i '/AStar\/AStar.h/d' ./headers/general.h; \
+	@sed -i '/ENEMY_SKELETON/d' ./src/game_loop/game_loop_helper.c
+	@sed -i '/update_enemy(gen, i);/d' ./src/game_loop/game_loop_helper.c
+	@if grep -q 'AStar/AStar.h' ./inc/general.h; then \
+		sed -i '/AStar\/AStar.h/d' ./inc/general.h; \
 	fi
-	@if grep -q '# include "mlx.h"' ./headers/general.h; then \
-		sed -i '/# include "mlx.h"/d' ./headers/general.h; \
+	@if grep -q '# include "mlx.h"' ./inc/general.h; then \
+		sed -i '/# include "mlx.h"/d' ./inc/general.h; \
 	fi
 	@rm -rf extra
 	@echo "Deleting extra directory"
-	@rm -rf headers/mlx.h
-	@echo "Removing mlx.h from headers"
+	@rm -rf inc/mlx.h
+	@echo "Removing mlx.h from inc"
 	@$(MAKE) clean
 	@rm -f $(NAME)
 

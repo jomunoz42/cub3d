@@ -1,4 +1,4 @@
-#include "../headers/cub3d.h"
+#include "cub3d.h"
 
 int	nodeComparator(void *node1, void *node2, void *context)
 {
