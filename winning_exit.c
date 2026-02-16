@@ -6,14 +6,13 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 20:50:51 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2026/02/16 20:50:52 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/02/16 21:13:36 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "./headers/cub3d.h"
 
-static void	flood_from_player(t_gen *gen, char **copy, int x, int y)
+void	flood_from_player(t_gen *gen, char **copy, int x, int y)
 {
 	if (x < 0 || y < 0 || x >= gen->parse->width || y >= gen->parse->height)
 		return ;
@@ -26,7 +25,7 @@ static void	flood_from_player(t_gen *gen, char **copy, int x, int y)
 	flood_from_player(gen, copy, x, y - 1);
 }
 
-static int	find_player_quadrant(t_gen *gen)
+int	find_player_quadrant(t_gen *gen)
 {
 	if (gen->player->x < gen->parse->width / 2
 		&& gen->player->y < gen->parse->height / 2)
@@ -43,62 +42,7 @@ static int	find_player_quadrant(t_gen *gen)
 	return (0);
 }
 
-static t_quad_bounds	get_quadrant_bounds(t_gen *gen, int quadrant)
-{
-	t_quad_bounds	b;
-	int				mid_x;
-	int				mid_y;
-
-	mid_x = gen->parse->width / 2;
-	mid_y = gen->parse->height / 2;
-	b.start_x = 0;
-	b.end_x = 0;
-	b.start_y = 0;
-	b.end_y = 0;
-	if (quadrant == 1)
-	{
-		b.start_x = mid_x - 1;
-		b.end_x = 0;
-		b.start_y = mid_y - 1;
-		b.end_y = 0;
-	}
-	else if (quadrant == 2)
-	{
-		b.start_x = gen->parse->width - 1;
-		b.end_x = mid_x;
-		b.start_y = mid_y - 1;
-		b.end_y = 0;
-	}
-	else if (quadrant == 3)
-	{
-		b.start_x = mid_x - 1;
-		b.end_x = 0;
-		b.start_y = gen->parse->height - 1;
-		b.end_y = mid_y;
-	}
-	else if (quadrant == 4)
-	{
-		b.start_x = gen->parse->width - 1;
-		b.end_x = mid_x;
-		b.start_y = gen->parse->height - 1;
-		b.end_y = mid_y;
-	}
-	return (b);
-}
-
-static void	get_quadrant_priority(int player_q, int order[4])
-{
-	if (player_q == 1)
-		ft_memcpy(order, (int[4]){4, 3, 2, 1}, sizeof(int) * 4);
-	else if (player_q == 2)
-		ft_memcpy(order, (int[4]){3, 4, 1, 2}, sizeof(int) * 4);
-	else if (player_q == 3)
-		ft_memcpy(order, (int[4]){2, 1, 4, 3}, sizeof(int) * 4);
-	else
-		ft_memcpy(order, (int[4]){1, 2, 3, 4}, sizeof(int) * 4);
-}
-
-static int	try_quadrant(t_gen *gen, char **copy, int quadrant)
+int	try_quadrant(t_gen *gen, char **copy, int quadrant)
 {
 	t_quad_bounds	quad;
 	int				x;

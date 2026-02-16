@@ -283,16 +283,16 @@ typedef struct s_xpm_paths
 
 typedef struct s_quad_bounds
 {
-    int 	start_x;
-    int 	end_x;
-    int 	start_y;
-    int 	end_y;
-}   		t_quad_bounds;
+	int				start_x;
+	int				end_x;
+	int				start_y;
+	int				end_y;
+}					t_quad_bounds;
 
 typedef struct s_exit
 {
-    bool 	active;
-} 			t_exit;
+	bool			active;
+}					t_exit;
 
 typedef struct s_general
 {
