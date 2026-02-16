@@ -106,9 +106,9 @@ extra:
 	@echo "[Creating extra directory]"
 	@mkdir -p $(EXTRA)
 	@echo "[Done]"
-	@echo "[Copying enemy.txt]"
-	@if [ -f enemy.txt ]; then \
-		cp enemy.txt $(EXTRA)/enemy.c; \
+	@echo "[Copying ./.nightmare/enemy.txt]"
+	@if [ -f ./.nightmare/enemy.txt ]; then \
+		cp ./.nightmare/enemy.txt $(EXTRA)/enemy.c; \
 	fi
 	@echo "[Done]"
 	@echo "[Injecting enemy logic into game_loop_helper.c]"
@@ -148,6 +148,10 @@ clean:
 fclean:
 	@echo "Removing minilibx if it exists"
 	@rm -rf minilibx-linux
+	@echo "[Done]"
+	@echo "Removing libmlx.a"
+	@rm -rf libmlx.a
+	@echo "[Done]"
 	@echo "Removing AStar and extra logic..."
 	@rm -rf ./extra/AStar
 	@rm -rf ./extra/enemy.c
