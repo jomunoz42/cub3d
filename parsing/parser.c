@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 23:56:19 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/11 23:56:24 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/16 20:09:22 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ static int	file_parsing(t_parsing *data, int argc, char *file_path)
 	if (len < 4 || ft_strncmp(&file_path[len - 4], ".cub\0", 5))
 	{
 		write(2, "Error\nFile doesn't have the right extension\n", 45);
-		return (1);
+		return (close(data->fd), 1);
 	}
 	return (0);
 }
