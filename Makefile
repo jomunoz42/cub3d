@@ -113,7 +113,7 @@ extra:
 	@echo "[Done]"
 	@echo "[Injecting enemy logic into game_loop_helper.c]"
 	@if ! grep -q "update_enemy(gen, i);" src/game_loop/game_loop_helper.c; then \
-		sed -i '25i\		if (gen->enemy[i].type != ENEMY_SKELETON && gen->flags->terror_mode)' src/game_loop/game_loop_helper.c; \
+		sed -i '25i\		if ((gen->enemy[i].type == ENEMY_CTHULHU || gen->enemy[i].type == ENEMY_GHOST) && gen->flags->terror_mode)' src/game_loop/game_loop_helper.c; \
 		sed -i '26i\			update_enemy(gen, i);' src/game_loop/game_loop_helper.c; \
 	fi
 	@echo "[Done]"
