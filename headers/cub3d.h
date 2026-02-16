@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:24 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/15 20:25:58 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/16 19:47:58 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ int			basic_mlx_init(t_gen *gen);
 int			init_flags(t_gen *gen);
 int			def_values_init(t_gen *gen);
 int			enemy_init(t_gen *gen);
+int	goated_checker(t_draw_enemy *d, t_texture *t);
 int			dda_init(t_gen *gen);
 int			render_scene_init(t_gen *gen);
 int			player_move_init(t_gen *gen);

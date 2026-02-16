@@ -154,7 +154,7 @@ fclean:
 
 
 
-re: fclean all
+re: fclean lib all
 
 # ============== TOOLS ======================
 

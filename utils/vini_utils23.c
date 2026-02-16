@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vini_utils23.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 09:46:09 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/12 09:46:11 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/16 19:47:44 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,33 +54,64 @@ void	crazy_math_operations(t_gen *gen)
 		gen->draw_enemy->draw_end_x = WIN_WIDTH - 1;
 }
 
-void	render_enemy_stripe(t_gen *gen, t_texture *tex, int stripe)
+int	goated_checker(t_draw_enemy *d, t_texture *t)
+{
+	if (!t || !t->data || t->width <= 0 || t->height <= 0)
+		return (1);
+
+	if (d->tex_x < 0)
+		d->tex_x = 0;
+	else if (d->tex_x >= t->width)
+		d->tex_x = t->width - 1;
+
+	if (d->tex_y < 0)
+		d->tex_y = 0;
+	else if (d->tex_y >= t->height)
+		d->tex_y = t->height - 1;
+
+	return (0);
+}
+
+
+void	render_enemy_stripe(t_gen *g, t_texture *t, int stripe)
 {
 	int	y;
 
-	gen->draw_enemy->tex_x = (int)((stripe - gen->draw_enemy->draw_start_x)
-			* tex->width / (gen->draw_enemy->draw_end_x
-				- gen->draw_enemy->draw_start_x));
-	y = gen->draw_enemy->draw_start_y;
-	while (y < gen->draw_enemy->draw_end_y)
+	g->draw_enemy->tex_x = (int)((stripe - g->draw_enemy->draw_start_x)
+		* t->width / (g->draw_enemy->draw_end_x
+			- g->draw_enemy->draw_start_x));
+
+	y = g->draw_enemy->draw_start_y;
+	while (y < g->draw_enemy->draw_end_y)
 	{
-		gen->draw_enemy->d = y * 256 - WIN_HEIGHT * 128
-			+ gen->draw_enemy->sprite_height * 128;
-		gen->draw_enemy->tex_y = ((gen->draw_enemy->d * tex->height)
-				/ gen->draw_enemy->sprite_height) / 256;
-		gen->draw_enemy->color = tex->data[gen->draw_enemy->tex_y * tex->width
-			+ gen->draw_enemy->tex_x];
-		if ((gen->draw_enemy->color & 0x00FFFFFF) != 0)
+		g->draw_enemy->d = y * 256 - WIN_HEIGHT * 128
+			+ g->draw_enemy->sprite_height * 128;
+
+		g->draw_enemy->tex_y = ((g->draw_enemy->d * t->height)
+			/ g->draw_enemy->sprite_height) / 256;
+
+		if (goated_checker(g->draw_enemy, t))
+			return;
+
+		g->draw_enemy->color = t->data[
+			g->draw_enemy->tex_y * t->width
+			+ g->draw_enemy->tex_x
+		];
+
+		if ((g->draw_enemy->color & 0x00FFFFFF) != 0)
 		{
-			if (gen->flags->terror_mode)
-				gen->draw_enemy->color = apply_fog(gen->draw_enemy->color,
-						gen->draw_enemy->distance);
-			copied_mlx_pixel_put(gen->img_data, stripe, y,
-				gen->draw_enemy->color);
+			if (g->flags->terror_mode)
+				g->draw_enemy->color = apply_fog(
+					g->draw_enemy->color,
+					g->draw_enemy->distance);
+
+			copied_mlx_pixel_put(g->img_data, stripe, y,
+				g->draw_enemy->color);
 		}
 		y++;
 	}
 }
+
 
 void	draw_enemy_square(t_gen *gen, int px, int py)
 {
