@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 09:46:09 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/16 19:47:44 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/16 19:50:35 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,24 +80,19 @@ void	render_enemy_stripe(t_gen *g, t_texture *t, int stripe)
 	g->draw_enemy->tex_x = (int)((stripe - g->draw_enemy->draw_start_x)
 		* t->width / (g->draw_enemy->draw_end_x
 			- g->draw_enemy->draw_start_x));
-
 	y = g->draw_enemy->draw_start_y;
 	while (y < g->draw_enemy->draw_end_y)
 	{
 		g->draw_enemy->d = y * 256 - WIN_HEIGHT * 128
 			+ g->draw_enemy->sprite_height * 128;
-
 		g->draw_enemy->tex_y = ((g->draw_enemy->d * t->height)
 			/ g->draw_enemy->sprite_height) / 256;
-
 		if (goated_checker(g->draw_enemy, t))
 			return;
-
 		g->draw_enemy->color = t->data[
 			g->draw_enemy->tex_y * t->width
 			+ g->draw_enemy->tex_x
 		];
-
 		if ((g->draw_enemy->color & 0x00FFFFFF) != 0)
 		{
 			if (g->flags->terror_mode)
