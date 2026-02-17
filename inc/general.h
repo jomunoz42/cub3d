@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   general.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/13 23:48:32 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/17 18:25:22 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GENERAL_H
 # define GENERAL_H
+# include "mlx.h"
 # include <X11/X.h>
 # include <X11/extensions/Xfixes.h>
 # include <sys/wait.h>
@@ -45,7 +46,7 @@
 
 // ###### MOUSE CONFIG ######
 
-# define MOUSE_SENS 0.0047
+# define MOUSE_SENS 0.0025
 
 // ###### MINIMAP CONFIG ######
 
