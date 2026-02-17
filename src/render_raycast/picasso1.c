@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   picasso1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 14:31:30 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/16 22:33:23 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/17 18:30:06 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
 
 int	get_pixel_color(t_gen *gen, int x, int y)
 {
