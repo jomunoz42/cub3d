@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header_validation.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:11:59 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/16 22:32:43 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/17 18:11:25 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	validate_texture_file(char *path)
 	if (fd < 0)
 	{
 		if (errno == ENOENT)
-			write(2, "Error\nFile does not exist\n", 26);
+			write(2, "Error\nFile texure does not exist\n", 34);
 		else if (errno == EACCES)
 			write(2, "Error\nNo reading permissions\n", 29);
 		return (1);

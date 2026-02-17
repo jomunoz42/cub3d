@@ -7,7 +7,7 @@ MAP_DIR = maps
 EXTRA = ./extra
 
 CC = cc
-CFLAGS = -Iinc -Wall -Wextra -Werror -g -Wno-incompatible-pointer-types
+CFLAGS = -Iinc -Wall -Wextra -Werror -g
 MLX_FLAGS = -L . -lmlx -lXext -lX11
 INCLUDES = -I$(MLXDIR) -I$(GNL_DIR) -I. -I$(MAP_DIR)
 
@@ -157,6 +157,7 @@ fclean:
 	@rm -rf ./extra/enemy.c
 	@sed -i '/ENEMY_SKELETON/d' ./src/game_loop/game_loop_helper.c
 	@sed -i '/update_enemy(gen, i);/d' ./src/game_loop/game_loop_helper.c
+	@sed -i '/gen->enemy\[i\].type == ENEMY_CTHULHU .* ENEMY_GHOST).*terror_mode/d' ./src/game_loop/game_loop_helper.c
 	@if grep -q 'AStar/AStar.h' ./inc/general.h; then \
 		sed -i '/AStar\/AStar.h/d' ./inc/general.h; \
 	fi
@@ -182,7 +183,7 @@ deb:
 val:
 	valgrind --leak-check=full --track-fds=yes \
 	--show-leak-kinds=all --track-origins=yes \
-	./$(NAME) map.cub
+	./$(NAME) maps/map.cub
 
 run: re
 	@./$(NAME) maps/testing.cub

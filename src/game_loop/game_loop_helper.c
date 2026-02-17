@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop_helper.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 23:54:34 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/16 23:00:15 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/17 18:10:53 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,6 @@ void	game_loop_part_one(t_gen *gen)
 	while (i < gen->enemy_count + 1)
 	{
 		gen->enemy[i].move_speed = gen->player->move_speed - 0.01;
-		if ((gen->enemy[i].type == ENEMY_CTHULHU || gen->enemy[i].type == ENEMY_GHOST) && gen->flags->terror_mode)
-		if ((gen->enemy[i].type == ENEMY_CTHULHU || gen->enemy[i].type == ENEMY_GHOST) && gen->flags->terror_mode)
-		if ((gen->enemy[i].type == ENEMY_CTHULHU || gen->enemy[i].type == ENEMY_GHOST) && gen->flags->terror_mode)
-		if ((gen->enemy[i].type == ENEMY_CTHULHU || gen->enemy[i].type == ENEMY_GHOST) && gen->flags->terror_mode)
-		if ((gen->enemy[i].type == ENEMY_CTHULHU || gen->enemy[i].type == ENEMY_GHOST) && gen->flags->terror_mode)
-		if ((gen->enemy[i].type == ENEMY_CTHULHU || gen->enemy[i].type == ENEMY_GHOST) && gen->flags->terror_mode)
-		if ((gen->enemy[i].type == ENEMY_CTHULHU || gen->enemy[i].type == ENEMY_GHOST) && gen->flags->terror_mode)
 		update_enemy_animation(gen->enemy, i);
 		i++;
 	}
