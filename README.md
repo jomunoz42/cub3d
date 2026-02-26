@@ -1,4 +1,4 @@
-This project has been created as part of the 42 curriculum by vivaz-ca, jomunoz
+_This project has been created as part of the 42 curriculum by vivaz-ca, jomunoz_
 # cub3d
 
 ### Description

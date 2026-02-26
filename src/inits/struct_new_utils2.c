@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:40:07 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/16 22:32:43 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/26 21:11:55 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,6 @@ int	enemy_init(t_gen *gen)
 
 	i = -1;
 	gen->enemy_count = count_enemies_in_map(gen);
-	if (gen->enemy_count == 0)
-		return (1);
 	gen->enemy = calloc((gen->enemy_count + 1), sizeof(t_enemy));
 	if (!gen->enemy)
 		return (0);
