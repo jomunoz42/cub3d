@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_new_utils7.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 22:03:10 by jomunoz           #+#    #+#             */
-/*   Updated: 2026/02/17 18:32:03 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/02/27 23:39:53 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,24 +56,6 @@ int	png_name_to_xpm(t_gen *gen, char *xpm_files[4])
 		ft_strcat(xpm_files[i], ".xpm");
 		i++;
 	}
-	return (1);
-}
-
-int	png_size_fd(const char *path, uint32_t *w, uint32_t *h)
-{
-	int				fd;
-	ssize_t			n;
-	unsigned char	buf[24];
-
-	fd = open(path, O_RDONLY);
-	if (fd < 0)
-		return (0);
-	n = read(fd, buf, sizeof(buf));
-	close(fd);
-	if (n != sizeof(buf))
-		return (0);
-	*w = (buf[16] << 24) | (buf[17] << 16) | (buf[18] << 8) | buf[19];
-	*h = (buf[20] << 24) | (buf[21] << 16) | (buf[22] << 8) | buf[23];
 	return (1);
 }
 

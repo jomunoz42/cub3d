@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:34:24 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 23:21:00 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 23:43:32 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,10 @@ int	init_all(t_gen *gen)
 {
 	gen->mlx_data = malloc(sizeof(t_mlx_data));
 	if (!gen->mlx_data)
-		return (1);
+	{
+		write(2, "Error\nMalloc failed\n", 21);
+		return (free_parsing(gen->parse), 1);
+	}
 	basic_mlx_init(gen);
 	texture_data_init(gen);
 	render_scene_init(gen);

@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:24 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 23:25:29 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 23:43:07 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void			ft_print_matrix(char **matrix);
 void			free_systems_and_mlx(t_gen *gen);
 int				ft_matrix_len(char **matrix);
 int				ultimate_file_validation(char *argv, t_parsing *parse);
-int				init_all(t_gen *gen);
 void			ft_free_matrix(char **matrix);
 int				super_duper_hiper_free();
 void			file_closer(void);
@@ -32,8 +31,6 @@ void			free_parsing(t_parsing *parse);
 int				window_init(t_gen *gen);
 int				handle_exit(int keysys);
 void			ft_free_matrix_partial(char **matrix, int max_index);
-int				png_size_fd(const char *path, uint32_t *w, uint32_t *h);
-int				png_size_fd(const char *path, uint32_t *w, uint32_t *h);
 int				rgb_to_hex(int r, int g, int b);
 int				color_switch(char *str);
 char			*space_skipper_shift(char *str);
@@ -129,7 +126,6 @@ bool			raycast_clear(t_gen *gen, double dx, double dy,
 					double distance);
 t_parsing		*parsing_init(void);
 void			copy_matrix(char **original_matrix, char ***matrix_to_copy_ptr);
-int				main_init(t_gen *gen, char *argv, char **environ);
 int				mouse_init(t_gen *gen);
 int				avg_img_init(t_gen *gen);
 int				general_texture_init(t_gen *gen);
@@ -261,7 +257,6 @@ char			**ft_split(char const *s, char c);
 int				is_space(char c);
 int				ft_atoi(const char *nptr);
 int				ft_matrix_len(char **matrix);
-int				png_size_fd(const char *path, uint32_t *w, uint32_t *h);
 int				color_switch(char *str);
 int				rgb_to_hex(int r, int g, int b);
 char			*space_skipper_shift(char *str);

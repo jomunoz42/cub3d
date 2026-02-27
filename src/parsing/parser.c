@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 23:56:19 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 21:09:03 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 23:52:20 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,7 @@ static int	file_parsing(t_parsing *data, int argc, char *file_path)
 	len = ft_strlen(file_path);
 	if (argc != 2)
 	{
-		write(2, "Error\n", 6);
-		write(2, "Incorrect number of arguments\n", 30);
+		write(2, "Error\nIncorrect number of arguments\n", 37);
 		return (1);
 	}
 	data->fd = open(file_path, O_RDONLY);
@@ -119,8 +118,9 @@ static int	file_parsing(t_parsing *data, int argc, char *file_path)
 	}
 	if (len < 4 || ft_strncmp(&file_path[len - 4], ".cub\0", 5))
 	{
-		write(2, "Error\nFile doesn't have the right extension\n", 45);
-		return (close(data->fd), 1);
+		(write(2, "Error\nIncorrect extension\n", 27), close(data->fd));
+		data->fd = -1;
+		return (1);
 	}
 	return (0);
 }

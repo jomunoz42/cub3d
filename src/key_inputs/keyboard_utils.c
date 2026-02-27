@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:02:46 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 21:53:30 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 23:53:14 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,11 @@ void	free_parsing(t_parsing *parse)
 	int	i;
 
 	i = 0;
+	if (parse->fd > 2)
+	{
+		close (parse->fd);
+		parse->fd = -1;
+	}
 	if (parse->textures_info)
 	{
 		while (i < E_COUNT)

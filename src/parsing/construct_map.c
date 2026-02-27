@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:09:42 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/16 22:32:43 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 23:52:30 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,7 @@ int	construct_map_and_textures(t_parsing *data)
 		return (free(line), 1);
 	data->map[0] = line;
 	get_height_and_max_width(data);
-	return (close(data->fd), 0);
+	close(data->fd);
+	data->fd = -1;
+	return (0);
 }
