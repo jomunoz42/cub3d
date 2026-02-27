@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard_utils2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:02:43 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/16 22:32:43 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 15:08:55 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,22 +55,22 @@ void	handle_modifier_keys(int key, t_gen *gen)
 
 void	handle_view_keys(int key, t_gen *gen)
 {
-	if (key == XK_f)
+	if (key == XK_f && gen->player->fov >= 1.5)
 	{
 		gen->kboard->key_f = true;
 		gen->player->fov -= 0.01;
 	}
-	if (key == XK_l)
+	if (key == XK_l && gen->player->fov <= 3.0)
 	{
 		gen->kboard->key_l = true;
 		gen->player->fov += 0.01;
 	}
-	if (key == XK_z)
+	if (key == XK_z && gen->minimap->zoom_level >= 6.0)
 	{
 		gen->kboard->key_z = true;
 		gen->minimap->zoom_level -= 0.5;
 	}
-	if (key == XK_x)
+	if (key == XK_x && gen->minimap->zoom_level <= 27.0)
 	{
 		gen->kboard->key_x = true;
 		gen->minimap->zoom_level += 0.5;
