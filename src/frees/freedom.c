@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:05:41 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 21:59:15 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 23:10:48 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,7 @@ void	free_all_resources(t_gen *gen)
 {
 	free_images(gen);
 	free_texture_array(gen, gen->texture, 4);
-	free_texture_array(gen, gen->terror_texture, 4);
-	free_texture_array(gen, gen->ghost_enemy, 4);
-	free_texture_array(gen, gen->cthulhu_enemy, 2);
 	free_texture_array(gen, gen->skeleton_enemy, 8);
-	free_texture_array(gen, gen->hanged_skel, 4);
-	free_texture_array(gen, gen->winning_exit, 3);
 	free_single_texture(gen, gen->door_texture);
 	free_single_texture(gen, gen->door_texture2);
 	if (gen->enemy)

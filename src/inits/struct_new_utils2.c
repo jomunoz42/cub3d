@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:40:07 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 21:54:58 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 23:09:45 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int	init_flags(t_gen *gen)
 	gen->flags = malloc(sizeof(t_flags));
 	if (!gen->flags)
 		return (0);
-	gen->flags->terror_mode = false;
 	gen->flags->info = true;
 	gen->flags->minimap = true;
 	gen->flags->mouse_on = true;
@@ -73,9 +72,6 @@ int	def_values_init(t_gen *gen)
 	gen->def_values->player_x = gen->player->x;
 	gen->def_values->player_y = gen->player->y;
 	gen->def_values->minimap_zoom_level = gen->minimap->zoom_level;
-	gen->def_values->terror_player_move_speed
-		= gen->def_values->player_move_speed
-		+ 0.05;
 	gen->def_values->env = NULL;
 	return (1);
 }
@@ -91,7 +87,6 @@ int	enemy_init(t_gen *gen)
 		return (0);
 	while (i < gen->enemy_count)
 	{
-		gen->enemy[i].move_speed = gen->def_values->player_move_speed;
 		gen->enemy[i].size = 20;
 		gen->enemy[i].x = 0;
 		gen->enemy[i].y = 0;

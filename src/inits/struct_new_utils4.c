@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:40:59 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/16 22:32:43 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 23:11:57 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,28 +35,11 @@ static int	init_texture_array(t_texture **array, int size)
 	return (1);
 }
 
-static int	init_enemy_textures(t_gen *gen)
-{
-	if (!init_texture_array(gen->ghost_enemy, 4))
-		return (0);
-	if (!init_texture_array(gen->cthulhu_enemy, 2))
-		return (0);
-	if (!init_texture_array(gen->skeleton_enemy, 8))
-		return (0);
-	if (!init_texture_array(gen->winning_exit, 3))
-		return (0);
-	if (!init_texture_array(gen->hanged_skel, 4))
-		return (0);
-	return (1);
-}
-
 int	general_texture_init(t_gen *gen)
 {
 	if (!init_texture_array(gen->texture, 4))
 		return (0);
-	if (!init_texture_array(gen->terror_texture, 4))
-		return (0);
-	if (!init_enemy_textures(gen))
+	if (!init_texture_array(gen->skeleton_enemy, 8))
 		return (0);
 	return (1);
 }

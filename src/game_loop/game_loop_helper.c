@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 23:54:34 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 21:59:23 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 23:09:55 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,8 @@ void	game_loop_part_one(t_gen *gen)
 
 	update_player(gen);
 	i = 0;
-	gen->enemy->move_speed = gen->player->move_speed - 0.001;
 	while (i < gen->enemy_count)
 	{
-		gen->enemy[i].move_speed = gen->player->move_speed - 0.01;
 		update_enemy_animation(gen->enemy, i);
 		i++;
 	}
