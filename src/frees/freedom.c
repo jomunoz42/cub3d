@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:05:41 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 18:34:05 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 18:43:07 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,13 @@ int	super_duper_hiper_free(int sound)
 		free_arm_object(gen, gen->arm);
 		stop_all_sounds(gen);
 	}
+	if (gen->xpm_paths)
+	{
+		free_xpm_paths(gen->xpm_paths);
+		free(gen->xpm_paths);
+	}
+	if (gen->arm)
+		free(gen->arm);
 	free_game_objects(gen);
 	free_all_resources(gen);
 	free_input_and_raycast(gen);

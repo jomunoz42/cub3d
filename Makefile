@@ -180,7 +180,12 @@ re: fclean lib all
 deb:
 	lldb ./$(NAME) maps/map3.cub
 
-val:
+val1:
+	valgrind --leak-check=full --track-fds=yes \
+	--show-leak-kinds=all --track-origins=yes \
+	./$(NAME) maps/map3.cub
+
+val2:
 	valgrind --leak-check=full --track-fds=yes \
 	--show-leak-kinds=all --track-origins=yes \
 	./$(NAME) maps/map2.cub
