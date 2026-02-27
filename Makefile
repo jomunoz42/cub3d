@@ -66,8 +66,6 @@ SRC_BASE = \
 	src/utils/lib_utils8.c \
 	src/utils/lib_utils9.c \
 	src/utils/print_stuff.c \
-	src/utils/vignette_utils.c \
-	src/utils/vignette_utils2.c \
 
 SRC = $(SRC_BASE)
 
@@ -97,39 +95,6 @@ $(OBJDIR)/%.o: ./%.c
 
 # =============== EXTRA =====================
 
-
-extra:
-	@echo "[Creating extra directory]"
-	@mkdir -p $(EXTRA)
-	@echo "[Done]"
-	@echo "[Copying ./.nightmare/enemy.txt]"
-	@if [ -f ./.nightmare/enemy.txt ]; then \
-		cp ./.nightmare/enemy.txt $(EXTRA)/enemy.c; \
-	fi
-	@echo "[Done]"
-	@echo "[Injecting enemy logic into game_loop_helper.c]"
-	@if ! grep -q "update_enemy(gen, i);" src/game_loop/game_loop_helper.c; then \
-		sed -i '25i\		if ((gen->enemy[i].type == ENEMY_CTHULHU || gen->enemy[i].type == ENEMY_GHOST) && gen->flags->terror_mode)' src/game_loop/game_loop_helper.c; \
-		sed -i '26i\			update_enemy(gen, i);' src/game_loop/game_loop_helper.c; \
-	fi
-	@echo "[Done]"
-	@echo "[Injecting mlx include into general.h]"
-	@	sed -i '17i\# include "../extra/AStar/AStar.h"' ./inc/general.h;
-	@echo "[Done]"
-	@echo "[Injecting AStar include]"
-	@if ! grep -q 'AStar.h' inc/general.h; then \
-		sed -i '17i\# include "../extra/AStar/AStar.h"' inc/general.h; \
-	fi
-	@echo "[Done]"
-	@echo "cloning AStar repository"
-	@if [ ! -d "$(EXTRA)/AStar" ]; then \
-		git clone https://github.com/BigZaphod/AStar.git $(EXTRA)/AStar; \
-	fi
-	@echo "[Done]"
-	@echo "Compiling now"
-	@$(MAKE) SRC="$(SRC_BASE) $(SRC_EXTRA)" CFLAGS="-Iinc"
-
-
 lib:
 	git clone git@github.com:42paris/minilibx-linux.git
 	cd minilibx-linux && make && cp libmlx.a ../ && cp mlx.h ../inc && cd .. && rm -rf minilibx-linux
@@ -153,7 +118,6 @@ fclean:
 	@rm -rf ./extra/enemy.c
 	@sed -i '/ENEMY_SKELETON/d' ./src/game_loop/game_loop_helper.c
 	@sed -i '/update_enemy(gen, i);/d' ./src/game_loop/game_loop_helper.c
-	@sed -i '/gen->enemy\[i\].type == ENEMY_CTHULHU .* ENEMY_GHOST).*terror_mode/d' ./src/game_loop/game_loop_helper.c
 	@if grep -q 'AStar/AStar.h' ./inc/general.h; then \
 		sed -i '/AStar\/AStar.h/d' ./inc/general.h; \
 	fi

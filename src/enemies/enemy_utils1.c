@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enemy_utils1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 09:46:09 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 19:02:59 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/02/27 22:00:09 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,7 @@ void	render_enemy_stripe(t_gen *g, t_texture *t, int stripe)
 		g->draw_enemy->color = t->data[g->draw_enemy->tex_y * t->width
 			+ g->draw_enemy->tex_x];
 		if ((g->draw_enemy->color & 0x00FFFFFF) != 0)
-		{
-			if (g->flags->terror_mode)
-				g->draw_enemy->color = apply_fog(g->draw_enemy->color,
-						g->draw_enemy->distance);
 			copied_mlx_pixel_put(g->img_data, stripe, y, g->draw_enemy->color);
-		}
 		y++;
 	}
 }

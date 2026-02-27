@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 23:45:44 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 21:15:08 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 21:56:56 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	apply_player_movement(t_gen *gen, double nx, double ny)
 		gen->player->x += gen->player_move->move_x;
 	if (!collision(gen, ny + gen->player_move->move_y, gen->player->x))
 		gen->player->y += gen->player_move->move_y;
-	if (!gen->flags->terror_mode && !gen->kboard->control_left)
+	if (!gen->kboard->control_left)
 	{
 		if (!gen->kboard->shift_left)
 			gen->player->move_speed = 0.05;

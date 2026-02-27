@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:02:46 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 19:00:56 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/02/27 21:53:30 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,10 @@ void	release_modifier_keys(int key, t_gen *gen)
 {
 	if (key == XK_Control_L)
 	{
-		if (gen->flags->terror_mode)
-		{
-			gen->player->move_speed = gen->def_values->terror_player_move_speed;
-			gen->enemy->move_speed = gen->player->move_speed;
-		}
-		else
-		{
-			gen->player->move_speed = 0.05;
-			gen->player->rotate_speed = 0.045;
-			gen->player->fov -= 0.07;
-			gen->kboard->control_left = false;
-		}
+		gen->player->move_speed = 0.05;
+		gen->player->rotate_speed = 0.045;
+		gen->player->fov -= 0.07;
+		gen->kboard->control_left = false;
 	}
 	if (key == XK_Shift_L)
 	{

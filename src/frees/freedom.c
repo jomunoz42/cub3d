@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:05:41 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 20:55:35 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 21:59:15 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ void	free_images(t_gen *gen)
 {
 	if (!gen || !gen->img_data)
 		return ;
-	if (gen->img_data->vignette)
-		free(gen->img_data->vignette);
 	if (gen->img_data->img && gen->mlx_data && gen->mlx_data->mlx_ptr)
 		mlx_destroy_image(gen->mlx_data->mlx_ptr, gen->img_data->img);
 	free(gen->img_data);

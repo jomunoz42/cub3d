@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:24 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 21:06:10 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 21:59:08 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ void			render_scene(t_gen *gen);
 void			draw_minimap_fov(t_gen *gen);
 int				get_pixel_color(t_gen *gen, int x, int y);
 int				get_pixel_color_img(t_img_data *img, int x, int y);
-void			init_vignette(t_img_data *img);
 void			ciclope_dos_xman(t_img_data *img, int *coords, int color);
 int				png_name_to_xpm(t_gen *gen, char *xpm_files[4]);
 void			rotate_player(t_gen *gen, double angle);
@@ -83,11 +82,9 @@ int				mouse_looking(t_gen *gen);
 t_rayhit		castrate(t_gen *gen, double ray_direction_x,
 					double ray_direction_y, bool interact);
 void			draw_terror_arm(t_gen *gen);
-int				apply_fog(int color, double dist);
 void			play_music(t_gen *gen);
 void			start_terror_music(t_gen *gen);
 void			play_sound(t_gen *gen, const char *filename);
-int				apply_fog(int color, double dist);
 void			open_close_door(t_gen *gen);
 t_texture		*load_xpm_texture(void *mlx_ptr, char *file);
 void			*ft_memset(void *b, int c, size_t len);
@@ -108,8 +105,7 @@ void			calculate_wall_x(t_gen *gen, t_rayhit hit);
 void			get_wall_texture(t_gen *gen, t_rayhit hit, t_texture **tex);
 void			calculate_texture_x(t_gen *gen, t_rayhit hit, t_texture *tex,
 					int *texture_x);
-void			draw_wall_slice(t_gen *gen, int x, t_texture *tex,
-					double hit_dist);
+void			draw_wall_slice(t_gen *gen, int x, t_texture *tex);
 void			draw_ceiling_slice(t_gen *gen, int x, int draw_start);
 void			draw_floor_slice(t_gen *gen, int x, int draw_end);
 void			game_loop_part_one(t_gen *gen);
@@ -139,7 +135,6 @@ void			copy_matrix(char **original_matrix, char ***matrix_to_copy_ptr);
 int				main_init(t_gen *gen, char *argv, char **environ);
 int				mouse_init(t_gen *gen);
 int				avg_img_init(t_gen *gen);
-void			init_vignette(t_img_data *img);
 int				general_texture_init(t_gen *gen);
 void			wall_textures_init(t_gen *gen);
 void			load_textures(t_gen *gen, t_texture **dst, char **xpm_files,
@@ -203,8 +198,6 @@ void			rotate_player(t_gen *gen, double angle);
 void			calculate_player_movement(t_gen *gen);
 char			*ft_dtoa_fixed(double v);
 char			*print_helper(char *which_info, double what_to_convert);
-void			apply_vignette_to_image(t_gen *gen, t_img_data *img);
-void			apply_vignette_pixel(t_img_data *img, int x, int y);
 void			draw_minimap_player(t_gen *gen);
 void			process_fov_ray(t_gen *gen, int i, int num_rays);
 void			draw_minimap_fov(t_gen *gen);
@@ -270,7 +263,6 @@ void			ft_print_matrix(char **matrix);
 void			ft_bzero(void *s, size_t n);
 void			*ft_calloc(size_t nmemb, size_t size);
 int				ft_str_count(char *str, char c);
-int				apply_fog(int color, double dist);
 char			*ft_split_strndup(const char *s, char c);
 void			*free_all(char **strs, int count);
 char			**alloc_mem(int str_count);

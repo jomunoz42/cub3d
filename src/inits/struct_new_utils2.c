@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:40:07 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 20:59:15 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 21:54:58 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,11 @@ int	init_flags(t_gen *gen)
 	gen->flags = malloc(sizeof(t_flags));
 	if (!gen->flags)
 		return (0);
-	gen->flags->info = true;
 	gen->flags->terror_mode = false;
+	gen->flags->info = true;
 	gen->flags->minimap = true;
 	gen->flags->mouse_on = true;
 	gen->flags->enemy_mini = true;
-	gen->flags->music_on = false;
 	return (1);
 }
 

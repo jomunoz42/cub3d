@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 23:41:46 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/16 22:32:43 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 21:58:16 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	calculate_texture_x(t_gen *gen, t_rayhit hit, t_texture *tex,
 		*texture_x = tex->width - *texture_x - 1;
 }
 
-void	draw_wall_slice(t_gen *gen, int x, t_texture *tex, double hit_dist)
+void	draw_wall_slice(t_gen *gen, int x, t_texture *tex)
 {
 	int	y;
 	int	d;
@@ -44,8 +44,6 @@ void	draw_wall_slice(t_gen *gen, int x, t_texture *tex, double hit_dist)
 		if (tex_y >= tex->height)
 			tex_y = tex->height - 1;
 		color = tex->data[tex_y * tex->width + tex_x];
-		if (gen->flags->terror_mode)
-			color = apply_fog(color, hit_dist);
 		copied_mlx_pixel_put(gen->img_data, x, y, color);
 	}
 }
@@ -56,10 +54,7 @@ void	draw_ceiling_slice(t_gen *gen, int x, int draw_start)
 	int	color;
 
 	y = 0;
-	if (gen->flags->terror_mode)
-		color = BLACK_CLR;
-	else
-		color = gen->texture_data->clng_color;
+	color = gen->texture_data->clng_color;
 	while (y < draw_start)
 	{
 		copied_mlx_pixel_put(gen->img_data, x, y, color);
@@ -73,10 +68,7 @@ void	draw_floor_slice(t_gen *gen, int x, int draw_end)
 	int	color;
 
 	y = draw_end;
-	if (gen->flags->terror_mode)
-		color = BLACK_CLR;
-	else
-		color = gen->texture_data->flr_color;
+	color = gen->texture_data->flr_color;
 	while (y < WIN_HEIGHT)
 	{
 		copied_mlx_pixel_put(gen->img_data, x, y, color);
@@ -87,17 +79,7 @@ void	draw_floor_slice(t_gen *gen, int x, int draw_end)
 void	get_wall_texture(t_gen *gen, t_rayhit hit, t_texture **tex)
 {
 	if (hit.type == HIT_WALL)
-	{
-		if (gen->flags->terror_mode)
-			*tex = gen->terror_texture[hit.face];
-		else
-			*tex = gen->texture[hit.face];
-	}
+		*tex = gen->texture[hit.face];
 	else
-	{
-		if (gen->flags->terror_mode)
-			*tex = gen->door_texture2;
-		else
-			*tex = gen->door_texture;
-	}
+		*tex = gen->door_texture;
 }

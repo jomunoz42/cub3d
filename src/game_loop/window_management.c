@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:02:06 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 17:58:01 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 21:59:20 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	start_window(t_gen *gen, char *argv)
 			&gen->img_data->endian);
 	gen->img_data->height = gen->mlx_data->win_height;
 	gen->img_data->width = gen->mlx_data->win_width;
-	init_vignette(gen->img_data);
 	mlx_hook(gen->mlx_data->win_ptr, 2, KeyPressMask, key_press, gen);
 	mlx_hook(gen->mlx_data->win_ptr, 3, KeyReleaseMask, key_release, gen);
 	mlx_hook(gen->mlx_data->win_ptr, DestroyNotify, KeyPressMask,

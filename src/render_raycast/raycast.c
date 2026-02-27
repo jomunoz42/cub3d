@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 23:18:27 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/16 22:30:36 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 21:58:21 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	render_scene(t_gen *gen)
 		calculate_wall_x(gen, hit);
 		get_wall_texture(gen, hit, &tex);
 		calculate_texture_x(gen, hit, tex, &gen->render->texture_x);
-		draw_wall_slice(gen, x, tex, hit.dist);
+		draw_wall_slice(gen, x, tex);
 		draw_ceiling_slice(gen, x, gen->render->draw_start);
 		draw_floor_slice(gen, x, gen->render->draw_end);
 		x++;

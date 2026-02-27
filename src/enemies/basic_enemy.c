@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:56:34 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 21:08:16 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 22:01:15 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,6 @@ void	draw_enemy(t_gen *gen, int i)
 	if (gen->draw_enemy->transform_y <= 0)
 		return ;
 	crazy_math_operations(gen);
-	if (gen->flags->terror_mode && !enemy_visible(gen,
-			&gen->draw_enemy->distance, i))
-		return ;
 	stripe = gen->draw_enemy->draw_start_x;
 	while (stripe < gen->draw_enemy->draw_end_x)
 	{

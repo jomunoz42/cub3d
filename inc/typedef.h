@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:27 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 21:24:27 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 23:07:02 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,6 @@ typedef struct s_images_data
 	int				endian;
 	int				width;
 	int				height;
-	float			*vignette;
 }					t_img_data;
 
 typedef struct s_minimap
@@ -164,7 +163,6 @@ typedef struct s_flags
 	bool			minimap;
 	bool			enemy_mini;
 	bool			mouse_on;
-	bool			music_on;
 }					t_flags;
 
 typedef struct s_default_values
