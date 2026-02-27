@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:05:41 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/16 22:32:06 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 18:18:29 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,13 @@ void	free_all_resources(t_gen *gen)
 		free(gen->draw_enemy);
 }
 
-int	super_duper_hiper_free(void)
+int	super_duper_hiper_free(int sound)
 {
 	t_gen	*gen;
 
 	gen = gen_stuff();
-	stop_all_sounds(gen);
+	if (sound == 1)
+		stop_all_sounds(gen);
 	free_game_objects(gen);
 	free_all_resources(gen);
 	free_input_and_raycast(gen);

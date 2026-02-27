@@ -178,15 +178,15 @@ re: fclean lib all
 # ============== TOOLS ======================
 
 deb:
-	lldb ./$(NAME) maps/testing.cub
+	lldb ./$(NAME) maps/map3.cub
 
 val:
 	valgrind --leak-check=full --track-fds=yes \
 	--show-leak-kinds=all --track-origins=yes \
-	./$(NAME) maps/map.cub
+	./$(NAME) maps/vini.cub
 
 run: re
-	@./$(NAME) maps/testing.cub
+	@./$(NAME) maps/map3.cub
 
 norm:
 	@norminette $(shell find . -type f \( -name "*.c" -o -name "*.h" \)) \

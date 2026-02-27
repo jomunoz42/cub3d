@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 09:46:09 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/16 22:32:43 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 18:03:40 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void	render_enemy_stripe(t_gen *g, t_texture *t, int stripe)
 {
 	int	y;
 
+	if (!g || !g->draw_enemy || !t || !t->data)
+    	return;
 	g->draw_enemy->tex_x = (int)((stripe - g->draw_enemy->draw_start_x)
 			* t->width / (g->draw_enemy->draw_end_x
 				- g->draw_enemy->draw_start_x));
