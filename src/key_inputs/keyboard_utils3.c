@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard_utils3.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 21:33:30 by jomunoz           #+#    #+#             */
-/*   Updated: 2026/02/17 18:31:45 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/02/27 18:18:58 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,29 +29,32 @@ void	handle_misc_toggles(int key, t_gen *gen)
 int	handle_exit(int keysys)
 {
 	if (keysys == XK_Escape)
-		return (super_duper_hiper_free(), 1);
+		return (super_duper_hiper_free(1), 1);
 	return (0);
 }
 
 void	handle_terror_toggle(int key, t_gen *gen)
 {
-	if (key == XK_t && !gen->kboard->key_t)
-	{
-		gen->kboard->key_t = true;
-		stop_all_sounds(gen);
-		gen->player->move_speed = 0.1;
-		gen->enemy->move_speed = gen->player->move_speed;
-		gen->flags->terror_mode = !gen->flags->terror_mode;
-		start_terror_music(gen);
-		update_enemy_modes(gen);
-		if (gen->flags->terror_mode)
-		{
-			if (gen->exit->active == false)
-				set_valid_exit(gen);
-		}
-		else
-			gen->exit->active = false;
-	}
+	(void)key;
+	(void)gen;
+	// if (key == XK_t && !gen->kboard->key_t)
+	// {
+	// 	gen->kboard->key_t = true;
+	// 	stop_all_sounds(gen);
+	// 	gen->player->move_speed = 0.1;
+	// 	gen->enemy->move_speed = gen->player->move_speed;
+	// 	gen->flags->terror_mode = !gen->flags->terror_mode;
+	// 	start_terror_music(gen);
+	// 	update_enemy_modes(gen);
+	// 	if (gen->flags->terror_mode)
+	// 	{
+	// 		if (gen->exit->active == false)
+	// 			set_valid_exit(gen);
+	// 	}
+	// 	else
+	// 		gen->exit->active = false;
+	// }
+
 }
 
 int	key_press(int key, t_gen *gen)

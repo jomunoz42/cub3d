@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:24 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/16 22:35:00 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 18:18:50 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int				ft_matrix_len(char **matrix);
 int				ultimate_file_validation(char *argv, t_parsing *parse);
 int				init_all(t_gen *gen);
 void			ft_free_matrix(char **matrix);
-int				super_duper_hiper_free(void);
+int				super_duper_hiper_free(int sound);
 void			file_closer(void);
 void			free_parsing(t_parsing *parse);
 int				window_init(t_gen *gen, int w, int h);

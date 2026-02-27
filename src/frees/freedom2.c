@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:02:49 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/16 22:32:43 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 18:42:25 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ void	free_game_objects(t_gen *gen)
 {
 	if (!gen)
 		return ;
-	free_arm_object(gen, gen->terror_arm);
-	free_arm_object(gen, gen->arm);
+	// free_arm_object(gen, gen->terror_arm);
 	free_minimap(gen);
 	if (gen->player)
 		free(gen->player);

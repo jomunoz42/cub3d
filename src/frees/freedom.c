@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:05:41 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/16 22:32:06 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 18:53:58 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,29 @@ void	free_all_resources(t_gen *gen)
 		free(gen->draw_enemy);
 }
 
-int	super_duper_hiper_free(void)
+int	super_duper_hiper_free(int sound)
 {
 	t_gen	*gen;
 
 	gen = gen_stuff();
-	stop_all_sounds(gen);
+	if (sound == 1)
+	{
+		free_arm_object(gen, gen->arm);
+		stop_all_sounds(gen);
+	}
+	if (gen->xpm_paths)
+	{
+		free_xpm_paths(gen->xpm_paths);
+		free(gen->xpm_paths);
+	}
+	if (gen->arm)
+		free(gen->arm);
 	free_game_objects(gen);
 	free_all_resources(gen);
+	if (gen->terror_arm->img)
+		mlx_destroy_image(gen->mlx_data->mlx_ptr, gen->terror_arm->img);
+	if(gen->terror_arm)
+		free(gen->terror_arm);
 	free_input_and_raycast(gen);
 	free_config_and_parsing(gen);
 	free_exit(gen);
