@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:34:24 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 18:28:14 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 20:58:36 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ int	init_all(t_gen *gen)
 	basic_mlx_init(gen);
 	texture_data_init(gen);
 	render_scene_init(gen);
-	exit_init(gen);
 	init_draw_enemy(gen);
 	player_move_init(gen);
 	dda_init(gen);

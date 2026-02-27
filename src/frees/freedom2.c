@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:02:49 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 20:52:31 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 21:03:13 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,4 @@ void	free_config_and_parsing(t_gen *gen)
 	}
 	if (gen->dda)
 		free(gen->dda);
-}
-
-void	free_exit(t_gen *gen)
-{
-	if (gen->exit)
-		free(gen->exit);
 }

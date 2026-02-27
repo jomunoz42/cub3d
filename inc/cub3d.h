@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:24 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 20:54:37 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 21:03:19 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int				ft_matrix_len(char **matrix);
 int				ultimate_file_validation(char *argv, t_parsing *parse);
 int				init_all(t_gen *gen);
 void			ft_free_matrix(char **matrix);
-int				super_duper_hiper_free(int sound);
+int				super_duper_hiper_free();
 void			file_closer(void);
 void			free_parsing(t_parsing *parse);
 int				window_init(t_gen *gen, int w, int h);
@@ -146,7 +146,6 @@ void			load_textures(t_gen *gen, t_texture **dst, char **xpm_files,
 					int count);
 int				texture_data_init(t_gen *gen);
 int				minimap_init(t_gen *gen);
-void			free_exit(t_gen *gen);
 void			init_extra_keys(t_keyboard *kb);
 int				keyboard_init(t_gen *gen);
 int				rayhit_init(t_gen *gen);
@@ -168,7 +167,6 @@ void			play_looped_background(t_gen *gen, const char *filename,
 void			background_supervisor(t_gen *gen, const char *filename,
 					int is_terror);
 void			exec_sound(t_gen *gen, const char *filename);
-int				exit_init(t_gen *gen);
 void			update_enemy_modes(t_gen *gen);
 void			update_enemy_animation(t_enemy *enemy, int i);
 void			find_enemy_from_map(t_gen *gen, int i);
@@ -240,11 +238,6 @@ char			*ft_strchr(const char *s, int c);
 void			free_xpm_paths(t_xpm_paths *paths);
 void			toggle_flag(bool *key_state, bool *flag);
 int				ft_isdigit(int c);
-void			set_quad_x_bounds(t_gen *gen, t_quad_bounds *b, int quadrant,
-					int mid_x);
-void			set_quad_y_bounds(t_gen *gen, t_quad_bounds *b, int quadrant,
-					int mid_y);
-t_quad_bounds	get_quadrant_bounds(t_gen *gen, int quadrant);
 void			get_quadrant_priority(int player_q, int order[4]);
 
 char			*ft_strdup(const char *s);

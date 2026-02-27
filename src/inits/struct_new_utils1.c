@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_new_utils1.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:39:35 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/17 18:32:15 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/02/27 20:58:27 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,5 @@ int	init_draw_enemy(t_gen *gen)
 	gen->draw_enemy->draw_end_x = 0;
 	gen->draw_enemy->tex_x = 0;
 	gen->draw_enemy->distance = 0;
-	return (1);
-}
-
-int	exit_init(t_gen *gen)
-{
-	gen->exit = malloc(sizeof(t_exit));
-	if (!gen->exit)
-		return (0);
-	gen->exit->active = false;
 	return (1);
 }

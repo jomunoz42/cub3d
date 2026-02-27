@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:40:07 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 20:52:16 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 20:59:15 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,12 @@ int	enemy_init(t_gen *gen)
 {
 	int	i;
 
-	i = -1;
+	i = 0;
 	gen->enemy_count = count_enemies_in_map(gen);
-	gen->enemy = calloc((gen->enemy_count + 1), sizeof(t_enemy));
+	gen->enemy = calloc((gen->enemy_count), sizeof(t_enemy));
 	if (!gen->enemy)
 		return (0);
-	while (++i <= gen->enemy_count)
+	while (i < gen->enemy_count)
 	{
 		gen->enemy[i].move_speed = gen->def_values->player_move_speed;
 		gen->enemy[i].size = 20;
@@ -99,11 +99,8 @@ int	enemy_init(t_gen *gen)
 		gen->enemy[i].enemy_frame = 0;
 		gen->enemy[i].enemy_timer = 0;
 		gen->enemy[i].type = ENEMY_SKELETON;
-		gen->enemy[i].first_type = ENEMY_SKELETON;
-		if (i == gen->enemy_count)
-			gen->enemy[i].type = WINNING_STAR;
-		else
-			find_enemy_from_map(gen, i);
+		find_enemy_from_map(gen, i);
+		i++;
 	}
 	return (1);
 }

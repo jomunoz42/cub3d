@@ -19,8 +19,6 @@ SRC_BASE = \
 	src/enemies/enemy_utils1.c \
 	src/enemies/enemy_utils2.c \
 	src/enemies/enemy_utils3.c \
-	src/exit_door/winning_exit.c \
-	src/exit_door/winnin_helper.c \
 	src/frees/freedom.c \
 	src/frees/freedom2.c \
 	src/frees/freedom3.c \

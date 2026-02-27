@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 09:43:03 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/16 22:32:43 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 21:02:12 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	get_anim_stat_value(int type, int column)
 {
 	static int	stats[][3] = {{ENEMY_GHOST, 4, 10}, {ENEMY_CTHULHU, 2, 25},
 	{ENEMY_SKELETON, 7, 8}, {ENEMY_SKELETON2, 3, 6}, {HANGED_SKELETON,
-		4, 15}, {WINNING_STAR, 3, 3}, {-1, 0, 0}};
+		4, 15}};
 	int			i;
 
 	i = 0;
@@ -94,9 +94,6 @@ int	enemy_dealer(t_gen *gen, t_texture **tex, t_enemy **enemy, int i)
 		*tex = gen->skeleton_enemy[(*enemy)->enemy_frame];
 	else if ((*enemy)->type == HANGED_SKELETON && gen->flags->terror_mode)
 		*tex = gen->hanged_skel[(*enemy)->enemy_frame];
-	else if ((*enemy)->type == WINNING_STAR && gen->flags->terror_mode
-		&& gen->exit->active)
-		*tex = gen->winning_exit[(*enemy)->enemy_frame];
 	else
 		return (0);
 	return (1);

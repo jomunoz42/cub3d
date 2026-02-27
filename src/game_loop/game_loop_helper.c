@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop_helper.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 23:54:34 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/17 18:10:53 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/02/27 20:59:33 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	game_loop_part_one(t_gen *gen)
 	update_player(gen);
 	i = 0;
 	gen->enemy->move_speed = gen->player->move_speed - 0.001;
-	while (i < gen->enemy_count + 1)
+	while (i < gen->enemy_count)
 	{
 		gen->enemy[i].move_speed = gen->player->move_speed - 0.01;
 		update_enemy_animation(gen->enemy, i);
@@ -28,7 +28,7 @@ void	game_loop_part_one(t_gen *gen)
 	clear_image(gen->img_data, 0x000000);
 	render_scene(gen);
 	i = 0;
-	while (i < gen->enemy_count + 1)
+	while (i < gen->enemy_count)
 	{
 		draw_enemy(gen, i);
 		i++;

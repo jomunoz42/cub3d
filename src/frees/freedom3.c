@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 21:51:04 by jomunoz           #+#    #+#             */
-/*   Updated: 2026/02/27 20:49:10 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 21:03:24 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	free_systems_and_mlx(t_gen *gen)
 {
 	free_input_and_raycast(gen);
 	free_config_and_parsing(gen);
-	free_exit(gen);
 	if (gen->mlx_data)
 	{
 		if (gen->mlx_data->win_ptr)
