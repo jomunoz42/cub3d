@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 23:56:19 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/16 22:32:43 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 21:09:03 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ static int	find_invalid_char(t_parsing *data)
 		{
 			c = data->map[y][x];
 			if (c != '0' && c != '1' && c != 'N' && c != 'S' && c != 'E'
-				&& c != 'W' && c != ' ' && c != 'D' && c != 'x' && c != '\n'
-				&& c != 'X' && c != 'Z')
+				&& c != 'W' && c != ' ' && c != 'D' && c != '\n' && c != 'Z')
 			{
 				write(2, "Error\n", 6);
 				write(2, "Invalid char in map.\n", 22);

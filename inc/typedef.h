@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:27 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 21:00:25 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 21:24:27 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,11 +181,8 @@ typedef struct s_default_values
 
 typedef enum e_enemy_type
 {
-	ENEMY_GHOST,
-	ENEMY_CTHULHU,
 	ENEMY_SKELETON,
-	ENEMY_SKELETON2,
-	HANGED_SKELETON
+	ENEMY_SKELETON2
 }					t_enemy_type;
 
 typedef struct s_enemy
@@ -262,12 +259,7 @@ typedef struct s_draw_enemy
 typedef struct s_xpm_paths
 {
 	char			*normal[4];
-	char			*terror[4];
-	char			*ghost[4];
-	char			*cthulhu[2];
 	char			*skeleton[8];
-	char			*hanged_skel[4];
-	char			*star[3];
 }					t_xpm_paths;
 
 typedef struct s_general

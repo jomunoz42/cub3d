@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 09:43:03 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 21:02:12 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 21:16:09 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,7 @@ bool	raycast_clear(t_gen *gen, double dx, double dy, double distance)
 
 int	get_anim_stat_value(int type, int column)
 {
-	static int	stats[][3] = {{ENEMY_GHOST, 4, 10}, {ENEMY_CTHULHU, 2, 25},
-	{ENEMY_SKELETON, 7, 8}, {ENEMY_SKELETON2, 3, 6}, {HANGED_SKELETON,
-		4, 15}};
+	static int	stats[][3] = {{ENEMY_SKELETON, 7, 8}, {ENEMY_SKELETON2, 3, 6}};
 	int			i;
 
 	i = 0;
@@ -77,24 +75,12 @@ void	update_enemy_animation(t_enemy *enemy, int i)
 
 int	enemy_dealer(t_gen *gen, t_texture **tex, t_enemy **enemy, int i)
 {
-	if (!gen->enemy || (gen->enemy[i].type == ENEMY_GHOST
-			&& !gen->ghost_enemy[0]) || (gen->enemy[i].type == ENEMY_CTHULHU
-			&& !gen->cthulhu_enemy[0] && gen->flags->terror_mode)
-		|| ((gen->enemy[i].type == ENEMY_SKELETON
+	if (!gen->enemy || ((gen->enemy[i].type == ENEMY_SKELETON
 				|| gen->enemy[i].type == ENEMY_SKELETON2)
 			&& !gen->skeleton_enemy[0]))
 		return (0);
 	*enemy = &gen->enemy[i];
-	if ((*enemy)->type == ENEMY_GHOST && gen->flags->terror_mode)
-		*tex = gen->ghost_enemy[(*enemy)->enemy_frame];
-	else if ((*enemy)->type == ENEMY_CTHULHU && gen->flags->terror_mode)
-		*tex = gen->cthulhu_enemy[(*enemy)->enemy_frame];
-	else if (((*enemy)->type == ENEMY_SKELETON
-			|| (*enemy)->type == ENEMY_SKELETON2) && !gen->flags->terror_mode)
+	if (((*enemy)->type == ENEMY_SKELETON || (*enemy)->type == ENEMY_SKELETON2))
 		*tex = gen->skeleton_enemy[(*enemy)->enemy_frame];
-	else if ((*enemy)->type == HANGED_SKELETON && gen->flags->terror_mode)
-		*tex = gen->hanged_skel[(*enemy)->enemy_frame];
-	else
-		return (0);
 	return (1);
 }

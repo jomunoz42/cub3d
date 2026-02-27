@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:24 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 21:03:19 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 21:06:10 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,6 @@ void			play_looped_background(t_gen *gen, const char *filename,
 void			background_supervisor(t_gen *gen, const char *filename,
 					int is_terror);
 void			exec_sound(t_gen *gen, const char *filename);
-void			update_enemy_modes(t_gen *gen);
 void			update_enemy_animation(t_enemy *enemy, int i);
 void			find_enemy_from_map(t_gen *gen, int i);
 void			update_enemy(t_gen *gen, int i);
