@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:24 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 19:05:28 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/02/27 20:54:37 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int				ft_strncmp(const char *s1, const char *s2, size_t n);
 char			*ft_strtrim(char const *s1, char const *set);
 char			*ft_strcpy(char *s1, char *s2);
 void			ft_print_matrix(char **matrix);
-void			free_game_assets(t_gen *gen, int sound);
+void			free_game_assets(t_gen *gen);
 void			free_systems_and_mlx(t_gen *gen);
 int				ft_matrix_len(char **matrix);
 int				ultimate_file_validation(char *argv, t_parsing *parse);
@@ -86,7 +86,6 @@ void			draw_terror_arm(t_gen *gen);
 int				apply_fog(int color, double dist);
 void			play_music(t_gen *gen);
 void			start_terror_music(t_gen *gen);
-void			stop_all_sounds(t_gen *gen);
 void			play_sound(t_gen *gen, const char *filename);
 int				apply_fog(int color, double dist);
 void			open_close_door(t_gen *gen);
@@ -96,7 +95,6 @@ void			handle_movement_keys(int key, t_gen *gen);
 void			handle_modifier_keys(int key, t_gen *gen);
 void			handle_view_keys(int key, t_gen *gen);
 void			handle_toggle_keys(int key, t_gen *gen);
-void			handle_audio_keys(int key, t_gen *gen);
 void			release_movement_keys(int key, t_gen *gen);
 void			release_modifier_keys(int key, t_gen *gen);
 void			release_toggle_keys(int key, t_gen *gen);
@@ -165,12 +163,10 @@ int				render_scene_init(t_gen *gen);
 int				player_move_init(t_gen *gen);
 int				init_draw_enemy(t_gen *gen);
 int				init_all(t_gen *gen);
-void			stop_background_and_terror(t_sound *sounds);
 void			play_looped_background(t_gen *gen, const char *filename,
 					int is_terror);
 void			background_supervisor(t_gen *gen, const char *filename,
 					int is_terror);
-void			stop_background_music(t_sound *sounds);
 void			exec_sound(t_gen *gen, const char *filename);
 int				exit_init(t_gen *gen);
 void			update_enemy_modes(t_gen *gen);

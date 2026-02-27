@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   freedom3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 21:51:04 by jomunoz           #+#    #+#             */
-/*   Updated: 2026/02/27 19:06:04 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/02/27 20:49:10 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,9 @@ void	free_arm_object(t_gen *gen, t_img_data *arm)
 		mlx_destroy_image(gen->mlx_data->mlx_ptr, arm->img);
 }
 
-void	free_game_assets(t_gen *gen, int sound)
+void	free_game_assets(t_gen *gen)
 {
-	if (sound == 1)
-	{
-		free_arm_object(gen, gen->arm);
-		stop_all_sounds(gen);
-	}
+	free_arm_object(gen, gen->arm);
 	if (gen->xpm_paths)
 	{
 		free_xpm_paths(gen->xpm_paths);

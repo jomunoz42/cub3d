@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:40:07 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/26 21:11:55 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 20:52:16 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,6 @@ int	def_values_init(t_gen *gen)
 		= gen->def_values->player_move_speed
 		+ 0.05;
 	gen->def_values->env = NULL;
-	gen->def_values->sounds.pids = malloc(sizeof(pid_t) * 128);
-	gen->def_values->sounds.terror_music_pid = 0;
-	gen->def_values->sounds.background_music_pid = 0;
-	gen->def_values->sounds.terror_music_pid = 0;
-	gen->def_values->sounds.count = 0;
-	gen->def_values->sounds.capacity = 128;
 	return (1);
 }
 

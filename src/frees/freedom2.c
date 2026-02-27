@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   freedom2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:02:49 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 19:00:37 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/02/27 20:52:31 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ void	free_config_and_parsing(t_gen *gen)
 	{
 		if (gen->def_values->env)
 			ft_free_matrix(gen->def_values->env);
-		if (gen->def_values->sounds.pids)
-			free(gen->def_values->sounds.pids);
 		free(gen->def_values);
 	}
 	if (gen->parse)

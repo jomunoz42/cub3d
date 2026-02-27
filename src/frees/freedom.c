@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   freedom.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:05:41 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 19:05:35 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/02/27 20:55:35 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,12 @@ void	free_all_resources(t_gen *gen)
 		free(gen->draw_enemy);
 }
 
-int	super_duper_hiper_free(int sound)
+int	super_duper_hiper_free()
 {
 	t_gen	*gen;
 
 	gen = gen_stuff();
-	free_game_assets(gen, sound);
+	free_game_assets(gen);
 	free_systems_and_mlx(gen);
 	exit(0);
 }

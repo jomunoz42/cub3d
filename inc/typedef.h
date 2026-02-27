@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:27 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/15 22:06:09 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 20:50:47 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,15 +167,6 @@ typedef struct s_flags
 	bool			music_on;
 }					t_flags;
 
-typedef struct s_sound
-{
-	pid_t			*pids;
-	int				count;
-	int				capacity;
-	pid_t			terror_music_pid;
-	pid_t			background_music_pid;
-}					t_sound;
-
 typedef struct s_default_values
 {
 	double			player_x;
@@ -186,7 +177,6 @@ typedef struct s_default_values
 	double			fov;
 	double			terror_player_move_speed;
 	char			**env;
-	t_sound			sounds;
 }					t_def_values;
 
 typedef enum e_enemy_type

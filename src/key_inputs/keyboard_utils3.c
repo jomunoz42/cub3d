@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard_utils3.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 21:33:30 by jomunoz           #+#    #+#             */
-/*   Updated: 2026/02/27 19:01:04 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/02/27 20:50:20 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	key_press(int key, t_gen *gen)
 	handle_modifier_keys(key, gen);
 	handle_view_keys(key, gen);
 	handle_toggle_keys(key, gen);
-	handle_audio_keys(key, gen);
 	return (0);
 }
 

@@ -40,8 +40,6 @@ SRC_BASE = \
 	src/minimap/minimap.c \
 	src/minimap/minimap_utils.c \
 	src/minimap/minimap_utils2.c \
-	src/music/songs.c \
-	src/music/songs_helper.c \
 	src/parsing/parser.c \
 	src/parsing/construct_map.c \
 	src/parsing/header_validation.c \
