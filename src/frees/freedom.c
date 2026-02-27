@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   freedom.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:05:41 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 18:53:58 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 19:05:35 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,37 +80,7 @@ int	super_duper_hiper_free(int sound)
 	t_gen	*gen;
 
 	gen = gen_stuff();
-	if (sound == 1)
-	{
-		free_arm_object(gen, gen->arm);
-		stop_all_sounds(gen);
-	}
-	if (gen->xpm_paths)
-	{
-		free_xpm_paths(gen->xpm_paths);
-		free(gen->xpm_paths);
-	}
-	if (gen->arm)
-		free(gen->arm);
-	free_game_objects(gen);
-	free_all_resources(gen);
-	if (gen->terror_arm->img)
-		mlx_destroy_image(gen->mlx_data->mlx_ptr, gen->terror_arm->img);
-	if (gen->terror_arm)
-		free(gen->terror_arm);
-	free_input_and_raycast(gen);
-	free_config_and_parsing(gen);
-	free_exit(gen);
-	if (gen->mlx_data)
-	{
-		if (gen->mlx_data->win_ptr)
-			mlx_destroy_window(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr);
-		if (gen->mlx_data->mlx_ptr)
-		{
-			mlx_destroy_display(gen->mlx_data->mlx_ptr);
-			free(gen->mlx_data->mlx_ptr);
-		}
-		free(gen->mlx_data);
-	}
+	free_game_assets(gen, sound);
+	free_systems_and_mlx(gen);
 	exit(0);
 }

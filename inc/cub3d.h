@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:24 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 18:18:50 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 19:05:28 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int				ft_strncmp(const char *s1, const char *s2, size_t n);
 char			*ft_strtrim(char const *s1, char const *set);
 char			*ft_strcpy(char *s1, char *s2);
 void			ft_print_matrix(char **matrix);
+void			free_game_assets(t_gen *gen, int sound);
+void			free_systems_and_mlx(t_gen *gen);
 int				ft_matrix_len(char **matrix);
 int				ultimate_file_validation(char *argv, t_parsing *parse);
 int				init_all(t_gen *gen);
