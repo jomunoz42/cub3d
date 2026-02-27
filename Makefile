@@ -186,7 +186,7 @@ val:
 	./$(NAME) maps/map.cub
 
 run: re
-	@./$(NAME) maps/testing.cub
+	@./$(NAME) maps/testingz.cub
 
 norm:
 	@norminette $(shell find . -type f \( -name "*.c" -o -name "*.h" \)) \
