@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:05:41 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 18:46:00 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 18:53:58 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,12 @@ int	super_duper_hiper_free(int sound)
 	}
 	if (gen->arm)
 		free(gen->arm);
-	if(gen->terror_arm)
-		free(gen->terror_arm);
 	free_game_objects(gen);
 	free_all_resources(gen);
+	if (gen->terror_arm->img)
+		mlx_destroy_image(gen->mlx_data->mlx_ptr, gen->terror_arm->img);
+	if(gen->terror_arm)
+		free(gen->terror_arm);
 	free_input_and_raycast(gen);
 	free_config_and_parsing(gen);
 	free_exit(gen);
