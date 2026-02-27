@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:05:41 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 18:43:07 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 18:46:00 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ int	super_duper_hiper_free(int sound)
 	}
 	if (gen->arm)
 		free(gen->arm);
+	if(gen->terror_arm)
+		free(gen->terror_arm);
 	free_game_objects(gen);
 	free_all_resources(gen);
 	free_input_and_raycast(gen);
