@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:27 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 23:10:21 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 23:23:54 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,6 @@ typedef enum e_element
 	E_C,
 	E_COUNT
 }					t_element;
-
-typedef struct s_mouse
-{
-	int				previous_x;
-	int				x;
-	int				y;
-	double			sens;
-}					t_mouse;
 
 typedef struct s_parsing
 {
@@ -55,20 +47,12 @@ typedef struct s_keyboard
 	bool			shift_left;
 	bool			key_f;
 	bool			key_l;
-	bool			key_t;
 	bool			key_i;
 	bool			key_z;
 	bool			key_x;
 	bool			key_m;
 	bool			key_caps_lock;
 	bool			key_e;
-	bool			key_num_one;
-	bool			key_num_two;
-	bool			key_num_three;
-	bool			key_num_four;
-	bool			key_num_five;
-	bool			key_num_six;
-
 }					t_keyboard;
 
 typedef struct s_mlx_data
@@ -81,10 +65,6 @@ typedef struct s_mlx_data
 
 typedef struct texture_data
 {
-	uint32_t		arm_width;
-	uint32_t		arm_height;
-	uint32_t		terror_arm_width;
-	uint32_t		terror_arm_height;
 	int				horizon;
 	int				flr_color;
 	int				clng_color;
@@ -111,6 +91,13 @@ typedef struct s_player
 	double			fov;
 }					t_player;
 
+typedef struct s_mouse
+{
+	int				previous_x;
+	int				x;
+	int				y;
+	double			sens;
+}					t_mouse;
 typedef struct s_images_data
 {
 	void			*img;
@@ -268,12 +255,9 @@ typedef struct s_general
 	t_keyboard		*kboard;
 	t_minimap		*minimap;
 	t_rayhit		*rayhit;
-	t_img_data		*arm;
-	t_img_data		*terror_arm;
 	t_texture		*texture[4];
 	t_texture		*skeleton_enemy[8];
 	t_texture		*door_texture;
-	t_texture		*door_texture2;
 	t_mouse			*mouse;
 	t_def_values	*def_values;
 	t_enemy			*enemy;

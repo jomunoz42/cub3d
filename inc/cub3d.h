@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:24 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 21:59:08 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 23:25:29 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int				ft_strncmp(const char *s1, const char *s2, size_t n);
 char			*ft_strtrim(char const *s1, char const *set);
 char			*ft_strcpy(char *s1, char *s2);
 void			ft_print_matrix(char **matrix);
-void			free_game_assets(t_gen *gen);
 void			free_systems_and_mlx(t_gen *gen);
 int				ft_matrix_len(char **matrix);
 int				ultimate_file_validation(char *argv, t_parsing *parse);
@@ -30,7 +29,7 @@ void			ft_free_matrix(char **matrix);
 int				super_duper_hiper_free();
 void			file_closer(void);
 void			free_parsing(t_parsing *parse);
-int				window_init(t_gen *gen, int w, int h);
+int				window_init(t_gen *gen);
 int				handle_exit(int keysys);
 void			ft_free_matrix_partial(char **matrix, int max_index);
 int				png_size_fd(const char *path, uint32_t *w, uint32_t *h);
@@ -54,7 +53,6 @@ void			draw_minimap(t_gen *gen);
 int				move_player(int keysym, t_gen *gen);
 void			ft_bzero(void *s, size_t n);
 void			genesis(t_gen *gen);
-void			draw_arm(t_gen *gen);
 void			draw_minimap_tile(t_gen *gen, int row, int col, int color);
 int				key_press(int key, t_gen *gen);
 int				key_release(int key, t_gen *gen);
@@ -81,7 +79,6 @@ void			rotate_player(t_gen *gen, double angle);
 int				mouse_looking(t_gen *gen);
 t_rayhit		castrate(t_gen *gen, double ray_direction_x,
 					double ray_direction_y, bool interact);
-void			draw_terror_arm(t_gen *gen);
 void			play_music(t_gen *gen);
 void			start_terror_music(t_gen *gen);
 void			play_sound(t_gen *gen, const char *filename);
@@ -141,12 +138,9 @@ void			load_textures(t_gen *gen, t_texture **dst, char **xpm_files,
 					int count);
 int				texture_data_init(t_gen *gen);
 int				minimap_init(t_gen *gen);
-void			init_extra_keys(t_keyboard *kb);
 int				keyboard_init(t_gen *gen);
 int				rayhit_init(t_gen *gen);
 int				player_init(t_gen *gen);
-int				arm_init(t_gen *gen);
-int				terror_arm_init(t_gen *gen);
 int				basic_mlx_init(t_gen *gen);
 int				init_flags(t_gen *gen);
 int				def_values_init(t_gen *gen);
@@ -184,7 +178,6 @@ void			free_texture(void *mlx_ptr, t_texture *tex);
 void			free_images(t_gen *gen);
 void			free_textures(t_gen *gen);
 void			free_all_resources(t_gen *gen);
-void			free_arm_object(t_gen *gen, t_img_data *arm);
 void			free_minimap(t_gen *gen);
 char			**create_copy_map(t_parsing *data);
 void			free_enemies(t_gen *gen);
@@ -230,8 +223,6 @@ char			*ft_strchr(const char *s, int c);
 void			free_xpm_paths(t_xpm_paths *paths);
 void			toggle_flag(bool *key_state, bool *flag);
 int				ft_isdigit(int c);
-void			get_quadrant_priority(int player_q, int order[4]);
-
 char			*ft_strdup(const char *s);
 char			*ft_strrchr(const char *s, int c);
 void			ft_bzero(void *s, size_t n);

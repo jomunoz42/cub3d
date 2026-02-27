@@ -6,32 +6,29 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:02:06 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 21:59:20 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 23:17:15 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	window_init(t_gen *gen, int w, int h)
+int	window_init(t_gen *gen)
 {
 	gen->mlx_data->win_ptr = mlx_new_window(gen->mlx_data->mlx_ptr,
 			gen->mlx_data->win_width, gen->mlx_data->win_height, WINDOW_NAME);
 	if (!gen->mlx_data->win_ptr)
 		return (1);
-	gen->arm->img = mlx_xpm_file_to_image(gen->mlx_data->mlx_ptr, USER_HAND_XPM,
-			&w, &h);
-	if (!gen->arm->img)
-		return (printf("Error\nError: failed to load arm image\n"), 1);
-	gen->arm->addr = mlx_get_data_addr(gen->arm->img, &gen->arm->bits_pixel,
-			&gen->arm->line_len, &gen->arm->endian);
 	return (0);
 }
 
 int	start_window(t_gen *gen, char *argv)
 {
 	(void)argv;
-	if (window_init(gen, 0, 0) == 1)
-		return (printf("Error\nError: cound't initiate window"), 1);
+	if (window_init(gen) == 1)
+	{
+		write(2, "Error\nError: cound't initiate window\n", 38);
+		return (1);
+	}
 	get_player_position(gen);
 	gen->img_data->img = mlx_new_image(gen->mlx_data->mlx_ptr,
 			gen->mlx_data->win_width, gen->mlx_data->win_height);

@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:05:41 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 23:10:48 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 23:18:59 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	free_all_resources(t_gen *gen)
 	free_texture_array(gen, gen->texture, 4);
 	free_texture_array(gen, gen->skeleton_enemy, 8);
 	free_single_texture(gen, gen->door_texture);
-	free_single_texture(gen, gen->door_texture2);
 	if (gen->enemy)
 		free(gen->enemy);
 	if (gen->render)
@@ -73,7 +72,6 @@ int	super_duper_hiper_free()
 	t_gen	*gen;
 
 	gen = gen_stuff();
-	free_game_assets(gen);
 	free_systems_and_mlx(gen);
 	exit(0);
 }

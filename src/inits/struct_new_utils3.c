@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:39:19 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/16 22:32:43 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 23:25:11 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,9 @@ int	texture_data_init(t_gen *gen)
 	gen->texture_data = malloc(sizeof(t_texture_data));
 	if (!gen->texture_data)
 		return (0);
-	gen->texture_data->arm_width = 0;
-	gen->texture_data->arm_height = 0;
-	gen->texture_data->terror_arm_width = 0;
-	gen->texture_data->terror_arm_height = 0;
 	gen->texture_data->clng_color = color_switch(gen->parse->textures_info[5]);
 	gen->texture_data->flr_color = color_switch(gen->parse->textures_info[4]);
 	gen->texture_data->horizon = gen->mlx_data->win_height / 2;
-	if (!png_size_fd(USER_HAND_PNG, &gen->texture_data->arm_width,
-			&gen->texture_data->arm_height))
-		return (0);
-	if (!png_size_fd(USER_TERROR_HAND_PNG, &gen->texture_data->terror_arm_width,
-			&gen->texture_data->terror_arm_height))
-		return (0);
 	return (1);
 }
 
@@ -52,20 +42,6 @@ int	minimap_init(t_gen *gen)
 	return (1);
 }
 
-void	init_extra_keys(t_keyboard *kb)
-{
-	kb->key_num_one = false;
-	kb->key_num_two = false;
-	kb->key_num_three = false;
-	kb->key_num_four = false;
-	kb->key_num_five = false;
-	kb->key_num_six = false;
-	kb->key_caps_lock = false;
-	kb->key_z = false;
-	kb->key_x = false;
-	kb->key_m = false;
-}
-
 int	keyboard_init(t_gen *gen)
 {
 	gen->kboard = malloc(sizeof(t_keyboard));
@@ -83,9 +59,11 @@ int	keyboard_init(t_gen *gen)
 	gen->kboard->shift_left = false;
 	gen->kboard->key_f = false;
 	gen->kboard->key_l = false;
-	gen->kboard->key_t = false;
 	gen->kboard->key_i = false;
-	init_extra_keys(gen->kboard);
+	gen->kboard->key_caps_lock = false;
+	gen->kboard->key_z = false;
+	gen->kboard->key_x = false;
+	gen->kboard->key_m = false;
 	return (1);
 }
 

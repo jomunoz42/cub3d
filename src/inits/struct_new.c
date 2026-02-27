@@ -6,11 +6,30 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:34:24 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 21:25:19 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 23:21:00 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static void	check_skeleton_alloc(t_gen *gen, int count)
+{
+	int	i;
+
+	i = 0;
+	while (i < count)
+	{
+		if (!gen->xpm_paths->skeleton[i])
+		{
+			write (2, "Error\nMalloc failed\n", 22);
+			while (--i >= 0)
+				free(gen->xpm_paths->skeleton[i]);
+			free(gen->xpm_paths);
+			super_duper_hiper_free();
+		}
+		i++;
+	}
+}
 
 int	init_xpm_paths(t_gen *gen)
 {
@@ -27,6 +46,7 @@ int	init_xpm_paths(t_gen *gen)
 	gen->xpm_paths->skeleton[5] = ft_strdup("imgs/skel_6.xpm");
 	gen->xpm_paths->skeleton[6] = ft_strdup("imgs/skel_7.xpm");
 	gen->xpm_paths->skeleton[7] = ft_strdup("imgs/skel_8.xpm");
+	check_skeleton_alloc(gen, 8);
 	return (1);
 }
 
@@ -50,8 +70,6 @@ void	load_all_textures(t_gen *gen, t_xpm_paths *paths)
 	load_textures(gen, gen->skeleton_enemy, paths->skeleton, 8);
 	gen->door_texture = load_xpm_texture(gen->mlx_data->mlx_ptr,
 			"imgs/porta_normal.xpm");
-	gen->door_texture2 = load_xpm_texture(gen->mlx_data->mlx_ptr,
-			"imgs/terror_door.xpm");
 }
 
 int	init_all(t_gen *gen)
@@ -70,8 +88,6 @@ int	init_all(t_gen *gen)
 	minimap_init(gen);
 	keyboard_init(gen);
 	rayhit_init(gen);
-	arm_init(gen);
-	terror_arm_init(gen);
 	general_texture_init(gen);
 	wall_textures_init(gen);
 	mouse_init(gen);

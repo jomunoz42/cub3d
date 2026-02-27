@@ -6,36 +6,11 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:40:07 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 23:09:45 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 23:14:26 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int	terror_arm_init(t_gen *gen)
-{
-	int	img_width;
-	int	img_height;
-
-	if (gen->terror_arm)
-		free_arm_object(gen, gen->terror_arm);
-	gen->terror_arm = malloc(sizeof(t_img_data));
-	if (!gen->terror_arm)
-		return (0);
-	img_width = (int)gen->texture_data->terror_arm_width;
-	img_height = (int)gen->texture_data->terror_arm_height;
-	gen->terror_arm->bits_pixel = 0;
-	gen->terror_arm->line_len = 0;
-	gen->terror_arm->endian = 0;
-	gen->terror_arm->width = 0;
-	gen->terror_arm->height = 0;
-	gen->terror_arm->img = mlx_xpm_file_to_image(gen->mlx_data->mlx_ptr,
-			USER_TERROR_HAND_XPM, &img_width, &img_height);
-	gen->terror_arm->addr = mlx_get_data_addr(gen->terror_arm->img,
-			&gen->terror_arm->bits_pixel, &gen->terror_arm->line_len,
-			&gen->terror_arm->endian);
-	return (1);
-}
 
 int	basic_mlx_init(t_gen *gen)
 {
@@ -43,7 +18,6 @@ int	basic_mlx_init(t_gen *gen)
 	if (!gen->mlx_data->mlx_ptr)
 		return (0);
 	gen->mlx_data->win_ptr = NULL;
-	gen->arm = NULL;
 	gen->mlx_data->win_width = WIN_WIDTH;
 	gen->mlx_data->win_height = WIN_HEIGHT;
 	return (1);

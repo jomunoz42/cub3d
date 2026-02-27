@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 21:36:14 by jomunoz           #+#    #+#             */
-/*   Updated: 2026/02/27 21:06:00 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 23:17:51 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,5 @@ bool	enemy_visible(t_gen *gen, double *distance_out, int i)
 	distance = sqrt(delta[0] * delta[0] + delta[1] * delta[1]);
 	if (distance_out)
 		*distance_out = distance;
-	if (distance > FOG_END)
-		return (false);
 	return (raycast_clear(gen, delta[0], delta[1], distance));
 }

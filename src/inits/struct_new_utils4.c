@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:40:59 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 23:11:57 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 23:14:57 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,25 +58,5 @@ int	player_init(t_gen *gen)
 	gen->player->move_speed = 0.05;
 	gen->player->rotate_speed = DEFAULT_PLAYER_ROTATE_SPEED;
 	gen->player->fov = DEFAULT_PLAYER_FOV;
-	return (1);
-}
-
-int	arm_init(t_gen *gen)
-{
-	int	img_width;
-	int	img_height;
-
-	if (gen->arm)
-		free_arm_object(gen, gen->arm);
-	gen->arm = malloc(sizeof(t_img_data));
-	if (!gen->arm)
-		return (0);
-	img_width = (int)gen->texture_data->arm_width;
-	img_height = (int)gen->texture_data->arm_height;
-	gen->arm->bits_pixel = 0;
-	gen->arm->line_len = 0;
-	gen->arm->endian = 0;
-	gen->arm->width = 0;
-	gen->arm->height = 0;
 	return (1);
 }

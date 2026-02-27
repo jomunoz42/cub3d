@@ -21,7 +21,6 @@ SRC_BASE = \
 	src/enemies/enemy_utils3.c \
 	src/frees/freedom.c \
 	src/frees/freedom2.c \
-	src/frees/freedom3.c \
 	src/game_loop/game_loop_helper.c \
 	src/game_loop/window_management.c \
 	src/inits/struct_new.c \
@@ -53,7 +52,6 @@ SRC_BASE = \
 	src/render_raycast/dda_utils2.c \
 	src/render_raycast/picasso1.c \
 	src/render_raycast/picasso2.c \
-	src/render_raycast/picasso3.c \
 	src/render_raycast/raycast.c \
 	src/utils/get_next_line.c \
 	src/utils/lib_utils1.c \

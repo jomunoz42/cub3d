@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   general.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/17 18:25:22 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2026/02/27 23:13:46 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,19 +65,5 @@
 # define DOOR_CLR 0x5ea7c4
 # define MINIMAP_GROUND_CLR 0x161616
 # define BLACK_CLR 0X000000
-# define TERROR_ARM_TRANSPARENT 0XA8E61D
-
-// ######ASSETS######
-
-# define USER_HAND_XPM "./imgs/pixil-frame-0.xpm"
-# define USER_HAND_PNG "./imgs/pixil-frame-0.png"
-# define USER_TERROR_HAND_PNG "./imgs/terror_arm.png"
-# define USER_TERROR_HAND_XPM "./imgs/terror_arm.xpm"
-# define ENEMY_SPRITE_PNG "./imgs/enemy.png"
-# define ENEMY_SPRITE_XPM "./imgs/enemy.xpm"
-
-// ######SHADOW######
-# define FOG_START 0.3
-# define FOG_END 5.5
 
 #endif

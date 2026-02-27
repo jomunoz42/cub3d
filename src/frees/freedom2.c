@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:02:49 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 21:03:13 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 23:22:51 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,21 @@ void	free_config_and_parsing(t_gen *gen)
 	}
 	if (gen->dda)
 		free(gen->dda);
+}
+
+void	free_systems_and_mlx(t_gen *gen)
+{
+	free_input_and_raycast(gen);
+	free_config_and_parsing(gen);
+	if (gen->mlx_data)
+	{
+		if (gen->mlx_data->win_ptr)
+			mlx_destroy_window(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr);
+		if (gen->mlx_data->mlx_ptr)
+		{
+			mlx_destroy_display(gen->mlx_data->mlx_ptr);
+			free(gen->mlx_data->mlx_ptr);
+		}
+		free(gen->mlx_data);
+	}
 }

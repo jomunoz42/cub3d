@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 23:54:34 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 23:09:55 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 23:14:06 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	game_loop_part_two(t_gen *gen)
 {
 	if (gen->flags->minimap)
 		draw_minimap(gen);
-	draw_arm(gen);
 	mlx_put_image_to_window(gen->mlx_data->mlx_ptr, gen->mlx_data->win_ptr,
 		gen->img_data->img, 0, 0);
 	if (gen->flags->info)
