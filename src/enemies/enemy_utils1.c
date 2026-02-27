@@ -74,7 +74,7 @@ void	render_enemy_stripe(t_gen *g, t_texture *t, int stripe)
 	int	y;
 
 	if (!g || !g->draw_enemy || !t || !t->data)
-    	return;
+		return ;
 	g->draw_enemy->tex_x = (int)((stripe - g->draw_enemy->draw_start_x)
 			* t->width / (g->draw_enemy->draw_end_x
 				- g->draw_enemy->draw_start_x));

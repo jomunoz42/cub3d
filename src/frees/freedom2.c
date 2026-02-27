@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   freedom2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:02:49 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 18:42:25 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 19:00:37 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	free_game_objects(t_gen *gen)
 {
 	if (!gen)
 		return ;
-	// free_arm_object(gen, gen->terror_arm);
 	free_minimap(gen);
 	if (gen->player)
 		free(gen->player);

@@ -96,7 +96,7 @@ int	super_duper_hiper_free(int sound)
 	free_all_resources(gen);
 	if (gen->terror_arm->img)
 		mlx_destroy_image(gen->mlx_data->mlx_ptr, gen->terror_arm->img);
-	if(gen->terror_arm)
+	if (gen->terror_arm)
 		free(gen->terror_arm);
 	free_input_and_raycast(gen);
 	free_config_and_parsing(gen);

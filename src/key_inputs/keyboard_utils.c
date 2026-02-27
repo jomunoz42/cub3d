@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:02:46 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 18:07:50 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 19:00:56 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,6 @@ void	release_toggle_keys(int key, t_gen *gen)
 		gen->kboard->key_f = false;
 	if (key == XK_l)
 		gen->kboard->key_l = false;
-	// if (key == XK_t)
-	// {
-	// 	if (!gen->flags->terror_mode)
-	// 		stop_all_sounds(gen);
-	// 	gen->kboard->key_t = false;
-	// }
 	if (key == XK_Caps_Lock)
 		gen->kboard->key_caps_lock = false;
 	if (key == XK_i)
