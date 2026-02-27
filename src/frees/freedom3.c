@@ -6,7 +6,7 @@
 /*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 21:51:04 by jomunoz           #+#    #+#             */
-/*   Updated: 2026/02/27 18:21:13 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/27 18:29:26 by jomunoz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	free_arm_object(t_gen *gen, t_img_data *arm)
 {
 	if (!arm)
 		return ;
-	if (arm->img && 
+	if (arm && arm->img && 
 		gen->mlx_data && 
 		gen->mlx_data->mlx_ptr)
 		mlx_destroy_image(gen->mlx_data->mlx_ptr, arm->img);

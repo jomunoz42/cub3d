@@ -183,7 +183,7 @@ deb:
 val:
 	valgrind --leak-check=full --track-fds=yes \
 	--show-leak-kinds=all --track-origins=yes \
-	./$(NAME) maps/vini.cub
+	./$(NAME) maps/map2.cub
 
 run: re
 	@./$(NAME) maps/map3.cub
