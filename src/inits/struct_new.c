@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:34:24 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/28 09:16:34 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/28 09:45:42 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,12 @@ void	free_xpm_paths(t_xpm_paths *paths)
 	i = 0;
 	while (i < 8)
 	{
-		if (i < 4)
+		if (i < 4 && paths->normal[i])
 			free(paths->normal[i]);
 		free(paths->skeleton[i]);
 		i++;
 	}
+	free(paths);
 }
 
 void	load_all_textures(t_gen *gen, t_xpm_paths *paths)

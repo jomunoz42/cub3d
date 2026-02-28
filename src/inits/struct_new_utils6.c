@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 21:42:32 by jomunoz           #+#    #+#             */
-/*   Updated: 2026/02/28 09:16:00 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/02/28 09:47:23 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	load_textures(t_gen *gen, t_texture **dst, char **xpm_files, int count)
 		if (!dst[i]->img)
 		{
 			printf("Failed to load texture %d: %s\n", i, xpm_files[i]);
+			free_xpm_paths(gen->xpm_paths);
 			super_duper_hiper_free();
 		}
 		dst[i]->data = (int *)mlx_get_data_addr(dst[i]->img, &bpp, &sl,
@@ -44,7 +45,6 @@ void	wall_textures_init(t_gen *gen)
 	}
 	load_all_textures(gen, gen->xpm_paths);
 	free_xpm_paths(gen->xpm_paths);
-	free(gen->xpm_paths);
 	gen->xpm_paths = NULL;
 }
 

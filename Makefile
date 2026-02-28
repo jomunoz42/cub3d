@@ -135,7 +135,7 @@ re: fclean all
 # ============== TOOLS ======================
 
 deb:
-	lldb ./$(NAME) maps/map3.cub
+	lldb ./$(NAME) maps/map2.cub
 
 val1:
 	valgrind --leak-check=full --track-fds=yes \
