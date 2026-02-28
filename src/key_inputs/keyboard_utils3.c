@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard_utils3.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 21:33:30 by jomunoz           #+#    #+#             */
-/*   Updated: 2026/02/27 20:50:20 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/28 09:16:07 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	handle_misc_toggles(int key, t_gen *gen)
 int	handle_exit(int keysys)
 {
 	if (keysys == XK_Escape)
-		return (super_duper_hiper_free(1), 1);
+		return (super_duper_hiper_free(), 1);
 	return (0);
 }
 

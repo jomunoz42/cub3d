@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_new.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:34:24 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 23:43:32 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/28 09:16:34 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	check_skeleton_alloc(t_gen *gen, int count)
 	{
 		if (!gen->xpm_paths->skeleton[i])
 		{
-			write (2, "Error\nMalloc failed\n", 22);
+			write (2, "Error\nMalloc failed\n", 21);
 			while (--i >= 0)
 				free(gen->xpm_paths->skeleton[i]);
 			free(gen->xpm_paths);

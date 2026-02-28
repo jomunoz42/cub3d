@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_new_utils6.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 21:42:32 by jomunoz           #+#    #+#             */
-/*   Updated: 2026/02/27 18:23:11 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/02/28 09:16:00 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	load_textures(t_gen *gen, t_texture **dst, char **xpm_files, int count)
 		if (!dst[i]->img)
 		{
 			printf("Failed to load texture %d: %s\n", i, xpm_files[i]);
-			super_duper_hiper_free(0);
+			super_duper_hiper_free();
 		}
 		dst[i]->data = (int *)mlx_get_data_addr(dst[i]->img, &bpp, &sl,
 				&endian);

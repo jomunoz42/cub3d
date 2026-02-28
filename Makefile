@@ -7,7 +7,7 @@ MAP_DIR = maps
 EXTRA = ./extra
 
 CC = cc
-CFLAGS = -Iinc -Wall -Wextra -Werror -g
+CFLAGS = -Iinc -Wall -Wextra -Werror -g -Wno-incompatible-pointer-types
 MLX_FLAGS = -L . -lmlx -lXext -lX11
 INCLUDES = -I$(MLXDIR) -I$(GNL_DIR) -I. -I$(MAP_DIR)
 
@@ -105,12 +105,12 @@ clean:
 	@rm -rf $(OBJDIR)
 
 fclean:
-	@echo "Removing minilibx if it exists"
-	@rm -rf minilibx-linux
-	@echo "[Done]"
-	@echo "Removing libmlx.a"
-	@rm -rf libmlx.a
-	@echo "[Done]"
+# 	@echo "Removing minilibx if it exists"
+# 	@rm -rf minilibx-linux
+# 	@echo "[Done]"
+# 	@echo "Removing libmlx.a"
+# 	@rm -rf libmlx.a
+# 	@echo "[Done]"
 	@echo "Removing AStar and extra logic..."
 	@rm -rf ./extra/AStar
 	@rm -rf ./extra/enemy.c
@@ -119,18 +119,18 @@ fclean:
 	@if grep -q 'AStar/AStar.h' ./inc/general.h; then \
 		sed -i '/AStar\/AStar.h/d' ./inc/general.h; \
 	fi
-	@if grep -q '# include "mlx.h"' ./inc/general.h; then \
-		sed -i '/# include "mlx.h"/d' ./inc/general.h; \
-	fi
+# 	@if grep -q '# include "mlx.h"' ./inc/general.h; then \
+# 		sed -i '/# include "mlx.h"/d' ./inc/general.h; \
+# 	fi
 	@rm -rf extra
 	@echo "Deleting extra directory"
-	@rm -rf inc/mlx.h
-	@echo "Removing mlx.h from inc"
+# 	@rm -rf inc/mlx.h
+# 	@echo "Removing mlx.h from inc"
 	@$(MAKE) clean
 	@rm -f $(NAME)
 
 
-re: fclean lib all
+re: fclean all
 
 # ============== TOOLS ======================
 
