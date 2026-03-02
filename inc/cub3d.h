@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:16:24 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/27 23:43:07 by jomunoz          ###   ########.fr       */
+/*   Updated: 2026/03/02 10:39:04 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void			free_systems_and_mlx(t_gen *gen);
 int				ft_matrix_len(char **matrix);
 int				ultimate_file_validation(char *argv, t_parsing *parse);
 void			ft_free_matrix(char **matrix);
-int				super_duper_hiper_free();
+int				super_duper_hiper_free(void);
 void			file_closer(void);
 void			free_parsing(t_parsing *parse);
 int				window_init(t_gen *gen);

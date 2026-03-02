@@ -12,7 +12,6 @@
 
 #ifndef GENERAL_H
 # define GENERAL_H
-# include "mlx.h"
 # include <X11/X.h>
 # include <X11/extensions/Xfixes.h>
 # include <sys/wait.h>

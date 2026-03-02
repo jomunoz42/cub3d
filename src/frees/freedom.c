@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:05:41 by vvazzs            #+#    #+#             */
-/*   Updated: 2026/02/28 09:38:25 by vvazzs           ###   ########.fr       */
+/*   Updated: 2026/03/02 10:38:49 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	free_all_resources(t_gen *gen)
 		free(gen->draw_enemy);
 }
 
-int	super_duper_hiper_free()
+int	super_duper_hiper_free(void)
 {
 	t_gen	*gen;
 

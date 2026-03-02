@@ -2,6 +2,7 @@
 
 NAME="cub3d"
 TMP="maps/tmp_test.cub"
+TEST_ID=1
 
 VALGRIND_CMD="valgrind --leak-check=full --track-fds=yes \
 --show-leak-kinds=all --track-origins=yes ./$NAME"
@@ -15,28 +16,29 @@ run_test()
 {
     DESC=$1
 
+    CURRENT_ID=$(printf "%02d" $TEST_ID)
+
     echo ""
     echo "=================================================="
-    echo "TEST: $DESC"
+    echo "Testing [./$NAME $TMP][$CURRENT_ID]"
+    echo "Description: $DESC"
     echo "=================================================="
     echo ""
 
     echo "📄 Current .cub file being tested:"
     echo "--------------------------------------------------"
 
-    # Print with line numbers for readability
     nl -ba $TMP
 
     echo "--------------------------------------------------"
     echo ""
 
-    # Parser quick check
     PARSER_OUTPUT=$(./$NAME $TMP 2>&1 | head -n 1)
 
     if [[ "$PARSER_OUTPUT" == Error* ]]; then
-        echo "[Parser]: Correctly rejected"
+        echo -e "${GREEN}[Parser]: Correctly rejected${NC}"
     else
-        echo "[Parser]: Did NOT print Error"
+        echo -e "${RED}[Parser]: Did NOT print Error${NC}"
     fi
 
     echo ""
@@ -53,6 +55,8 @@ run_test()
     echo ""
     echo "=================================================="
     echo ""
+
+    TEST_ID=$((TEST_ID + 1))
 }
 ########################################
 # BUILD VALID FILE PROGRESSIVELY
