@@ -47,16 +47,13 @@ The project serves as a deep dive into computer graphics, requiring the implemen
 ### Feature list
     Key [m] -> enable/disalbe minimap
     key [i] -> enable/disable information
-    key [f] -> decreases player_fog
-    key [l] -> increases player_fog
+    key [f] -> decreases player_fov
+    key [l] -> increases player_fov
     key [ctl] -> run
     key [shift] -> slow walk
     key [z] -> decreases minimap zoom leve
     key [x] -> increases minimap zoom level
     key [r] -> restore to the default values
-    key [t] -> activates/disactivate terror mode
     key [e] -> show/hide enemy on minimap
     key [caps lock] -> activates/disactivates mouse on screen
-    keys [1] - [5] -> choosee which songs to play in normal mode
-    key [6] -> stop all music (unless in terror mode, you can't run from that)
     

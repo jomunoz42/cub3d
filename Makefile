@@ -111,48 +111,28 @@ fclean:
 	@echo "Removing libmlx.a"
 	@rm -rf libmlx.a
 	@echo "[Done]"
-	@echo "Removing AStar and extra logic..."
-	@rm -rf ./extra/AStar
-	@rm -rf ./extra/enemy.c
-	@sed -i '/ENEMY_SKELETON/d' ./src/game_loop/game_loop_helper.c
-	@sed -i '/update_enemy(gen, i);/d' ./src/game_loop/game_loop_helper.c
-	@if grep -q 'AStar/AStar.h' ./inc/general.h; then \
-		sed -i '/AStar\/AStar.h/d' ./inc/general.h; \
-	fi
 	@if grep -q 'include "mlx.h"' ./inc/general.h; then \
 		sed -i '/include "mlx.h"/d' ./inc/general.h; \
 	fi
-	@rm -rf extra
-	@echo "Deleting extra directory"
 	@rm -rf inc/mlx.h
 	@echo "Removing mlx.h from inc"
 	@$(MAKE) clean
 	@rm -f $(NAME)
 
 
-re: fclean all
+re: fclean lib all
 
 # ============== TOOLS ======================
 
 deb:
-	lldb ./$(NAME) maps/map2.cub
+	lldb ./$(NAME) maps/map3.cub
 
-val1:
+val:
 	valgrind --leak-check=full --track-fds=yes \
 	--show-leak-kinds=all --track-origins=yes \
 	./$(NAME) maps/map3.cub
 
-val2:
-	valgrind --leak-check=full --track-fds=yes \
-	--show-leak-kinds=all --track-origins=yes \
-	./$(NAME) maps/map2.cub
-
 run: re
 	@./$(NAME) maps/map3.cub
-
-norm:
-	@norminette $(shell find . -type f \( -name "*.c" -o -name "*.h" \)) \
-	| awk '/c: Error/ { c++; if (c % 2 == 1) printf "\033[1;35m%s\033[0m\n", $$0; else printf "\033[1;36m%s\033[0m\n", $$0 }'
-	@echo "Amount of errors: " && norminette $(shell find . -type f \( -name "*.c" -o -name "*.h" \)) | grep "Error" | wc -l
 
 .PHONY: all clean fclean re extra run norm
