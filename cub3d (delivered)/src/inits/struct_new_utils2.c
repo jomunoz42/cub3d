@@ -1,0 +1,74 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   struct_new_utils2.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jomunoz <jomunoz@student.42lisboa.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/12 10:40:07 by vvazzs            #+#    #+#             */
+/*   Updated: 2026/02/27 23:14:26 by jomunoz          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "cub3d.h"
+
+int	basic_mlx_init(t_gen *gen)
+{
+	gen->mlx_data->mlx_ptr = mlx_init();
+	if (!gen->mlx_data->mlx_ptr)
+		return (0);
+	gen->mlx_data->win_ptr = NULL;
+	gen->mlx_data->win_width = WIN_WIDTH;
+	gen->mlx_data->win_height = WIN_HEIGHT;
+	return (1);
+}
+
+int	init_flags(t_gen *gen)
+{
+	gen->flags = malloc(sizeof(t_flags));
+	if (!gen->flags)
+		return (0);
+	gen->flags->info = true;
+	gen->flags->minimap = true;
+	gen->flags->mouse_on = true;
+	gen->flags->enemy_mini = true;
+	return (1);
+}
+
+int	def_values_init(t_gen *gen)
+{
+	gen->def_values = malloc(sizeof(t_def_values));
+	if (!gen->def_values)
+		return (0);
+	gen->def_values->fov = gen->player->fov;
+	gen->def_values->player_rotation_speed = gen->player->rotate_speed;
+	gen->def_values->player_move_speed = gen->player->move_speed;
+	gen->def_values->player_x = gen->player->x;
+	gen->def_values->player_y = gen->player->y;
+	gen->def_values->minimap_zoom_level = gen->minimap->zoom_level;
+	gen->def_values->env = NULL;
+	return (1);
+}
+
+int	enemy_init(t_gen *gen)
+{
+	int	i;
+
+	i = 0;
+	gen->enemy_count = count_enemies_in_map(gen);
+	gen->enemy = calloc((gen->enemy_count), sizeof(t_enemy));
+	if (!gen->enemy)
+		return (0);
+	while (i < gen->enemy_count)
+	{
+		gen->enemy[i].size = 20;
+		gen->enemy[i].x = 0;
+		gen->enemy[i].y = 0;
+		gen->enemy[i].enemy_frame = 0;
+		gen->enemy[i].enemy_timer = 0;
+		gen->enemy[i].type = ENEMY_SKELETON;
+		find_enemy_from_map(gen, i);
+		i++;
+	}
+	return (1);
+}
